@@ -47,7 +47,8 @@ def main():
 
     # 2) Limpar
     df_clean = clean_and_normalize(df_raw, cfg["columns"])
-
+    logger.info(f"Colunas disponíveis: {df_clean.columns.tolist()}")
+    
     # 3) Selecionar Top FIIs
     top_fiis = select_top_fiis(df_clean, cfg["filters"])
     top_fiis["Data Preço"] = data_hoje
