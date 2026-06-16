@@ -1,0 +1,43 @@
+paths:
+  base_dir: "C:/Users/Ítalo/OneDrive/stock-screener-automation"
+  data_dir: "data"
+  input_dir: "data/input"
+  output_dir: "data/output"
+  old_dir: "data/old"
+  logs_dir: "logs"
+  local_input_file: "data/input/Ranking_Acoes_FII.xlsx"
+
+scraper:
+  url: "https://www.fundsexplorer.com.br/ranking"
+  wait_timeout: 20
+  sleep_after_load: 4
+  cookie_button_id: "didomi-notice-agree-button"
+
+filters:
+  pvp_max: 1.20
+  dy_min: 0.05
+  liquidez_min: 300000
+  patrimonio_min: 200000000
+  volatilidade_max: 3.0
+  top_n: 20
+
+columns:
+  percent:
+    - "DIVIDEND YIELD"
+    - "DY (3M) ACUMULADO"
+    - "DY (6M) ACUMULADO"
+    - "DY (12M) ACUMULADO"
+    - "DY (3M) MÉDIA"
+    - "DY (6M) MÉDIA"
+    - "DY (12M) MÉDIA"
+    - "DY ANO"
+    - "DY PATRIMONIAL"
+    - "VOLATILIDADE"
+  money:
+    - "PREÇO ATUAL (R$)"
+    - "LIQUIDEZ DIÁRIA (R$)"
+    - "PATRIMÔNIO LÍQUIDO"
+    - "VPA"
+  integer:
+    - "QUANT. ATIVOS"
+    - "NUM. COTISTAS"

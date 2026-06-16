@@ -1,0 +1,21 @@
+# Dados locais (nunca sobem pro GitHub)
+data/input/
+data/output/
+data/old/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Credenciais
+.env
+*.key
+
+# Sistema
+.DS_Store
+Thumbs.db
