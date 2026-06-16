@@ -27,7 +27,7 @@ def clean_and_normalize(df_raw: pd.DataFrame, col_cfg: dict) -> pd.DataFrame:
         DataFrame com tipos corretos.
     """
     df = df_raw.copy()
-    df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
 
     # Percentuais: '4,5%' → 0.045
     for col in col_cfg.get("percent", []):
