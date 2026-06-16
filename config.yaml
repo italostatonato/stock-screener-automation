@@ -18,26 +18,26 @@ filters:
   dy_min: 0.05
   liquidez_min: 300000
   patrimonio_min: 200000000
-  volatilidade_max: 3.0
+  volatilidade_max: 3000.0
   top_n: 20
 
 columns:
   percent:
-    - "DIVIDEND YIELD"
-    - "DY (3M) ACUMULADO"
-    - "DY (6M) ACUMULADO"
-    - "DY (12M) ACUMULADO"
-    - "DY (3M) MÉDIA"
-    - "DY (6M) MÉDIA"
-    - "DY (12M) MÉDIA"
-    - "DY ANO"
-    - "DY PATRIMONIAL"
-    - "VOLATILIDADE"
+    - "Dividend Yield"
+    - "DY (3M) Acumulado"
+    - "DY (6M) Acumulado"
+    - "DY (12M) Acumulado"
+    - "DY (3M) média"
+    - "DY (6M) média"
+    - "DY (12M) média"
+    - "DY Ano"
+    - "DY Patrimonial"
+    - "Volatilidade"
   money:
-    - "PREÇO ATUAL (R$)"
-    - "LIQUIDEZ DIÁRIA (R$)"
-    - "PATRIMÔNIO LÍQUIDO"
+    - "Preço Atual (R$)"
+    - "Liquidez Diária (R$)"
+    - "Patrimônio Líquido"
     - "VPA"
   integer:
-    - "QUANT. ATIVOS"
-    - "NUM. COTISTAS"
+    - "Quant. Ativos"
+    - "Num. Cotistas"

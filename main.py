@@ -62,7 +62,7 @@ def main():
     save_snapshot(top_actions if not top_actions.empty else pd.DataFrame(), top_fiis, snapshot_path)
 
     # 5) Atualizar histórico
-    update_history(top_fiis, os.path.join(paths["old_dir"], "Top_20_FII_BRL.xlsx"), key_col="FUNDOS")
+    update_history(top_fiis, os.path.join(paths["old_dir"], "Top_20_FII_BRL.xlsx"), key_col="Fundos")
 
     logger.info("=== Screener finalizado com sucesso ===")
 
