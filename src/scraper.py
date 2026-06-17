@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -79,6 +80,90 @@ def scrape_fundsexplorer(cfg: dict) -> pd.DataFrame:
 
     except Exception as e:
         logger.error(f"Erro no scraping: {e}")
+        raise
+
+    finally:
+        driver.quit()
+
+def scrape_acoes_investsite(cfg: dict) -> pd.DataFrame:
+    """Coleta ranking de ações do Investsite via Selenium (download de Excel).
+
+    Args:
+        cfg: dicionário com chaves 'acoes_url', 'wait_timeout', 'download_dir'
+
+    Returns:
+        DataFrame bruto com os dados de ações.
+    """
+    url = cfg.get("acoes_url", "https://www.investsite.com.br/seleciona_acoes.php")
+    download_dir = os.path.abspath(cfg.get("download_dir", "data/input/acoes_download"))
+    os.makedirs(download_dir, exist_ok=True)
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920,1080")
+    prefs = {
+        "download.default_directory": download_dir,
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+    }
+    options.add_experimental_option("prefs", prefs)
+
+    logger.info(f"Iniciando scraping de ações: {url}")
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager().install()), options=options
+    )
+    wait = WebDriverWait(driver, cfg["wait_timeout"])
+
+    try:
+        driver.get(url)
+        time.sleep(3)
+
+        # clica em "Procurar Ações"
+        btn_procurar = wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[contains(text(),'Procurar Ações')]")
+            )
+        )
+        driver.execute_script("arguments[0].scrollIntoView(true);", btn_procurar)
+        time.sleep(0.5)
+        btn_procurar.click()
+        logger.info("Botão 'Procurar Ações' clicado.")
+
+        # clica em "Baixar Arquivo Excel"
+        btn_excel = wait.until(
+            EC.element_to_be_clickable((By.XPATH,
+                "//input[contains(@value,'Baixar Arquivo Excel')] | "
+                "//button[contains(text(),'Baixar Arquivo Excel')]"
+            ))
+        )
+        driver.execute_script("arguments[0].scrollIntoView(true);", btn_excel)
+        time.sleep(0.5)
+        btn_excel.click()
+        logger.info("Botão 'Baixar Arquivo Excel' clicado.")
+
+        # aguarda download
+        time.sleep(8)
+
+        files = [
+            os.path.join(download_dir, f)
+            for f in os.listdir(download_dir)
+            if f.lower().endswith((".xls", ".xlsx"))
+        ]
+        if not files:
+            raise FileNotFoundError("Arquivo Excel de ações não encontrado após download.")
+
+        latest = max(files, key=os.path.getctime)
+        logger.info(f"Arquivo baixado: {latest}")
+
+        df = pd.read_excel(latest, sheet_name=0, header=2)
+        logger.info(f"Ações brutas: {df.shape[0]} linhas x {df.shape[1]} colunas")
+        return df
+
+    except Exception as e:
+        logger.error(f"Erro no scraping de ações: {e}")
         raise
 
     finally:
