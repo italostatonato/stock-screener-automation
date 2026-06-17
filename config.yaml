@@ -15,10 +15,10 @@ scraper:
 
 filters:
   pvp_max: 1.20
-  dy_min: 0.05
+  dy_min: 0.005        # 0,5% em decimal (após divisão por 100)
   liquidez_min: 300000
   patrimonio_min: 200000000
-  volatilidade_max: 3000.0
+  volatilidade_max: 50.0   # pontos base — mediana é ~16
   top_n: 20
 
 columns:
@@ -32,7 +32,6 @@ columns:
     - "DY (12M) MÉDIA"
     - "DY ANO"
     - "DY PATRIMONIAL"
-    - "VOLATILIDADE"
   money:
     - "PREÇO ATUAL (R$)"
     - "LIQUIDEZ DIÁRIA (R$)"
@@ -41,6 +40,8 @@ columns:
   integer:
     - "QUANT. ATIVOS"
     - "NUM. COTISTAS"
+  float_simple:
+    - "VOLATILIDADE"
 
 acoes:
     pvpa_max: 5.0
