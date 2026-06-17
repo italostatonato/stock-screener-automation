@@ -6,67 +6,70 @@ logger = logging.getLogger(__name__)
 _INVALID = {"N/A", "nan", "None", ""}
 
 
-def _to_numeric_series(series: pd.Series, remove_chars: list[str]) -> pd.Series:
+def _parse_percent(series: pd.Series) -> pd.Series:
+    """'4,5%' → 0.045"""
     s = series.astype(str)
-    for ch in remove_chars:
-        s = s.str.replace(ch, "", regex=False)
-    s = s.str.replace("\u200b", "", regex=False)  # zero-width space
+    s = s.str.replace("\u200b", "", regex=False)
+    s = s.str.replace("%", "", regex=False)
+    s = s.str.replace(".", "", regex=False)   # remove milhar
+    s = s.str.replace(",", ".", regex=False)  # decimal
     s = s.str.strip()
-    s = s.replace(_INVALID, None)
+    s = s.replace(list(_INVALID), None)
+    return pd.to_numeric(s, errors="coerce") / 100
+
+
+def _parse_money(series: pd.Series) -> pd.Series:
+    """'R$ 1.234,56' → 1234.56"""
+    s = series.astype(str)
+    s = s.str.replace("\u200b", "", regex=False)
+    s = s.str.replace("R$", "", regex=False)
+    s = s.str.replace(".", "", regex=False)
+    s = s.str.replace(",", ".", regex=False)
+    s = s.str.strip()
+    s = s.replace(list(_INVALID), None)
     return pd.to_numeric(s, errors="coerce")
 
 
+def _parse_float(series: pd.Series) -> pd.Series:
+    """'1,05' → 1.05"""
+    s = series.astype(str)
+    s = s.str.replace(",", ".", regex=False)
+    s = s.str.strip()
+    s = s.replace(list(_INVALID), None)
+    return pd.to_numeric(s, errors="coerce")
+
+
+def _parse_integer(series: pd.Series) -> pd.Series:
+    s = series.astype(str)
+    s = s.str.replace(".", "", regex=False)
+    s = s.str.replace(",", "", regex=False)
+    s = s.str.strip()
+    s = s.replace(list(_INVALID), None)
+    return pd.to_numeric(s, errors="coerce", downcast="integer")
+
+
 def clean_and_normalize(df_raw: pd.DataFrame, col_cfg: dict) -> pd.DataFrame:
-    """Normaliza tipos de dado do DataFrame bruto.
-
-    Args:
-        df_raw: DataFrame saído do scraper (tudo string).
-        col_cfg: dict com chaves 'percent', 'money', 'integer'.
-
-    Returns:
-        DataFrame com tipos corretos.
-    """
     df = df_raw.copy()
     df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
 
-    # Percentuais: '4,5%' → 0.045
     for col in col_cfg.get("percent", []):
         if col in df.columns:
-            df[col] = _to_numeric_series(df[col], ["%", ".", ","]) 
-            # re-aplica vírgula→ponto na ordem certa
-            s = df[col + "_raw"] if col + "_raw" in df.columns else df_raw[col].astype(str)
-            s = s.str.replace("%", "", regex=False)
-            s = s.str.replace("\u200b", "", regex=False)
-            s = s.str.replace(".", "", regex=False)   # milhar
-            s = s.str.replace(",", ".", regex=False)  # decimal
-            s = s.replace(list(_INVALID), None)
-            df[col] = pd.to_numeric(s, errors="coerce") / 100
-            logger.debug(f"Coluna percentual processada: {col}")
+            df[col] = _parse_percent(df_raw[col])
+            logger.debug(f"Percentual: {col}")
 
-    # Monetárias: 'R$ 1.234,56' → 1234.56
     for col in col_cfg.get("money", []):
         if col in df.columns:
-            s = df_raw[col].astype(str)
-            s = s.str.replace("R$", "", regex=False)
-            s = s.str.replace("\u200b", "", regex=False)
-            s = s.str.replace(".", "", regex=False)
-            s = s.str.replace(",", ".", regex=False)
-            s = s.replace(list(_INVALID), None)
-            df[col] = pd.to_numeric(s, errors="coerce")
-            logger.debug(f"Coluna monetária processada: {col}")
+            df[col] = _parse_money(df_raw[col])
+            logger.debug(f"Monetário: {col}")
 
-    # P/VP
-    if "P/VP" in df.columns:
-        s = df_raw["P/VP"].astype(str).str.replace(",", ".", regex=False)
-        s = s.replace(list(_INVALID), None)
-        df["P/VP"] = pd.to_numeric(s, errors="coerce")
-
-    # Inteiros
     for col in col_cfg.get("integer", []):
         if col in df.columns:
-            s = df_raw[col].astype(str).str.replace(".", "", regex=False).str.replace(",", "", regex=False)
-            s = s.replace(list(_INVALID), None)
-            df[col] = pd.to_numeric(s, errors="coerce", downcast="integer")
+            df[col] = _parse_integer(df_raw[col])
+            logger.debug(f"Inteiro: {col}")
+
+    # P/VP separado pois é float simples
+    if "P/VP" in df.columns:
+        df["P/VP"] = _parse_float(df_raw["P/VP"])
 
     logger.info("Limpeza e normalização concluídas.")
     return df
