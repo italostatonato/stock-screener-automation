@@ -9,6 +9,9 @@ jobs:
   screener:
     runs-on: ubuntu-latest
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4.2.2
@@ -26,3 +29,10 @@ jobs:
 
       - name: Rodar screener
         run: python main.py
+
+      - name: Salvar Excel como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: Top20-Ranking-${{ github.run_id }}
+          path: data/output/
+          retention-days: 90
