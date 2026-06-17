@@ -26,14 +26,3 @@ jobs:
 
       - name: Rodar screener
         run: python main.py
-
-      - name: Commitar resultados
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/output/ data/old/ logs/
-          git diff --cached --quiet || git commit -m "chore: snapshot ${{ env.data_hoje }}"
-          git push
-        env:
-          data_hoje: ${{ steps.date.outputs.date }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
