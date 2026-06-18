@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 from datetime import datetime
+from src.formatter import format_workbook
 
 import pandas as pd
 import yaml
@@ -79,6 +80,14 @@ def main():
         paths["output_dir"], f"Top20_Ranking_{data_hoje}.xlsx"
     )
     save_snapshot(top_actions, top_fiis, snapshot_path)
+    
+    format_workbook(
+    snapshot_path=snapshot_path,
+    cfg=cfg,
+    data_hoje=data_hoje,
+    n_fiis=len(top_fiis),
+    n_acoes=len(top_actions),
+)
 
     logger.info("=== Screener finalizado com sucesso ===")
 

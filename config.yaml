@@ -14,13 +14,13 @@ scraper:
   cookie_button_id: "didomi-notice-agree-button"
 
 filters:
-  pvp_max: 1.20
-  dy_min: 0.005        # 0,5% em decimal (após divisão por 100)
-  liquidez_min: 300000
-  patrimonio_min: 200000000
-  volatilidade_max: 50.0   # pontos base — mediana é ~16
+  pvp_max: 1.15
+  dy_min: 0.005
+  liquidez_min: 150000
+  patrimonio_min: 100000000
+  volatilidade_max: 50.0
   top_n: 20
-
+  
 columns:
   percent:
     - "DIVIDEND YIELD"
