@@ -2,27 +2,26 @@ name: Daily FII Screener
 
 on:
   schedule:
-    - cron: "0 12 * * 1-5"   # roda todo dia útil às 09:00 BRT (12:00 UTC)
-  workflow_dispatch:           # permite rodar manualmente pelo GitHub
+    - cron: "0 12 * * 1-5"
+  workflow_dispatch:
 
 jobs:
   screener:
     runs-on: ubuntu-latest
 
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     steps:
       - name: Checkout do repositório
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
 
       - name: Configurar Python
-        uses: actions/setup-python@v5.6.0
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
       - name: Instalar dependências
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Instalar Chrome
         uses: browser-actions/setup-chrome@v2
