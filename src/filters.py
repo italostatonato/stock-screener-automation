@@ -13,24 +13,21 @@ def _log_quartis(df: pd.DataFrame, col: str, q: float, direcao: str):
 
 def select_top_fiis(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     """
-    Recebe diretamente cfg["filters"].
+    Filtragem em duas camadas:
+    1) Filtros fixos — eliminam fundos com problemas absolutos
+    2) Filtros por quartil — selecionam os melhores 25% do universo restante
     """
-
     required_cols = [
-        "P/VP",
-        "DIVIDEND YIELD",
-        "LIQUIDEZ DIÁRIA (R$)",
-        "PATRIMÔNIO LÍQUIDO",
-        "VOLATILIDADE"
+        "P/VP", "DIVIDEND YIELD", "LIQUIDEZ DIÁRIA (R$)",
+        "PATRIMÔNIO LÍQUIDO", "VOLATILIDADE"
     ]
-
     missing = [c for c in required_cols if c not in df.columns]
     if missing:
         raise ValueError(f"Colunas ausentes no DataFrame FII: {missing}")
 
-    f = cfg
+    f = cfg["filters"]
 
-    # ── Camada 1: filtros fixos ──────────────────────────────────────────────
+    # ── Camada 1: filtros fixos ───────────────────────────────────────────────
     base = df[
         (df["P/VP"].notna()) &
         (df["DIVIDEND YIELD"].notna()) &
@@ -49,31 +46,29 @@ def select_top_fiis(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
         logger.warning("Nenhum FII passou nos filtros fixos.")
         return base
 
-    # ── Camada 2: quartis ────────────────────────────────────────────────────
+    # ── Camada 2: filtros por quartil ────────────────────────────────────────
     logger.info("Calculando quartis FIIs:")
-
-    q_pvp = _log_quartis(base, "P/VP", 0.25, "≤ Q25 melhor")
-    q_dy = _log_quartis(base, "DIVIDEND YIELD", 0.75, "≥ Q75 melhor")
-    q_liquidez = _log_quartis(base, "LIQUIDEZ DIÁRIA (R$)", 0.75, "≥ Q75 melhor")
-    q_patrimonio = _log_quartis(base, "PATRIMÔNIO LÍQUIDO", 0.75, "≥ Q75 melhor")
-    q_vol = _log_quartis(base, "VOLATILIDADE", 0.75, "≤ Q75 melhor")
+    q_pvp       = _log_quartis(base, "P/VP",                0.25, "≤ Q25 melhor")
+    q_dy        = _log_quartis(base, "DIVIDEND YIELD",       0.75, "≥ Q75 melhor")
+    q_liquidez  = _log_quartis(base, "LIQUIDEZ DIÁRIA (R$)", 0.75, "≥ Q75 melhor")
+    q_patrimonio= _log_quartis(base, "PATRIMÔNIO LÍQUIDO",   0.75, "≥ Q75 melhor")
+    q_vol       = _log_quartis(base, "VOLATILIDADE",         0.75, "≤ Q75 melhor")
 
     result = base[
-        (base["P/VP"] <= q_pvp) &
-        (base["DIVIDEND YIELD"] >= q_dy) &
+        (base["P/VP"]                <= q_pvp) &
+        (base["DIVIDEND YIELD"]       >= q_dy) &
         (base["LIQUIDEZ DIÁRIA (R$)"] >= q_liquidez) &
-        (base["PATRIMÔNIO LÍQUIDO"] >= q_patrimonio) &
-        (base["VOLATILIDADE"] <= q_vol)
+        (base["PATRIMÔNIO LÍQUIDO"]   >= q_patrimonio) &
+        (base["VOLATILIDADE"]         <= q_vol)
     ].copy()
 
     logger.info(f"FIIs após filtros por quartil: {len(base)} → {len(result)}")
 
     if result.empty:
-        logger.warning(
-            "Nenhum FII passou nos filtros por quartil — retornando Top N do universo base."
-        )
+        logger.warning("Nenhum FII passou nos filtros por quartil — retornando Top N do universo base.")
         result = base.copy()
 
+    # ── Ordenação e Top N ────────────────────────────────────────────────────
     result = result.sort_values(
         by=["DIVIDEND YIELD", "P/VP", "LIQUIDEZ DIÁRIA (R$)"],
         ascending=[False, True, False]
@@ -85,37 +80,28 @@ def select_top_fiis(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
 
 def select_top_acoes(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     """
-    Recebe diretamente cfg["filters"].
+    Filtragem em duas camadas:
+    1) Filtros fixos — eliminam empresas com problemas absolutos
+    2) Filtros por quartil — selecionam as melhores 25% do universo restante
     """
-
     required_cols = [
-        "Preço/VPA",
-        "Preço/Lucro",
-        "EV/EBIT",
-        "EV/EBITDA",
-        "Margem Líquida",
-        "ROA",
-        "RPL",
-        "ROInvC",
-        "Passivo/Patrimônio Líquido",
-        "Alavancagem Financeira",
-        "Dividend Yield",
-        "Volume Diário Médio (3 meses)",
-        "Market Cap Empresa"
+        "Preço/VPA", "Preço/Lucro", "EV/EBIT", "EV/EBITDA",
+        "Margem Líquida", "ROA", "RPL", "ROInvC",
+        "Passivo/Patrimônio Líquido", "Alavancagem Financeira",
+        "Dividend Yield", "Volume Diário Médio (3 meses)", "Market Cap Empresa"
     ]
-
     missing = [c for c in required_cols if c not in df.columns]
     if missing:
         logger.warning(f"Colunas ausentes em ações: {missing}")
 
+    # limpeza básica
     result = df.copy()
-
     result = result.dropna(subset=["Ação", "Preço"])
     result = result.drop_duplicates(subset=["Empresa"], keep="first")
 
-    a = cfg["acoes"]
+    a = cfg["filters"]["acoes"]
 
-    # ── Camada 1: filtros fixos ──────────────────────────────────────────────
+    # ── Camada 1: filtros fixos ───────────────────────────────────────────────
     base = result[
         (result["Preço/VPA"].notna()) &
         (result["Margem Líquida"].notna()) &
@@ -133,37 +119,35 @@ def select_top_acoes(df: pd.DataFrame, cfg: dict) -> pd.DataFrame:
         logger.warning("Nenhuma ação passou nos filtros fixos.")
         return base
 
-    # ── Camada 2: quartis ────────────────────────────────────────────────────
+    # ── Camada 2: filtros por quartil ────────────────────────────────────────
     logger.info("Calculando quartis Ações:")
-
-    q_pvpa = _log_quartis(base, "Preço/VPA", 0.25, "≤ Q25 melhor")
-    q_pl = _log_quartis(base, "Preço/Lucro", 0.25, "≤ Q25 melhor")
-    q_ev_ebit = _log_quartis(base, "EV/EBIT", 0.25, "≤ Q25 melhor")
-    q_ev_ebitda = _log_quartis(base, "EV/EBITDA", 0.25, "≤ Q25 melhor")
-    q_margem = _log_quartis(base, "Margem Líquida", 0.75, "≥ Q75 melhor")
-    q_roa = _log_quartis(base, "ROA", 0.75, "≥ Q75 melhor")
-    q_rpl = _log_quartis(base, "RPL", 0.75, "≥ Q75 melhor")
-    q_dy = _log_quartis(base, "Dividend Yield", 0.75, "≥ Q75 melhor")
+    q_pvpa      = _log_quartis(base, "Preço/VPA",    0.25, "≤ Q25 melhor")
+    q_pl        = _log_quartis(base, "Preço/Lucro",  0.25, "≤ Q25 melhor")
+    q_ev_ebit   = _log_quartis(base, "EV/EBIT",      0.25, "≤ Q25 melhor")
+    q_ev_ebitda = _log_quartis(base, "EV/EBITDA",    0.25, "≤ Q25 melhor")
+    q_margem    = _log_quartis(base, "Margem Líquida", 0.75, "≥ Q75 melhor")
+    q_roa       = _log_quartis(base, "ROA",           0.75, "≥ Q75 melhor")
+    q_rpl       = _log_quartis(base, "RPL",           0.75, "≥ Q75 melhor")
+    q_dy        = _log_quartis(base, "Dividend Yield", 0.75, "≥ Q75 melhor")
 
     result = base[
-        (base["Preço/VPA"] <= q_pvpa) &
-        (base["Preço/Lucro"] <= q_pl) &
-        (base["EV/EBIT"] <= q_ev_ebit) &
-        (base["EV/EBITDA"] <= q_ev_ebitda) &
+        (base["Preço/VPA"]     <= q_pvpa) &
+        (base["Preço/Lucro"]   <= q_pl) &
+        (base["EV/EBIT"]       <= q_ev_ebit) &
+        (base["EV/EBITDA"]     <= q_ev_ebitda) &
         (base["Margem Líquida"] >= q_margem) &
-        (base["ROA"] >= q_roa) &
-        (base["RPL"] >= q_rpl) &
+        (base["ROA"]            >= q_roa) &
+        (base["RPL"]            >= q_rpl) &
         (base["Dividend Yield"] >= q_dy)
     ].copy()
 
     logger.info(f"Ações após filtros por quartil: {len(base)} → {len(result)}")
 
     if result.empty:
-        logger.warning(
-            "Nenhuma ação passou nos filtros por quartil — retornando Top N do universo base."
-        )
+        logger.warning("Nenhuma ação passou nos filtros por quartil — retornando Top N do universo base.")
         result = base.copy()
 
+    # ── Ordenação e Top N ────────────────────────────────────────────────────
     result = result.sort_values(
         by=["Preço/VPA", "Dividend Yield"],
         ascending=[True, False]
