@@ -14,16 +14,28 @@ scraper:
   cookie_button_id: "didomi-notice-agree-button"
 
 filters:
-  pvp_max: 1.15        # mantido só como referência, não usado no quartil
-  dy_min: 0.003        # mínimo absoluto: 0,3% — elimina FIIs sem dividendo
-  liquidez_min: 100000 # mínimo absoluto: R$ 100k
-  patrimonio_min: 50000000  # mínimo absoluto: R$ 50M
+  pvp_max: 1.15
+  dy_min: 0.003
+  liquidez_min: 100000
+  patrimonio_min: 50000000
   volatilidade_max: 50.0
   top_n: 20
+
   acoes:
-    dy_min: 0.02       # mínimo absoluto: 2%
-    volume_min: 500000 # mínimo absoluto: R$ 500k
-    market_cap_min: 200000000  # mínimo absoluto: R$ 200M
+    pvpa_max: 5.0
+    pl_max: 15.0
+    ev_ebit_max: 10.0
+    ev_ebitda_max: 8.0
+    margem_min: 0.05
+    roa_min: 0.03
+    rpl_min: 0.10
+    roinvc_min: 0.05
+    passivo_pl_max: 1.5
+    alavancagem_max: 3.0
+
+    dy_min: 0.02
+    volume_min: 500000
+    market_cap_min: 200000000
     top_n: 20
   
 columns:
