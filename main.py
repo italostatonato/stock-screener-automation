@@ -51,7 +51,7 @@ def main():
     df_clean = clean_and_normalize(df_raw, cfg["columns"])
     logger.info(f"Colunas disponíveis: {df_clean.columns.tolist()}")
 
-    top_fiis = select_top_fiis(df_clean, cfg["filters"])
+    top_fiis = select_top_fiis(df_clean, cfg)
     top_fiis["Data Preço"] = data_hoje
 
     update_history(
@@ -64,7 +64,7 @@ def main():
     logger.info("Coletando ações...")
     try:
         df_acoes_raw = scrape_acoes_investsite(cfg["scraper"])
-        top_actions = select_top_acoes(df_acoes_raw, cfg["filters"])
+        top_actions = select_top_acoes(df_acoes_raw, cfg)
         top_actions["Data Preço"] = data_hoje
         update_history(
             top_actions,
