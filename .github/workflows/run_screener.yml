@@ -2,26 +2,48 @@ name: Daily FII Screener
 
 on:
   schedule:
-    - cron: "0 12 * * 1-5"
-  workflow_dispatch:
+    - cron: "0 12 * * 1-5"   # roda todo dia útil às 09:00 BRT (12:00 UTC)
+  workflow_dispatch:           # permite rodar manualmente pelo GitHub
 
 jobs:
-  screener:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do repositório
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4.2.2
 
       - name: Configurar Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.11"
 
       - name: Instalar dependências
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest
+
+      - name: Rodar testes unitários
+        run: pytest tests/ -v
+
+  screener:
+    needs: test
+    runs-on: ubuntu-latest
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4.2.2
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5.6.0
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
 
       - name: Instalar Chrome
         uses: browser-actions/setup-chrome@v2
@@ -30,8 +52,16 @@ jobs:
         run: python main.py
 
       - name: Salvar Excel como artefato
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: Top20-Ranking-${{ github.run_id }}
           path: data/output/
           retention-days: 90
+
+      - name: Notificar falha no Telegram
+        if: failure()
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="🚨 Stock Screener falhou! Veja o log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
