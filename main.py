@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 import sys
 from datetime import datetime
 
@@ -98,6 +99,17 @@ def main():
         acoes_base=acoes_base,
         market_data=market_data,
     )
+
+    # ── Copia para o OneDrive ───────────────────────────────────────────────
+    onedrive_dir = paths.get("onedrive_output_dir")
+    if onedrive_dir:
+        try:
+            os.makedirs(onedrive_dir, exist_ok=True)
+            destino = os.path.join(onedrive_dir, os.path.basename(snapshot_path))
+            shutil.copy2(snapshot_path, destino)
+            logger.info(f"Cópia salva no OneDrive: {destino}")
+        except Exception as e:
+            logger.error(f"Falha ao copiar para o OneDrive: {e}")
 
     logger.info("=== Screener finalizado com sucesso ===")
 

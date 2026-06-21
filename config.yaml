@@ -71,3 +71,14 @@ scraper:
   wait_timeout: 20
   sleep_after_load: 4
   cookie_button_id: "didomi-notice-agree-button"
+
+paths:
+  base_dir: "C:/Users/Ítalo/OneDrive/stock-screener-automation"
+  data_dir: "data"
+  input_dir: "data/input"
+  output_dir: "data/output"
+  old_dir: "data/old"
+  logs_dir: "logs"
+  local_input_file: "data/input/Ranking_Acoes_FII.xlsx"
+  onedrive_output_dir: "C:/Users/Ítalo/OneDrive/Tabelas Ações/Recomendações"
+  onedrive_output_dir: "C:/Users/Ítalo/OneDrive/Tabelas Acoes/Recomendacoes"

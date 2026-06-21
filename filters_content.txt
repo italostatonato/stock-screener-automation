@@ -13,11 +13,11 @@ def _log_quartis(df: pd.DataFrame, col: str, q: float, direcao: str):
 
 def _build_status_column(df: pd.DataFrame, fixed_checks: list, quartil_checks: list, rank_df: pd.DataFrame, id_col: str) -> pd.Series:
     """
-    Constrói coluna de status para a base completa:
-    - 'Eliminado no filtro fixo: <motivo>' — primeira condição fixa que falhar
-    - 'Eliminado no quartil: <motivo>' — primeira condição de quartil que falhar (só se passou nos fixos)
-    - 'Rank #N' — se passou em tudo e está no Top N final
-    - 'Aprovado (fora do Top N)' — passou em tudo mas não entrou no corte final
+    Constroi coluna de status para a base completa:
+    - 'Eliminado no filtro fixo: <motivo>' - primeira condicao fixa que falhar
+    - 'Eliminado no quartil: <motivo>' - primeira condicao de quartil que falhar (so se passou nos fixos)
+    - 'Rank #N' - se passou em tudo e esta no Top N final
+    - 'Aprovado (fora do Top N)' - passou em tudo mas nao entrou no corte final
     """
     status = pd.Series(index=df.index, dtype=object)
 
@@ -25,21 +25,18 @@ def _build_status_column(df: pd.DataFrame, fixed_checks: list, quartil_checks: l
         row = df.loc[idx]
         motivo = None
 
-        # checa filtros fixos em ordem
         for label, cond_func in fixed_checks:
             if not cond_func(row):
                 motivo = f"Eliminado no filtro fixo: {label}"
                 break
 
         if motivo is None:
-            # checa filtros de quartil em ordem
             for label, cond_func in quartil_checks:
                 if not cond_func(row):
                     motivo = f"Eliminado no quartil: {label}"
                     break
 
         if motivo is None:
-            # passou em tudo — checa se está no rank final
             match = rank_df[rank_df[id_col] == row[id_col]]
             if not match.empty:
                 posicao = match.index[0] + 1
@@ -67,7 +64,6 @@ def select_top_fiis(df: pd.DataFrame, cfg: dict):
     f = cfg["filters"]
     base_full = df.copy()
 
-    # ── Camada 1: filtros fixos ───────────────────────────────────────────────
     fixed_checks = [
         ("P/VP nulo ou negativo",        lambda r: pd.notna(r["P/VP"]) and r["P/VP"] > 0),
         ("DIVIDEND YIELD nulo",          lambda r: pd.notna(r["DIVIDEND YIELD"])),
@@ -90,7 +86,6 @@ def select_top_fiis(df: pd.DataFrame, cfg: dict):
         base_full["Status"] = "Eliminado no filtro fixo: dados insuficientes"
         return base, base_full
 
-    # ── Camada 2: filtros por quartil ────────────────────────────────────────
     logger.info("Calculando quartis FIIs:")
     q_pvp        = _log_quartis(base, "P/VP",                0.25, "≤ Q25 melhor")
     q_dy         = _log_quartis(base, "DIVIDEND YIELD",       0.75, "≥ Q75 melhor")
@@ -125,7 +120,6 @@ def select_top_fiis(df: pd.DataFrame, cfg: dict):
 
     logger.info(f"Top {len(result)} FIIs selecionados.")
 
-    # ── Monta status na base completa ───────────────────────────────────────
     if not used_quartil_fallback:
         status = _build_status_column(base_full, fixed_checks, quartil_checks, result, id_col="FUNDOS")
     else:
@@ -155,7 +149,6 @@ def select_top_acoes(df: pd.DataFrame, cfg: dict):
 
     a = cfg["filters"]["acoes"]
 
-    # ── Camada 1: filtros fixos ───────────────────────────────────────────────
     fixed_checks = [
         ("Preço/VPA nulo",            lambda r: pd.notna(r["Preço/VPA"])),
         ("Margem Líquida nula",       lambda r: pd.notna(r["Margem Líquida"])),
@@ -178,7 +171,6 @@ def select_top_acoes(df: pd.DataFrame, cfg: dict):
         base_full["Status"] = "Eliminado no filtro fixo: dados insuficientes"
         return base, base_full
 
-    # ── Camada 2: filtros por quartil ────────────────────────────────────────
     logger.info("Calculando quartis Ações:")
     q_pvpa      = _log_quartis(base, "Preço/VPA",     0.25, "≤ Q25 melhor")
     q_pl        = _log_quartis(base, "Preço/Lucro",   0.25, "≤ Q25 melhor")
@@ -219,7 +211,6 @@ def select_top_acoes(df: pd.DataFrame, cfg: dict):
 
     logger.info(f"Top {len(result)} ações selecionadas.")
 
-    # ── Monta status na base completa ───────────────────────────────────────
     if not used_quartil_fallback:
         status = _build_status_column(base_full, fixed_checks, quartil_checks, result, id_col="Ação")
     else:
