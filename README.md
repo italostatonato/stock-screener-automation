@@ -1,5 +1,7 @@
 # 📊 Stock Screener Automation
 
+### 🔗 [Acesse o dashboard ao vivo](https://italostatonato.github.io/stock-screener-automation/)
+
 Screener automático de FIIs (Fundos Imobiliários) e Ações brasileiras, com filtro adaptativo por quartis, rodando diariamente via GitHub Actions.
 
 📖 **Documentação completa:** [Wiki do projeto](../../wiki)
@@ -48,6 +50,7 @@ O workflow `.github/workflows/run_screener.yml`:
 
 ## Onde pegar o resultado
 
+- **Dashboard web**: [italostatonato.github.io/stock-screener-automation](https://italostatonato.github.io/stock-screener-automation/) — atualizado automaticamente todo dia útil
 - **Artefato no GitHub**: aba *Actions* → última execução → seção *Artifacts*
 - **OneDrive local** (apenas em execuções locais): pasta configurada em `onedrive_output_dir` no `config.yaml`
 
