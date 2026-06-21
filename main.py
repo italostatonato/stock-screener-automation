@@ -13,6 +13,7 @@ from src.filters import select_top_fiis, select_top_acoes
 from src.storage import save_snapshot, update_history
 from src.formatter import format_workbook
 from src.market_data import get_market_indicators
+from src.exporter import export_dashboard_json
 
 
 def setup_logging(logs_dir: str):
@@ -82,7 +83,7 @@ def main():
         logger.error(f"Falha ao coletar indicadores de mercado: {e}")
         market_data = {}
 
-    # ── Snapshot ──────────────────────────────────────────────────────────────
+    # ── Snapshot Excel ────────────────────────────────────────────────────────
     snapshot_path = os.path.join(
         paths["output_dir"], f"Top20_Ranking_{data_hoje}.xlsx"
     )
@@ -99,6 +100,18 @@ def main():
         acoes_base=acoes_base,
         market_data=market_data,
     )
+
+    # ── Exporta JSON para o dashboard web (GitHub Pages) ────────────────────
+    try:
+        export_dashboard_json(
+            output_dir=os.path.join("docs", "data"),
+            data_hoje=data_hoje,
+            top_fiis=top_fiis,
+            top_acoes=top_actions,
+            market_data=market_data,
+        )
+    except Exception as e:
+        logger.error(f"Falha ao exportar JSON do dashboard: {e}")
 
     # ── Copia para o OneDrive ───────────────────────────────────────────────
     onedrive_dir = paths.get("onedrive_output_dir")

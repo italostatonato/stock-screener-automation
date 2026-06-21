@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boletim — Stock Screener</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:        #0B0F14;
+    --card:      #141A21;
+    --card-hi:   #1B232C;
+    --line:      #2A333D;
+    --text:      #E8E6DF;
+    --text-dim:  #8B95A1;
+    --accent:    #6B9080;
+    --accent-hi: #8FB5A3;
+    --gold:      #C9A66B;
+    --neg:       #C97B6B;
+    --radius:    10px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+  /* ── Ticker ── */
+  .ticker-wrap {
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 8px 0;
+  }
+  .ticker {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-ticker 35s linear infinite;
+  }
+  .ticker span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    margin-right: 38px;
+    color: var(--text-dim);
+  }
+  .ticker span b { color: var(--text); font-weight: 500; }
+  .ticker .up { color: var(--accent-hi); }
+  .ticker .down { color: var(--neg); }
+  @keyframes scroll-ticker {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* ── Header ── */
+  header {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 48px 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .date-picker-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .date-picker-wrap label {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  select#date-select {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 9px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 36px 24px 80px;
+  }
+
+  /* ── Resumo cards ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 44px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .stat-label {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--accent-hi);
+  }
+  .stat-value.gold { color: var(--gold); }
+
+  /* ── Section ── */
+  section { margin-bottom: 52px; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+  }
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+  }
+  .section-head .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* ── Asset cards grid ── */
+  .asset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+  }
+  .asset-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .asset-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .asset-ticker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .asset-sub {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .asset-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 10px;
+  }
+  .metric-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .metric-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-hi);
+    font-weight: 500;
+  }
+
+  /* ── Indicadores ── */
+  .indicators-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .indicator-chart-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .indicator-chart-card h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 14px;
+  }
+  .indicator-chart-card canvas { max-height: 180px; }
+
+  /* ── Empty / loading ── */
+  .empty-state {
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 30px 0;
+  }
+
+  footer {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px;
+    color: var(--text-dim);
+    font-size: 11.5px;
+    font-family: 'JetBrains Mono', monospace;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="ticker-wrap">
+    <div class="ticker" id="ticker-content"></div>
+  </div>
+
+  <header>
+    <div>
+      <div class="masthead-eyebrow">Boletim diário · Renda variável BR</div>
+      <h1>Stock Screener</h1>
+    </div>
+    <div class="date-picker-wrap">
+      <label for="date-select">Data do boletim</label>
+      <select id="date-select"></select>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="summary-grid" id="summary-grid"></div>
+
+    <section>
+      <div class="section-head">
+        <h2>FIIs recomendados</h2>
+        <span class="count" id="fii-count"></span>
+      </div>
+      <div class="asset-grid" id="fii-grid"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Ações recomendadas</h2>
+        <span class="count" id="acoes-count"></span>
+      </div>
+      <div class="asset-grid" id="acoes-grid"></div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Indicadores de mercado</h2>
+      </div>
+      <div class="indicators-row" id="indicators-row"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    Fontes: fundsexplorer.com.br · investsite.com.br · Banco Central (SGS) · AwesomeAPI — Gerado automaticamente via GitHub Actions
+  </footer>
+
+<script>
+const DATA_DIR = 'data';
+let currentPayload = null;
+const charts = {};
+
+function fmtMoney(v) {
+  if (v === null || v === undefined) return '—';
+  return 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtMoneyCompact(v) {
+  if (v === null || v === undefined) return '—';
+  const n = Number(v);
+  if (n >= 1e9) return 'R$ ' + (n / 1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return 'R$ ' + (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return 'R$ ' + (n / 1e3).toFixed(0) + 'K';
+  return fmtMoney(n);
+}
+function fmtPct(v) {
+  if (v === null || v === undefined) return '—';
+  return (Number(v) * 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+}
+function fmtNum(v) {
+  if (v === null || v === undefined) return '—';
+  return Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+async function loadIndex() {
+  const res = await fetch(`${DATA_DIR}/index.json`);
+  if (!res.ok) throw new Error('index.json não encontrado');
+  return res.json();
+}
+
+async function loadPayload(date) {
+  const res = await fetch(`${DATA_DIR}/${date}.json`);
+  if (!res.ok) throw new Error(`${date}.json não encontrado`);
+  return res.json();
+}
+
+function renderTicker(indicadores) {
+  const cambio = indicadores?.cambio || {};
+  const el = document.getElementById('ticker-content');
+  const items = Object.entries(cambio).map(([par, d]) => {
+    const cls = d.variacao_pct >= 0 ? 'up' : 'down';
+    const arrow = d.variacao_pct >= 0 ? '▲' : '▼';
+    return `<span><b>${par}</b> ${fmtMoney(d.valor)} <span class="${cls}">${arrow} ${fmtNum(Math.abs(d.variacao_pct))}%</span></span>`;
+  });
+  el.innerHTML = items.join('') + items.join(''); // duplica para loop contínuo
+}
+
+function renderSummary(payload) {
+  const r = payload.resumo || {};
+  const grid = document.getElementById('summary-grid');
+  grid.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">FIIs no Top N</div>
+      <div class="stat-value">${r.total_fiis ?? '—'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Ações no Top N</div>
+      <div class="stat-value gold">${r.total_acoes ?? '—'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">DY médio (FIIs)</div>
+      <div class="stat-value">${fmtPct(r.dy_medio_fiis)}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">P/VP médio (FIIs)</div>
+      <div class="stat-value gold">${fmtNum(r.pvp_medio_fiis)}</div>
+    </div>
+  `;
+}
+
+function renderFiis(lista) {
+  document.getElementById('fii-count').textContent = `${lista.length} fundo(s)`;
+  const grid = document.getElementById('fii-grid');
+  if (!lista.length) {
+    grid.innerHTML = `<div class="empty-state">Nenhum FII disponível para esta data.</div>`;
+    return;
+  }
+  grid.innerHTML = lista.map(f => `
+    <div class="asset-card">
+      <div class="asset-ticker">${f['FUNDOS'] ?? '—'}</div>
+      <div class="asset-sub">${f['SETOR'] ?? ''}</div>
+      <div class="asset-metrics">
+        <div><div class="metric-label">Preço</div><div class="metric-value">${fmtMoney(f['PREÇO ATUAL (R$)'])}</div></div>
+        <div><div class="metric-label">DY</div><div class="metric-value">${fmtPct(f['DIVIDEND YIELD'])}</div></div>
+        <div><div class="metric-label">P/VP</div><div class="metric-value">${fmtNum(f['P/VP'])}</div></div>
+        <div><div class="metric-label">Liquidez</div><div class="metric-value">${fmtMoneyCompact(f['LIQUIDEZ DIÁRIA (R$)'])}</div></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAcoes(lista) {
+  document.getElementById('acoes-count').textContent = `${lista.length} ação(ões)`;
+  const grid = document.getElementById('acoes-grid');
+  if (!lista.length) {
+    grid.innerHTML = `<div class="empty-state">Nenhuma ação disponível para esta data.</div>`;
+    return;
+  }
+  grid.innerHTML = lista.map(a => `
+    <div class="asset-card">
+      <div class="asset-ticker">${a['Ação'] ?? '—'}</div>
+      <div class="asset-sub">${a['Empresa'] ?? ''}</div>
+      <div class="asset-metrics">
+        <div><div class="metric-label">Preço</div><div class="metric-value">${fmtMoney(a['Preço'])}</div></div>
+        <div><div class="metric-label">DY</div><div class="metric-value">${fmtPct(a['Dividend Yield'])}</div></div>
+        <div><div class="metric-label">P/VPA</div><div class="metric-value">${fmtNum(a['Preço/VPA'])}</div></div>
+        <div><div class="metric-label">ROA</div><div class="metric-value">${fmtPct(a['ROA'])}</div></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function destroyCharts() {
+  Object.values(charts).forEach(c => c.destroy());
+}
+
+function renderIndicatorChart(canvasId, label, points, colorVar) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  const labels = points.map(p => {
+    const [y, m] = p.data.split('-');
+    return `${m}/${y.slice(2)}`;
+  });
+  const values = points.map(p => p.valor);
+
+  charts[canvasId] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label,
+        data: values,
+        borderColor: colorVar,
+        backgroundColor: colorVar + '22',
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0.3,
+        fill: true,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#8B95A1', font: { family: 'JetBrains Mono', size: 10 } }, grid: { color: '#2A333D' } },
+        y: { ticks: { color: '#8B95A1', font: { family: 'JetBrains Mono', size: 10 } }, grid: { color: '#2A333D' } },
+      }
+    }
+  });
+}
+
+function renderIndicadores(indicadores) {
+  destroyCharts();
+  const row = document.getElementById('indicators-row');
+  const series = [
+    { key: 'ipca_12m', label: 'IPCA (var. mensal)', color: '#C9A66B' },
+    { key: 'selic',    label: 'Selic Meta',         color: '#6B9080' },
+    { key: 'igpm',     label: 'IGP-M (var. mensal)', color: '#8FB5A3' },
+  ];
+
+  row.innerHTML = series.map(s => `
+    <div class="indicator-chart-card">
+      <h3>${s.label}</h3>
+      <canvas id="chart-${s.key}"></canvas>
+    </div>
+  `).join('');
+
+  series.forEach(s => {
+    const pts = indicadores[s.key] || [];
+    if (pts.length) renderIndicatorChart(`chart-${s.key}`, s.label, pts, s.color);
+  });
+}
+
+async function renderAll(date) {
+  try {
+    currentPayload = await loadPayload(date);
+  } catch (e) {
+    document.getElementById('fii-grid').innerHTML = `<div class="empty-state">Não foi possível carregar os dados de ${date}.</div>`;
+    return;
+  }
+  renderTicker(currentPayload.indicadores);
+  renderSummary(currentPayload);
+  renderFiis(currentPayload.fiis || []);
+  renderAcoes(currentPayload.acoes || []);
+  renderIndicadores(currentPayload.indicadores || {});
+}
+
+async function init() {
+  let datas;
+  try {
+    datas = await loadIndex();
+  } catch (e) {
+    document.getElementById('fii-grid').innerHTML = `<div class="empty-state">Nenhum dado disponível ainda. O dashboard será populado na próxima execução do screener.</div>`;
+    return;
+  }
+
+  const select = document.getElementById('date-select');
+  select.innerHTML = datas.map(d => `<option value="${d}">${d.split('-').reverse().join('/')}</option>`).join('');
+  select.addEventListener('change', e => renderAll(e.target.value));
+
+  if (datas.length) await renderAll(datas[0]);
+}
+
+init();
+</script>
+</body>
+</html>
