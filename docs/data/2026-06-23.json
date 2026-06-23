@@ -402,31 +402,484 @@
       }
     }
   ],
-  "acoes": [],
-  "indicadores": {
-    "cambio": {
-      "USD/BRL": {
-        "valor": 5.1987,
-        "variacao_pct": 0.816429,
-        "atualizado_em": "2026-06-23 18:40:56"
-      },
-      "EUR/BRL": {
-        "valor": 5.91366,
-        "variacao_pct": 0.413992,
-        "atualizado_em": "2026-06-23 18:40:03"
-      },
-      "GBP/BRL": {
-        "valor": 6.86388,
-        "variacao_pct": 0.484365,
-        "atualizado_em": "2026-06-23 18:40:56"
-      },
-      "BTC/BRL": {
-        "valor": 325857.0,
-        "variacao_pct": -1.348,
-        "atualizado_em": "2026-06-23 18:43:14"
+  "acoes": [
+    {
+      "Ação": "HBRE3",
+      "Empresa": "HBR REALTY",
+      "Preço": 2.52,
+      "Preço/VPA": 0.14367364995699,
+      "Preço/Lucro": 8.6724997371932,
+      "Dividend Yield": 0.46247167929762,
+      "ROA": 0.0058477445013084,
+      "Margem Líquida": 0.054338528452338,
+      "Market Cap Empresa": 260036232.12,
+      "EV/EBITDA": 4.9963265359209,
+      "RPL": 0.014693818344338,
+      "EV/EBIT": 5.0959283089445,
+      "score": 38.8,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
       }
     },
-    "ipca_12m": [],
+    {
+      "Ação": "HBOR3",
+      "Empresa": "HELBOR",
+      "Preço": 2.25,
+      "Preço/VPA": 0.20803480360801,
+      "Preço/Lucro": 53.597599572877,
+      "Dividend Yield": 0.059198499404444,
+      "ROA": 0.00088008962849066,
+      "Margem Líquida": 0.0047786179172233,
+      "Market Cap Empresa": 301164912.0,
+      "EV/EBITDA": 15.480369479327,
+      "RPL": 0.0038493657349589,
+      "EV/EBIT": 16.959346007482,
+      "score": 61.3,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "ESPA3",
+      "Empresa": "ESPACOLASER",
+      "Preço": 5.98,
+      "Preço/VPA": 0.24860845225757,
+      "Preço/Lucro": 13.567544876334,
+      "Dividend Yield": 0.06391015735786,
+      "ROA": 0.0069386912400003,
+      "Margem Líquida": 0.014458539932527,
+      "Market Cap Empresa": 216130989.88,
+      "EV/EBITDA": 3.0227498335577,
+      "RPL": 0.018355579727512,
+      "EV/EBIT": 4.83631293542,
+      "score": 58.5,
+      "tendencias": {
+        "Dividend Yield": "subindo",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "ETER3",
+      "Empresa": "ETERNIT",
+      "Preço": 3.67,
+      "Preço/VPA": 0.27292714109098,
+      "Preço/Lucro": 4.7754661355211,
+      "Dividend Yield": 0.046516858847411,
+      "ROA": 0.036419593980902,
+      "Margem Líquida": 0.041937706481989,
+      "Market Cap Empresa": 226720030.25,
+      "EV/EBITDA": 3.4658837165182,
+      "RPL": 0.059695036771871,
+      "EV/EBIT": 6.7076086134682,
+      "score": 59.8,
+      "tendencias": {
+        "Dividend Yield": "subindo",
+        "Preço/VPA": "caindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "ALLD3",
+      "Empresa": "ALLIED",
+      "Preço": 4.84,
+      "Preço/VPA": 0.30207456047848,
+      "Preço/Lucro": 1.3567113035655,
+      "Dividend Yield": 0.6315371175124,
+      "ROA": 0.099670567546755,
+      "Margem Líquida": 0.062619868617136,
+      "Market Cap Empresa": 464453834.24,
+      "EV/EBITDA": 1.070010007768,
+      "RPL": 0.21373749356143,
+      "EV/EBIT": 1.1652004298374,
+      "score": 48.7,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "MTRE3",
+      "Empresa": "MITRE REALTY",
+      "Preço": 3.3,
+      "Preço/VPA": 0.34253066916049,
+      "Preço/Lucro": 5.7318287300076,
+      "Dividend Yield": 0.12318908252727,
+      "ROA": 0.027376088785954,
+      "Margem Líquida": 0.055324951645858,
+      "Market Cap Empresa": 349056906.0,
+      "EV/EBITDA": 6.2813596662324,
+      "RPL": 0.061071749126264,
+      "EV/EBIT": 8.2913298209688,
+      "score": 57.2,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "MYPK3",
+      "Empresa": "IOCHP-MAXION",
+      "Preço": 9.28,
+      "Preço/VPA": 0.34808672979732,
+      "Preço/Lucro": 15.605538690967,
+      "Dividend Yield": 0.033096778017241,
+      "ROA": 0.0059632181559577,
+      "Margem Líquida": 0.0059997427115836,
+      "Market Cap Empresa": 1426517897.28,
+      "EV/EBITDA": 3.5209983425849,
+      "RPL": 0.021224792496894,
+      "EV/EBIT": 5.5821248704896,
+      "score": 48.0,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "POSI3",
+      "Empresa": "POSITIVO TEC",
+      "Preço": 3.9,
+      "Preço/VPA": 0.35523049964287,
+      "Preço/Lucro": 56.252670125114,
+      "Dividend Yield": 0.046047139166667,
+      "ROA": 0.0023319041298257,
+      "Margem Líquida": 0.0029078279758429,
+      "Market Cap Empresa": 553020000.0,
+      "EV/EBITDA": 3.5652574199665,
+      "RPL": 0.0061151217861555,
+      "EV/EBIT": 4.7369804282531,
+      "score": 70.5,
+      "tendencias": {
+        "Dividend Yield": "subindo",
+        "Preço/VPA": "caindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "COGN3",
+      "Empresa": "COGNA ON",
+      "Preço": 2.35,
+      "Preço/VPA": 0.35666098748664,
+      "Preço/Lucro": 7.2203267255531,
+      "Dividend Yield": 0.054906978021277,
+      "ROA": 0.027758166645596,
+      "Margem Líquida": 0.089162901983673,
+      "Market Cap Empresa": 4851027052.85,
+      "EV/EBITDA": 5.4226479391344,
+      "RPL": 0.053988215849685,
+      "EV/EBIT": 8.0354693977213,
+      "score": 57.4,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "MLAS3",
+      "Empresa": "MULTILASER",
+      "Preço": 1.63,
+      "Preço/VPA": 0.43294728504598,
+      "Preço/Lucro": 7.4014085683375,
+      "Dividend Yield": 0.030962983595092,
+      "ROA": 0.034236305648253,
+      "Margem Líquida": 0.044810243474957,
+      "Market Cap Empresa": 1337478936.75,
+      "EV/EBITDA": 4.5377251821467,
+      "RPL": 0.061185109792645,
+      "EV/EBIT": 5.7872692694979,
+      "score": 63.9,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "ANIM3",
+      "Empresa": "ANIMA",
+      "Preço": 2.61,
+      "Preço/VPA": 0.44125049910272,
+      "Preço/Lucro": 7.8521020012067,
+      "Dividend Yield": 0.029802576908046,
+      "ROA": 0.013470200027112,
+      "Margem Líquida": 0.032710701665555,
+      "Market Cap Empresa": 1054097581.05,
+      "EV/EBITDA": 4.7254894307341,
+      "RPL": 0.056649061419189,
+      "EV/EBIT": 6.670422756242,
+      "score": 69.5,
+      "tendencias": {
+        "Dividend Yield": "subindo",
+        "Preço/VPA": "caindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "ROMI3",
+      "Empresa": "ROMI",
+      "Preço": 6.11,
+      "Preço/VPA": 0.45830151116181,
+      "Preço/Lucro": 7.3484956907368,
+      "Dividend Yield": 0.06873977086743,
+      "ROA": 0.031230812832418,
+      "Margem Líquida": 0.060778855598829,
+      "Market Cap Empresa": 569273264.17,
+      "EV/EBITDA": 7.6358316242055,
+      "RPL": 0.063600643001286,
+      "EV/EBIT": 14.181108930792,
+      "score": 49.6,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "AZZA3",
+      "Empresa": "AZZAS 2154",
+      "Preço": 19.4,
+      "Preço/VPA": 0.50039108804987,
+      "Preço/Lucro": 4.8146765545018,
+      "Dividend Yield": 0.1276392705768,
+      "ROA": 0.054227635244838,
+      "Margem Líquida": 0.0717104632054,
+      "Market Cap Empresa": 4005902372.2,
+      "EV/EBITDA": 4.1776467160248,
+      "RPL": 0.10660955156203,
+      "EV/EBIT": 7.0880359598276,
+      "score": 47.9,
+      "tendencias": {
+        "Dividend Yield": "caindo",
+        "Preço/VPA": "subindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "CAML3",
+      "Empresa": "CAMIL",
+      "Preço": 4.89,
+      "Preço/VPA": 0.56760201332066,
+      "Preço/Lucro": 11.535428559874,
+      "Dividend Yield": 0.059957849717791,
+      "ROA": 0.013358639619073,
+      "Margem Líquida": 0.013348534408853,
+      "Market Cap Empresa": 1711500000.0,
+      "EV/EBITDA": 5.4462140207695,
+      "RPL": 0.04291442914487,
+      "EV/EBIT": 7.9204623094499,
+      "score": 72.5,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "EVEN3",
+      "Empresa": "EVEN",
+      "Preço": 5.61,
+      "Preço/VPA": 0.58209814735073,
+      "Preço/Lucro": 5.1874078217973,
+      "Dividend Yield": 0.16333123172906,
+      "ROA": 0.042014590004555,
+      "Margem Líquida": 0.11305725492492,
+      "Market Cap Empresa": 1122000000.0,
+      "EV/EBITDA": 11.188704662769,
+      "RPL": 0.11473340197403,
+      "EV/EBIT": 11.403876749528,
+      "score": 51.7,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "PFRM3",
+      "Empresa": "PROFARMA",
+      "Preço": 6.31,
+      "Preço/VPA": 0.58242421309672,
+      "Preço/Lucro": 7.4066988777968,
+      "Dividend Yield": 0.10211036062599,
+      "ROA": 0.018223426674549,
+      "Margem Líquida": 0.0090822024564826,
+      "Market Cap Empresa": 781258597.63,
+      "EV/EBITDA": 2.7133372528704,
+      "RPL": 0.080210609883517,
+      "EV/EBIT": 4.276489671685,
+      "score": 51.3,
+      "tendencias": {
+        "Dividend Yield": "subindo",
+        "Preço/VPA": "caindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "MELK3",
+      "Empresa": "MELNICK",
+      "Preço": 3.16,
+      "Preço/VPA": 0.6047983290481,
+      "Preço/Lucro": 5.2706104000194,
+      "Dividend Yield": 0.16604525522785,
+      "ROA": 0.049685460808553,
+      "Margem Líquida": 0.10198773366365,
+      "Market Cap Empresa": 651811117.56,
+      "EV/EBITDA": 10.426677004746,
+      "RPL": 0.11418681287227,
+      "EV/EBIT": 10.848877913147,
+      "score": 48.7,
+      "tendencias": {
+        "Dividend Yield": "subindo",
+        "Preço/VPA": "caindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "SOJA3",
+      "Empresa": "BOA SAFRA",
+      "Preço": 5.8,
+      "Preço/VPA": 0.61580491904348,
+      "Preço/Lucro": 32.836049886296,
+      "Dividend Yield": 0.051267722925862,
+      "ROA": 0.0072132713833279,
+      "Margem Líquida": 0.0094768542061693,
+      "Market Cap Empresa": 823035590.4,
+      "EV/EBITDA": 14.034200325864,
+      "RPL": 0.01860093372012,
+      "EV/EBIT": 18.777254692496,
+      "score": 47.0,
+      "tendencias": {
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "LOGG3",
+      "Empresa": "LOG COM PROP",
+      "Preço": 27.44,
+      "Preço/VPA": 0.64435646031144,
+      "Preço/Lucro": 5.9922778877878,
+      "Dividend Yield": 0.25338283968149,
+      "ROA": 0.059713439252889,
+      "Margem Líquida": 1.5503452687393,
+      "Market Cap Empresa": 2410855185.76,
+      "EV/EBITDA": 6.9359463727649,
+      "RPL": 0.10953876194928,
+      "EV/EBIT": 7.0013000352358,
+      "score": 47.2,
+      "tendencias": {
+        "Dividend Yield": "caindo",
+        "Preço/VPA": "subindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "SMTO3",
+      "Empresa": "SAO MARTINHO",
+      "Preço": 14.6,
+      "Preço/VPA": 0.65907274750074,
+      "Preço/Lucro": 5.8044609079179,
+      "Dividend Yield": 0.031268006780822,
+      "ROA": 0.038410688993804,
+      "Margem Líquida": 0.11251391829532,
+      "Market Cap Empresa": 4853556708.6,
+      "EV/EBITDA": 4.3311722815535,
+      "RPL": 0.12481442262711,
+      "EV/EBIT": 11.694430035969,
+      "score": 48.7,
+      "tendencias": {
+        "Dividend Yield": "subindo",
+        "Preço/VPA": "caindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    }
+  ],
+  "indicadores": {
+    "cambio": {},
+    "ipca_12m": [
+      {
+        "data": "2025-05-01",
+        "valor": 0.26
+      },
+      {
+        "data": "2025-06-01",
+        "valor": 0.24
+      },
+      {
+        "data": "2025-07-01",
+        "valor": 0.26
+      },
+      {
+        "data": "2025-08-01",
+        "valor": -0.11
+      },
+      {
+        "data": "2025-09-01",
+        "valor": 0.48
+      },
+      {
+        "data": "2025-10-01",
+        "valor": 0.09
+      },
+      {
+        "data": "2025-11-01",
+        "valor": 0.18
+      },
+      {
+        "data": "2025-12-01",
+        "valor": 0.33
+      },
+      {
+        "data": "2026-01-01",
+        "valor": 0.33
+      },
+      {
+        "data": "2026-02-01",
+        "valor": 0.7
+      },
+      {
+        "data": "2026-03-01",
+        "valor": 0.88
+      },
+      {
+        "data": "2026-04-01",
+        "valor": 0.67
+      },
+      {
+        "data": "2026-05-01",
+        "valor": 0.58
+      }
+    ],
     "selic": [
       {
         "data": "2025-05-16",
@@ -4592,18 +5045,30 @@
         "data": "2026-06-23",
         "valor": 139.42
       }
+    ],
+    "carteira_acoes_base100": [
+      {
+        "data": "2025-05-16",
+        "valor": 100.0
+      },
+      {
+        "data": "2026-06-23",
+        "valor": 272.6
+      }
     ]
   },
   "kpis": {
     "dy_medio_fiis_carteira": 0.0298,
     "dy_medio_fiis_mercado": 0.0345,
+    "dy_medio_acoes_carteira": 0.1303,
+    "dy_medio_acoes_mercado": 0.0777,
     "pvp_medio_fiis": 0.7435,
     "total_fiis_universo": 537,
-    "total_acoes_universo": 0
+    "total_acoes_universo": 463
   },
   "resumo": {
     "total_fiis": 20,
-    "total_acoes": 0,
+    "total_acoes": 20,
     "dy_medio_fiis": 0.0298,
     "pvp_medio_fiis": 0.7435
   }
