@@ -35,6 +35,7 @@ def update_history(df_new: pd.DataFrame, hist_path: str, key_col: str):
         combined = df_new.copy()
         logger.info("Nenhum histórico encontrado — criando novo arquivo.")
 
-    combined.drop_duplicates(subset=[key_col, "Data Preço"], keep="last", inplace=True)
+    date_col = "Data Preço" if "Data Preço" in combined.columns else "Data Preco"
+	combined.drop_duplicates(subset=[key_col, date_col], keep="last", inplace=True)
     combined.to_excel(hist_path, index=False)
     logger.info(f"Histórico atualizado: {hist_path} ({len(combined)} linhas totais)")

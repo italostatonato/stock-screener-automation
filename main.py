@@ -58,7 +58,7 @@ def main():
     df_clean["Score"] = fii_scores_universe
 
     top_fiis, fii_base = select_top_fiis(df_clean, cfg)
-    top_fiis["Data Preco"] = data_hoje
+    top_fiis["Data Preço"] = data_hoje
 
     fii_scores_top = fii_scores_universe.reindex(top_fiis.index) if not top_fiis.empty else pd.Series(dtype=float)
 
@@ -78,7 +78,7 @@ def main():
         df_acoes_raw["Score"] = acoes_scores_universe
 
         top_actions, acoes_base = select_top_acoes(df_acoes_raw, cfg)
-        top_actions["Data Preco"] = data_hoje
+        top_actions["Data Preço"] = data_hoje
 
         acoes_scores_top = acoes_scores_universe.reindex(top_actions.index) if not top_actions.empty else pd.Series(dtype=float)
 
