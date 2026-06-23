@@ -2,8 +2,8 @@ name: Daily FII Screener
 
 on:
   schedule:
-    - cron: "0 12 * * 1-5"   # roda todo dia útil às 09:00 BRT (12:00 UTC)
-  workflow_dispatch:           # permite rodar manualmente pelo GitHub
+    - cron: "0 11 * * 1-5"   # 08:00 BRT (11:00 UTC)
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,49 +11,28 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do repositório
-        uses: actions/checkout@v4.2.2
-
-      - name: Configurar Python
-        uses: actions/setup-python@v5.6.0
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.11"
-
-      - name: Instalar dependências
-        run: |
-          pip install -r requirements.txt
-          pip install pytest
-
-      - name: Rodar testes unitários
-        run: pytest tests/ -v
+      - run: pip install -r requirements.txt pytest
+      - run: pytest tests/ -v
 
   screener:
     needs: test
     runs-on: ubuntu-latest
-
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     steps:
-      - name: Checkout do repositório
-        uses: actions/checkout@v4.2.2
-
-      - name: Configurar Python
-        uses: actions/setup-python@v5.6.0
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.11"
-
-      - name: Instalar dependências
-        run: pip install -r requirements.txt
-
-      - name: Instalar Chrome
-        uses: browser-actions/setup-chrome@v2
-
+      - run: pip install -r requirements.txt
+      - uses: browser-actions/setup-chrome@v2
       - name: Rodar screener
         run: python main.py
-
       - name: Salvar Excel como artefato
         if: success()
         uses: actions/upload-artifact@v4
@@ -61,8 +40,7 @@ jobs:
           name: Top20-Ranking-${{ github.run_id }}
           path: data/output/
           retention-days: 90
-
-      - name: Commitar dados do dashboard (docs/data)
+      - name: Commitar dados do dashboard
         if: success()
         run: |
           git config user.name "github-actions[bot]"
@@ -70,10 +48,9 @@ jobs:
           git add docs/data/
           git diff --cached --quiet || git commit -m "chore: atualiza dashboard com snapshot do dia"
           git push
-
       - name: Notificar falha no Telegram
         if: failure()
         run: |
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d text="🚨 Stock Screener falhou! Veja o log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            -d text="Screener falhou: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
