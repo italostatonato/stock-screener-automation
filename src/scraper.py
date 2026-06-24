@@ -85,6 +85,35 @@ def scrape_fundsexplorer(cfg: dict) -> pd.DataFrame:
     finally:
         driver.quit()
 
+
+def clean_acoes_raw(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove rodapé/legenda que o Investsite inclui no Excel exportado."""
+    if df.empty:
+        return df
+
+    df = df.dropna(how="all").copy()
+    n_antes = len(df)
+
+    for col in ("Ação", "Empresa"):
+        if col in df.columns:
+            mask_legenda = df[col].astype(str).str.strip().str.lower().eq("legenda")
+            df = df[~mask_legenda]
+
+    if "Preço" in df.columns:
+        preco_num = pd.to_numeric(df["Preço"], errors="coerce")
+        invalid = df["Preço"].notna() & preco_num.isna()
+        df = df[~invalid]
+
+    n_removidas = n_antes - len(df)
+    if n_removidas:
+        logger.info(
+            f"Ações após limpeza de rodapé: {n_antes} → {len(df)} "
+            f"({n_removidas} linhas removidas)"
+        )
+
+    return df.reset_index(drop=True)
+
+
 def scrape_acoes_investsite(cfg: dict) -> pd.DataFrame:
     """Coleta ranking de ações do Investsite via Selenium (download de Excel).
 
@@ -160,6 +189,7 @@ def scrape_acoes_investsite(cfg: dict) -> pd.DataFrame:
 
         df = pd.read_excel(latest, sheet_name=0, header=2)
         logger.info(f"Ações brutas: {df.shape[0]} linhas x {df.shape[1]} colunas")
+        df = clean_acoes_raw(df)
         return df
 
     except Exception as e:
