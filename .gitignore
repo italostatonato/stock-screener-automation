@@ -11,6 +11,7 @@ __pycache__/
 .venv/
 venv/
 *.egg-info/
+.pytest_cache/
 
 # Credenciais
 .env
@@ -19,10 +20,3 @@ venv/
 # Sistema
 .DS_Store
 Thumbs.db
-.pytest_cache/
-
-.pytest_cache/
-
-.pytest_cache/
-
-.pytest_cache/

@@ -437,7 +437,21 @@ function renderIndicadores(payload){
   const b=payload.benchmarks||{};
   const ind=payload.indicadores||{};
   const cv=payload.carteira_vs||{};
+  const bt=payload.backtest||{};
   const cambio=ind.cambio||{};
+
+  const btHtml=bt.disponivel?`
+    <div class="chart-card chart-full">
+      <h3>Backtest — Top 20 FIIs vs IFIX / IBOV</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px">
+        <div class="modal-metric"><div class="modal-metric-label">Carteira Top 20</div><div class="modal-metric-value" style="color:var(--accent-hi)">${fmtNum(bt.carteira_top20_fiis?.retorno_pct)}%</div></div>
+        <div class="modal-metric"><div class="modal-metric-label">IFIX</div><div class="modal-metric-value">${fmtNum(bt.ifix?.retorno_pct)}%</div></div>
+        <div class="modal-metric"><div class="modal-metric-label">IBOV</div><div class="modal-metric-value">${fmtNum(bt.ibov?.retorno_pct)}%</div></div>
+        <div class="modal-metric"><div class="modal-metric-label">Bateu IFIX?</div><div class="modal-metric-value" style="color:${bt.bateu_ifix?'var(--accent-hi)':'var(--neg)'}">${bt.bateu_ifix?'Sim':'Não'}</div></div>
+        <div class="modal-metric"><div class="modal-metric-label">Bateu IBOV?</div><div class="modal-metric-value" style="color:${bt.bateu_ibov?'var(--accent-hi)':'var(--neg)'}">${bt.bateu_ibov?'Sim':'Não'}</div></div>
+      </div>
+      <p style="color:var(--text-dim);font-size:12px;margin-top:12px;line-height:1.6">${bt.periodo?.inicio||'—'} → ${bt.periodo?.fim||'—'} · ${bt.rebalanceamentos||0} rebalanceamento(s)</p>
+    </div>`:'';
 
   const cambioRows=Object.entries(cambio).map(([par,d])=>{
     const cls=d.variacao_pct>=0?'up':'down';
@@ -446,6 +460,7 @@ function renderIndicadores(payload){
   }).join('');
 
   document.getElementById('charts-grid').innerHTML=`
+    ${btHtml}
     <div class="chart-card"><h3>Câmbio e Cripto</h3>${cambioRows||'<p style="color:var(--text-dim);font-size:13px">Sem dados</p>'}</div>
     <div class="chart-card"><h3>IPCA (índice acumulado)</h3><canvas id="chart-ipca" style="max-height:220px"></canvas></div>
     <div class="chart-card"><h3>IGP-M (índice acumulado)</h3><canvas id="chart-igpm" style="max-height:220px"></canvas></div>

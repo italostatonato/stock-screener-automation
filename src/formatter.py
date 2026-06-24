@@ -129,12 +129,14 @@ def _add_premissas(wb, cfg: dict, data_hoje: str, n_fiis: int, n_acoes: int):
         ("Ações BR",  "investsite.com.br/seleciona_acoes.php"),
         ("Indicadores de mercado", "Banco Central do Brasil (SGS) + AwesomeAPI"),
         (None, None),
-        ("── METODOLOGIA: FILTRO EM DUAS CAMADAS ──", None),
+        ("── METODOLOGIA: FILTRO EM TRÊS CAMADAS ──", None),
         (None, "1) Filtros fixos eliminam ativos com problemas absolutos (dados ausentes, "
                "indicadores fora de qualquer faixa razoável, liquidez/patrimônio mínimos)."),
         (None, "2) Filtros por quartil selecionam os melhores 25% do universo restante "
                "em cada indicador-chave — o corte se adapta automaticamente às condições "
                "do mercado no dia, garantindo que sempre haja candidatos qualificados."),
+        (None, "3) Backtest (Camada 3) compara o retorno acumulado da carteira Top 20 FIIs "
+               "(equal-weight, rebalanceada a cada snapshot) contra IFIX e IBOV."),
         (None, "Ativos que passam em todos os filtros são ordenados e os Top N entram "
                "na aba de Recomendações. Os demais aparecem nas abas de Base Completa "
                "com o motivo exato da eliminação, para auditoria e transparência total."),

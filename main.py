@@ -16,6 +16,7 @@ from src.market_data import get_market_indicators
 from src.exporter import export_dashboard_json
 from src.scorer import score_fiis, score_acoes
 from src.benchmark import get_benchmarks
+from src.backtest import run_backtest
 from src.ml_storage import append_historical_data
 
 
@@ -141,6 +142,16 @@ def main():
         logger.error(f"Falha ao coletar benchmarks: {e}")
         benchmarks = {}
 
+    # ── Backtest (Camada 3) ───────────────────────────────────────────────────
+    try:
+        backtest = run_backtest(
+            os.path.join(paths["old_dir"], "Top_20_FII_BRL.xlsx"),
+            data_fim=data_hoje,
+        )
+    except Exception as e:
+        logger.error(f"Falha no backtest Top 20 FIIs: {e}")
+        backtest = {"disponivel": False, "motivo": str(e)}
+
     # ── Snapshot Excel ────────────────────────────────────────────────────────
     snapshot_path = os.path.join(
         paths["output_dir"], f"Top20_Ranking_{data_hoje}.xlsx"
@@ -171,6 +182,7 @@ def main():
             benchmarks=benchmarks,
             fii_scores=fii_scores_top,
             acoes_scores=acoes_scores_top,
+            backtest=backtest,
         )
     except Exception as e:
         logger.error(f"Falha ao exportar JSON do dashboard: {e}")

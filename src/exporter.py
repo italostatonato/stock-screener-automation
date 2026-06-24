@@ -185,6 +185,7 @@ def export_dashboard_json(
     benchmarks: dict = None,
     fii_scores: pd.Series = None,
     acoes_scores: pd.Series = None,
+    backtest: dict = None,
 ):
     os.makedirs(output_dir, exist_ok=True)
 
@@ -244,6 +245,7 @@ def export_dashboard_json(
         },
         "benchmarks": benchmarks_json,
         "carteira_vs": carteira_vs,
+        "backtest": backtest or {"disponivel": False},
         "kpis": kpis,
         "resumo": {
             "total_fiis": len(top_fiis),
