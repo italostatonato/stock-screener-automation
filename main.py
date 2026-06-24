@@ -16,6 +16,7 @@ from src.market_data import get_market_indicators
 from src.exporter import export_dashboard_json
 from src.scorer import score_fiis, score_acoes
 from src.benchmark import get_benchmarks
+from src.ml_storage import append_historical_data
 
 
 def setup_logging(logs_dir: str):
@@ -58,14 +59,25 @@ def main():
     df_clean["Score"] = fii_scores_universe
 
     top_fiis, fii_base = select_top_fiis(df_clean, cfg)
-    top_fiis["Data Preço"] = data_hoje
+    top_fiis["Data Preco"] = data_hoje
 
-    fii_scores_top = fii_scores_universe.reindex(top_fiis.index) if not top_fiis.empty else pd.Series(dtype=float)
+    fii_scores_top = (
+        fii_scores_universe.reindex(top_fiis.index)
+        if not top_fiis.empty
+        else pd.Series(dtype=float)
+    )
 
     update_history(
         top_fiis,
         os.path.join(paths["old_dir"], "Top_20_FII_BRL.xlsx"),
-        key_col="FUNDOS"
+        key_col="FUNDOS",
+    )
+
+    # Historico ML (universo completo de FIIs)
+    append_historical_data(
+        df=df_clean,
+        data_execucao=data_hoje,
+        output_file=os.path.join(paths["old_dir"], "ml_historico_fiis.parquet"),
     )
 
     # ── Acoes ─────────────────────────────────────────────────────────────────
@@ -78,15 +90,27 @@ def main():
         df_acoes_raw["Score"] = acoes_scores_universe
 
         top_actions, acoes_base = select_top_acoes(df_acoes_raw, cfg)
-        top_actions["Data Preço"] = data_hoje
+        top_actions["Data Preco"] = data_hoje
 
-        acoes_scores_top = acoes_scores_universe.reindex(top_actions.index) if not top_actions.empty else pd.Series(dtype=float)
+        acoes_scores_top = (
+            acoes_scores_universe.reindex(top_actions.index)
+            if not top_actions.empty
+            else pd.Series(dtype=float)
+        )
 
         update_history(
             top_actions,
             os.path.join(paths["old_dir"], "Top_20_Acoes_BRL.xlsx"),
-            key_col="Acao"
+            key_col="Acao",
         )
+
+        # Historico ML (universo completo de Acoes)
+        append_historical_data(
+            df=df_acoes_raw,
+            data_execucao=data_hoje,
+            output_file=os.path.join(paths["old_dir"], "ml_historico_acoes.parquet"),
+        )
+
     except Exception as e:
         logger.error(f"Falha no scraping de acoes: {e} — continuando sem acoes.")
         top_actions = pd.DataFrame()
