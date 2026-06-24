@@ -1,5 +1,5 @@
 {
-  "data": "2026-06-23",
+  "data": "2026-06-24",
   "fiis": [
     {
       "FUNDOS": "VIUR11",
@@ -17,7 +17,7 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "subindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -37,7 +37,7 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -96,9 +96,9 @@
       "score": 63.6,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "subindo",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
-        "VOLATILIDADE": "caindo"
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -136,8 +136,8 @@
       "score": 68.5,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "subindo",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -197,7 +197,7 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "subindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -237,7 +237,7 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -297,7 +297,7 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -316,8 +316,8 @@
       "score": 60.1,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "subindo",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -336,8 +336,8 @@
       "score": 48.3,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "subindo",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -397,7 +397,7 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     }
@@ -460,7 +460,7 @@
       "EV/EBIT": 4.83631293542,
       "score": 58.5,
       "tendencias": {
-        "Dividend Yield": "subindo",
+        "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
@@ -481,8 +481,8 @@
       "EV/EBIT": 6.7076086134682,
       "score": 59.8,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -565,8 +565,8 @@
       "EV/EBIT": 4.7369804282531,
       "score": 70.5,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -628,8 +628,8 @@
       "EV/EBIT": 6.670422756242,
       "score": 69.5,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -670,8 +670,8 @@
       "EV/EBIT": 7.0880359598276,
       "score": 47.9,
       "tendencias": {
-        "Dividend Yield": "caindo",
-        "Preço/VPA": "subindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -733,8 +733,8 @@
       "EV/EBIT": 4.276489671685,
       "score": 51.3,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -754,8 +754,8 @@
       "EV/EBIT": 10.848877913147,
       "score": 48.7,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -796,8 +796,8 @@
       "EV/EBIT": 7.0013000352358,
       "score": 47.2,
       "tendencias": {
-        "Dividend Yield": "caindo",
-        "Preço/VPA": "subindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -817,8 +817,8 @@
       "EV/EBIT": 11.694430035969,
       "score": 48.7,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -881,10 +881,6 @@
       }
     ],
     "selic": [
-      {
-        "data": "2025-05-16",
-        "valor": 14.75
-      },
       {
         "data": "2025-05-17",
         "valor": 14.75
@@ -2728,10 +2724,6 @@
   "benchmarks": {
     "IBOV": [
       {
-        "data": "2025-05-16",
-        "valor": 139187.0
-      },
-      {
         "data": "2025-05-19",
         "valor": 139636.0
       },
@@ -3826,13 +3818,13 @@
       {
         "data": "2026-06-22",
         "valor": 170370.0
+      },
+      {
+        "data": "2026-06-23",
+        "valor": 171258.88
       }
     ],
     "IFIX": [
-      {
-        "data": "2025-05-16",
-        "valor": 12.2
-      },
       {
         "data": "2025-05-19",
         "valor": 12.2
@@ -4924,6 +4916,10 @@
       {
         "data": "2026-06-22",
         "valor": 13.39
+      },
+      {
+        "data": "2026-06-23",
+        "valor": 13.36
       }
     ],
     "IPCA": [
@@ -5038,22 +5034,22 @@
   "carteira_vs": {
     "carteira_fiis_base100": [
       {
-        "data": "2025-05-16",
+        "data": "2025-05-19",
         "valor": 100.0
       },
       {
-        "data": "2026-06-23",
-        "valor": 139.42
+        "data": "2026-06-24",
+        "valor": 139.23
       }
     ],
     "carteira_acoes_base100": [
       {
-        "data": "2025-05-16",
+        "data": "2025-05-19",
         "valor": 100.0
       },
       {
-        "data": "2026-06-23",
-        "valor": 272.6
+        "data": "2026-06-24",
+        "valor": 271.74
       }
     ]
   },
