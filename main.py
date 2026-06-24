@@ -82,41 +82,50 @@ def main():
 
     # ── Acoes ─────────────────────────────────────────────────────────────────
     logger.info("Coletando acoes...")
+    top_actions = pd.DataFrame()
+    acoes_base = pd.DataFrame()
+    acoes_scores_top = pd.Series(dtype=float)
+    df_acoes_raw = pd.DataFrame()
+
     try:
         df_acoes_raw = scrape_acoes_investsite(cfg["scraper"])
-
-        logger.info("Calculando scores Acoes...")
-        acoes_scores_universe = score_acoes(df_acoes_raw)
-        df_acoes_raw["Score"] = acoes_scores_universe
-
-        top_actions, acoes_base = select_top_acoes(df_acoes_raw, cfg)
-        top_actions["Data Preco"] = data_hoje
-
-        acoes_scores_top = (
-            acoes_scores_universe.reindex(top_actions.index)
-            if not top_actions.empty
-            else pd.Series(dtype=float)
-        )
-
-        update_history(
-            top_actions,
-            os.path.join(paths["old_dir"], "Top_20_Acoes_BRL.xlsx"),
-            key_col="Acao",
-        )
-
-        # Historico ML (universo completo de Acoes)
-        append_historical_data(
-            df=df_acoes_raw,
-            data_execucao=data_hoje,
-            output_file=os.path.join(paths["old_dir"], "ml_historico_acoes.parquet"),
-        )
-
     except Exception as e:
         logger.error(f"Falha no scraping de acoes: {e} — continuando sem acoes.")
-        top_actions = pd.DataFrame()
-        acoes_base = pd.DataFrame()
-        acoes_scores_top = pd.Series(dtype=float)
-        df_acoes_raw = pd.DataFrame()
+    else:
+        try:
+            append_historical_data(
+                df=df_acoes_raw,
+                data_execucao=data_hoje,
+                output_file=os.path.join(paths["old_dir"], "ml_historico_acoes.parquet"),
+            )
+            logger.info("Historico ML Acoes salvo.")
+        except Exception as e:
+            logger.error(f"Falha ao salvar historico ML Acoes: {e}")
+
+        try:
+            logger.info("Calculando scores Acoes...")
+            acoes_scores_universe = score_acoes(df_acoes_raw)
+            df_acoes_raw["Score"] = acoes_scores_universe
+
+            top_actions, acoes_base = select_top_acoes(df_acoes_raw, cfg)
+            top_actions["Data Preco"] = data_hoje
+
+            acoes_scores_top = (
+                acoes_scores_universe.reindex(top_actions.index)
+                if not top_actions.empty
+                else pd.Series(dtype=float)
+            )
+
+            update_history(
+                top_actions,
+                os.path.join(paths["old_dir"], "Top_20_Acoes_BRL.xlsx"),
+                key_col="Acao",
+            )
+        except Exception as e:
+            logger.error(f"Falha no processamento de acoes: {e} — continuando sem acoes.")
+            top_actions = pd.DataFrame()
+            acoes_base = pd.DataFrame()
+            acoes_scores_top = pd.Series(dtype=float)
 
     # ── Indicadores de mercado ───────────────────────────────────────────────
     try:
