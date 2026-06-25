@@ -1,530 +1,246 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boletim — Stock Screener</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<style>
-  :root {
-    --bg:#0B0F14; --card:#141A21; --card-hi:#1B232C; --line:#2A333D;
-    --text:#E8E6DF; --text-dim:#8B95A1; --accent:#6B9080; --accent-hi:#8FB5A3;
-    --gold:#C9A66B; --neg:#C97B6B; --radius:10px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
-
-  /* Ticker */
-  .ticker-wrap{background:var(--card);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:8px 0}
-  .ticker{display:inline-block;padding-left:100%;animation:scroll-ticker 40s linear infinite}
-  .ticker span{font-family:'JetBrains Mono',monospace;font-size:12px;margin-right:36px;color:var(--text-dim)}
-  .ticker span b{color:var(--text)}.ticker .up{color:var(--accent-hi)}.ticker .down{color:var(--neg)}
-  @keyframes scroll-ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-  /* Header */
-  header{max-width:1200px;margin:0 auto;padding:40px 24px 24px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;border-bottom:1px solid var(--line)}
-  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
-  h1{font-family:'Fraunces',serif;font-size:38px;font-weight:600;line-height:1.05}
-  select#date-select{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer}
-
-  /* KPI bar */
-  .kpi-bar{max-width:1200px;margin:0 auto;padding:20px 24px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px;border-bottom:1px solid var(--line)}
-  .kpi-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
-  .kpi-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
-  .kpi-main{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:600;color:var(--accent-hi)}
-  .kpi-vs{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);margin-top:4px}
-  .kpi-vs .up{color:var(--accent-hi)}.kpi-vs .down{color:var(--neg)}
-
-  /* Tabs */
-  .tabs-wrap{max-width:1200px;margin:0 auto;padding:0 24px;border-bottom:1px solid var(--line)}
-  .tabs{display:flex}
-  .tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:var(--text-dim);font-family:'Inter',sans-serif;font-size:14px;font-weight:500;padding:16px 20px;cursor:pointer;transition:all .15s}
-  .tab-btn:hover{color:var(--text)}.tab-btn.active{color:var(--accent-hi);border-bottom-color:var(--accent-hi)}
-  .tab-content{display:none;max-width:1200px;margin:0 auto;padding:32px 24px 80px}
-  .tab-content.active{display:block}
-
-  /* Asset grid */
-  .asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-  .asset-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;cursor:pointer;transition:border-color .15s,transform .15s;position:relative}
-  .asset-card:hover{border-color:var(--accent);transform:translateY(-2px)}
-  .asset-ticker{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;margin-bottom:2px}
-  .asset-sub{font-size:11.5px;color:var(--text-dim);margin-bottom:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .asset-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .metric-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px;display:flex;align-items:center;gap:4px}
-  .metric-value{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent-hi);font-weight:500}
-  .arrow-up{color:var(--accent-hi);font-size:10px}.arrow-down{color:var(--neg);font-size:10px}.arrow-stable{color:var(--text-dim);font-size:10px}
-
-  /* Score badge + info icon */
-  .score-wrap{position:absolute;top:14px;right:14px;display:flex;align-items:center;gap:5px}
-  .score-badge{background:var(--card-hi);border:1px solid var(--line);border-radius:20px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600}
-  .score-badge.high{color:var(--accent-hi);border-color:var(--accent)}.score-badge.mid{color:var(--gold);border-color:var(--gold)}.score-badge.low{color:var(--text-dim)}
-  .info-icon{background:none;border:1px solid var(--line);border-radius:50%;color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:10px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
-  .info-icon:hover{color:var(--accent-hi);border-color:var(--accent)}
-
-  /* Charts */
-  .charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
-  .chart-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
-  .chart-card h3{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
-  .chart-card canvas{max-height:220px}
-  .chart-full{grid-column:1/-1}
-
-  /* Score tab */
-  .score-page{max-width:800px}
-  .score-page h2{font-family:'Fraunces',serif;font-size:22px;font-weight:600;margin-bottom:12px;margin-top:32px}
-  .score-page h2:first-child{margin-top:0}
-  .score-page p{color:var(--text-dim);line-height:1.7;font-size:14px;margin-bottom:12px}
-  .score-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px}
-  .score-table th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);padding:8px 12px;border-bottom:1px solid var(--line)}
-  .score-table td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--text-dim)}
-  .score-table td:first-child{color:var(--text);font-weight:500;font-family:'JetBrains Mono',monospace}
-  .score-table .up{color:var(--accent-hi)}.score-table .down{color:var(--neg)}
-  .score-example{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:20px}
-  .score-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .score-bar-label{font-size:12px;color:var(--text-dim);width:160px;flex-shrink:0}
-  .score-bar-wrap{flex:1;background:var(--card-hi);border-radius:4px;height:6px}
-  .score-bar-fill{height:6px;border-radius:4px;background:var(--accent)}
-  .score-bar-pct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);width:32px;text-align:right}
-
-  /* Info tab */
-  .info-content{max-width:700px}
-  .info-content h2{font-family:'Fraunces',serif;font-size:22px;margin-bottom:12px;margin-top:28px}
-  .info-content h2:first-child{margin-top:0}
-  .info-content p{color:var(--text-dim);line-height:1.7;margin-bottom:12px;font-size:14px}
-  .info-content table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px}
-  .info-content th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);padding:8px 12px;border-bottom:1px solid var(--line)}
-  .info-content td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--text-dim)}
-  .info-content td:first-child{color:var(--text);font-weight:500}
-  .info-content a{color:var(--accent)}
-
-  /* Modal */
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center;padding:20px}
-  .modal-overlay.open{display:flex}
-  .modal{background:var(--card);border:1px solid var(--line);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;padding:28px;position:relative}
-  .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-dim);font-size:22px;cursor:pointer}
-  .modal-close:hover{color:var(--text)}
-  .modal-ticker{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:600;margin-bottom:4px}
-  .modal-sub{font-size:13px;color:var(--text-dim);margin-bottom:20px}
-  .modal-score-row{display:flex;align-items:center;gap:14px;margin-bottom:24px}
-  .modal-score-big{font-family:'JetBrains Mono',monospace;font-size:40px;font-weight:600;color:var(--accent-hi)}
-  .modal-score-meta{font-size:12px;color:var(--text-dim);line-height:1.6}
-  .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
-  .modal-metric{background:var(--card-hi);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
-  .modal-metric-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;display:flex;align-items:center;gap:5px}
-  .modal-metric-value{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--text);font-weight:500}
-  .modal-link{display:inline-block;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:6px;padding:7px 14px}
-  .modal-link:hover{background:var(--accent);color:var(--bg)}
-  .breakdown-title{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:20px}
-
-  /* Misc */
-  .empty{color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:13px;padding:40px 0}
-  .cambio-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)}
-  .cambio-row:last-child{border-bottom:none}
-  footer{max-width:1200px;margin:0 auto;padding:20px 24px;color:var(--text-dim);font-size:11px;font-family:'JetBrains Mono',monospace;border-top:1px solid var(--line)}
-
-  @media(max-width:700px){.kpi-bar{grid-template-columns:repeat(3,1fr)}h1{font-size:28px}.tab-btn{padding:12px 12px;font-size:12px}}
-  @media(max-width:420px){.kpi-bar{grid-template-columns:repeat(2,1fr)}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stock Screener · Dashboard</title>
+  <meta name="description" content="Dashboard diário de FIIs e Ações BR com score quantitativo, indicadores e backtest." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root{
+      --bg:#080c18; --surface:#0e1426; --surface2:#111a31; --card:#121b32;
+      --border:rgba(148,163,184,.18); --border-strong:rgba(148,163,184,.35);
+      --text:#eef2ff; --muted:#94a3b8; --muted2:#64748b;
+      --accent:#d6b46f; --accent2:#7dd3fc; --good:#34d399; --bad:#fb7185; --warn:#fbbf24;
+      --shadow:0 18px 60px rgba(0,0,0,.35); --radius:22px;
+      --max:1240px;
+    }
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,rgba(214,180,111,.16),transparent 34%),radial-gradient(circle at 80% 10%,rgba(125,211,252,.10),transparent 28%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.45}
+    a{color:inherit} button,input{font:inherit}.wrap{width:min(var(--max),calc(100% - 32px));margin-inline:auto}.mono{font-family:"JetBrains Mono",monospace}.muted{color:var(--muted)}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(8,12,24,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:800}.logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#8b6f35);display:grid;place-items:center;color:#111827;box-shadow:0 10px 30px rgba(214,180,111,.25)}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}.tab{border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);padding:9px 12px;border-radius:999px;cursor:pointer}.tab.active{color:#111827;background:var(--accent);border-color:transparent;font-weight:800}
+    .hero{padding:42px 0 22px}.eyebrow{color:var(--accent);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:end}.hero h1{font-family:Fraunces,serif;font-size:clamp(38px,6vw,74px);line-height:.95;margin:10px 0 14px;letter-spacing:-.04em}.hero p{font-size:17px;color:var(--muted);max-width:760px;margin:0}.asof{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .asof strong{display:block;font-size:24px;margin-top:3px}.data-select{margin-top:12px;width:100%;background:#0b1224;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:10px}
+    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:10px 0 28px}.kpi{background:rgba(18,27,50,.78);border:1px solid var(--border);border-radius:18px;padding:16px;min-height:112px}.kpi .label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}.kpi .value{font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:800;margin-top:8px}.kpi .note{font-size:12px;color:var(--muted2);margin-top:4px}.kpi.good .value{color:var(--good)}.kpi.bad .value{color:var(--bad)}
+    .section{display:none;padding-bottom:46px}.section.active{display:block}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:20px 0 16px}.section h2{font-size:26px;margin:0}.section .desc{color:var(--muted);margin:6px 0 0}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.search{background:#0b1224;border:1px solid var(--border);border-radius:999px;color:var(--text);padding:10px 14px;min-width:240px}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.asset-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.022));border:1px solid var(--border);border-radius:20px;padding:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.18)}.asset-card:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),transparent)}
+    .asset-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.rank{font-family:"JetBrains Mono",monospace;color:#111827;background:var(--accent);padding:4px 8px;border-radius:999px;font-weight:900;font-size:12px}.ticker{font-size:22px;font-weight:900;letter-spacing:-.03em}.name{font-size:12px;color:var(--muted);min-height:34px;margin-top:2px}.score-wrap{margin:14px 0 12px}.score-line{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700}.bar{height:9px;background:rgba(148,163,184,.18);border-radius:999px;overflow:hidden;margin-top:6px}.bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{border:1px solid rgba(148,163,184,.12);background:rgba(0,0,0,.12);border-radius:13px;padding:9px}.metric b{display:block;font-size:13px}.metric span{font-size:11px;color:var(--muted)}.trend{font-size:11px;margin-left:4px}.trend.subindo{color:var(--good)}.trend.caindo{color:var(--bad)}.trend.estavel{color:var(--muted)}
+    .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:rgba(18,27,50,.70);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}.panel h3{margin:0 0 4px;font-size:18px}.panel p{margin:0 0 12px;color:var(--muted);font-size:13px}.chart-box{height:300px}.wide{grid-column:1/-1}.mini-note{font-size:12px;color:var(--muted2);margin-top:10px}
+    .info-card{background:rgba(18,27,50,.72);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}.info-card h3{margin-top:0}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:12px;border-bottom:1px solid var(--border);text-align:left}.table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+    .empty{border:1px dashed var(--border-strong);border-radius:18px;padding:28px;text-align:center;color:var(--muted)} footer{border-top:1px solid var(--border);padding:24px 0 36px;color:var(--muted2);font-size:13px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:5px 9px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--good)}
+    @media(max-width:1050px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.hero-grid,.charts{grid-template-columns:1fr}}@media(max-width:620px){.wrap{width:min(100% - 20px,var(--max))}.nav{height:auto;padding:12px 0;align-items:flex-start;flex-direction:column}.kpis{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1}.hero{padding-top:26px}.kpi .value{font-size:22px}.search{min-width:100%;width:100%}}
+  </style>
 </head>
 <body>
-
-<div class="ticker-wrap"><div class="ticker" id="ticker-content">Carregando...</div></div>
-
-<header>
-  <div>
-    <div class="eyebrow">Boletim diário · Renda variável BR</div>
-    <h1>Stock Screener</h1>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px">
-    <label for="date-select" style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace">Data</label>
-    <select id="date-select"></select>
-  </div>
-</header>
-
-<div class="kpi-bar" id="kpi-bar"></div>
-
-<div class="tabs-wrap">
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="acoes">Ações</button>
-    <button class="tab-btn" data-tab="fiis">FIIs</button>
-    <button class="tab-btn" data-tab="indicadores">Indicadores</button>
-    <button class="tab-btn" data-tab="score">Score</button>
-    <button class="tab-btn" data-tab="info">Info</button>
-  </div>
-</div>
-
-<div class="tab-content active" id="tab-acoes"><div class="asset-grid" id="acoes-grid"></div></div>
-<div class="tab-content" id="tab-fiis"><div class="asset-grid" id="fii-grid"></div></div>
-
-<div class="tab-content" id="tab-indicadores">
-  <div class="charts-grid" id="charts-grid"></div>
-</div>
-
-<div class="tab-content" id="tab-score">
-  <div class="score-page">
-    <h2>Como o Score funciona</h2>
-    <p>Cada ativo recebe uma pontuação de <strong style="color:var(--text)">0 a 100</strong> baseada na sua posição percentílica dentro do universo do dia. O score reflete o quanto um ativo é melhor que os demais — não é absoluto, é relativo ao mercado atual.</p>
-    <p>A fórmula é uma <strong style="color:var(--text)">média ponderada de percentis</strong>: cada indicador é convertido em percentil (0–100) e multiplicado pelo seu peso. Indicadores "maior é melhor" (DY, ROA) geram score mais alto quanto maior o valor. Indicadores "menor é melhor" (P/VP, P/L) geram score mais alto quanto mais baixo o valor.</p>
-
-    <h2>Indicadores e pesos — FIIs</h2>
-    <table class="score-table">
-      <thead><tr><th>Indicador</th><th>Direção</th><th>Peso</th><th>Lógica</th></tr></thead>
-      <tbody>
-        <tr><td>Dividend Yield</td><td class="up">↑ maior é melhor</td><td>30%</td><td>Principal métrica de renda do fundo</td></tr>
-        <tr><td>P/VP</td><td class="down">↓ menor é melhor</td><td>25%</td><td>Preço vs patrimônio — quanto menor, mais barato</td></tr>
-        <tr><td>Liquidez Diária</td><td class="up">↑ maior é melhor</td><td>20%</td><td>Facilidade de entrada e saída</td></tr>
-        <tr><td>Patrimônio Líquido</td><td class="up">↑ maior é melhor</td><td>15%</td><td>Solidez e porte do fundo</td></tr>
-        <tr><td>Volatilidade</td><td class="down">↓ menor é melhor</td><td>10%</td><td>Menor oscilação = menor risco</td></tr>
-      </tbody>
-    </table>
-
-    <h2>Indicadores e pesos — Ações</h2>
-    <table class="score-table">
-      <thead><tr><th>Indicador</th><th>Direção</th><th>Peso</th><th>Lógica</th></tr></thead>
-      <tbody>
-        <tr><td>Dividend Yield</td><td class="up">↑ maior é melhor</td><td>20%</td><td>Retorno em dividendos</td></tr>
-        <tr><td>Preço/VPA</td><td class="down">↓ menor é melhor</td><td>20%</td><td>Quanto mais abaixo do patrimônio, mais barata</td></tr>
-        <tr><td>Preço/Lucro</td><td class="down">↓ menor é melhor</td><td>15%</td><td>Múltiplo de valuation — menor = mais atrativo</td></tr>
-        <tr><td>ROA</td><td class="up">↑ maior é melhor</td><td>15%</td><td>Eficiência no uso dos ativos</td></tr>
-        <tr><td>Margem Líquida</td><td class="up">↑ maior é melhor</td><td>15%</td><td>Lucratividade da operação</td></tr>
-        <tr><td>EV/EBITDA</td><td class="down">↓ menor é melhor</td><td>15%</td><td>Preço do negócio inteiro vs geração de caixa</td></tr>
-      </tbody>
-    </table>
-
-    <h2>Exemplo de leitura</h2>
-    <div class="score-example">
-      <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px">Um FII com score <strong style="color:var(--accent-hi)">82</strong> significa que ele está melhor que 82% dos FIIs do universo do dia nos indicadores ponderados. Um score acima de <strong style="color:var(--accent-hi)">70</strong> é considerado alto; entre <strong style="color:var(--gold)">45–70</strong> é médio; abaixo de <strong style="color:var(--text-dim)">45</strong> é baixo.</p>
-      <div class="score-bar-row"><div class="score-bar-label">Score alto (≥ 70)</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:82%;background:var(--accent)"></div></div><div class="score-bar-pct" style="color:var(--accent-hi)">82</div></div>
-      <div class="score-bar-row"><div class="score-bar-label">Score médio (45–70)</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:58%;background:var(--gold)"></div></div><div class="score-bar-pct" style="color:var(--gold)">58</div></div>
-      <div class="score-bar-row"><div class="score-bar-label">Score baixo (< 45)</div><div class="score-bar-wrap"><div class="score-bar-fill" style="width:31%;background:var(--text-dim)"></div></div><div class="score-bar-pct">31</div></div>
-    </div>
-
-    <p style="font-size:12px;color:var(--text-dim)">⚠️ O score é uma ferramenta de triagem quantitativa, não uma recomendação de investimento. Sempre analise os fundamentos antes de investir.</p>
-  </div>
-</div>
-
-<div class="tab-content" id="tab-info">
-  <div class="info-content">
-    <h2>Sobre o projeto</h2>
-    <p>Screener automático de FIIs e Ações brasileiras com filtro adaptativo por quartis, rodando diariamente via GitHub Actions às 08h BRT.</p>
-    <p>Os ativos exibidos passaram por dois estágios: filtros fixos (liquidez mínima, patrimônio mínimo) e filtros por quartil — sempre os melhores 25% do universo do dia.</p>
-    <h2>Fontes de dados</h2>
-    <table><thead><tr><th>Dado</th><th>Fonte</th></tr></thead><tbody>
-      <tr><td>FIIs</td><td>fundsexplorer.com.br/ranking</td></tr>
-      <tr><td>Ações BR</td><td>investsite.com.br/seleciona_acoes.php</td></tr>
-      <tr><td>IPCA, IGP-M, CDI</td><td>Banco Central do Brasil (API SGS)</td></tr>
-      <tr><td>Câmbio, Cripto</td><td>AwesomeAPI (gratuita)</td></tr>
-      <tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance / AwesomeAPI</td></tr>
-    </tbody></table>
-    <h2>Código-fonte</h2>
-    <p><a href="https://github.com/italostatonato/stock-screener-automation" target="_blank">github.com/italostatonato/stock-screener-automation</a></p>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
-    <button class="modal-close" id="modal-close">×</button>
-    <div id="modal-body"></div>
-  </div>
-</div>
-
-<footer>Atualizado automaticamente todo dia útil às 08h BRT · fundsexplorer.com.br · investsite.com.br · bcb.gov.br · awesomeapi.com.br</footer>
-
-<script>
-const DATA_DIR='data';
-const charts={};
-let currentPayload=null;
-
-const fmtMoney=v=>v==null?'—':'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtMoneyC=v=>{if(v==null)return'—';const n=Number(v);if(n>=1e9)return'R$ '+(n/1e9).toFixed(1)+'B';if(n>=1e6)return'R$ '+(n/1e6).toFixed(1)+'M';if(n>=1e3)return'R$ '+(n/1e3).toFixed(0)+'K';return fmtMoney(v)};
-const fmtPct=v=>v==null?'—':(Number(v)*100).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';
-const fmtNum=v=>v==null?'—':Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const arrowHtml=d=>!d||d==='neutro'||d==='estavel'?'<span class="arrow-stable">→</span>':d==='subindo'?'<span class="arrow-up">↑</span>':'<span class="arrow-down">↓</span>';
-
-function scoreBadgeHtml(score){
-  if(score==null)return'';
-  const cls=score>=70?'high':score>=45?'mid':'low';
-  return `<div class="score-wrap">
-    <div class="score-badge ${cls}">${Math.round(score)}</div>
-    <button class="info-icon" onclick="event.stopPropagation();switchTab('score')" title="Ver metodologia do Score">i</button>
-  </div>`;
-}
-
-function switchTab(name){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  const btn=document.querySelector(`.tab-btn[data-tab="${name}"]`);
-  if(btn)btn.classList.add('active');
-  const content=document.getElementById(`tab-${name}`);
-  if(content)content.classList.add('active');
-  if(name==='indicadores'&&currentPayload)renderIndicadores(currentPayload);
-}
-
-// Ticker
-function renderTicker(ind){
-  const cambio=ind?.cambio||{};
-  const el=document.getElementById('ticker-content');
-  const items=Object.entries(cambio).map(([par,d])=>{
-    const cls=d.variacao_pct>=0?'up':'down';
-    const arrow=d.variacao_pct>=0?'▲':'▼';
-    return `<span><b>${par}</b> ${fmtMoney(d.valor)} <span class="${cls}">${arrow} ${fmtNum(Math.abs(d.variacao_pct))}%</span></span>`;
-  });
-  const html=items.join('');
-  el.innerHTML=html+html;
-}
-
-// KPIs
-function renderKPIs(payload){
-  const kpis=payload.kpis||{};const r=payload.resumo||{};
-  function diffHtml(c,m,label){
-    if(c==null||m==null)return'';
-    const diff=(c-m)*100;const cls=diff>=0?'up':'down';const sign=diff>=0?'+':'';
-    return `<div class="kpi-vs">vs ${label}: <span class="${cls}">${sign}${fmtNum(diff)}pp</span></div>`;
-  }
-  document.getElementById('kpi-bar').innerHTML=`
-    <div class="kpi-card"><div class="kpi-label">Ações Top N</div><div class="kpi-main" style="color:var(--gold)">${r.total_acoes??'—'}</div></div>
-    <div class="kpi-card"><div class="kpi-label">FIIs Top N</div><div class="kpi-main">${r.total_fiis??'—'}</div></div>
-    <div class="kpi-card"><div class="kpi-label">DY médio FIIs</div><div class="kpi-main">${fmtPct(kpis.dy_medio_fiis_carteira)}${diffHtml(kpis.dy_medio_fiis_carteira,kpis.dy_medio_fiis_mercado,'mercado')}</div></div>
-    <div class="kpi-card"><div class="kpi-label">DY médio Ações</div><div class="kpi-main" style="color:var(--gold)">${fmtPct(kpis.dy_medio_acoes_carteira)}${diffHtml(kpis.dy_medio_acoes_carteira,kpis.dy_medio_acoes_mercado,'mercado')}</div></div>
-    <div class="kpi-card"><div class="kpi-label">P/VP médio FIIs</div><div class="kpi-main">${fmtNum(kpis.pvp_medio_fiis)}</div></div>
-    <div class="kpi-card"><div class="kpi-label">Universo</div><div class="kpi-main" style="font-size:14px">${kpis.total_fiis_universo??'—'} FIIs<br>${kpis.total_acoes_universo??'—'} Ações</div></div>
-  `;
-}
-
-// Cards
-function renderFiis(lista){
-  const grid=document.getElementById('fii-grid');
-  if(!lista.length){grid.innerHTML='<div class="empty">Nenhum FII disponível.</div>';return}
-  grid.innerHTML=lista.map((f,i)=>{const t=f.tendencias||{};return`
-    <div class="asset-card" onclick="openModal('fii',${i})">
-      ${scoreBadgeHtml(f.score)}
-      <div class="asset-ticker">${f['FUNDOS']??'—'}</div>
-      <div class="asset-sub">${f['SETOR']??''}</div>
-      <div class="asset-metrics">
-        <div><div class="metric-label">${arrowHtml(t['DIVIDEND YIELD'])} DY</div><div class="metric-value">${fmtPct(f['DIVIDEND YIELD'])}</div></div>
-        <div><div class="metric-label">${arrowHtml(t['P/VP'])} P/VP</div><div class="metric-value">${fmtNum(f['P/VP'])}</div></div>
-        <div><div class="metric-label">Preço</div><div class="metric-value">${fmtMoney(f['PREÇO ATUAL (R$)'])}</div></div>
-        <div><div class="metric-label">${arrowHtml(t['LIQUIDEZ DIÁRIA (R$)'])} Liquidez</div><div class="metric-value">${fmtMoneyC(f['LIQUIDEZ DIÁRIA (R$)'])}</div></div>
+  <div class="topbar">
+    <div class="wrap nav">
+      <div class="brand"><div class="logo">▰</div><div><div>Stock Screener</div><small class="muted">Renda variável BR · Quant dashboard</small></div></div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="overview">Visão geral</button>
+        <button class="tab" data-tab="fiis">FIIs</button>
+        <button class="tab" data-tab="acoes">Ações</button>
+        <button class="tab" data-tab="indicadores">Indicadores</button>
+        <button class="tab" data-tab="score">Score</button>
+        <button class="tab" data-tab="info">Info</button>
       </div>
-    </div>`}).join('');
-}
-
-function renderAcoes(lista){
-  const grid=document.getElementById('acoes-grid');
-  if(!lista.length){grid.innerHTML='<div class="empty">Nenhuma ação disponível.</div>';return}
-  grid.innerHTML=lista.map((a,i)=>{const t=a.tendencias||{};return`
-    <div class="asset-card" onclick="openModal('acao',${i})">
-      ${scoreBadgeHtml(a.score)}
-      <div class="asset-ticker">${a['Ação']??'—'}</div>
-      <div class="asset-sub">${a['Empresa']??''}</div>
-      <div class="asset-metrics">
-        <div><div class="metric-label">${arrowHtml(t['Dividend Yield'])} DY</div><div class="metric-value">${fmtPct(a['Dividend Yield'])}</div></div>
-        <div><div class="metric-label">${arrowHtml(t['Preço/VPA'])} P/VPA</div><div class="metric-value">${fmtNum(a['Preço/VPA'])}</div></div>
-        <div><div class="metric-label">${arrowHtml(t['ROA'])} ROA</div><div class="metric-value">${fmtPct(a['ROA'])}</div></div>
-        <div><div class="metric-label">${arrowHtml(t['Margem Líquida'])} Margem</div><div class="metric-value">${fmtPct(a['Margem Líquida'])}</div></div>
-      </div>
-    </div>`}).join('');
-}
-
-// Modal
-function openModal(tipo,idx){
-  const item=tipo==='fii'?currentPayload.fiis[idx]:currentPayload.acoes[idx];
-  if(!item)return;
-  const ticker=item['FUNDOS']||item['Ação']||'—';
-  const sub=item['SETOR']||item['Empresa']||'';
-  const score=item.score;
-  const t=item.tendencias||{};
-
-  let metricsHtml='';
-  if(tipo==='fii'){
-    metricsHtml=`
-      <div class="modal-metric"><div class="modal-metric-label">${arrowHtml(t['DIVIDEND YIELD'])} Dividend Yield</div><div class="modal-metric-value">${fmtPct(item['DIVIDEND YIELD'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">${arrowHtml(t['P/VP'])} P/VP</div><div class="modal-metric-value">${fmtNum(item['P/VP'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">Preço Atual</div><div class="modal-metric-value">${fmtMoney(item['PREÇO ATUAL (R$)'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">VPA</div><div class="modal-metric-value">${fmtMoney(item['VPA'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">${arrowHtml(t['LIQUIDEZ DIÁRIA (R$)'])} Liquidez Diária</div><div class="modal-metric-value">${fmtMoneyC(item['LIQUIDEZ DIÁRIA (R$)'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">Patrimônio Líquido</div><div class="modal-metric-value">${fmtMoneyC(item['PATRIMÔNIO LÍQUIDO'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">${arrowHtml(t['VOLATILIDADE'])} Volatilidade</div><div class="modal-metric-value">${fmtNum(item['VOLATILIDADE'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">Último Dividendo</div><div class="modal-metric-value">${fmtMoney(item['ÚLTIMO DIVIDENDO'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">Num. Cotistas</div><div class="modal-metric-value">${item['NUM. COTISTAS']??'—'}</div></div>`;
-  }else{
-    metricsHtml=`
-      <div class="modal-metric"><div class="modal-metric-label">${arrowHtml(t['Dividend Yield'])} Dividend Yield</div><div class="modal-metric-value">${fmtPct(item['Dividend Yield'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">${arrowHtml(t['Preço/VPA'])} Preço/VPA</div><div class="modal-metric-value">${fmtNum(item['Preço/VPA'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">Preço</div><div class="modal-metric-value">${fmtMoney(item['Preço'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">P/Lucro</div><div class="modal-metric-value">${fmtNum(item['Preço/Lucro'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">${arrowHtml(t['ROA'])} ROA</div><div class="modal-metric-value">${fmtPct(item['ROA'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">${arrowHtml(t['Margem Líquida'])} Margem Líquida</div><div class="modal-metric-value">${fmtPct(item['Margem Líquida'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">EV/EBITDA</div><div class="modal-metric-value">${fmtNum(item['EV/EBITDA'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">EV/EBIT</div><div class="modal-metric-value">${fmtNum(item['EV/EBIT'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">RPL</div><div class="modal-metric-value">${fmtPct(item['RPL'])}</div></div>
-      <div class="modal-metric"><div class="modal-metric-label">Market Cap</div><div class="modal-metric-value">${fmtMoneyC(item['Market Cap Empresa'])}</div></div>`;
-  }
-
-  const linkUrl=tipo==='fii'
-    ?`https://www.fundsexplorer.com.br/funds/${ticker.toLowerCase()}`
-    :`https://www.fundamentus.com.br/detalhes.php?papel=${ticker}`;
-
-  const scoreSection=score!=null?`
-    <div class="breakdown-title">Score geral — posição no universo do dia</div>
-    <div class="score-bar-row" style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-      <div style="font-size:12px;color:var(--text-dim);width:120px">Melhor que...</div>
-      <div style="flex:1;background:var(--card-hi);border-radius:4px;height:8px"><div style="width:${score}%;height:8px;border-radius:4px;background:var(--accent)"></div></div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent-hi);width:44px;text-align:right">${Math.round(score)}%</div>
     </div>
-    <p style="font-size:11px;color:var(--text-dim)">Veja a metodologia completa na aba <button onclick="document.getElementById('modal-overlay').classList.remove('open');switchTab('score')" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:11px;padding:0;font-family:inherit">Score ↗</button></p>
-  `:'';
+  </div>
 
-  document.getElementById('modal-body').innerHTML=`
-    <div class="modal-ticker">${ticker}</div>
-    <div class="modal-sub">${sub}</div>
-    ${score!=null?`<div class="modal-score-row"><div class="modal-score-big">${Math.round(score)}</div><div class="modal-score-meta">Score 0–100<br><span style="font-size:10px">Melhor que ${Math.round(score)}% do universo</span></div></div>`:''}
-    <div class="modal-grid">${metricsHtml}</div>
-    ${scoreSection}
-    <a class="modal-link" href="${linkUrl}" target="_blank">Ver no site ↗</a>
-  `;
-  document.getElementById('modal-overlay').classList.add('open');
-}
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Boletim diário · filtro quantitativo</div>
+          <h1>Ranking com contexto, não só lista.</h1>
+          <p>Top 20 FIIs e Ações BR, score multifatorial, comparação contra benchmarks e leitura visual das principais métricas do dia.</p>
+        </div>
+        <aside class="asof">
+          <span class="pill"><span class="dot"></span> Atualizado automaticamente</span>
+          <strong id="asOf">Carregando...</strong>
+          <select id="dateSelect" class="data-select" aria-label="Selecionar data"></select>
+        </aside>
+      </div>
+    </section>
 
-document.getElementById('modal-close').addEventListener('click',()=>document.getElementById('modal-overlay').classList.remove('open'));
-document.getElementById('modal-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').classList.remove('open')});
+    <section class="kpis" id="kpis"></section>
 
-// Charts
-function destroyCharts(){Object.values(charts).forEach(c=>c.destroy());Object.keys(charts).forEach(k=>delete charts[k])}
+    <section id="overview" class="section active">
+      <div class="section-head"><div><h2>Visão geral</h2><p class="desc">Resumo executivo do dia: carteira, score, alpha e concentração.</p></div></div>
+      <div class="charts">
+        <div class="panel"><h3>Score dos Top 20</h3><p>Distribuição por faixa. Ajuda a separar ranking forte de ranking apenas “menos pior”.</p><div class="chart-box"><canvas id="scoreChart"></canvas></div></div>
+        <div class="panel"><h3>Composição dos FIIs</h3><p>Concentração por setor da carteira Top 20 de FIIs.</p><div class="chart-box"><canvas id="sectorChart"></canvas></div></div>
+        <div class="panel wide"><h3>Backtest FIIs · base 100</h3><p>Carteira Top 20 FIIs contra IFIX e IBOV. Tudo começa em 100 para comparar crescimento contra crescimento.</p><div class="chart-box"><canvas id="backtestChart"></canvas></div><div class="mini-note" id="backtestNote"></div></div>
+      </div>
+    </section>
 
-const CHART_OPTS={
-  responsive:true,maintainAspectRatio:false,
-  interaction:{mode:'index',intersect:false},
-  plugins:{
-    legend:{display:true,labels:{color:'#8B95A1',font:{family:'JetBrains Mono',size:11},boxWidth:12}},
-    tooltip:{
-      backgroundColor:'#1B232C',borderColor:'#2A333D',borderWidth:1,
-      titleColor:'#E8E6DF',bodyColor:'#8B95A1',
-      titleFont:{family:'JetBrains Mono',size:11},
-      bodyFont:{family:'JetBrains Mono',size:11},
-      callbacks:{label:ctx=>`  ${ctx.dataset.label}: ${ctx.parsed.y!=null?Number(ctx.parsed.y).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'—'}`}
+    <section id="fiis" class="section">
+      <div class="section-head"><div><h2>Top 20 FIIs</h2><p class="desc">Rank, score, renda, valuation, liquidez e tendência diária.</p></div><div class="toolbar"><input id="searchFiis" class="search" placeholder="Buscar FII ou setor..." /></div></div>
+      <div class="grid" id="fiisGrid"></div>
+    </section>
+
+    <section id="acoes" class="section">
+      <div class="section-head"><div><h2>Top 20 Ações</h2><p class="desc">Rank, score, valuation, rentabilidade e dividend yield.</p></div><div class="toolbar"><input id="searchAcoes" class="search" placeholder="Buscar ação ou empresa..." /></div></div>
+      <div class="grid" id="acoesGrid"></div>
+    </section>
+
+    <section id="indicadores" class="section">
+      <div class="section-head"><div><h2>Indicadores</h2><p class="desc">Mercado, juros, inflação e câmbio em blocos separados para leitura mais limpa.</p></div></div>
+      <div class="charts">
+        <div class="panel"><h3>Mercado · IBOV e IFIX</h3><p>Índices em base 100 para comparação visual.</p><div class="chart-box"><canvas id="marketChart"></canvas></div></div>
+        <div class="panel"><h3>Macro · IPCA, IGP-M e Selic</h3><p>Séries disponíveis no payload diário.</p><div class="chart-box"><canvas id="macroChart"></canvas></div></div>
+        <div class="panel wide"><h3>Carteira FIIs (DY proxy) · base 100</h3><p>Comparação visual de crescimento: carteira, IFIX e IBOV partem de 100. Não mistura pontos de índice com retorno.</p><div class="chart-box"><canvas id="proxyFiisChart"></canvas></div><div class="mini-note" id="proxyFiisNote"></div></div>
+        <div class="panel wide"><h3>Carteira Ações (DY proxy) · base 100</h3><p>Comparação visual de crescimento: carteira, IBOV e IFIX partem de 100. Escala corrigida para leitura justa.</p><div class="chart-box"><canvas id="proxyAcoesChart"></canvas></div><div class="mini-note" id="proxyAcoesNote"></div></div>
+        <div class="panel wide"><h3>Câmbio e cripto</h3><p>Valores de referência coletados via API gratuita.</p><div id="fxGrid" class="kpis" style="margin:0;grid-template-columns:repeat(4,1fr)"></div></div>
+      </div>
+    </section>
+
+    <section id="score" class="section">
+      <div class="section-head"><div><h2>Como o score funciona</h2><p class="desc">Pontuação relativa ao universo do dia. Não é recomendação de investimento.</p></div></div>
+      <div class="info-card"><h3>Leitura rápida</h3><p>Um score 82 significa que o ativo está melhor posicionado que boa parte do universo analisado nos indicadores ponderados. A metodologia usa percentis: maior é melhor para DY, ROA, liquidez e patrimônio; menor é melhor para P/VP, P/L, EV/EBITDA e volatilidade.</p></div>
+      <div class="charts">
+        <div class="info-card"><h3>FIIs</h3><table class="table"><thead><tr><th>Indicador</th><th>Direção</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior é melhor</td><td>30%</td></tr><tr><td>P/VP</td><td>Menor é melhor</td><td>25%</td></tr><tr><td>Liquidez diária</td><td>Maior é melhor</td><td>20%</td></tr><tr><td>Patrimônio líquido</td><td>Maior é melhor</td><td>15%</td></tr><tr><td>Volatilidade</td><td>Menor é melhor</td><td>10%</td></tr></tbody></table></div>
+        <div class="info-card"><h3>Ações</h3><table class="table"><thead><tr><th>Indicador</th><th>Direção</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior é melhor</td><td>20%</td></tr><tr><td>Preço/VPA</td><td>Menor é melhor</td><td>20%</td></tr><tr><td>Preço/Lucro</td><td>Menor é melhor</td><td>15%</td></tr><tr><td>ROA</td><td>Maior é melhor</td><td>15%</td></tr><tr><td>Margem Líquida</td><td>Maior é melhor</td><td>15%</td></tr><tr><td>EV/EBITDA</td><td>Menor é melhor</td><td>15%</td></tr></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="info" class="section">
+      <div class="section-head"><div><h2>Sobre o projeto</h2><p class="desc">Pipeline gratuito, automatizado e versionado.</p></div></div>
+      <div class="info-card"><h3>Arquitetura</h3><p>Screener automático de FIIs e Ações brasileiras, com coleta via Selenium, filtros fixos + quartis, score multifatorial, snapshot Excel, JSON para dashboard, histórico ML em Parquet e camada inicial de backtest.</p></div>
+      <div class="info-card"><h3>Fontes</h3><table class="table"><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Investsite</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio e cripto</td><td>AwesomeAPI</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table></div>
+      <div class="info-card"><h3>Disclaimer</h3><p>Este dashboard é uma ferramenta educacional e quantitativa de triagem. Não constitui recomendação de investimento.</p></div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">Atualizado automaticamente em dias úteis · GitHub Pages · dados públicos e APIs gratuitas</div></footer>
+
+  <script>
+    const state = { data:null, charts:{}, allDates:[] };
+    const BR = 'pt-BR';
+    const fmtNum = (v,d=2)=> v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{maximumFractionDigits:d,minimumFractionDigits:d});
+    const fmtMoney = v => v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{style:'currency',currency:'BRL',maximumFractionDigits:2});
+    const fmtPct = v => v==null || Number.isNaN(Number(v)) ? '—' : (Number(v)*100).toLocaleString(BR,{maximumFractionDigits:2,minimumFractionDigits:2})+'%';
+    const fmtBig = v => { if(v==null || Number.isNaN(Number(v))) return '—'; const n=Number(v); if(Math.abs(n)>=1e9) return (n/1e9).toLocaleString(BR,{maximumFractionDigits:1})+' bi'; if(Math.abs(n)>=1e6) return (n/1e6).toLocaleString(BR,{maximumFractionDigits:1})+' mi'; if(Math.abs(n)>=1e3) return (n/1e3).toLocaleString(BR,{maximumFractionDigits:1})+' mil'; return fmtNum(n,0); };
+    const scoreOf = r => Number(r.score ?? r.Score ?? 0);
+    const avg = arr => arr.length ? arr.reduce((a,b)=>a+Number(b||0),0)/arr.length : null;
+    const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+    async function init(){
+      try{
+        const dates = await fetch('data/index.json').then(r=>r.json());
+        state.allDates = dates;
+        const select = document.getElementById('dateSelect');
+        select.innerHTML = dates.map(d=>`<option value="${d}">${d}</option>`).join('');
+        select.addEventListener('change',()=>loadDate(select.value));
+        await loadDate(dates[0]);
+      }catch(e){
+        document.getElementById('asOf').textContent='Erro ao carregar dados';
+        console.error(e);
+      }
     }
-  },
-  scales:{
-    x:{ticks:{color:'#8B95A1',font:{family:'JetBrains Mono',size:10},maxTicksLimit:10},grid:{color:'#2A333D'}},
-    y:{ticks:{color:'#8B95A1',font:{family:'JetBrains Mono',size:10}},grid:{color:'#2A333D'}}
-  }
-};
 
-function makeChart(canvasId,datasets,opts={}){
-  const ctx=document.getElementById(canvasId)?.getContext('2d');
-  if(!ctx)return;
-  const allPts=datasets.flatMap(d=>d.data||[]);
-  if(!allPts.length)return;
-  const labels=[...new Set(allPts.map(p=>p.data))].sort();
-  const chartDatasets=datasets.map(d=>({
-    label:d.label,
-    data:labels.map(l=>{const p=d.data.find(x=>x.data===l);return p?p.valor:null}),
-    borderColor:d.color,backgroundColor:d.color+'18',
-    borderWidth:2,pointRadius:0,tension:0.3,fill:d.fill||false,spanGaps:true,
-  }));
-  charts[canvasId]=new Chart(ctx,{
-    type:'line',
-    data:{labels:labels.map(l=>{const[y,m]=l.split('-');return`${m}/${y.slice(2)}`}),datasets:chartDatasets},
-    options:{...CHART_OPTS,...opts},
-  });
-}
+    async function loadDate(date){
+      state.data = await fetch(`data/${date}.json`, {cache:'no-store'}).then(r=>r.json());
+      document.getElementById('asOf').textContent = new Date(`${state.data.data}T12:00:00`).toLocaleDateString(BR,{day:'2-digit',month:'long',year:'numeric'});
+      document.getElementById('dateSelect').value = date;
+      renderAll();
+    }
 
-function renderIndicadores(payload){
-  destroyCharts();
-  const b=payload.benchmarks||{};
-  const ind=payload.indicadores||{};
-  const cv=payload.carteira_vs||{};
-  const bt=payload.backtest||{};
-  const cambio=ind.cambio||{};
+    function renderAll(){ renderKpis(); renderCards('fiis'); renderCards('acoes'); renderCharts(); renderFx(); }
 
-  const btHtml=bt.disponivel?`
-    <div class="chart-card chart-full">
-      <h3>Backtest — Top 20 FIIs vs IFIX / IBOV</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:8px">
-        <div class="modal-metric"><div class="modal-metric-label">Carteira Top 20</div><div class="modal-metric-value" style="color:var(--accent-hi)">${fmtNum(bt.carteira_top20_fiis?.retorno_pct)}%</div></div>
-        <div class="modal-metric"><div class="modal-metric-label">IFIX</div><div class="modal-metric-value">${fmtNum(bt.ifix?.retorno_pct)}%</div></div>
-        <div class="modal-metric"><div class="modal-metric-label">IBOV</div><div class="modal-metric-value">${fmtNum(bt.ibov?.retorno_pct)}%</div></div>
-        <div class="modal-metric"><div class="modal-metric-label">Bateu IFIX?</div><div class="modal-metric-value" style="color:${bt.bateu_ifix?'var(--accent-hi)':'var(--neg)'}">${bt.bateu_ifix?'Sim':'Não'}</div></div>
-        <div class="modal-metric"><div class="modal-metric-label">Bateu IBOV?</div><div class="modal-metric-value" style="color:${bt.bateu_ibov?'var(--accent-hi)':'var(--neg)'}">${bt.bateu_ibov?'Sim':'Não'}</div></div>
-      </div>
-      <p style="color:var(--text-dim);font-size:12px;margin-top:12px;line-height:1.6">${bt.periodo?.inicio||'—'} → ${bt.periodo?.fim||'—'} · ${bt.rebalanceamentos||0} rebalanceamento(s)</p>
-    </div>`:'';
+    function kpi(label,value,note,kind='') { return `<article class="kpi ${kind}"><div class="label">${label}</div><div class="value">${value}</div><div class="note">${note||''}</div></article>`; }
+    function renderKpis(){
+      const d=state.data, fiis=d.fiis||[], acoes=d.acoes||[], bt=d.backtest||{};
+      const scoreF=avg(fiis.map(scoreOf)); const scoreA=avg(acoes.map(scoreOf));
+      const fiiRet=bt?.carteira_top20_fiis?.retorno_pct, ifix=bt?.ifix?.retorno_pct, ibov=bt?.ibov?.retorno_pct;
+      const alphaIfix = fiiRet!=null && ifix!=null ? fiiRet-ifix : null;
+      const alphaIbov = fiiRet!=null && ibov!=null ? fiiRet-ibov : null;
+      document.getElementById('kpis').innerHTML = [
+        kpi('Top FIIs', fiis.length, 'ativos selecionados'),
+        kpi('Top Ações', acoes.length, 'ativos selecionados'),
+        kpi('DY médio FIIs', fmtPct(avg(fiis.map(x=>x['DIVIDEND YIELD']))), 'carteira Top 20'),
+        kpi('P/VP médio', fmtNum(avg(fiis.map(x=>x['P/VP'])),2), 'FIIs Top 20'),
+        kpi('Score médio', fmtNum(scoreF,1), 'FIIs', scoreF>=60?'good':''),
+        kpi('Score médio', fmtNum(scoreA,1), 'Ações', scoreA>=60?'good':''),
+        kpi('Alpha vs IFIX', alphaIfix==null?'—':`${alphaIfix>=0?'+':''}${fmtNum(alphaIfix,2)} pp`, 'backtest FIIs', alphaIfix>=0?'good':'bad'),
+        kpi('Alpha vs IBOV', alphaIbov==null?'—':`${alphaIbov>=0?'+':''}${fmtNum(alphaIbov,2)} pp`, 'backtest FIIs', alphaIbov>=0?'good':'bad')
+      ].join('');
+    }
 
-  const cambioRows=Object.entries(cambio).map(([par,d])=>{
-    const cls=d.variacao_pct>=0?'up':'down';
-    const arrow=d.variacao_pct>=0?'▲':'▼';
-    return`<div class="cambio-row"><span style="font-family:'JetBrains Mono',monospace;font-size:13px">${par}</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px">${fmtMoney(d.valor)} <span class="${cls}">${arrow} ${fmtNum(Math.abs(d.variacao_pct))}%</span></span></div>`;
-  }).join('');
+    function trendIcon(rec,col){ const t=rec.tendencias?.[col]; if(!t) return ''; const icon=t==='subindo'?'▲':t==='caindo'?'▼':'●'; return `<span class="trend ${t}" title="${t}">${icon}</span>`; }
+    function scoreBar(s){ const w=Math.max(0,Math.min(100,Number(s||0))); return `<div class="score-wrap"><div class="score-line"><span>Score</span><b class="mono">${fmtNum(s,1)}</b></div><div class="bar"><span style="width:${w}%"></span></div></div>`; }
+    function metric(label,value,trend=''){ return `<div class="metric"><span>${label}</span><b>${value}${trend}</b></div>`; }
+    function cardFii(r,i){ return `<article class="asset-card"><div class="asset-top"><div><div class="ticker">${r.FUNDOS||'—'}</div><div class="name">${r.SETOR||'Setor não informado'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['PREÇO ATUAL (R$)']))}${metric('DY',fmtPct(r['DIVIDEND YIELD']),trendIcon(r,'DIVIDEND YIELD'))}${metric('P/VP',fmtNum(r['P/VP'],2),trendIcon(r,'P/VP'))}${metric('Liquidez',fmtBig(r['LIQUIDEZ DIÁRIA (R$)']),trendIcon(r,'LIQUIDEZ DIÁRIA (R$)'))}</div></article>`; }
+    function cardAcao(r,i){ return `<article class="asset-card"><div class="asset-top"><div><div class="ticker">${r['Ação']||'—'}</div><div class="name">${r.Empresa||'Empresa não informada'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['Preço']))}${metric('DY',fmtPct(r['Dividend Yield']),trendIcon(r,'Dividend Yield'))}${metric('P/VPA',fmtNum(r['Preço/VPA'],2),trendIcon(r,'Preço/VPA'))}${metric('ROA',fmtPct(r.ROA),trendIcon(r,'ROA'))}</div></article>`; }
+    function renderCards(type){
+      const input=document.getElementById(type==='fiis'?'searchFiis':'searchAcoes');
+      const grid=document.getElementById(type==='fiis'?'fiisGrid':'acoesGrid');
+      const base=state.data[type]||[];
+      const apply=()=>{ const q=(input.value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); const arr=base.filter(r=>JSON.stringify(r).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q)); grid.innerHTML=arr.length?arr.map((r,i)=>type==='fiis'?cardFii(r,i):cardAcao(r,i)).join(''):'<div class="empty">Nenhum ativo encontrado.</div>'; };
+      input.oninput=apply; apply();
+    }
 
-  document.getElementById('charts-grid').innerHTML=`
-    ${btHtml}
-    <div class="chart-card"><h3>Câmbio e Cripto</h3>${cambioRows||'<p style="color:var(--text-dim);font-size:13px">Sem dados</p>'}</div>
-    <div class="chart-card"><h3>IPCA (índice acumulado)</h3><canvas id="chart-ipca" style="max-height:220px"></canvas></div>
-    <div class="chart-card"><h3>IGP-M (índice acumulado)</h3><canvas id="chart-igpm" style="max-height:220px"></canvas></div>
-    <div class="chart-card"><h3>Selic Meta (%)</h3><canvas id="chart-selic" style="max-height:220px"></canvas></div>
-    <div class="chart-card"><h3>Ibovespa (pontos)</h3><canvas id="chart-ibov" style="max-height:220px"></canvas></div>
-    <div class="chart-card"><h3>IFIX</h3><canvas id="chart-ifix" style="max-height:220px"></canvas></div>
-    <div class="chart-card"><h3>IMOB</h3><canvas id="chart-imob" style="max-height:220px"></canvas></div>
-    <div class="chart-card chart-full"><h3>Carteira FIIs (DY proxy) vs IFIX vs IBOV</h3><canvas id="chart-vs-fii" style="max-height:220px"></canvas></div>
-    <div class="chart-card chart-full"><h3>Carteira Ações (DY proxy) vs IBOV vs IFIX</h3><canvas id="chart-vs-acao" style="max-height:220px"></canvas></div>
-  `;
+    function destroy(id){ if(state.charts[id]){ state.charts[id].destroy(); delete state.charts[id]; } }
+    function makeChart(id,cfg){ destroy(id); state.charts[id]=new Chart(document.getElementById(id), cfg); }
+    function baseOptions(extra={}){ return Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:css('--muted'),boxWidth:10}},tooltip:{mode:'index',intersect:false}},scales:{x:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}},y:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}}, extra); }
+    function renderCharts(){ renderScoreChart(); renderSectorChart(); renderBacktestChart(); renderMarketChart(); renderMacroChart(); renderProxyCharts(); }
+    function renderScoreChart(){
+      const bins=['<40','40-55','55-70','70+']; const count=(arr)=>[arr.filter(x=>scoreOf(x)<40).length,arr.filter(x=>scoreOf(x)>=40&&scoreOf(x)<55).length,arr.filter(x=>scoreOf(x)>=55&&scoreOf(x)<70).length,arr.filter(x=>scoreOf(x)>=70).length];
+      makeChart('scoreChart',{type:'bar',data:{labels:bins,datasets:[{label:'FIIs',data:count(state.data.fiis||[])},{label:'Ações',data:count(state.data.acoes||[])}]},options:baseOptions()});
+    }
+    function renderSectorChart(){
+      const counts={}; (state.data.fiis||[]).forEach(r=>{ const s=r.SETOR||'Não informado'; counts[s]=(counts[s]||0)+1; }); const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      makeChart('sectorChart',{type:'bar',data:{labels:entries.map(x=>x[0]),datasets:[{label:'FIIs',data:entries.map(x=>x[1])}]},options:baseOptions({indexAxis:'y',plugins:{legend:{display:false}}})});
+    }
+    function renderBacktestChart(){
+      const bt=state.data.backtest||{}; const periods=bt.periodos||[]; const note=document.getElementById('backtestNote');
+      if(!bt.disponivel||!periods.length){ note.textContent=bt.motivo||'Backtest ainda indisponível.'; makeChart('backtestChart',{type:'line',data:{labels:[],datasets:[]},options:baseOptions()}); return; }
+      let c=100, f=100, i=100; const labels=['Início'], carteira=[100], ifix=[100], ibov=[100];
+      periods.forEach(p=>{ c*=1+(Number(p.carteira_retorno_pct||0)/100); f*=1+(Number(p.ifix_retorno_pct||0)/100); i*=1+(Number(p.ibov_retorno_pct||0)/100); labels.push(p.fim); carteira.push(c); ifix.push(f); ibov.push(i); });
+      note.textContent=`Rebalanceamentos: ${bt.rebalanceamentos||periods.length}. Carteira ${fmtNum((c-100),2)}%, IFIX ${fmtNum((f-100),2)}%, IBOV ${fmtNum((i-100),2)}%.`;
+      makeChart('backtestChart',{type:'line',data:{labels,datasets:[{label:'Carteira FIIs',data:carteira,borderWidth:3,tension:.25},{label:'IFIX',data:ifix,borderWidth:2,tension:.25},{label:'IBOV',data:ibov,borderWidth:2,tension:.25}]},options:baseOptions()});
+    }
+    function normalizeSeries(arr){
+      if(!arr||!arr.length) return [];
+      const clean = arr.filter(x=>x && x.data && x.valor!=null && !Number.isNaN(Number(x.valor))).sort((a,b)=>String(a.data).localeCompare(String(b.data)));
+      if(!clean.length) return [];
+      const first = Number(clean[0].valor);
+      if(!first) return [];
+      return clean.map(x=>({data:x.data, valor:Number(x.valor)/first*100}));
+    }
+    function benchSeries(name){ const b=state.data.benchmarks||{}; return b[name]||b[name?.toUpperCase()]||[]; }
+    function carteiraVsSeries(key){ const cv=state.data.carteira_vs||{}; return normalizeSeries(cv[key]||[]); }
+    function benchmarkBase100(name){
+      const cv=state.data.carteira_vs||{};
+      const key=`${String(name).toLowerCase()}_base100`;
+      return normalizeSeries(cv[key]||benchSeries(name));
+    }
+    function seriesMap(arr){ return Object.fromEntries((arr||[]).map(x=>[x.data,x.valor])); }
+    function renderMarketChart(){ const ibov=benchmarkBase100('IBOV'), ifix=benchmarkBase100('IFIX'); const labels=[...new Set([...ibov,...ifix].map(x=>x.data))].sort(); const mi=seriesMap(ibov), mf=seriesMap(ifix); makeChart('marketChart',{type:'line',data:{labels,datasets:[{label:'IBOV base 100',data:labels.map(d=>mi[d]??null),spanGaps:true,tension:.25},{label:'IFIX base 100',data:labels.map(d=>mf[d]??null),spanGaps:true,tension:.25}]},options:baseOptions({scales:{x:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}},y:{title:{display:true,text:'Base 100',color:css('--muted')},ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}})}); }
+    function renderMacroChart(){ const ind=state.data.indicadores||{}; const series=[['IPCA 12M',ind.ipca_12m||[]],['IGP-M',ind.igpm||[]],['Selic',ind.selic||[]]]; const labels=[...new Set(series.flatMap(s=>s[1].map(x=>x.data)))].sort(); const datasets=series.map(([label,arr])=>{ const m=Object.fromEntries(arr.map(x=>[x.data,x.valor])); return {label,data:labels.map(d=>m[d]??null),spanGaps:true,tension:.25}; }); makeChart('macroChart',{type:'line',data:{labels,datasets},options:baseOptions()}); }
+    function renderProxyCharts(){ renderProxyChart('proxyFiisChart','proxyFiisNote','carteira_fiis_base100','Carteira FIIs'); renderProxyChart('proxyAcoesChart','proxyAcoesNote','carteira_acoes_base100','Carteira Ações'); }
+    function renderProxyChart(chartId,noteId,portfolioKey,portfolioLabel){
+      const carteira=carteiraVsSeries(portfolioKey), ifix=benchmarkBase100('IFIX'), ibov=benchmarkBase100('IBOV');
+      const note=document.getElementById(noteId);
+      if(!carteira.length){ if(note) note.textContent='Série da carteira ainda indisponível no JSON.'; makeChart(chartId,{type:'line',data:{labels:[],datasets:[]},options:baseOptions()}); return; }
+      const labels=[...new Set([...carteira,...ifix,...ibov].map(x=>x.data))].sort();
+      const mc=seriesMap(carteira), mf=seriesMap(ifix), mi=seriesMap(ibov);
+      const first=labels[0], last=labels[labels.length-1];
+      if(note) note.textContent=`Base 100 de ${first} até ${last}. Carteira e benchmarks estão na mesma escala.`;
+      makeChart(chartId,{type:'line',data:{labels,datasets:[
+        {label:`${portfolioLabel} base 100`,data:labels.map(d=>mc[d]??null),spanGaps:true,borderWidth:3,tension:.25},
+        {label:'IFIX base 100',data:labels.map(d=>mf[d]??null),spanGaps:true,borderWidth:2,tension:.25},
+        {label:'IBOV base 100',data:labels.map(d=>mi[d]??null),spanGaps:true,borderWidth:2,tension:.25}
+      ]},options:baseOptions({scales:{x:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}},y:{title:{display:true,text:'Base 100',color:css('--muted')},ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}})});
+    }
+    function renderFx(){ const c=state.data.indicadores?.cambio||{}; const entries=Object.entries(c).slice(0,4); document.getElementById('fxGrid').innerHTML=entries.length?entries.map(([k,v])=>kpi(k, typeof v==='number'?fmtNum(v,2):String(v),'câmbio/cripto')).join(''):'<div class="empty">Sem dados de câmbio.</div>'; }
 
-  setTimeout(()=>{
-    // Índices individuais (valor absoluto)
-    if(b.IPCA?.length)  makeChart('chart-ipca', [{label:'IPCA base 100',data:b.IPCA,color:'#C9A66B'}]);
-    if(b.IGPM?.length)  makeChart('chart-igpm', [{label:'IGP-M base 100',data:b.IGPM,color:'#8FB5A3'}]);
-    if(ind.selic?.length) makeChart('chart-selic',[{label:'Selic %',data:ind.selic,color:'#6B9080'}]);
-    if(b.IBOV?.length)  makeChart('chart-ibov', [{label:'Ibovespa',data:b.IBOV,color:'#E8E6DF'}]);
-    if(b.IFIX?.length)  makeChart('chart-ifix', [{label:'IFIX',data:b.IFIX,color:'#6B9080'}]);
-    if(b.IMOB?.length)  makeChart('chart-imob', [{label:'IMOB',data:b.IMOB,color:'#C9A66B'}]);
-
-    // Carteira vs índices
-    const dsFii=[];
-    if(cv.carteira_fiis_base100?.length) dsFii.push({label:'Carteira FIIs',data:cv.carteira_fiis_base100,color:'#8FB5A3'});
-    if(b.IFIX?.length) dsFii.push({label:'IFIX',data:b.IFIX,color:'#6B9080'});
-    if(b.IBOV?.length) dsFii.push({label:'IBOV',data:b.IBOV,color:'#E8E6DF'});
-    if(dsFii.length>0) makeChart('chart-vs-fii',dsFii);
-
-    const dsAcao=[];
-    if(cv.carteira_acoes_base100?.length) dsAcao.push({label:'Carteira Ações',data:cv.carteira_acoes_base100,color:'#C9A66B'});
-    if(b.IBOV?.length) dsAcao.push({label:'IBOV',data:b.IBOV,color:'#E8E6DF'});
-    if(b.IFIX?.length) dsAcao.push({label:'IFIX',data:b.IFIX,color:'#6B9080'});
-    if(dsAcao.length>0) makeChart('chart-vs-acao',dsAcao);
-  },50);
-}
-
-// Tabs
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>switchTab(btn.dataset.tab));
-});
-
-// Load
-async function loadIndex(){const r=await fetch(`${DATA_DIR}/index.json`);return r.json()}
-async function loadPayload(date){const r=await fetch(`${DATA_DIR}/${date}.json`);return r.json()}
-
-async function renderAll(date){
-  try{currentPayload=await loadPayload(date)}
-  catch(e){document.getElementById('acoes-grid').innerHTML=`<div class="empty">Erro ao carregar dados de ${date}.</div>`;return}
-  renderTicker(currentPayload.indicadores);
-  renderKPIs(currentPayload);
-  renderAcoes(currentPayload.acoes||[]);
-  renderFiis(currentPayload.fiis||[]);
-}
-
-async function init(){
-  let datas;
-  try{datas=await loadIndex()}
-  catch(e){document.getElementById('acoes-grid').innerHTML=`<div class="empty">Dashboard será populado na próxima execução do screener.</div>`;return}
-  const sel=document.getElementById('date-select');
-  sel.innerHTML=datas.map(d=>`<option value="${d}">${d.split('-').reverse().join('/')}</option>`).join('');
-  sel.addEventListener('change',e=>renderAll(e.target.value));
-  if(datas.length)await renderAll(datas[0]);
-}
-
-init();
-</script>
+    document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');setTimeout(()=>Object.values(state.charts).forEach(c=>c.resize()),50);}));
+    init();
+  </script>
 </body>
 </html>

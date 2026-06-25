@@ -4,19 +4,19 @@
     {
       "FUNDOS": "VIUR11",
       "SETOR": "MISTO",
-      "PREÇO ATUAL (R$)": 2.2,
+      "PREÇO ATUAL (R$)": 2.29,
       "DIVIDEND YIELD": 0.12890000000000001,
-      "P/VP": 0.67,
+      "P/VP": 0.64,
       "LIQUIDEZ DIÁRIA (R$)": 135468.7,
       "PATRIMÔNIO LÍQUIDO": 94664702.09,
-      "VOLATILIDADE": 3709.42,
+      "VOLATILIDADE": 3656.89,
       "VPA": 3.51,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 37666.0,
-      "score": 52.0,
+      "score": 46.3,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
+        "P/VP": "caindo",
         "LIQUIDEZ DIÁRIA (R$)": "subindo",
         "VOLATILIDADE": "estavel"
       }
@@ -24,16 +24,16 @@
     {
       "FUNDOS": "KOPA11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 336.03,
+      "PREÇO ATUAL (R$)": 338.0,
       "DIVIDEND YIELD": 0.11939999999999999,
       "P/VP": 0.86,
       "LIQUIDEZ DIÁRIA (R$)": 120535.05,
       "PATRIMÔNIO LÍQUIDO": 140155422.69,
-      "VOLATILIDADE": 2011.79,
+      "VOLATILIDADE": 2013.3,
       "VPA": 395.16,
       "ÚLTIMO DIVIDENDO": "47,50",
       "NUM. COTISTAS": 3498.0,
-      "score": 61.2,
+      "score": 61.1,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -49,11 +49,11 @@
       "P/VP": 1.1,
       "LIQUIDEZ DIÁRIA (R$)": 370780.04,
       "PATRIMÔNIO LÍQUIDO": 95085890.53,
-      "VOLATILIDADE": 5764.85,
+      "VOLATILIDADE": 5745.54,
       "VPA": 10.03,
       "ÚLTIMO DIVIDENDO": "0,83",
       "NUM. COTISTAS": 230.0,
-      "score": 55.3,
+      "score": 55.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -64,12 +64,12 @@
     {
       "FUNDOS": "RBIR11",
       "SETOR": "FUNDO DE DESENVOLVIMENTO",
-      "PREÇO ATUAL (R$)": 79.58,
+      "PREÇO ATUAL (R$)": 78.55,
       "DIVIDEND YIELD": 0.0209,
-      "P/VP": 1.01,
+      "P/VP": 1.0,
       "LIQUIDEZ DIÁRIA (R$)": 243027.48,
       "PATRIMÔNIO LÍQUIDO": 120414062.37,
-      "VOLATILIDADE": 1388.91,
+      "VOLATILIDADE": 1388.67,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,64",
       "NUM. COTISTAS": 1464.0,
@@ -104,12 +104,12 @@
     {
       "FUNDOS": "RZAT11",
       "SETOR": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
-      "PREÇO ATUAL (R$)": 94.6,
+      "PREÇO ATUAL (R$)": 94.51,
       "DIVIDEND YIELD": 0.0175,
       "P/VP": 0.91,
       "LIQUIDEZ DIÁRIA (R$)": 573823.09,
       "PATRIMÔNIO LÍQUIDO": 439716792.04,
-      "VOLATILIDADE": 1109.48,
+      "VOLATILIDADE": 1109.08,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,70",
       "NUM. COTISTAS": 34380.0,
@@ -122,38 +122,18 @@
       }
     },
     {
-      "FUNDOS": "SMRE11",
-      "SETOR": "INCORPORAÇÕES",
-      "PREÇO ATUAL (R$)": 52.29,
-      "DIVIDEND YIELD": 0.017,
-      "P/VP": 0.5,
-      "LIQUIDEZ DIÁRIA (R$)": 221594.27,
-      "PATRIMÔNIO LÍQUIDO": 104105096.46,
-      "VOLATILIDADE": 2759.11,
-      "VPA": null,
-      "ÚLTIMO DIVIDENDO": "1,01",
-      "NUM. COTISTAS": 1233.0,
-      "score": 68.5,
-      "tendencias": {
-        "DIVIDEND YIELD": "estavel",
-        "P/VP": "subindo",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
-        "VOLATILIDADE": "estavel"
-      }
-    },
-    {
       "FUNDOS": "DEVA11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 17.82,
+      "PREÇO ATUAL (R$)": 17.8,
       "DIVIDEND YIELD": 0.0165,
       "P/VP": 0.19,
       "LIQUIDEZ DIÁRIA (R$)": 512278.17,
       "PATRIMÔNIO LÍQUIDO": 1334067797.89,
-      "VOLATILIDADE": 2241.36,
+      "VOLATILIDADE": 2241.65,
       "VPA": 94.99,
       "ÚLTIMO DIVIDENDO": "0,30",
       "NUM. COTISTAS": 74905.0,
-      "score": 60.5,
+      "score": 68.5,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -164,16 +144,16 @@
     {
       "FUNDOS": "KIVO11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 59.23,
+      "PREÇO ATUAL (R$)": 58.87,
       "DIVIDEND YIELD": 0.016399999999999998,
       "P/VP": 0.7,
       "LIQUIDEZ DIÁRIA (R$)": 479032.48,
       "PATRIMÔNIO LÍQUIDO": 187570261.88,
-      "VOLATILIDADE": 1481.81,
+      "VOLATILIDADE": 1481.57,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,14",
       "NUM. COTISTAS": 7247.0,
-      "score": 63.9,
+      "score": 60.5,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -184,16 +164,16 @@
     {
       "FUNDOS": "GZIT11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 41.76,
+      "PREÇO ATUAL (R$)": 41.64,
       "DIVIDEND YIELD": 0.0161,
       "P/VP": 0.48,
       "LIQUIDEZ DIÁRIA (R$)": 430782.36,
       "PATRIMÔNIO LÍQUIDO": 2028146076.2,
-      "VOLATILIDADE": 1693.26,
+      "VOLATILIDADE": 1686.49,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,78",
       "NUM. COTISTAS": 8032.0,
-      "score": 72.1,
+      "score": 63.9,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -204,16 +184,16 @@
     {
       "FUNDOS": "HCTR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 15.92,
+      "PREÇO ATUAL (R$)": 15.88,
       "DIVIDEND YIELD": 0.016,
       "P/VP": 0.16,
       "LIQUIDEZ DIÁRIA (R$)": 520524.36,
       "PATRIMÔNIO LÍQUIDO": 2216689880.53,
-      "VOLATILIDADE": 2021.06,
+      "VOLATILIDADE": 2024.08,
       "VPA": 100.37,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 123678.0,
-      "score": 60.0,
+      "score": 72.1,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -224,16 +204,16 @@
     {
       "FUNDOS": "VCRA11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 61.61,
+      "PREÇO ATUAL (R$)": 61.99,
       "DIVIDEND YIELD": 0.0158,
       "P/VP": 0.59,
       "LIQUIDEZ DIÁRIA (R$)": 495632.32,
       "PATRIMÔNIO LÍQUIDO": 471637374.73,
-      "VOLATILIDADE": 1306.21,
+      "VOLATILIDADE": 1314.27,
       "VPA": 102.67,
       "ÚLTIMO DIVIDENDO": "1,00",
       "NUM. COTISTAS": 9776.0,
-      "score": 62.8,
+      "score": 60.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -244,16 +224,16 @@
     {
       "FUNDOS": "SNME11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 9.35,
+      "PREÇO ATUAL (R$)": 9.39,
       "DIVIDEND YIELD": 0.0158,
       "P/VP": 1.0,
       "LIQUIDEZ DIÁRIA (R$)": 402588.23,
       "PATRIMÔNIO LÍQUIDO": 69984048.36,
-      "VOLATILIDADE": 1380.79,
+      "VOLATILIDADE": 1380.87,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,15",
       "NUM. COTISTAS": 7492.0,
-      "score": 50.4,
+      "score": 62.8,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -264,16 +244,16 @@
     {
       "FUNDOS": "EGAF11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 88.33,
+      "PREÇO ATUAL (R$)": 88.82,
       "DIVIDEND YIELD": 0.0147,
       "P/VP": 0.89,
       "LIQUIDEZ DIÁRIA (R$)": 910964.73,
       "PATRIMÔNIO LÍQUIDO": 310127971.92,
-      "VOLATILIDADE": 1034.79,
+      "VOLATILIDADE": 1037.35,
       "VPA": 99.02,
       "ÚLTIMO DIVIDENDO": "1,32",
       "NUM. COTISTAS": 12644.0,
-      "score": 29.8,
+      "score": 50.4,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -284,7 +264,7 @@
     {
       "FUNDOS": "IAAG11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 8.39,
+      "PREÇO ATUAL (R$)": 8.4,
       "DIVIDEND YIELD": 0.0143,
       "P/VP": 0.87,
       "LIQUIDEZ DIÁRIA (R$)": 206424.27,
@@ -293,7 +273,7 @@
       "VPA": 9.69,
       "ÚLTIMO DIVIDENDO": "0,12",
       "NUM. COTISTAS": 16132.0,
-      "score": 69.6,
+      "score": 29.8,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -304,16 +284,16 @@
     {
       "FUNDOS": "CACR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 25.26,
+      "PREÇO ATUAL (R$)": 24.59,
       "DIVIDEND YIELD": 0.0141,
       "P/VP": 0.25,
       "LIQUIDEZ DIÁRIA (R$)": 1042048.61,
       "PATRIMÔNIO LÍQUIDO": 471926680.37,
-      "VOLATILIDADE": 6399.13,
+      "VOLATILIDADE": 6401.77,
       "VPA": 95.04,
       "ÚLTIMO DIVIDENDO": "1,20",
       "NUM. COTISTAS": 25317.0,
-      "score": 60.0,
+      "score": 69.9,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -324,19 +304,19 @@
     {
       "FUNDOS": "ARRI11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 4.74,
+      "PREÇO ATUAL (R$)": 4.7,
       "DIVIDEND YIELD": 0.0139,
-      "P/VP": 0.58,
+      "P/VP": 0.56,
       "LIQUIDEZ DIÁRIA (R$)": 195045.36,
       "PATRIMÔNIO LÍQUIDO": 174647296.59,
-      "VOLATILIDADE": 1863.95,
+      "VOLATILIDADE": 1863.23,
       "VPA": 8.43,
       "ÚLTIMO DIVIDENDO": "0,07",
       "NUM. COTISTAS": 23191.0,
-      "score": 48.2,
+      "score": 60.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
+        "P/VP": "caindo",
         "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
@@ -344,16 +324,16 @@
     {
       "FUNDOS": "LSAG11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 77.44,
+      "PREÇO ATUAL (R$)": 77.45,
       "DIVIDEND YIELD": 0.0139,
       "P/VP": 0.8,
       "LIQUIDEZ DIÁRIA (R$)": 102470.91,
       "PATRIMÔNIO LÍQUIDO": 98794610.7,
-      "VOLATILIDADE": 1667.52,
+      "VOLATILIDADE": 1667.59,
       "VPA": 97.88,
       "ÚLTIMO DIVIDENDO": "1,05",
       "NUM. COTISTAS": 2589.0,
-      "score": 64.7,
+      "score": 48.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "subindo",
@@ -373,7 +353,7 @@
       "VPA": 100.43,
       "ÚLTIMO DIVIDENDO": "1,09",
       "NUM. COTISTAS": 8102.0,
-      "score": 25.9,
+      "score": 64.7,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -384,21 +364,41 @@
     {
       "FUNDOS": "EXES11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 9.53,
+      "PREÇO ATUAL (R$)": 9.47,
       "DIVIDEND YIELD": 0.0137,
-      "P/VP": 0.97,
+      "P/VP": 0.96,
       "LIQUIDEZ DIÁRIA (R$)": 116708.41,
       "PATRIMÔNIO LÍQUIDO": 138137672.46,
-      "VOLATILIDADE": 1290.86,
+      "VOLATILIDADE": 1290.35,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,13",
       "NUM. COTISTAS": 2258.0,
-      "score": 36.6,
+      "score": 26.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
         "LIQUIDEZ DIÁRIA (R$)": "caindo",
         "VOLATILIDADE": "estavel"
+      }
+    },
+    {
+      "FUNDOS": "CPTR11",
+      "SETOR": "INDEFINIDO",
+      "PREÇO ATUAL (R$)": 7.9,
+      "DIVIDEND YIELD": 0.013600000000000001,
+      "P/VP": 0.78,
+      "LIQUIDEZ DIÁRIA (R$)": 189044.59,
+      "PATRIMÔNIO LÍQUIDO": 198071876.54,
+      "VOLATILIDADE": 1094.77,
+      "VPA": 9.99,
+      "ÚLTIMO DIVIDENDO": "0,11",
+      "NUM. COTISTAS": 21287.0,
+      "score": 37.2,
+      "tendencias": {
+        "DIVIDEND YIELD": "neutro",
+        "P/VP": "neutro",
+        "LIQUIDEZ DIÁRIA (R$)": "neutro",
+        "VOLATILIDADE": "neutro"
       }
     }
   ],
@@ -827,24 +827,24 @@
   "indicadores": {
     "cambio": {
       "USD/BRL": {
-        "valor": 5.189,
-        "variacao_pct": -0.312948,
-        "atualizado_em": "2026-06-25 13:44:26"
+        "valor": 5.1927,
+        "variacao_pct": -0.241866,
+        "atualizado_em": "2026-06-25 19:02:38"
       },
       "EUR/BRL": {
         "valor": 5.89971,
         "variacao_pct": -0.177069,
-        "atualizado_em": "2026-06-25 13:40:57"
+        "atualizado_em": "2026-06-25 19:00:32"
       },
       "GBP/BRL": {
-        "valor": 6.85446,
-        "variacao_pct": -0.019358,
-        "atualizado_em": "2026-06-25 13:44:26"
+        "valor": 6.85157,
+        "variacao_pct": -0.0616,
+        "atualizado_em": "2026-06-25 19:02:38"
       },
       "BTC/BRL": {
-        "valor": 311550.0,
-        "variacao_pct": -1.71,
-        "atualizado_em": "2026-06-25 13:44:40"
+        "valor": 314492.0,
+        "variacao_pct": -2.068,
+        "atualizado_em": "2026-06-25 19:05:56"
       }
     },
     "ipca_12m": [
@@ -5057,6 +5057,2214 @@
     ]
   },
   "carteira_vs": {
+    "ibov_base100": [
+      {
+        "data": "2025-05-19",
+        "valor": 100.0
+      },
+      {
+        "data": "2025-05-20",
+        "valor": 100.3395
+      },
+      {
+        "data": "2025-05-21",
+        "valor": 98.7432
+      },
+      {
+        "data": "2025-05-22",
+        "valor": 98.3077
+      },
+      {
+        "data": "2025-05-23",
+        "valor": 98.7023
+      },
+      {
+        "data": "2025-05-26",
+        "valor": 98.9258
+      },
+      {
+        "data": "2025-05-27",
+        "valor": 99.932
+      },
+      {
+        "data": "2025-05-28",
+        "valor": 99.4643
+      },
+      {
+        "data": "2025-05-29",
+        "valor": 99.2108
+      },
+      {
+        "data": "2025-05-30",
+        "valor": 98.1316
+      },
+      {
+        "data": "2025-06-02",
+        "valor": 97.9597
+      },
+      {
+        "data": "2025-06-03",
+        "valor": 98.5033
+      },
+      {
+        "data": "2025-06-04",
+        "valor": 98.1137
+      },
+      {
+        "data": "2025-06-05",
+        "valor": 97.5651
+      },
+      {
+        "data": "2025-06-06",
+        "valor": 97.4691
+      },
+      {
+        "data": "2025-06-09",
+        "valor": 97.1805
+      },
+      {
+        "data": "2025-06-10",
+        "valor": 97.7083
+      },
+      {
+        "data": "2025-06-11",
+        "valor": 98.2039
+      },
+      {
+        "data": "2025-06-12",
+        "valor": 98.6852
+      },
+      {
+        "data": "2025-06-13",
+        "valor": 98.2648
+      },
+      {
+        "data": "2025-06-16",
+        "valor": 99.7279
+      },
+      {
+        "data": "2025-06-17",
+        "valor": 99.4299
+      },
+      {
+        "data": "2025-06-18",
+        "valor": 99.3419
+      },
+      {
+        "data": "2025-06-20",
+        "valor": 98.1953
+      },
+      {
+        "data": "2025-06-23",
+        "valor": 97.7907
+      },
+      {
+        "data": "2025-06-24",
+        "valor": 98.2304
+      },
+      {
+        "data": "2025-06-25",
+        "valor": 97.2292
+      },
+      {
+        "data": "2025-06-26",
+        "valor": 98.1939
+      },
+      {
+        "data": "2025-06-27",
+        "valor": 98.0163
+      },
+      {
+        "data": "2025-06-30",
+        "valor": 99.4407
+      },
+      {
+        "data": "2025-07-01",
+        "valor": 99.9377
+      },
+      {
+        "data": "2025-07-02",
+        "valor": 99.5811
+      },
+      {
+        "data": "2025-07-03",
+        "valor": 100.9253
+      },
+      {
+        "data": "2025-07-04",
+        "valor": 101.3191
+      },
+      {
+        "data": "2025-07-07",
+        "valor": 99.8954
+      },
+      {
+        "data": "2025-07-08",
+        "valor": 99.7615
+      },
+      {
+        "data": "2025-07-09",
+        "valor": 98.4567
+      },
+      {
+        "data": "2025-07-10",
+        "valor": 97.9282
+      },
+      {
+        "data": "2025-07-11",
+        "valor": 97.53
+      },
+      {
+        "data": "2025-07-14",
+        "valor": 96.8941
+      },
+      {
+        "data": "2025-07-15",
+        "valor": 96.859
+      },
+      {
+        "data": "2025-07-16",
+        "valor": 97.0459
+      },
+      {
+        "data": "2025-07-17",
+        "valor": 97.0846
+      },
+      {
+        "data": "2025-07-18",
+        "valor": 95.5212
+      },
+      {
+        "data": "2025-07-21",
+        "valor": 96.0834
+      },
+      {
+        "data": "2025-07-22",
+        "valor": 95.9896
+      },
+      {
+        "data": "2025-07-23",
+        "valor": 96.9435
+      },
+      {
+        "data": "2025-07-24",
+        "valor": 95.8263
+      },
+      {
+        "data": "2025-07-25",
+        "valor": 95.6229
+      },
+      {
+        "data": "2025-07-28",
+        "valor": 94.6239
+      },
+      {
+        "data": "2025-07-29",
+        "valor": 95.0514
+      },
+      {
+        "data": "2025-07-30",
+        "valor": 95.9566
+      },
+      {
+        "data": "2025-07-31",
+        "valor": 95.2985
+      },
+      {
+        "data": "2025-08-01",
+        "valor": 94.8445
+      },
+      {
+        "data": "2025-08-04",
+        "valor": 95.2269
+      },
+      {
+        "data": "2025-08-05",
+        "valor": 95.3558
+      },
+      {
+        "data": "2025-08-06",
+        "valor": 96.3491
+      },
+      {
+        "data": "2025-08-07",
+        "valor": 97.7742
+      },
+      {
+        "data": "2025-08-08",
+        "valor": 97.3338
+      },
+      {
+        "data": "2025-08-11",
+        "valor": 97.1261
+      },
+      {
+        "data": "2025-08-12",
+        "valor": 98.7668
+      },
+      {
+        "data": "2025-08-13",
+        "valor": 97.8881
+      },
+      {
+        "data": "2025-08-14",
+        "valor": 97.651
+      },
+      {
+        "data": "2025-08-15",
+        "valor": 97.6403
+      },
+      {
+        "data": "2025-08-18",
+        "valor": 98.3428
+      },
+      {
+        "data": "2025-08-19",
+        "valor": 96.2732
+      },
+      {
+        "data": "2025-08-20",
+        "valor": 96.4415
+      },
+      {
+        "data": "2025-08-21",
+        "valor": 96.3297
+      },
+      {
+        "data": "2025-08-22",
+        "valor": 98.8055
+      },
+      {
+        "data": "2025-08-25",
+        "valor": 98.8463
+      },
+      {
+        "data": "2025-08-26",
+        "valor": 98.6644
+      },
+      {
+        "data": "2025-08-27",
+        "valor": 99.6921
+      },
+      {
+        "data": "2025-08-28",
+        "valor": 101.0119
+      },
+      {
+        "data": "2025-08-29",
+        "valor": 101.279
+      },
+      {
+        "data": "2025-09-01",
+        "valor": 101.0663
+      },
+      {
+        "data": "2025-09-02",
+        "valor": 100.5006
+      },
+      {
+        "data": "2025-09-03",
+        "valor": 100.1633
+      },
+      {
+        "data": "2025-09-04",
+        "valor": 100.9718
+      },
+      {
+        "data": "2025-09-05",
+        "valor": 102.1513
+      },
+      {
+        "data": "2025-09-08",
+        "valor": 101.544
+      },
+      {
+        "data": "2025-09-09",
+        "valor": 101.4194
+      },
+      {
+        "data": "2025-09-10",
+        "valor": 101.9429
+      },
+      {
+        "data": "2025-09-11",
+        "valor": 102.5173
+      },
+      {
+        "data": "2025-09-12",
+        "valor": 101.8878
+      },
+      {
+        "data": "2025-09-15",
+        "valor": 102.8009
+      },
+      {
+        "data": "2025-09-16",
+        "valor": 103.1697
+      },
+      {
+        "data": "2025-09-17",
+        "valor": 104.2668
+      },
+      {
+        "data": "2025-09-18",
+        "valor": 104.1995
+      },
+      {
+        "data": "2025-09-19",
+        "valor": 104.4609
+      },
+      {
+        "data": "2025-09-22",
+        "valor": 103.9195
+      },
+      {
+        "data": "2025-09-23",
+        "valor": 104.8619
+      },
+      {
+        "data": "2025-09-24",
+        "valor": 104.9099
+      },
+      {
+        "data": "2025-09-25",
+        "valor": 104.0606
+      },
+      {
+        "data": "2025-09-26",
+        "valor": 104.1615
+      },
+      {
+        "data": "2025-09-29",
+        "valor": 104.7989
+      },
+      {
+        "data": "2025-09-30",
+        "valor": 104.7273
+      },
+      {
+        "data": "2025-10-01",
+        "valor": 104.2117
+      },
+      {
+        "data": "2025-10-02",
+        "valor": 103.0895
+      },
+      {
+        "data": "2025-10-03",
+        "valor": 103.2692
+      },
+      {
+        "data": "2025-10-06",
+        "valor": 102.8445
+      },
+      {
+        "data": "2025-10-07",
+        "valor": 101.2318
+      },
+      {
+        "data": "2025-10-08",
+        "valor": 101.7968
+      },
+      {
+        "data": "2025-10-09",
+        "valor": 101.4839
+      },
+      {
+        "data": "2025-10-10",
+        "valor": 100.7477
+      },
+      {
+        "data": "2025-10-13",
+        "valor": 101.5376
+      },
+      {
+        "data": "2025-10-14",
+        "valor": 101.466
+      },
+      {
+        "data": "2025-10-15",
+        "valor": 102.1255
+      },
+      {
+        "data": "2025-10-16",
+        "valor": 101.8362
+      },
+      {
+        "data": "2025-10-17",
+        "valor": 102.6949
+      },
+      {
+        "data": "2025-10-20",
+        "valor": 103.4898
+      },
+      {
+        "data": "2025-10-21",
+        "valor": 103.1861
+      },
+      {
+        "data": "2025-10-22",
+        "valor": 103.7505
+      },
+      {
+        "data": "2025-10-23",
+        "valor": 104.3578
+      },
+      {
+        "data": "2025-10-24",
+        "valor": 104.6807
+      },
+      {
+        "data": "2025-10-27",
+        "valor": 105.2515
+      },
+      {
+        "data": "2025-10-28",
+        "valor": 105.5809
+      },
+      {
+        "data": "2025-10-29",
+        "valor": 106.4432
+      },
+      {
+        "data": "2025-10-30",
+        "valor": 106.5485
+      },
+      {
+        "data": "2025-10-31",
+        "valor": 107.0927
+      },
+      {
+        "data": "2025-11-03",
+        "valor": 107.7473
+      },
+      {
+        "data": "2025-11-04",
+        "valor": 107.9263
+      },
+      {
+        "data": "2025-11-05",
+        "valor": 109.7811
+      },
+      {
+        "data": "2025-11-06",
+        "valor": 109.8134
+      },
+      {
+        "data": "2025-11-07",
+        "valor": 110.3326
+      },
+      {
+        "data": "2025-11-10",
+        "valor": 111.1869
+      },
+      {
+        "data": "2025-11-11",
+        "valor": 112.9716
+      },
+      {
+        "data": "2025-11-12",
+        "valor": 112.8885
+      },
+      {
+        "data": "2025-11-13",
+        "valor": 112.5512
+      },
+      {
+        "data": "2025-11-14",
+        "valor": 112.9644
+      },
+      {
+        "data": "2025-11-17",
+        "valor": 112.4302
+      },
+      {
+        "data": "2025-11-18",
+        "valor": 112.0929
+      },
+      {
+        "data": "2025-11-19",
+        "valor": 111.2757
+      },
+      {
+        "data": "2025-11-21",
+        "valor": 110.8382
+      },
+      {
+        "data": "2025-11-24",
+        "valor": 111.202
+      },
+      {
+        "data": "2025-11-25",
+        "valor": 111.6546
+      },
+      {
+        "data": "2025-11-26",
+        "valor": 113.5488
+      },
+      {
+        "data": "2025-11-27",
+        "valor": 113.3605
+      },
+      {
+        "data": "2025-11-28",
+        "valor": 113.919
+      },
+      {
+        "data": "2025-12-01",
+        "valor": 113.5889
+      },
+      {
+        "data": "2025-12-02",
+        "valor": 115.3657
+      },
+      {
+        "data": "2025-12-03",
+        "valor": 115.8405
+      },
+      {
+        "data": "2025-12-04",
+        "valor": 117.7748
+      },
+      {
+        "data": "2025-12-05",
+        "valor": 112.6994
+      },
+      {
+        "data": "2025-12-08",
+        "valor": 113.2853
+      },
+      {
+        "data": "2025-12-09",
+        "valor": 113.1377
+      },
+      {
+        "data": "2025-12-10",
+        "valor": 113.9212
+      },
+      {
+        "data": "2025-12-11",
+        "valor": 114.0028
+      },
+      {
+        "data": "2025-12-12",
+        "valor": 115.1322
+      },
+      {
+        "data": "2025-12-15",
+        "valor": 116.3611
+      },
+      {
+        "data": "2025-12-16",
+        "valor": 113.5653
+      },
+      {
+        "data": "2025-12-17",
+        "valor": 112.6694
+      },
+      {
+        "data": "2025-12-18",
+        "valor": 113.0962
+      },
+      {
+        "data": "2025-12-19",
+        "valor": 113.4901
+      },
+      {
+        "data": "2025-12-22",
+        "valor": 113.253
+      },
+      {
+        "data": "2025-12-23",
+        "valor": 114.9102
+      },
+      {
+        "data": "2025-12-26",
+        "valor": 115.226
+      },
+      {
+        "data": "2025-12-29",
+        "valor": 114.9345
+      },
+      {
+        "data": "2025-12-30",
+        "valor": 115.3893
+      },
+      {
+        "data": "2026-01-02",
+        "valor": 114.9696
+      },
+      {
+        "data": "2026-01-05",
+        "valor": 115.9228
+      },
+      {
+        "data": "2026-01-06",
+        "valor": 117.2076
+      },
+      {
+        "data": "2026-01-07",
+        "valor": 115.998
+      },
+      {
+        "data": "2026-01-08",
+        "valor": 116.687
+      },
+      {
+        "data": "2026-01-09",
+        "valor": 116.997
+      },
+      {
+        "data": "2026-01-12",
+        "valor": 116.8395
+      },
+      {
+        "data": "2026-01-13",
+        "valor": 115.9966
+      },
+      {
+        "data": "2026-01-14",
+        "valor": 118.2689
+      },
+      {
+        "data": "2026-01-15",
+        "valor": 118.5711
+      },
+      {
+        "data": "2026-01-16",
+        "valor": 118.0211
+      },
+      {
+        "data": "2026-01-19",
+        "valor": 118.0562
+      },
+      {
+        "data": "2026-01-20",
+        "valor": 119.0789
+      },
+      {
+        "data": "2026-01-21",
+        "valor": 123.0463
+      },
+      {
+        "data": "2026-01-22",
+        "valor": 125.7477
+      },
+      {
+        "data": "2026-01-23",
+        "valor": 128.0895
+      },
+      {
+        "data": "2026-01-26",
+        "valor": 127.9906
+      },
+      {
+        "data": "2026-01-27",
+        "valor": 130.2809
+      },
+      {
+        "data": "2026-01-28",
+        "valor": 132.266
+      },
+      {
+        "data": "2026-01-29",
+        "valor": 131.151
+      },
+      {
+        "data": "2026-01-30",
+        "valor": 129.8834
+      },
+      {
+        "data": "2026-02-02",
+        "valor": 130.9068
+      },
+      {
+        "data": "2026-02-03",
+        "valor": 132.97
+      },
+      {
+        "data": "2026-02-04",
+        "valor": 130.1298
+      },
+      {
+        "data": "2026-02-05",
+        "valor": 130.4298
+      },
+      {
+        "data": "2026-02-06",
+        "valor": 131.0192
+      },
+      {
+        "data": "2026-02-09",
+        "valor": 133.3761
+      },
+      {
+        "data": "2026-02-10",
+        "valor": 133.1526
+      },
+      {
+        "data": "2026-02-11",
+        "valor": 135.8525
+      },
+      {
+        "data": "2026-02-12",
+        "valor": 134.4682
+      },
+      {
+        "data": "2026-02-13",
+        "valor": 133.5358
+      },
+      {
+        "data": "2026-02-18",
+        "valor": 133.2149
+      },
+      {
+        "data": "2026-02-19",
+        "valor": 135.0182
+      },
+      {
+        "data": "2026-02-20",
+        "valor": 136.4505
+      },
+      {
+        "data": "2026-02-23",
+        "valor": 135.2474
+      },
+      {
+        "data": "2026-02-24",
+        "valor": 137.1351
+      },
+      {
+        "data": "2026-02-25",
+        "valor": 136.9618
+      },
+      {
+        "data": "2026-02-26",
+        "valor": 136.7878
+      },
+      {
+        "data": "2026-02-27",
+        "valor": 135.1994
+      },
+      {
+        "data": "2026-03-02",
+        "valor": 135.5718
+      },
+      {
+        "data": "2026-03-03",
+        "valor": 131.1302
+      },
+      {
+        "data": "2026-03-04",
+        "valor": 132.7494
+      },
+      {
+        "data": "2026-03-05",
+        "valor": 129.2389
+      },
+      {
+        "data": "2026-03-06",
+        "valor": 128.4518
+      },
+      {
+        "data": "2026-03-09",
+        "valor": 129.5619
+      },
+      {
+        "data": "2026-03-10",
+        "valor": 131.3751
+      },
+      {
+        "data": "2026-03-11",
+        "valor": 131.749
+      },
+      {
+        "data": "2026-03-12",
+        "valor": 128.3945
+      },
+      {
+        "data": "2026-03-13",
+        "valor": 127.2258
+      },
+      {
+        "data": "2026-03-16",
+        "valor": 128.8171
+      },
+      {
+        "data": "2026-03-17",
+        "valor": 129.2002
+      },
+      {
+        "data": "2026-03-18",
+        "valor": 128.6488
+      },
+      {
+        "data": "2026-03-19",
+        "valor": 129.1007
+      },
+      {
+        "data": "2026-03-20",
+        "valor": 126.1988
+      },
+      {
+        "data": "2026-03-23",
+        "valor": 130.2902
+      },
+      {
+        "data": "2026-03-24",
+        "valor": 130.7034
+      },
+      {
+        "data": "2026-03-25",
+        "valor": 132.791
+      },
+      {
+        "data": "2026-03-26",
+        "valor": 130.8638
+      },
+      {
+        "data": "2026-03-27",
+        "valor": 130.0216
+      },
+      {
+        "data": "2026-03-30",
+        "valor": 130.707
+      },
+      {
+        "data": "2026-03-31",
+        "valor": 134.2505
+      },
+      {
+        "data": "2026-04-01",
+        "valor": 134.6021
+      },
+      {
+        "data": "2026-04-02",
+        "valor": 134.673
+      },
+      {
+        "data": "2026-04-06",
+        "valor": 134.7518
+      },
+      {
+        "data": "2026-04-07",
+        "valor": 134.8212
+      },
+      {
+        "data": "2026-04-08",
+        "valor": 137.6443
+      },
+      {
+        "data": "2026-04-09",
+        "valor": 139.7412
+      },
+      {
+        "data": "2026-04-10",
+        "valor": 141.3131
+      },
+      {
+        "data": "2026-04-13",
+        "valor": 141.798
+      },
+      {
+        "data": "2026-04-14",
+        "valor": 142.2678
+      },
+      {
+        "data": "2026-04-15",
+        "valor": 141.6096
+      },
+      {
+        "data": "2026-04-16",
+        "valor": 140.9515
+      },
+      {
+        "data": "2026-04-17",
+        "valor": 140.1745
+      },
+      {
+        "data": "2026-04-20",
+        "valor": 140.4595
+      },
+      {
+        "data": "2026-04-22",
+        "valor": 138.137
+      },
+      {
+        "data": "2026-04-23",
+        "valor": 137.0549
+      },
+      {
+        "data": "2026-04-24",
+        "valor": 136.6016
+      },
+      {
+        "data": "2026-04-27",
+        "valor": 135.7666
+      },
+      {
+        "data": "2026-04-28",
+        "valor": 135.0791
+      },
+      {
+        "data": "2026-04-29",
+        "valor": 132.3083
+      },
+      {
+        "data": "2026-04-30",
+        "valor": 134.1474
+      },
+      {
+        "data": "2026-05-04",
+        "valor": 132.917
+      },
+      {
+        "data": "2026-05-05",
+        "valor": 133.7434
+      },
+      {
+        "data": "2026-05-06",
+        "valor": 134.4145
+      },
+      {
+        "data": "2026-05-07",
+        "valor": 131.2111
+      },
+      {
+        "data": "2026-05-08",
+        "valor": 131.8485
+      },
+      {
+        "data": "2026-05-11",
+        "valor": 130.2737
+      },
+      {
+        "data": "2026-05-12",
+        "valor": 129.1515
+      },
+      {
+        "data": "2026-05-13",
+        "valor": 126.8283
+      },
+      {
+        "data": "2026-05-14",
+        "valor": 127.7364
+      },
+      {
+        "data": "2026-05-15",
+        "valor": 126.9615
+      },
+      {
+        "data": "2026-05-18",
+        "valor": 126.741
+      },
+      {
+        "data": "2026-05-19",
+        "valor": 124.8095
+      },
+      {
+        "data": "2026-05-20",
+        "valor": 127.0131
+      },
+      {
+        "data": "2026-05-21",
+        "valor": 127.2236
+      },
+      {
+        "data": "2026-05-22",
+        "valor": 126.1924
+      },
+      {
+        "data": "2026-05-25",
+        "valor": 127.0152
+      },
+      {
+        "data": "2026-05-26",
+        "valor": 126.4638
+      },
+      {
+        "data": "2026-05-27",
+        "valor": 125.8587
+      },
+      {
+        "data": "2026-05-28",
+        "valor": 125.371
+      },
+      {
+        "data": "2026-05-29",
+        "valor": 124.4579
+      },
+      {
+        "data": "2026-06-01",
+        "valor": 123.3192
+      },
+      {
+        "data": "2026-06-02",
+        "valor": 124.7515
+      },
+      {
+        "data": "2026-06-03",
+        "valor": 121.9822
+      },
+      {
+        "data": "2026-06-05",
+        "valor": 121.0426
+      },
+      {
+        "data": "2026-06-08",
+        "valor": 120.7919
+      },
+      {
+        "data": "2026-06-09",
+        "valor": 121.6112
+      },
+      {
+        "data": "2026-06-10",
+        "valor": 120.7561
+      },
+      {
+        "data": "2026-06-11",
+        "valor": 122.8172
+      },
+      {
+        "data": "2026-06-12",
+        "valor": 122.5565
+      },
+      {
+        "data": "2026-06-15",
+        "valor": 122.0423
+      },
+      {
+        "data": "2026-06-16",
+        "valor": 121.4937
+      },
+      {
+        "data": "2026-06-17",
+        "valor": 120.6379
+      },
+      {
+        "data": "2026-06-18",
+        "valor": 120.5119
+      },
+      {
+        "data": "2026-06-19",
+        "valor": 120.7253
+      },
+      {
+        "data": "2026-06-22",
+        "valor": 122.0101
+      },
+      {
+        "data": "2026-06-23",
+        "valor": 122.6467
+      },
+      {
+        "data": "2026-06-24",
+        "valor": 122.1082
+      }
+    ],
+    "ifix_base100": [
+      {
+        "data": "2025-05-19",
+        "valor": 100.0
+      },
+      {
+        "data": "2025-05-20",
+        "valor": 100.0
+      },
+      {
+        "data": "2025-05-21",
+        "valor": 99.7541
+      },
+      {
+        "data": "2025-05-22",
+        "valor": 100.0
+      },
+      {
+        "data": "2025-05-23",
+        "valor": 99.7541
+      },
+      {
+        "data": "2025-05-26",
+        "valor": 99.918
+      },
+      {
+        "data": "2025-05-27",
+        "valor": 99.918
+      },
+      {
+        "data": "2025-05-28",
+        "valor": 100.0
+      },
+      {
+        "data": "2025-05-29",
+        "valor": 100.1639
+      },
+      {
+        "data": "2025-05-30",
+        "valor": 100.3279
+      },
+      {
+        "data": "2025-06-02",
+        "valor": 100.082
+      },
+      {
+        "data": "2025-06-03",
+        "valor": 99.918
+      },
+      {
+        "data": "2025-06-04",
+        "valor": 100.3279
+      },
+      {
+        "data": "2025-06-05",
+        "valor": 100.3279
+      },
+      {
+        "data": "2025-06-06",
+        "valor": 100.0
+      },
+      {
+        "data": "2025-06-09",
+        "valor": 99.1803
+      },
+      {
+        "data": "2025-06-10",
+        "valor": 98.7705
+      },
+      {
+        "data": "2025-06-11",
+        "valor": 98.9344
+      },
+      {
+        "data": "2025-06-12",
+        "valor": 98.5246
+      },
+      {
+        "data": "2025-06-13",
+        "valor": 99.2623
+      },
+      {
+        "data": "2025-06-16",
+        "valor": 99.5902
+      },
+      {
+        "data": "2025-06-17",
+        "valor": 99.7541
+      },
+      {
+        "data": "2025-06-18",
+        "valor": 99.918
+      },
+      {
+        "data": "2025-06-20",
+        "valor": 100.0
+      },
+      {
+        "data": "2025-06-23",
+        "valor": 99.4262
+      },
+      {
+        "data": "2025-06-24",
+        "valor": 99.6721
+      },
+      {
+        "data": "2025-06-25",
+        "valor": 100.1639
+      },
+      {
+        "data": "2025-06-26",
+        "valor": 100.4098
+      },
+      {
+        "data": "2025-06-27",
+        "valor": 100.082
+      },
+      {
+        "data": "2025-06-30",
+        "valor": 101.0656
+      },
+      {
+        "data": "2025-07-01",
+        "valor": 101.0656
+      },
+      {
+        "data": "2025-07-02",
+        "valor": 100.8197
+      },
+      {
+        "data": "2025-07-03",
+        "valor": 101.3115
+      },
+      {
+        "data": "2025-07-04",
+        "valor": 101.3934
+      },
+      {
+        "data": "2025-07-07",
+        "valor": 101.6393
+      },
+      {
+        "data": "2025-07-08",
+        "valor": 101.3115
+      },
+      {
+        "data": "2025-07-09",
+        "valor": 101.2295
+      },
+      {
+        "data": "2025-07-10",
+        "valor": 101.0656
+      },
+      {
+        "data": "2025-07-11",
+        "valor": 101.0656
+      },
+      {
+        "data": "2025-07-14",
+        "valor": 101.0656
+      },
+      {
+        "data": "2025-07-15",
+        "valor": 101.0656
+      },
+      {
+        "data": "2025-07-16",
+        "valor": 100.9836
+      },
+      {
+        "data": "2025-07-17",
+        "valor": 101.0656
+      },
+      {
+        "data": "2025-07-18",
+        "valor": 100.4918
+      },
+      {
+        "data": "2025-07-21",
+        "valor": 99.7541
+      },
+      {
+        "data": "2025-07-22",
+        "valor": 99.7541
+      },
+      {
+        "data": "2025-07-23",
+        "valor": 99.6721
+      },
+      {
+        "data": "2025-07-24",
+        "valor": 99.918
+      },
+      {
+        "data": "2025-07-25",
+        "valor": 99.8361
+      },
+      {
+        "data": "2025-07-28",
+        "valor": 99.3443
+      },
+      {
+        "data": "2025-07-29",
+        "valor": 99.1803
+      },
+      {
+        "data": "2025-07-30",
+        "valor": 98.7705
+      },
+      {
+        "data": "2025-07-31",
+        "valor": 99.6721
+      },
+      {
+        "data": "2025-08-01",
+        "valor": 98.9344
+      },
+      {
+        "data": "2025-08-04",
+        "valor": 99.0984
+      },
+      {
+        "data": "2025-08-05",
+        "valor": 99.0984
+      },
+      {
+        "data": "2025-08-06",
+        "valor": 98.6066
+      },
+      {
+        "data": "2025-08-07",
+        "valor": 99.1803
+      },
+      {
+        "data": "2025-08-08",
+        "valor": 99.0984
+      },
+      {
+        "data": "2025-08-11",
+        "valor": 99.4262
+      },
+      {
+        "data": "2025-08-12",
+        "valor": 99.1803
+      },
+      {
+        "data": "2025-08-13",
+        "valor": 98.9344
+      },
+      {
+        "data": "2025-08-14",
+        "valor": 99.4262
+      },
+      {
+        "data": "2025-08-15",
+        "valor": 99.4262
+      },
+      {
+        "data": "2025-08-18",
+        "valor": 99.5082
+      },
+      {
+        "data": "2025-08-19",
+        "valor": 99.5902
+      },
+      {
+        "data": "2025-08-20",
+        "valor": 99.2623
+      },
+      {
+        "data": "2025-08-21",
+        "valor": 99.6721
+      },
+      {
+        "data": "2025-08-22",
+        "valor": 99.4262
+      },
+      {
+        "data": "2025-08-25",
+        "valor": 99.7541
+      },
+      {
+        "data": "2025-08-26",
+        "valor": 99.7541
+      },
+      {
+        "data": "2025-08-27",
+        "valor": 99.8361
+      },
+      {
+        "data": "2025-08-28",
+        "valor": 100.1639
+      },
+      {
+        "data": "2025-08-29",
+        "valor": 100.8197
+      },
+      {
+        "data": "2025-09-01",
+        "valor": 101.2295
+      },
+      {
+        "data": "2025-09-02",
+        "valor": 100.8197
+      },
+      {
+        "data": "2025-09-03",
+        "valor": 101.4754
+      },
+      {
+        "data": "2025-09-04",
+        "valor": 101.1475
+      },
+      {
+        "data": "2025-09-05",
+        "valor": 101.5574
+      },
+      {
+        "data": "2025-09-08",
+        "valor": 101.8852
+      },
+      {
+        "data": "2025-09-09",
+        "valor": 102.0492
+      },
+      {
+        "data": "2025-09-10",
+        "valor": 102.2131
+      },
+      {
+        "data": "2025-09-11",
+        "valor": 102.2951
+      },
+      {
+        "data": "2025-09-12",
+        "valor": 102.623
+      },
+      {
+        "data": "2025-09-15",
+        "valor": 102.9508
+      },
+      {
+        "data": "2025-09-16",
+        "valor": 103.4426
+      },
+      {
+        "data": "2025-09-17",
+        "valor": 103.7705
+      },
+      {
+        "data": "2025-09-18",
+        "valor": 103.4426
+      },
+      {
+        "data": "2025-09-19",
+        "valor": 103.6885
+      },
+      {
+        "data": "2025-09-22",
+        "valor": 103.5246
+      },
+      {
+        "data": "2025-09-23",
+        "valor": 103.6066
+      },
+      {
+        "data": "2025-09-24",
+        "valor": 103.4426
+      },
+      {
+        "data": "2025-09-25",
+        "valor": 103.6066
+      },
+      {
+        "data": "2025-09-26",
+        "valor": 103.8525
+      },
+      {
+        "data": "2025-09-29",
+        "valor": 104.0984
+      },
+      {
+        "data": "2025-09-30",
+        "valor": 104.2623
+      },
+      {
+        "data": "2025-10-01",
+        "valor": 103.7705
+      },
+      {
+        "data": "2025-10-02",
+        "valor": 104.2623
+      },
+      {
+        "data": "2025-10-03",
+        "valor": 104.5082
+      },
+      {
+        "data": "2025-10-06",
+        "valor": 103.7705
+      },
+      {
+        "data": "2025-10-07",
+        "valor": 104.0984
+      },
+      {
+        "data": "2025-10-08",
+        "valor": 103.9344
+      },
+      {
+        "data": "2025-10-09",
+        "valor": 105.9016
+      },
+      {
+        "data": "2025-10-10",
+        "valor": 103.8525
+      },
+      {
+        "data": "2025-10-13",
+        "valor": 103.7705
+      },
+      {
+        "data": "2025-10-14",
+        "valor": 103.9344
+      },
+      {
+        "data": "2025-10-15",
+        "valor": 104.3443
+      },
+      {
+        "data": "2025-10-16",
+        "valor": 103.9344
+      },
+      {
+        "data": "2025-10-17",
+        "valor": 103.9344
+      },
+      {
+        "data": "2025-10-20",
+        "valor": 103.6066
+      },
+      {
+        "data": "2025-10-21",
+        "valor": 103.8525
+      },
+      {
+        "data": "2025-10-22",
+        "valor": 103.6885
+      },
+      {
+        "data": "2025-10-23",
+        "valor": 103.6885
+      },
+      {
+        "data": "2025-10-27",
+        "valor": 104.1803
+      },
+      {
+        "data": "2025-10-28",
+        "valor": 104.1803
+      },
+      {
+        "data": "2025-10-29",
+        "valor": 104.3443
+      },
+      {
+        "data": "2025-10-30",
+        "valor": 104.5902
+      },
+      {
+        "data": "2025-10-31",
+        "valor": 104.5082
+      },
+      {
+        "data": "2025-11-03",
+        "valor": 103.8525
+      },
+      {
+        "data": "2025-11-04",
+        "valor": 104.0984
+      },
+      {
+        "data": "2025-11-05",
+        "valor": 104.0984
+      },
+      {
+        "data": "2025-11-06",
+        "valor": 104.1803
+      },
+      {
+        "data": "2025-11-07",
+        "valor": 104.3443
+      },
+      {
+        "data": "2025-11-10",
+        "valor": 104.1803
+      },
+      {
+        "data": "2025-11-11",
+        "valor": 104.1803
+      },
+      {
+        "data": "2025-11-12",
+        "valor": 104.5902
+      },
+      {
+        "data": "2025-11-13",
+        "valor": 104.2623
+      },
+      {
+        "data": "2025-11-14",
+        "valor": 105.2459
+      },
+      {
+        "data": "2025-11-17",
+        "valor": 105.1639
+      },
+      {
+        "data": "2025-11-18",
+        "valor": 105.1639
+      },
+      {
+        "data": "2025-11-19",
+        "valor": 105.2459
+      },
+      {
+        "data": "2025-11-21",
+        "valor": 105.3279
+      },
+      {
+        "data": "2025-11-24",
+        "valor": 105.2459
+      },
+      {
+        "data": "2025-11-25",
+        "valor": 105.4098
+      },
+      {
+        "data": "2025-11-26",
+        "valor": 105.082
+      },
+      {
+        "data": "2025-11-27",
+        "valor": 105.5738
+      },
+      {
+        "data": "2025-11-28",
+        "valor": 106.1475
+      },
+      {
+        "data": "2025-12-01",
+        "valor": 105.3279
+      },
+      {
+        "data": "2025-12-02",
+        "valor": 106.3934
+      },
+      {
+        "data": "2025-12-03",
+        "valor": 106.3934
+      },
+      {
+        "data": "2025-12-04",
+        "valor": 106.7213
+      },
+      {
+        "data": "2025-12-05",
+        "valor": 106.7213
+      },
+      {
+        "data": "2025-12-08",
+        "valor": 106.8033
+      },
+      {
+        "data": "2025-12-09",
+        "valor": 106.6393
+      },
+      {
+        "data": "2025-12-10",
+        "valor": 106.4754
+      },
+      {
+        "data": "2025-12-11",
+        "valor": 106.8033
+      },
+      {
+        "data": "2025-12-12",
+        "valor": 107.0492
+      },
+      {
+        "data": "2025-12-15",
+        "valor": 107.1311
+      },
+      {
+        "data": "2025-12-16",
+        "valor": 107.0492
+      },
+      {
+        "data": "2025-12-17",
+        "valor": 106.7213
+      },
+      {
+        "data": "2025-12-18",
+        "valor": 106.8033
+      },
+      {
+        "data": "2025-12-19",
+        "valor": 107.623
+      },
+      {
+        "data": "2025-12-22",
+        "valor": 108.3607
+      },
+      {
+        "data": "2025-12-23",
+        "valor": 108.8525
+      },
+      {
+        "data": "2025-12-26",
+        "valor": 109.5082
+      },
+      {
+        "data": "2025-12-29",
+        "valor": 109.3443
+      },
+      {
+        "data": "2025-12-30",
+        "valor": 109.3443
+      },
+      {
+        "data": "2026-01-02",
+        "valor": 108.8525
+      },
+      {
+        "data": "2026-01-05",
+        "valor": 109.5082
+      },
+      {
+        "data": "2026-01-06",
+        "valor": 109.7541
+      },
+      {
+        "data": "2026-01-07",
+        "valor": 109.5902
+      },
+      {
+        "data": "2026-01-08",
+        "valor": 109.5902
+      },
+      {
+        "data": "2026-01-09",
+        "valor": 109.6721
+      },
+      {
+        "data": "2026-01-12",
+        "valor": 109.5902
+      },
+      {
+        "data": "2026-01-13",
+        "valor": 109.8361
+      },
+      {
+        "data": "2026-01-14",
+        "valor": 109.918
+      },
+      {
+        "data": "2026-01-15",
+        "valor": 110.0
+      },
+      {
+        "data": "2026-01-16",
+        "valor": 110.0
+      },
+      {
+        "data": "2026-01-19",
+        "valor": 110.082
+      },
+      {
+        "data": "2026-01-20",
+        "valor": 110.1639
+      },
+      {
+        "data": "2026-01-21",
+        "valor": 110.2459
+      },
+      {
+        "data": "2026-01-22",
+        "valor": 110.4918
+      },
+      {
+        "data": "2026-01-23",
+        "valor": 111.1475
+      },
+      {
+        "data": "2026-01-26",
+        "valor": 111.3115
+      },
+      {
+        "data": "2026-01-27",
+        "valor": 110.9836
+      },
+      {
+        "data": "2026-01-28",
+        "valor": 111.3115
+      },
+      {
+        "data": "2026-01-29",
+        "valor": 111.1475
+      },
+      {
+        "data": "2026-01-30",
+        "valor": 111.6393
+      },
+      {
+        "data": "2026-02-02",
+        "valor": 110.1639
+      },
+      {
+        "data": "2026-02-03",
+        "valor": 111.0656
+      },
+      {
+        "data": "2026-02-04",
+        "valor": 111.1475
+      },
+      {
+        "data": "2026-02-05",
+        "valor": 111.0656
+      },
+      {
+        "data": "2026-02-06",
+        "valor": 111.1475
+      },
+      {
+        "data": "2026-02-09",
+        "valor": 110.9016
+      },
+      {
+        "data": "2026-02-10",
+        "valor": 110.7377
+      },
+      {
+        "data": "2026-02-11",
+        "valor": 110.8197
+      },
+      {
+        "data": "2026-02-12",
+        "valor": 110.6557
+      },
+      {
+        "data": "2026-02-13",
+        "valor": 111.2295
+      },
+      {
+        "data": "2026-02-18",
+        "valor": 111.1475
+      },
+      {
+        "data": "2026-02-19",
+        "valor": 111.1475
+      },
+      {
+        "data": "2026-02-20",
+        "valor": 111.6393
+      },
+      {
+        "data": "2026-02-23",
+        "valor": 111.5574
+      },
+      {
+        "data": "2026-02-24",
+        "valor": 111.6393
+      },
+      {
+        "data": "2026-02-25",
+        "valor": 112.0492
+      },
+      {
+        "data": "2026-02-26",
+        "valor": 112.2131
+      },
+      {
+        "data": "2026-02-27",
+        "valor": 112.9508
+      },
+      {
+        "data": "2026-03-02",
+        "valor": 112.0492
+      },
+      {
+        "data": "2026-03-03",
+        "valor": 111.8033
+      },
+      {
+        "data": "2026-03-04",
+        "valor": 112.2951
+      },
+      {
+        "data": "2026-03-05",
+        "valor": 112.1312
+      },
+      {
+        "data": "2026-03-06",
+        "valor": 112.541
+      },
+      {
+        "data": "2026-03-09",
+        "valor": 111.8852
+      },
+      {
+        "data": "2026-03-10",
+        "valor": 111.8852
+      },
+      {
+        "data": "2026-03-11",
+        "valor": 111.8033
+      },
+      {
+        "data": "2026-03-12",
+        "valor": 111.3115
+      },
+      {
+        "data": "2026-03-13",
+        "valor": 111.9672
+      },
+      {
+        "data": "2026-03-16",
+        "valor": 112.0492
+      },
+      {
+        "data": "2026-03-17",
+        "valor": 111.8852
+      },
+      {
+        "data": "2026-03-18",
+        "valor": 111.7213
+      },
+      {
+        "data": "2026-03-19",
+        "valor": 111.4754
+      },
+      {
+        "data": "2026-03-20",
+        "valor": 111.4754
+      },
+      {
+        "data": "2026-03-23",
+        "valor": 111.5574
+      },
+      {
+        "data": "2026-03-24",
+        "valor": 111.3934
+      },
+      {
+        "data": "2026-03-25",
+        "valor": 111.3115
+      },
+      {
+        "data": "2026-03-26",
+        "valor": 111.3115
+      },
+      {
+        "data": "2026-03-27",
+        "valor": 111.7213
+      },
+      {
+        "data": "2026-03-30",
+        "valor": 111.4754
+      },
+      {
+        "data": "2026-03-31",
+        "valor": 111.4754
+      },
+      {
+        "data": "2026-04-01",
+        "valor": 111.6393
+      },
+      {
+        "data": "2026-04-02",
+        "valor": 112.2131
+      },
+      {
+        "data": "2026-04-06",
+        "valor": 112.2951
+      },
+      {
+        "data": "2026-04-07",
+        "valor": 112.0492
+      },
+      {
+        "data": "2026-04-08",
+        "valor": 112.3771
+      },
+      {
+        "data": "2026-04-09",
+        "valor": 112.3771
+      },
+      {
+        "data": "2026-04-10",
+        "valor": 113.1148
+      },
+      {
+        "data": "2026-04-13",
+        "valor": 112.9508
+      },
+      {
+        "data": "2026-04-14",
+        "valor": 112.459
+      },
+      {
+        "data": "2026-04-15",
+        "valor": 112.9508
+      },
+      {
+        "data": "2026-04-16",
+        "valor": 113.1148
+      },
+      {
+        "data": "2026-04-17",
+        "valor": 113.4426
+      },
+      {
+        "data": "2026-04-20",
+        "valor": 113.9344
+      },
+      {
+        "data": "2026-04-22",
+        "valor": 113.7705
+      },
+      {
+        "data": "2026-04-23",
+        "valor": 113.4426
+      },
+      {
+        "data": "2026-04-24",
+        "valor": 113.7705
+      },
+      {
+        "data": "2026-04-27",
+        "valor": 113.4426
+      },
+      {
+        "data": "2026-04-28",
+        "valor": 113.3607
+      },
+      {
+        "data": "2026-04-29",
+        "valor": 113.1967
+      },
+      {
+        "data": "2026-04-30",
+        "valor": 113.6885
+      },
+      {
+        "data": "2026-05-04",
+        "valor": 112.0492
+      },
+      {
+        "data": "2026-05-05",
+        "valor": 112.0492
+      },
+      {
+        "data": "2026-05-06",
+        "valor": 113.1148
+      },
+      {
+        "data": "2026-05-07",
+        "valor": 113.0328
+      },
+      {
+        "data": "2026-05-08",
+        "valor": 113.3607
+      },
+      {
+        "data": "2026-05-11",
+        "valor": 111.8033
+      },
+      {
+        "data": "2026-05-12",
+        "valor": 111.8033
+      },
+      {
+        "data": "2026-05-13",
+        "valor": 111.1475
+      },
+      {
+        "data": "2026-05-14",
+        "valor": 111.9672
+      },
+      {
+        "data": "2026-05-15",
+        "valor": 112.541
+      },
+      {
+        "data": "2026-05-18",
+        "valor": 111.4754
+      },
+      {
+        "data": "2026-05-19",
+        "valor": 110.4918
+      },
+      {
+        "data": "2026-05-20",
+        "valor": 111.8033
+      },
+      {
+        "data": "2026-05-21",
+        "valor": 111.4754
+      },
+      {
+        "data": "2026-05-22",
+        "valor": 111.3934
+      },
+      {
+        "data": "2026-05-25",
+        "valor": 111.9672
+      },
+      {
+        "data": "2026-05-26",
+        "valor": 111.3934
+      },
+      {
+        "data": "2026-05-27",
+        "valor": 111.3934
+      },
+      {
+        "data": "2026-05-28",
+        "valor": 111.8033
+      },
+      {
+        "data": "2026-05-29",
+        "valor": 112.1312
+      },
+      {
+        "data": "2026-06-01",
+        "valor": 111.6393
+      },
+      {
+        "data": "2026-06-02",
+        "valor": 111.8033
+      },
+      {
+        "data": "2026-06-03",
+        "valor": 111.4754
+      },
+      {
+        "data": "2026-06-05",
+        "valor": 111.2295
+      },
+      {
+        "data": "2026-06-08",
+        "valor": 110.7377
+      },
+      {
+        "data": "2026-06-09",
+        "valor": 110.1639
+      },
+      {
+        "data": "2026-06-10",
+        "valor": 109.2623
+      },
+      {
+        "data": "2026-06-11",
+        "valor": 110.1639
+      },
+      {
+        "data": "2026-06-12",
+        "valor": 110.5738
+      },
+      {
+        "data": "2026-06-15",
+        "valor": 111.0656
+      },
+      {
+        "data": "2026-06-16",
+        "valor": 110.4918
+      },
+      {
+        "data": "2026-06-17",
+        "valor": 110.1639
+      },
+      {
+        "data": "2026-06-18",
+        "valor": 109.8361
+      },
+      {
+        "data": "2026-06-19",
+        "valor": 109.7541
+      },
+      {
+        "data": "2026-06-22",
+        "valor": 109.7541
+      },
+      {
+        "data": "2026-06-23",
+        "valor": 109.5082
+      },
+      {
+        "data": "2026-06-24",
+        "valor": 109.2623
+      }
+    ],
     "carteira_fiis_base100": [
       {
         "data": "2025-05-19",
@@ -5064,7 +7272,7 @@
       },
       {
         "data": "2026-06-25",
-        "valor": 139.33
+        "valor": 139.1008
       }
     ],
     "carteira_acoes_base100": [
@@ -5074,7 +7282,7 @@
       },
       {
         "data": "2026-06-25",
-        "valor": 271.19
+        "valor": 271.1879
       }
     ]
   },
@@ -5086,16 +7294,16 @@
     },
     "rebalanceamentos": 3,
     "carteira_top20_fiis": {
-      "retorno_pct": 0.07,
-      "base100": 100.07
+      "retorno_pct": 0.15,
+      "base100": 100.15
     },
     "ifix": {
       "retorno_pct": -0.0,
       "base100": 100.0
     },
     "ibov": {
-      "retorno_pct": 0.98,
-      "base100": 100.98
+      "retorno_pct": 0.43,
+      "base100": 100.43
     },
     "bateu_ifix": true,
     "bateu_ibov": false,
@@ -5112,26 +7320,26 @@
         "inicio": "2026-06-24",
         "fim": "2026-06-25",
         "ativos": 20,
-        "carteira_retorno_pct": 0.28,
+        "carteira_retorno_pct": 0.37,
         "ifix_retorno_pct": 0.23,
-        "ibov_retorno_pct": 1.43
+        "ibov_retorno_pct": 0.87
       }
     ],
     "metodologia": "Camada 3 — carteira equal-weight Top 20 FIIs rebalanceada a cada snapshot diário, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
   },
   "kpis": {
-    "dy_medio_fiis_carteira": 0.0298,
-    "dy_medio_fiis_mercado": 0.0345,
+    "dy_medio_fiis_carteira": 0.0296,
+    "pvp_medio_fiis": 0.7555,
+    "dy_medio_fiis_mercado": 0.0344,
+    "total_fiis_universo": 537,
     "dy_medio_acoes_carteira": 0.1295,
     "dy_medio_acoes_mercado": 0.0816,
-    "pvp_medio_fiis": 0.745,
-    "total_fiis_universo": 537,
     "total_acoes_universo": 425
   },
   "resumo": {
     "total_fiis": 20,
     "total_acoes": 20,
-    "dy_medio_fiis": 0.0298,
-    "pvp_medio_fiis": 0.745
+    "dy_medio_fiis": 0.0296,
+    "pvp_medio_fiis": 0.7555
   }
 }
