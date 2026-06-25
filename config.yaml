@@ -6,9 +6,12 @@ paths:
   old_dir: "data/old"
   logs_dir: "logs"
   local_input_file: "data/input/Ranking_Acoes_FII.xlsx"
+  onedrive_output_dir: "C:/Users/Ítalo/OneDrive/Tabelas Acoes/Recomendacoes"
 
 scraper:
   url: "https://www.fundsexplorer.com.br/ranking"
+  acoes_url: "https://www.investsite.com.br/seleciona_acoes.php"
+  download_dir: "data/input/acoes_download"
   wait_timeout: 20
   sleep_after_load: 4
   cookie_button_id: "didomi-notice-agree-button"
@@ -25,7 +28,7 @@ filters:
     volume_min: 500000 # mínimo absoluto: R$ 500k
     market_cap_min: 200000000  # mínimo absoluto: R$ 200M
     top_n: 20
-  
+
 columns:
   percent:
     - "DIVIDEND YIELD"
@@ -49,36 +52,17 @@ columns:
     - "VOLATILIDADE"
 
 acoes:
-    pvpa_max: 5.0
-    pl_max: 15.0
-    ev_ebit_max: 10.0
-    ev_ebitda_max: 8.0
-    margem_min: 0.05
-    roa_min: 0.03
-    rpl_min: 0.10
-    roinvc_min: 0.05
-    passivo_pl_max: 1.5
-    alavancagem_max: 3.0
-    dy_min: 0.04
-    volume_min: 1000000
-    market_cap_min: 500000000
-    top_n: 20
-
-scraper:
-  url: "https://www.fundsexplorer.com.br/ranking"
-  acoes_url: "https://www.investsite.com.br/seleciona_acoes.php"
-  download_dir: "data/input/acoes_download"
-  wait_timeout: 20
-  sleep_after_load: 4
-  cookie_button_id: "didomi-notice-agree-button"
-
-paths:
-  base_dir: "C:/Users/Ítalo/OneDrive/stock-screener-automation"
-  data_dir: "data"
-  input_dir: "data/input"
-  output_dir: "data/output"
-  old_dir: "data/old"
-  logs_dir: "logs"
-  local_input_file: "data/input/Ranking_Acoes_FII.xlsx"
-  onedrive_output_dir: "C:/Users/Ítalo/OneDrive/Tabelas Ações/Recomendações"
-  onedrive_output_dir: "C:/Users/Ítalo/OneDrive/Tabelas Acoes/Recomendacoes"
+  pvpa_max: 5.0
+  pl_max: 15.0
+  ev_ebit_max: 10.0
+  ev_ebitda_max: 8.0
+  margem_min: 0.05
+  roa_min: 0.03
+  rpl_min: 0.10
+  roinvc_min: 0.05
+  passivo_pl_max: 1.5
+  alavancagem_max: 3.0
+  dy_min: 0.04
+  volume_min: 1000000
+  market_cap_min: 500000000
+  top_n: 20

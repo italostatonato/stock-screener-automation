@@ -4,12 +4,12 @@
     {
       "FUNDOS": "VIUR11",
       "SETOR": "MISTO",
-      "PREÇO ATUAL (R$)": 2.3,
+      "PREÇO ATUAL (R$)": 2.2,
       "DIVIDEND YIELD": 0.12890000000000001,
       "P/VP": 0.67,
       "LIQUIDEZ DIÁRIA (R$)": 135468.7,
       "PATRIMÔNIO LÍQUIDO": 94664702.09,
-      "VOLATILIDADE": 3664.17,
+      "VOLATILIDADE": 3709.42,
       "VPA": 3.51,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 37666.0,
@@ -24,16 +24,16 @@
     {
       "FUNDOS": "KOPA11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 335.25,
+      "PREÇO ATUAL (R$)": 336.03,
       "DIVIDEND YIELD": 0.11939999999999999,
-      "P/VP": 0.87,
+      "P/VP": 0.86,
       "LIQUIDEZ DIÁRIA (R$)": 120535.05,
       "PATRIMÔNIO LÍQUIDO": 140155422.69,
-      "VOLATILIDADE": 2015.84,
+      "VOLATILIDADE": 2011.79,
       "VPA": 395.16,
       "ÚLTIMO DIVIDENDO": "47,50",
       "NUM. COTISTAS": 3498.0,
-      "score": 60.8,
+      "score": 61.2,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -64,12 +64,12 @@
     {
       "FUNDOS": "RBIR11",
       "SETOR": "FUNDO DE DESENVOLVIMENTO",
-      "PREÇO ATUAL (R$)": 79.0,
+      "PREÇO ATUAL (R$)": 79.58,
       "DIVIDEND YIELD": 0.0209,
       "P/VP": 1.01,
       "LIQUIDEZ DIÁRIA (R$)": 243027.48,
       "PATRIMÔNIO LÍQUIDO": 120414062.37,
-      "VOLATILIDADE": 1390.04,
+      "VOLATILIDADE": 1388.91,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,64",
       "NUM. COTISTAS": 1464.0,
@@ -104,12 +104,12 @@
     {
       "FUNDOS": "RZAT11",
       "SETOR": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
-      "PREÇO ATUAL (R$)": 94.74,
+      "PREÇO ATUAL (R$)": 94.6,
       "DIVIDEND YIELD": 0.0175,
       "P/VP": 0.91,
       "LIQUIDEZ DIÁRIA (R$)": 573823.09,
       "PATRIMÔNIO LÍQUIDO": 439716792.04,
-      "VOLATILIDADE": 1111.27,
+      "VOLATILIDADE": 1109.48,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,70",
       "NUM. COTISTAS": 34380.0,
@@ -126,7 +126,7 @@
       "SETOR": "INCORPORAÇÕES",
       "PREÇO ATUAL (R$)": 52.29,
       "DIVIDEND YIELD": 0.017,
-      "P/VP": 0.49,
+      "P/VP": 0.5,
       "LIQUIDEZ DIÁRIA (R$)": 221594.27,
       "PATRIMÔNIO LÍQUIDO": 104105096.46,
       "VOLATILIDADE": 2759.11,
@@ -136,7 +136,7 @@
       "score": 68.5,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
+        "P/VP": "subindo",
         "LIQUIDEZ DIÁRIA (R$)": "caindo",
         "VOLATILIDADE": "estavel"
       }
@@ -144,12 +144,12 @@
     {
       "FUNDOS": "DEVA11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 17.78,
+      "PREÇO ATUAL (R$)": 17.82,
       "DIVIDEND YIELD": 0.0165,
       "P/VP": 0.19,
       "LIQUIDEZ DIÁRIA (R$)": 512278.17,
       "PATRIMÔNIO LÍQUIDO": 1334067797.89,
-      "VOLATILIDADE": 2245.65,
+      "VOLATILIDADE": 2241.36,
       "VPA": 94.99,
       "ÚLTIMO DIVIDENDO": "0,30",
       "NUM. COTISTAS": 74905.0,
@@ -164,12 +164,12 @@
     {
       "FUNDOS": "KIVO11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 58.9,
+      "PREÇO ATUAL (R$)": 59.23,
       "DIVIDEND YIELD": 0.016399999999999998,
       "P/VP": 0.7,
       "LIQUIDEZ DIÁRIA (R$)": 479032.48,
       "PATRIMÔNIO LÍQUIDO": 187570261.88,
-      "VOLATILIDADE": 1484.33,
+      "VOLATILIDADE": 1481.81,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,14",
       "NUM. COTISTAS": 7247.0,
@@ -184,12 +184,12 @@
     {
       "FUNDOS": "GZIT11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 41.81,
+      "PREÇO ATUAL (R$)": 41.76,
       "DIVIDEND YIELD": 0.0161,
       "P/VP": 0.48,
       "LIQUIDEZ DIÁRIA (R$)": 430782.36,
       "PATRIMÔNIO LÍQUIDO": 2028146076.2,
-      "VOLATILIDADE": 1689.85,
+      "VOLATILIDADE": 1693.26,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,78",
       "NUM. COTISTAS": 8032.0,
@@ -204,12 +204,12 @@
     {
       "FUNDOS": "HCTR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 15.79,
+      "PREÇO ATUAL (R$)": 15.92,
       "DIVIDEND YIELD": 0.016,
       "P/VP": 0.16,
       "LIQUIDEZ DIÁRIA (R$)": 520524.36,
       "PATRIMÔNIO LÍQUIDO": 2216689880.53,
-      "VOLATILIDADE": 2023.58,
+      "VOLATILIDADE": 2021.06,
       "VPA": 100.37,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 123678.0,
@@ -224,12 +224,12 @@
     {
       "FUNDOS": "VCRA11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 60.74,
+      "PREÇO ATUAL (R$)": 61.61,
       "DIVIDEND YIELD": 0.0158,
-      "P/VP": 0.6,
+      "P/VP": 0.59,
       "LIQUIDEZ DIÁRIA (R$)": 495632.32,
       "PATRIMÔNIO LÍQUIDO": 471637374.73,
-      "VOLATILIDADE": 1306.13,
+      "VOLATILIDADE": 1306.21,
       "VPA": 102.67,
       "ÚLTIMO DIVIDENDO": "1,00",
       "NUM. COTISTAS": 9776.0,
@@ -244,12 +244,12 @@
     {
       "FUNDOS": "SNME11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 9.4,
+      "PREÇO ATUAL (R$)": 9.35,
       "DIVIDEND YIELD": 0.0158,
-      "P/VP": 0.99,
+      "P/VP": 1.0,
       "LIQUIDEZ DIÁRIA (R$)": 402588.23,
       "PATRIMÔNIO LÍQUIDO": 69984048.36,
-      "VOLATILIDADE": 1383.54,
+      "VOLATILIDADE": 1380.79,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,15",
       "NUM. COTISTAS": 7492.0,
@@ -264,16 +264,16 @@
     {
       "FUNDOS": "EGAF11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 88.18,
+      "PREÇO ATUAL (R$)": 88.33,
       "DIVIDEND YIELD": 0.0147,
       "P/VP": 0.89,
       "LIQUIDEZ DIÁRIA (R$)": 910964.73,
       "PATRIMÔNIO LÍQUIDO": 310127971.92,
-      "VOLATILIDADE": 1036.78,
+      "VOLATILIDADE": 1034.79,
       "VPA": 99.02,
       "ÚLTIMO DIVIDENDO": "1,32",
       "NUM. COTISTAS": 12644.0,
-      "score": 29.2,
+      "score": 29.8,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -286,10 +286,10 @@
       "SETOR": "INDEFINIDO",
       "PREÇO ATUAL (R$)": 8.39,
       "DIVIDEND YIELD": 0.0143,
-      "P/VP": 0.86,
+      "P/VP": 0.87,
       "LIQUIDEZ DIÁRIA (R$)": 206424.27,
       "PATRIMÔNIO LÍQUIDO": 100620221.64,
-      "VOLATILIDADE": 1706.07,
+      "VOLATILIDADE": 1702.65,
       "VPA": 9.69,
       "ÚLTIMO DIVIDENDO": "0,12",
       "NUM. COTISTAS": 16132.0,
@@ -304,16 +304,16 @@
     {
       "FUNDOS": "CACR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 25.19,
+      "PREÇO ATUAL (R$)": 25.26,
       "DIVIDEND YIELD": 0.0141,
       "P/VP": 0.25,
       "LIQUIDEZ DIÁRIA (R$)": 1042048.61,
       "PATRIMÔNIO LÍQUIDO": 471926680.37,
-      "VOLATILIDADE": 6411.77,
+      "VOLATILIDADE": 6399.13,
       "VPA": 95.04,
       "ÚLTIMO DIVIDENDO": "1,20",
       "NUM. COTISTAS": 25317.0,
-      "score": 60.2,
+      "score": 60.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -324,16 +324,16 @@
     {
       "FUNDOS": "ARRI11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 4.73,
+      "PREÇO ATUAL (R$)": 4.74,
       "DIVIDEND YIELD": 0.0139,
       "P/VP": 0.58,
       "LIQUIDEZ DIÁRIA (R$)": 195045.36,
       "PATRIMÔNIO LÍQUIDO": 174647296.59,
-      "VOLATILIDADE": 1866.92,
+      "VOLATILIDADE": 1863.95,
       "VPA": 8.43,
       "ÚLTIMO DIVIDENDO": "0,07",
       "NUM. COTISTAS": 23191.0,
-      "score": 47.4,
+      "score": 48.2,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -344,19 +344,19 @@
     {
       "FUNDOS": "LSAG11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 78.0,
+      "PREÇO ATUAL (R$)": 77.44,
       "DIVIDEND YIELD": 0.0139,
-      "P/VP": 0.78,
+      "P/VP": 0.8,
       "LIQUIDEZ DIÁRIA (R$)": 102470.91,
       "PATRIMÔNIO LÍQUIDO": 98794610.7,
-      "VOLATILIDADE": 1670.85,
+      "VOLATILIDADE": 1667.52,
       "VPA": 97.88,
       "ÚLTIMO DIVIDENDO": "1,05",
       "NUM. COTISTAS": 2589.0,
       "score": 64.7,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
+        "P/VP": "subindo",
         "LIQUIDEZ DIÁRIA (R$)": "caindo",
         "VOLATILIDADE": "estavel"
       }
@@ -384,12 +384,12 @@
     {
       "FUNDOS": "EXES11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 9.45,
+      "PREÇO ATUAL (R$)": 9.53,
       "DIVIDEND YIELD": 0.0137,
       "P/VP": 0.97,
       "LIQUIDEZ DIÁRIA (R$)": 116708.41,
       "PATRIMÔNIO LÍQUIDO": 138137672.46,
-      "VOLATILIDADE": 1291.68,
+      "VOLATILIDADE": 1290.86,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,13",
       "NUM. COTISTAS": 2258.0,
@@ -825,7 +825,28 @@
     }
   ],
   "indicadores": {
-    "cambio": {},
+    "cambio": {
+      "USD/BRL": {
+        "valor": 5.189,
+        "variacao_pct": -0.312948,
+        "atualizado_em": "2026-06-25 13:44:26"
+      },
+      "EUR/BRL": {
+        "valor": 5.89971,
+        "variacao_pct": -0.177069,
+        "atualizado_em": "2026-06-25 13:40:57"
+      },
+      "GBP/BRL": {
+        "valor": 6.85446,
+        "variacao_pct": -0.019358,
+        "atualizado_em": "2026-06-25 13:44:26"
+      },
+      "BTC/BRL": {
+        "valor": 311550.0,
+        "variacao_pct": -1.71,
+        "atualizado_em": "2026-06-25 13:44:40"
+      }
+    },
     "ipca_12m": [
       {
         "data": "2025-05-01",
@@ -5058,15 +5079,52 @@
     ]
   },
   "backtest": {
-    "disponivel": false,
-    "motivo": "Nao foi possivel calcular retorno da carteira Top 20"
+    "disponivel": true,
+    "periodo": {
+      "inicio": "2026-06-23",
+      "fim": "2026-06-25"
+    },
+    "rebalanceamentos": 3,
+    "carteira_top20_fiis": {
+      "retorno_pct": 0.07,
+      "base100": 100.07
+    },
+    "ifix": {
+      "retorno_pct": -0.0,
+      "base100": 100.0
+    },
+    "ibov": {
+      "retorno_pct": 0.98,
+      "base100": 100.98
+    },
+    "bateu_ifix": true,
+    "bateu_ibov": false,
+    "periodos": [
+      {
+        "inicio": "2026-06-23",
+        "fim": "2026-06-24",
+        "ativos": 20,
+        "carteira_retorno_pct": -0.22,
+        "ifix_retorno_pct": -0.22,
+        "ibov_retorno_pct": -0.44
+      },
+      {
+        "inicio": "2026-06-24",
+        "fim": "2026-06-25",
+        "ativos": 20,
+        "carteira_retorno_pct": 0.28,
+        "ifix_retorno_pct": 0.23,
+        "ibov_retorno_pct": 1.43
+      }
+    ],
+    "metodologia": "Camada 3 — carteira equal-weight Top 20 FIIs rebalanceada a cada snapshot diário, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
   },
   "kpis": {
     "dy_medio_fiis_carteira": 0.0298,
     "dy_medio_fiis_mercado": 0.0345,
     "dy_medio_acoes_carteira": 0.1295,
     "dy_medio_acoes_mercado": 0.0816,
-    "pvp_medio_fiis": 0.7435,
+    "pvp_medio_fiis": 0.745,
     "total_fiis_universo": 537,
     "total_acoes_universo": 425
   },
@@ -5074,6 +5132,6 @@
     "total_fiis": 20,
     "total_acoes": 20,
     "dy_medio_fiis": 0.0298,
-    "pvp_medio_fiis": 0.7435
+    "pvp_medio_fiis": 0.745
   }
 }

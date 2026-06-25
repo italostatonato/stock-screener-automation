@@ -16,7 +16,7 @@ from src.market_data import get_market_indicators
 from src.exporter import export_dashboard_json
 from src.scorer import score_fiis, score_acoes
 from src.benchmark import get_benchmarks
-from src.backtest import run_backtest
+from src.backtest import run_backtest, save_portfolio_snapshot
 from src.ml_storage import append_historical_data
 
 
@@ -43,6 +43,11 @@ def main():
 
     paths = cfg["paths"]
     data_hoje = datetime.today().strftime("%Y-%m-%d")
+
+    ml_dir = os.path.join(paths["data_dir"], "ml")
+    backtest_dir = os.path.join(paths["data_dir"], "backtest")
+    os.makedirs(ml_dir, exist_ok=True)
+    os.makedirs(backtest_dir, exist_ok=True)
 
     # ── FIIs ──────────────────────────────────────────────────────────────────
     local_file = paths["local_input_file"]
@@ -74,14 +79,19 @@ def main():
         key_col="FUNDOS",
     )
 
-    # Historico ML (universo completo de FIIs)
-    append_historical_data(
-        df=df_clean,
-        data_execucao=data_hoje,
-        output_file=os.path.join(paths["old_dir"], "ml_historico_fiis.parquet"),
-    )
+    # Histórico ML — universo completo de FIIs, com status de filtro quando disponível.
+    try:
+        fii_hist_source = fii_base if fii_base is not None and not fii_base.empty else df_clean
+        append_historical_data(
+            df=fii_hist_source,
+            data_execucao=data_hoje,
+            output_file=os.path.join(ml_dir, "historico_fiis.parquet"),
+            subset_cols=["Data_Execucao", "FUNDOS"],
+        )
+    except Exception as e:
+        logger.error(f"Falha ao salvar historico ML FIIs: {e}")
 
-    # ── Acoes ─────────────────────────────────────────────────────────────────
+    # ── Ações ─────────────────────────────────────────────────────────────────
     logger.info("Coletando acoes...")
     top_actions = pd.DataFrame()
     acoes_base = pd.DataFrame()
@@ -93,16 +103,6 @@ def main():
     except Exception as e:
         logger.error(f"Falha no scraping de acoes: {e} — continuando sem acoes.")
     else:
-        try:
-            append_historical_data(
-                df=df_acoes_raw,
-                data_execucao=data_hoje,
-                output_file=os.path.join(paths["old_dir"], "ml_historico_acoes.parquet"),
-            )
-            logger.info("Historico ML Acoes salvo.")
-        except Exception as e:
-            logger.error(f"Falha ao salvar historico ML Acoes: {e}")
-
         try:
             logger.info("Calculando scores Acoes...")
             acoes_scores_universe = score_acoes(df_acoes_raw)
@@ -123,10 +123,22 @@ def main():
                 key_col="Acao",
             )
         except Exception as e:
-            logger.error(f"Falha no processamento de acoes: {e} — continuando sem acoes.")
+            logger.error(f"Falha no processamento de acoes: {e} — continuando sem acoes processadas.")
             top_actions = pd.DataFrame()
             acoes_base = pd.DataFrame()
             acoes_scores_top = pd.Series(dtype=float)
+
+        # Histórico ML — salva a base processada quando existir; se falhar, salva a base bruta.
+        try:
+            acoes_hist_source = acoes_base if acoes_base is not None and not acoes_base.empty else df_acoes_raw
+            append_historical_data(
+                df=acoes_hist_source,
+                data_execucao=data_hoje,
+                output_file=os.path.join(ml_dir, "historico_acoes.parquet"),
+                subset_cols=["Data_Execucao", "Acao"],
+            )
+        except Exception as e:
+            logger.error(f"Falha ao salvar historico ML Acoes: {e}")
 
     # ── Indicadores de mercado ───────────────────────────────────────────────
     try:
@@ -142,7 +154,7 @@ def main():
         logger.error(f"Falha ao coletar benchmarks: {e}")
         benchmarks = {}
 
-    # ── Backtest (Camada 3) ───────────────────────────────────────────────────
+    # ── Backtest legado FIIs ──────────────────────────────────────────────────
     try:
         backtest = run_backtest(
             os.path.join(paths["old_dir"], "Top_20_FII_BRL.xlsx"),
@@ -151,6 +163,17 @@ def main():
     except Exception as e:
         logger.error(f"Falha no backtest Top 20 FIIs: {e}")
         backtest = {"disponivel": False, "motivo": str(e)}
+
+    # ── Histórico de carteiras para backtest futuro ───────────────────────────
+    try:
+        save_portfolio_snapshot(
+            top_fiis=top_fiis,
+            top_acoes=top_actions,
+            data_execucao=data_hoje,
+            output_file=os.path.join(backtest_dir, "carteiras_historicas.parquet"),
+        )
+    except Exception as e:
+        logger.error(f"Falha ao salvar carteira historica de backtest: {e}")
 
     # ── Snapshot Excel ────────────────────────────────────────────────────────
     snapshot_path = os.path.join(
