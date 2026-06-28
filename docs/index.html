@@ -16,6 +16,7 @@
       --border:rgba(148,163,184,.18); --border-strong:rgba(148,163,184,.35);
       --text:#eef2ff; --muted:#94a3b8; --muted2:#64748b;
       --accent:#d6b46f; --accent2:#7dd3fc; --good:#34d399; --bad:#fb7185; --warn:#fbbf24;
+      --acao:#1F4E79; --fii:#7A869A;
       --shadow:0 18px 60px rgba(0,0,0,.35); --radius:22px;
       --max:1240px;
     }
@@ -26,12 +27,12 @@
     .tabs{display:flex;gap:8px;flex-wrap:wrap}.tab{border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);padding:9px 12px;border-radius:999px;cursor:pointer}.tab.active{color:#111827;background:var(--accent);border-color:transparent;font-weight:800}
     .hero{padding:42px 0 22px}.eyebrow{color:var(--accent);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:end}.hero h1{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;font-size:clamp(38px,6vw,74px);line-height:.95;margin:10px 0 14px;letter-spacing:-.04em}.hero p{font-size:17px;color:var(--muted);max-width:760px;margin:0}.asof{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
     .asof strong{display:block;font-size:24px;margin-top:3px}.update-note{display:block;margin-top:10px;color:var(--muted);font-size:13px;line-height:1.45}.update-note b{color:var(--text)}
-    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:10px 0 28px}.kpi{background:rgba(18,27,50,.78);border:1px solid var(--border);border-radius:18px;padding:16px;min-height:112px}.kpi .label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}.kpi .value{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;font-size:26px;font-weight:800;margin-top:8px}.kpi .note{font-size:11px;color:var(--muted2);margin-top:4px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kpi .note b{color:var(--muted);font-weight:700}.kpi .delta-pos{color:var(--good);font-weight:800}.kpi .delta-neg{color:var(--bad);font-weight:800}.kpi .delta-neu{color:var(--muted);font-weight:800}.kpi.good .value{color:var(--good)}.kpi.bad .value{color:var(--bad)}
+    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:10px 0 28px}.kpi{background:rgba(18,27,50,.78);border:1px solid var(--border);border-radius:18px;padding:16px;min-height:112px}.kpi .label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}.kpi .value{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;font-size:26px;font-weight:800;margin-top:8px}.kpi .note{font-size:10.5px;color:var(--muted2);margin-top:4px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kpi .note b{color:var(--muted);font-weight:700}.kpi .delta-pos{color:var(--good);font-weight:800}.kpi .delta-neg{color:var(--bad);font-weight:800}.kpi .delta-neu{color:var(--muted);font-weight:800}.kpi.good .value{color:var(--good)}.kpi.bad .value{color:var(--bad)}
     .section{display:none;padding-bottom:46px}.section.active{display:block}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:20px 0 16px}.section h2{font-size:26px;margin:0}.section .desc{color:var(--muted);margin:6px 0 0}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.search{background:#0b1224;border:1px solid var(--border);border-radius:999px;color:var(--text);padding:10px 14px;min-width:240px}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.asset-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.022));border:1px solid var(--border);border-radius:20px;padding:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.18)}.asset-card:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),transparent)}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.asset-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.022));border:1px solid var(--border);border-radius:20px;padding:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.18)}.asset-card:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),transparent)}.asset-card.acao:before{background:linear-gradient(90deg,var(--acao),transparent)}.asset-card.fii:before{background:linear-gradient(90deg,var(--fii),transparent)}.asset-card.acao .bar>span{background:var(--acao)}.asset-card.fii .bar>span{background:var(--fii)}
     .asset-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.rank{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#111827;background:var(--accent);padding:4px 8px;border-radius:999px;font-weight:900;font-size:12px}.ticker{font-size:22px;font-weight:900;letter-spacing:-.03em}.name{font-size:12px;color:var(--muted);min-height:34px;margin-top:2px}.score-wrap{margin:14px 0 12px}.score-line{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700}.bar{height:9px;background:rgba(148,163,184,.18);border-radius:999px;overflow:hidden;margin-top:6px}.bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{border:1px solid rgba(148,163,184,.12);background:rgba(0,0,0,.12);border-radius:13px;padding:9px}.metric b{display:block;font-size:13px}.metric span{font-size:11px;color:var(--muted)}.trend{font-size:11px;margin-left:4px}.trend.subindo{color:var(--good)}.trend.caindo{color:var(--bad)}.trend.estavel{color:var(--muted)}
     .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:rgba(18,27,50,.70);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}.panel h3{margin:0 0 4px;font-size:18px}.panel p{margin:0 0 12px;color:var(--muted);font-size:13px}.chart-box{height:300px}.wide{grid-column:1/-1}.mini-note{font-size:12px;color:var(--muted2);margin-top:10px}.chart-explain{font-size:13px;color:var(--muted);line-height:1.55;margin-top:12px;padding-top:12px;border-top:1px solid rgba(148,163,184,.14)}.chart-explain b{color:var(--text)}
-    .info-card{background:rgba(18,27,50,.72);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}.info-card h3{margin-top:0}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:12px;border-bottom:1px solid var(--border);text-align:left}.table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.rank-table-wrap{max-height:300px;overflow:auto;border:1px solid rgba(148,163,184,.12);border-radius:16px}.rank-table td:first-child,.rank-table th:first-child{width:70px;color:var(--accent);font-weight:900}.rank-table td{font-weight:800}.rank-table .muted-cell{color:var(--muted);font-weight:600}
+    .info-card{background:rgba(18,27,50,.72);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}.info-card h3{margin-top:0}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:12px;border-bottom:1px solid var(--border);text-align:left}.table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.rank-table-wrap{max-height:380px;overflow:auto;border:1px solid rgba(148,163,184,.12);border-radius:16px}.rank-table td:first-child,.rank-table th:first-child{width:70px;color:var(--accent);font-weight:900}.rank-table td{font-weight:800;vertical-align:top}.rank-table .muted-cell{color:var(--muted);font-weight:600}.rank-asset{display:flex;flex-direction:column;gap:3px;min-width:0}.rank-asset .asset-name{font-size:14px;font-weight:900;letter-spacing:.01em}.rank-asset.acao .asset-name{color:var(--acao)}.rank-asset.fii .asset-name{color:var(--fii)}.rank-asset.fii{border-left:3px solid var(--fii);padding-left:8px}.rank-asset.acao{border-left:3px solid var(--acao);padding-left:8px}.asset-detail{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .empty{border:1px dashed var(--border-strong);border-radius:18px;padding:28px;text-align:center;color:var(--muted)} footer{border-top:1px solid var(--border);padding:24px 0 36px;color:var(--muted2);font-size:13px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:5px 9px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--good)}
     @media(max-width:1050px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.hero-grid,.charts{grid-template-columns:1fr}}@media(max-width:620px){.wrap{width:min(100% - 20px,var(--max))}.nav{height:auto;padding:12px 0;align-items:flex-start;flex-direction:column}.kpis{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1}.hero{padding-top:26px}.kpi .value{font-size:22px}.search{min-width:100%;width:100%}}
   </style>
@@ -73,7 +74,7 @@
       <div class="section-head"><div><h2>Visão geral</h2><p class="desc">Resumo executivo do dia: carteira, score, comparativos e concentração.</p></div></div>
       <div class="charts">
         <div class="panel"><h3>Score dos Top 20</h3><p>Distribuição por faixa. Ajuda a separar ranking forte de ranking apenas “menos pior”.</p><div class="chart-box"><canvas id="scoreChart"></canvas></div><div class="chart-explain"><b>Como ler:</b> quanto mais ativos nas faixas altas, mais forte está o ranking do dia. Se muitos ativos aparecem abaixo de 55, o mercado analisado está oferecendo menos oportunidades claras pelos critérios do modelo.</div></div>
-        <div class="panel"><h3>Rank comparado</h3><p>Top 20 lado a lado por posição no ranking.</p><div class="rank-table-wrap"><table class="table rank-table"><thead><tr><th>Rank</th><th>Ação</th><th>FII</th></tr></thead><tbody id="rankTableBody"></tbody></table></div><div class="chart-explain"><b>Como ler:</b> cada linha mostra a ação e o FII que ocupam a mesma posição no ranking do dia. Serve para comparar rapidamente quem está no topo em cada classe de ativo.</div></div>
+        <div class="panel"><h3>Resumo Top 20 Ações e FII de hoje</h3><p>Top 20 lado a lado por posição no ranking, com preço atual e score.</p><div class="rank-table-wrap"><table class="table rank-table"><thead><tr><th>Rank</th><th>Ação</th><th>FII</th></tr></thead><tbody id="rankTableBody"></tbody></table></div><div class="chart-explain"><b>Como ler:</b> cada linha mostra a ação e o FII que ocupam a mesma posição no ranking do dia. Preço e score ajudam a comparar rapidamente valuation, força relativa e prioridade dentro de cada classe.</div></div>
         <div class="panel wide"><h3>Backtest FIIs Top 20 · base 100</h3><p>Carteira real registrada no histórico contra IFIX, IMOB e CDI.</p><div class="chart-box"><canvas id="overviewFiisBacktestChart"></canvas></div><div class="mini-note" id="overviewFiisBacktestNote"></div><div class="chart-explain"><b>Como ler:</b> todas as linhas começam em 100 na primeira data real da carteira. Se a linha da carteira ficar acima dos benchmarks, o Top 20 FIIs está crescendo mais que as referências comparadas no mesmo período.</div></div>
         <div class="panel wide"><h3>Backtest Ações Top 20 · base 100</h3><p>Carteira real registrada no histórico contra IBOV, IPCA e CDI.</p><div class="chart-box"><canvas id="overviewAcoesBacktestChart"></canvas></div><div class="mini-note" id="overviewAcoesBacktestNote"></div><div class="chart-explain"><b>Como ler:</b> compara a evolução da carteira de ações com bolsa, inflação e renda fixa. A carteira só aparece a partir da primeira data em que o robô salvou uma carteira Top 20 real.</div></div>
       </div>
@@ -122,6 +123,7 @@
   <script>
     const state = { data:null, charts:{}, allDates:[], selectedDate:null };
     const BR = 'pt-BR';
+    if(window.Chart){ Chart.defaults.font.family = '"Proxima Nova", "ProximaNova", Inter, system-ui, -apple-system, Segoe UI, sans-serif'; }
     const fmtNum = (v,d=2)=> v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{maximumFractionDigits:d,minimumFractionDigits:d});
     const fmtMoney = v => v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{style:'currency',currency:'BRL',maximumFractionDigits:2});
     const fmtPct = v => v==null || Number.isNaN(Number(v)) ? '—' : (Number(v)*100).toLocaleString(BR,{maximumFractionDigits:2,minimumFractionDigits:2})+'%';
@@ -165,7 +167,7 @@
     function comparePctNote(ref,val,label='Geral',higherIsBetter=true){
       if(ref==null || val==null) return `${label}: —`;
       const diff = Number(val)-Number(ref);
-      return `<b>${label}</b> ${fmtPct(ref)} · <span class="${deltaClass(diff,higherIsBetter)}">${signed(diff*100,2)} p.p.</span>`;
+      return `<b>${label}</b> ${fmtPct(ref)} · <span class="${deltaClass(diff,higherIsBetter)}">${signed(diff*100,2)}p.p.</span>`;
     }
     function compareNumNote(ref,val,label='Geral',dec=2,suffix='',higherIsBetter=true){
       if(ref==null || val==null) return `${label}: —`;
@@ -195,7 +197,7 @@
       const diff = retCarteira!=null && retBench!=null ? retCarteira-retBench : null;
       return {
         value: retCarteira==null ? '—' : fmtPct(retCarteira),
-        note: `<b>vs ${benchmarkName}:</b> ${retBench==null?'—':fmtPct(retBench)} · <span class="${deltaClass(diff,true)}">${diff==null?'—':signed(diff*100,2)+' p.p.'}</span>`,
+        note: `<b>vs ${benchmarkName}</b> ${retBench==null?'—':fmtPct(retBench)} · <span class="${deltaClass(diff,true)}">${diff==null?'—':signed(diff*100,2)+'p.p.'}</span>`,
         kind: diff==null ? '' : diff>=0 ? 'good' : 'bad'
       };
     }
@@ -218,23 +220,27 @@
     }
 
 
+    function rankAssetCell(rec,type){
+      if(!rec) return '<span class="muted-cell">—</span>';
+      const isAcao = type === 'acao';
+      const ticker = isAcao ? (rec['Ação'] || '—') : (rec.FUNDOS || '—');
+      const preco = isAcao ? rec['Preço'] : rec['PREÇO ATUAL (R$)'];
+      const score = scoreOf(rec);
+      return `<div class="rank-asset ${isAcao?'acao':'fii'}"><span class="asset-name">${ticker}</span><span class="asset-detail">${fmtMoney(preco)} · Score ${fmtNum(score,1)}</span></div>`;
+    }
     function renderRankTable(){
       const body=document.getElementById('rankTableBody');
       if(!body) return;
       const fiis=state.data.fiis||[];
       const acoes=state.data.acoes||[];
-      body.innerHTML = Array.from({length:20},(_,i)=>{
-        const acao=acoes[i]?.['Ação'] || '—';
-        const fii=fiis[i]?.FUNDOS || '—';
-        return `<tr><td>#${i+1}</td><td class="${acao==='—'?'muted-cell':''}">${acao}</td><td class="${fii==='—'?'muted-cell':''}">${fii}</td></tr>`;
-      }).join('');
+      body.innerHTML = Array.from({length:20},(_,i)=>`<tr><td>#${i+1}</td><td>${rankAssetCell(acoes[i],'acao')}</td><td>${rankAssetCell(fiis[i],'fii')}</td></tr>`).join('');
     }
 
     function trendIcon(rec,col){ const t=rec.tendencias?.[col]; if(!t) return ''; const icon=t==='subindo'?'▲':t==='caindo'?'▼':'●'; return `<span class="trend ${t}" title="${t}">${icon}</span>`; }
     function scoreBar(s){ const w=Math.max(0,Math.min(100,Number(s||0))); return `<div class="score-wrap"><div class="score-line"><span>Score</span><b class="mono">${fmtNum(s,1)}</b></div><div class="bar"><span style="width:${w}%"></span></div></div>`; }
     function metric(label,value,trend=''){ return `<div class="metric"><span>${label}</span><b>${value}${trend}</b></div>`; }
-    function cardFii(r,i){ return `<article class="asset-card"><div class="asset-top"><div><div class="ticker">${r.FUNDOS||'—'}</div><div class="name">${r.SETOR||'Setor não informado'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['PREÇO ATUAL (R$)']))}${metric('DY',fmtPct(r['DIVIDEND YIELD']),trendIcon(r,'DIVIDEND YIELD'))}${metric('P/VP',fmtNum(r['P/VP'],2),trendIcon(r,'P/VP'))}${metric('Liquidez',fmtBig(r['LIQUIDEZ DIÁRIA (R$)']),trendIcon(r,'LIQUIDEZ DIÁRIA (R$)'))}</div></article>`; }
-    function cardAcao(r,i){ return `<article class="asset-card"><div class="asset-top"><div><div class="ticker">${r['Ação']||'—'}</div><div class="name">${r.Empresa||'Empresa não informada'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['Preço']))}${metric('DY',fmtPct(r['Dividend Yield']),trendIcon(r,'Dividend Yield'))}${metric('P/VPA',fmtNum(r['Preço/VPA'],2),trendIcon(r,'Preço/VPA'))}${metric('ROA',fmtPct(r.ROA),trendIcon(r,'ROA'))}</div></article>`; }
+    function cardFii(r,i){ return `<article class="asset-card fii"><div class="asset-top"><div><div class="ticker">${r.FUNDOS||'—'}</div><div class="name">${r.SETOR||'Setor não informado'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['PREÇO ATUAL (R$)']))}${metric('DY',fmtPct(r['DIVIDEND YIELD']),trendIcon(r,'DIVIDEND YIELD'))}${metric('P/VP',fmtNum(r['P/VP'],2),trendIcon(r,'P/VP'))}${metric('Liquidez',fmtBig(r['LIQUIDEZ DIÁRIA (R$)']),trendIcon(r,'LIQUIDEZ DIÁRIA (R$)'))}</div></article>`; }
+    function cardAcao(r,i){ return `<article class="asset-card acao"><div class="asset-top"><div><div class="ticker">${r['Ação']||'—'}</div><div class="name">${r.Empresa||'Empresa não informada'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['Preço']))}${metric('DY',fmtPct(r['Dividend Yield']),trendIcon(r,'Dividend Yield'))}${metric('P/VPA',fmtNum(r['Preço/VPA'],2),trendIcon(r,'Preço/VPA'))}${metric('ROA',fmtPct(r.ROA),trendIcon(r,'ROA'))}</div></article>`; }
     function renderCards(type){
       const input=document.getElementById(type==='fiis'?'searchFiis':'searchAcoes');
       const grid=document.getElementById(type==='fiis'?'fiisGrid':'acoesGrid');
@@ -244,8 +250,27 @@
     }
 
     function destroy(id){ if(state.charts[id]){ state.charts[id].destroy(); delete state.charts[id]; } }
-    function makeChart(id,cfg){ const el=document.getElementById(id); if(!el) return; destroy(id); state.charts[id]=new Chart(el, cfg); }
-    function baseOptions(extra={}){ return Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:css('--muted'),boxWidth:10}},tooltip:{mode:'index',intersect:false}},scales:{x:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}},y:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}}, extra); }
+    function datasetColor(label){
+      const l=String(label||'').toLowerCase();
+      if(l.includes('ação') || l.includes('ações') || l.includes('acoes') || l.includes('ibov')) return css('--acao');
+      if(l.includes('fii') || l.includes('ifix') || l.includes('imob')) return css('--fii');
+      if(l.includes('cdi')) return css('--accent');
+      if(l.includes('ipca')) return css('--warn');
+      return css('--accent2');
+    }
+    function applyDatasetColors(cfg){
+      (cfg?.data?.datasets||[]).forEach(ds=>{
+        const c=datasetColor(ds.label);
+        if(!ds.borderColor) ds.borderColor=c;
+        if(!ds.backgroundColor) ds.backgroundColor=cfg.type==='bar' ? c : c;
+        if(!ds.pointBackgroundColor) ds.pointBackgroundColor=c;
+        if(!ds.pointBorderColor) ds.pointBorderColor=c;
+        if(ds.label && String(ds.label).toLowerCase().includes('fii')) ds.borderWidth = ds.borderWidth || 2;
+      });
+      return cfg;
+    }
+    function makeChart(id,cfg){ const el=document.getElementById(id); if(!el) return; destroy(id); state.charts[id]=new Chart(el, applyDatasetColors(cfg)); }
+    function baseOptions(extra={}){ return Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:css('--muted'),boxWidth:10,font:{family:'"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif'}}},tooltip:{mode:'index',intersect:false,titleFont:{family:'"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif'},bodyFont:{family:'"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif'}}},scales:{x:{ticks:{color:css('--muted'),font:{family:'"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif'}},grid:{color:'rgba(148,163,184,.08)'}},y:{ticks:{color:css('--muted'),font:{family:'"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif'}},grid:{color:'rgba(148,163,184,.08)'}}}}, extra); }
     function renderCharts(){ renderScoreChart(); renderOverviewBacktestCharts(); renderMarketChart(); renderMacroChart(); renderProxyCharts(); }
     function shortNames(names,limit=14){
       const clean=(names||[]).filter(Boolean);
