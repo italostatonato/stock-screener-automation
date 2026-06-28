@@ -135,7 +135,7 @@ def main():
                 df=acoes_hist_source,
                 data_execucao=data_hoje,
                 output_file=os.path.join(ml_dir, "historico_acoes.parquet"),
-                subset_cols=["Data_Execucao", "Acao"],
+                subset_cols=["Data_Execucao", "Ação"],
             )
         except Exception as e:
             logger.error(f"Falha ao salvar historico ML Acoes: {e}")

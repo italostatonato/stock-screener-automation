@@ -147,34 +147,231 @@ def _add_tendencias_acoes(records: list, prev_data: dict) -> list:
     return records
 
 
+def _mean_numeric(df: pd.DataFrame, col: str):
+    if df is None or df.empty or col not in df.columns:
+        return None
+    serie = pd.to_numeric(df[col], errors="coerce").dropna()
+    if serie.empty:
+        return None
+    return _safe(serie.mean())
+
+
 def _calc_kpis(top_fiis, top_acoes, fii_universe, acoes_universe) -> dict:
+    """Calcula KPIs do dashboard e suas bases comparativas.
+
+    Convenção:
+    - *_carteira: média dos ativos selecionados no Top 20 do dia.
+    - *_mercado: média do universo completo analisado no mesmo dia.
+
+    Isso permite que o frontend mostre, abaixo do valor principal, se a
+    carteira está acima ou abaixo da média geral do mercado filtrado.
+    """
     kpis = {}
 
-    if top_fiis is not None and not top_fiis.empty:
-        if "DIVIDEND YIELD" in top_fiis.columns:
-            kpis["dy_medio_fiis_carteira"] = _safe(top_fiis["DIVIDEND YIELD"].mean())
-        if "P/VP" in top_fiis.columns:
-            kpis["pvp_medio_fiis"] = _safe(top_fiis["P/VP"].mean())
+    kpis["dy_medio_fiis_carteira"] = _mean_numeric(top_fiis, "DIVIDEND YIELD")
+    kpis["dy_medio_fiis_mercado"] = _mean_numeric(fii_universe, "DIVIDEND YIELD")
+    kpis["pvp_medio_fiis_carteira"] = _mean_numeric(top_fiis, "P/VP")
+    kpis["pvp_medio_fiis_mercado"] = _mean_numeric(fii_universe, "P/VP")
+    kpis["score_medio_fiis_carteira"] = _mean_numeric(top_fiis, "Score")
+    kpis["score_medio_fiis_mercado"] = _mean_numeric(fii_universe, "Score")
 
-    if fii_universe is not None and not fii_universe.empty:
-        if "DIVIDEND YIELD" in fii_universe.columns:
-            kpis["dy_medio_fiis_mercado"] = _safe(fii_universe["DIVIDEND YIELD"].dropna().mean())
-        kpis["total_fiis_universo"] = int(len(fii_universe))
-    else:
-        kpis["total_fiis_universo"] = 0
+    kpis["dy_medio_acoes_carteira"] = _mean_numeric(top_acoes, "Dividend Yield")
+    kpis["dy_medio_acoes_mercado"] = _mean_numeric(acoes_universe, "Dividend Yield")
+    kpis["score_medio_acoes_carteira"] = _mean_numeric(top_acoes, "Score")
+    kpis["score_medio_acoes_mercado"] = _mean_numeric(acoes_universe, "Score")
 
-    if top_acoes is not None and not top_acoes.empty:
-        if "Dividend Yield" in top_acoes.columns:
-            kpis["dy_medio_acoes_carteira"] = _safe(top_acoes["Dividend Yield"].mean())
-
-    if acoes_universe is not None and not acoes_universe.empty:
-        if "Dividend Yield" in acoes_universe.columns:
-            kpis["dy_medio_acoes_mercado"] = _safe(acoes_universe["Dividend Yield"].dropna().mean())
-        kpis["total_acoes_universo"] = int(len(acoes_universe))
-    else:
-        kpis["total_acoes_universo"] = 0
+    kpis["total_fiis_universo"] = int(len(fii_universe)) if fii_universe is not None else 0
+    kpis["total_acoes_universo"] = int(len(acoes_universe)) if acoes_universe is not None else 0
 
     return kpis
+
+
+def _base100_records_from_date(df_serie, start_date: pd.Timestamp | None = None) -> list:
+    """Converte série absoluta em base 100 a partir de uma data de início.
+
+    Se a carteira começa em uma data posterior ao último ponto disponível do
+    benchmark, devolve pelo menos um ponto em 100 na data de início. Isso evita
+    gráfico em branco no primeiro dia de histórico real.
+    """
+    records = _serie_to_records(df_serie)
+    clean_all = []
+
+    for r in records:
+        if r.get("valor") is None:
+            continue
+        try:
+            data = pd.to_datetime(r["data"]).normalize()
+            valor = float(r["valor"])
+        except (TypeError, ValueError):
+            continue
+        clean_all.append({"data_ts": data, "data": data.strftime("%Y-%m-%d"), "valor": valor})
+
+    clean_all = sorted(clean_all, key=lambda x: x["data_ts"])
+    if not clean_all:
+        return []
+
+    if start_date is None:
+        clean = clean_all
+        base_value = float(clean[0]["valor"])
+        base_date = clean[0]["data_ts"]
+    else:
+        start_date = pd.Timestamp(start_date).normalize()
+        anteriores = [r for r in clean_all if r["data_ts"] <= start_date]
+        posteriores = [r for r in clean_all if r["data_ts"] >= start_date]
+
+        if anteriores:
+            base_value = float(anteriores[-1]["valor"])
+        elif posteriores:
+            base_value = float(posteriores[0]["valor"])
+        else:
+            return []
+
+        base_date = start_date
+        clean = [r for r in clean_all if r["data_ts"] >= start_date]
+
+        # Se ainda não existe fechamento de benchmark após a data da carteira,
+        # mantém o ponto inicial em 100. O próximo pregão preencherá a sequência.
+        if not clean:
+            return [{"data": start_date.strftime("%Y-%m-%d"), "valor": 100.0}]
+
+        # Garante que todas as séries comparativas nasçam exatamente na mesma data.
+        if clean[0]["data_ts"] != start_date:
+            clean = [{"data_ts": start_date, "data": start_date.strftime("%Y-%m-%d"), "valor": base_value}] + clean
+
+    if base_value == 0:
+        return []
+
+    out = []
+    for r in clean:
+        out.append({
+            "data": r["data"],
+            "valor": round(float(r["valor"]) / base_value * 100, 4),
+        })
+
+    if start_date is not None and (not out or out[0]["data"] != base_date.strftime("%Y-%m-%d")):
+        out.insert(0, {"data": base_date.strftime("%Y-%m-%d"), "valor": 100.0})
+
+    return out
+
+
+def _normalize_ticker_series(series: pd.Series) -> pd.Series:
+    return series.astype(str).str.strip().str.upper()
+
+
+def _load_parquet_safe(path: str) -> pd.DataFrame:
+    try:
+        if not os.path.exists(path):
+            return pd.DataFrame()
+        return pd.read_parquet(path)
+    except Exception as e:
+        logger.warning(f"Nao foi possivel carregar parquet {path}: {e}")
+        return pd.DataFrame()
+
+
+def _build_portfolio_base100_from_history(
+    tipo: str,
+    carteira_path: str,
+    historico_path: str,
+    ticker_col: str,
+    price_col: str,
+) -> list:
+    """Monta série real da carteira Top 20 em base 100 usando histórico salvo.
+
+    A linha da carteira começa somente na primeira data real registrada em
+    data/backtest/carteiras_historicas.parquet. Para cada intervalo entre
+    snapshots, mede o retorno equal-weight dos tickers escolhidos no início
+    do período usando os preços do universo histórico no dia seguinte.
+    """
+    carteiras = _load_parquet_safe(carteira_path)
+    historico = _load_parquet_safe(historico_path)
+
+    required_carteira = {"Data_Carteira", "Tipo", "Ticker"}
+    required_hist = {"Data_Execucao", ticker_col, price_col}
+
+    if carteiras.empty or historico.empty:
+        return []
+    if not required_carteira.issubset(carteiras.columns):
+        logger.warning(f"Carteiras sem colunas esperadas para {tipo}: {required_carteira}")
+        return []
+    if not required_hist.issubset(historico.columns):
+        logger.warning(f"Historico sem colunas esperadas para {tipo}: {required_hist}")
+        return []
+
+    c = carteiras.copy()
+    h = historico.copy()
+
+    c = c[c["Tipo"].astype(str).str.upper().eq(tipo.upper())].copy()
+    if c.empty:
+        return []
+
+    c["Data_Carteira"] = pd.to_datetime(c["Data_Carteira"], errors="coerce").dt.normalize()
+    c["Ticker_norm"] = _normalize_ticker_series(c["Ticker"])
+    c = c.dropna(subset=["Data_Carteira"])
+
+    h["Data_Execucao"] = pd.to_datetime(h["Data_Execucao"], errors="coerce").dt.normalize()
+    h["Ticker_norm"] = _normalize_ticker_series(h[ticker_col])
+    h["Preco_norm"] = pd.to_numeric(h[price_col], errors="coerce")
+    h = h.dropna(subset=["Data_Execucao", "Preco_norm"])
+
+    dates = sorted(c["Data_Carteira"].dropna().unique())
+    dates = [pd.Timestamp(d).normalize() for d in dates]
+    if not dates:
+        return []
+
+    valor = 100.0
+    out = [{"data": dates[0].strftime("%Y-%m-%d"), "valor": round(valor, 4)}]
+
+    price_matrix = h.drop_duplicates(["Data_Execucao", "Ticker_norm"]).pivot(
+        index="Data_Execucao",
+        columns="Ticker_norm",
+        values="Preco_norm",
+    )
+
+    for i in range(len(dates) - 1):
+        inicio = dates[i]
+        fim = dates[i + 1]
+
+        tickers = (
+            c.loc[c["Data_Carteira"].eq(inicio), "Ticker_norm"]
+            .dropna()
+            .unique()
+            .tolist()
+        )
+        if not tickers or inicio not in price_matrix.index or fim not in price_matrix.index:
+            out.append({"data": fim.strftime("%Y-%m-%d"), "valor": round(valor, 4)})
+            continue
+
+        p0 = price_matrix.loc[inicio].reindex(tickers)
+        p1 = price_matrix.loc[fim].reindex(tickers)
+        valid = p0.notna() & p1.notna() & (p0 != 0)
+
+        if valid.sum() == 0:
+            out.append({"data": fim.strftime("%Y-%m-%d"), "valor": round(valor, 4)})
+            continue
+
+        retornos = (p1[valid] / p0[valid]) - 1.0
+        retorno_periodo = float(retornos.mean())
+        valor *= (1.0 + retorno_periodo)
+        out.append({"data": fim.strftime("%Y-%m-%d"), "valor": round(valor, 4)})
+
+    return out
+
+
+def _series_start_date(series: list) -> pd.Timestamp | None:
+    if not series:
+        return None
+    try:
+        return pd.to_datetime(series[0]["data"]).normalize()
+    except Exception:
+        return None
+
+
+def _benchmark_dict_from_start(benchmarks: dict, names: list[str], start_date: pd.Timestamp | None) -> dict:
+    out = {}
+    for name in names:
+        serie = benchmarks.get(name)
+        out[name] = _base100_records_from_date(serie, start_date)
+    return out
 
 
 def _calc_carteira_vs_benchmarks(
@@ -183,45 +380,65 @@ def _calc_carteira_vs_benchmarks(
     benchmarks: dict,
     data_hoje: str,
 ) -> dict:
-    """Monta séries comparativas em base 100.
+    """Monta séries comparativas em base 100 tecnicamente consistentes.
 
-    Importante: esta função NÃO mistura IBOV/IFIX em pontos com carteira em %.
-    Tudo que sai daqui já está na mesma escala: crescimento desde a primeira data.
+    As carteiras Top 20 só começam quando existe histórico real salvo em
+    data/backtest/carteiras_historicas.parquet. Os benchmarks de comparação
+    são rebaseados para 100 na mesma data inicial da carteira.
 
-    A carteira ainda usa DY médio anualizado como proxy enquanto não houver histórico
-    suficiente de preço por ativo. O proxy é representado como base 100 também.
+    - FIIs: Top 20 FIIs vs IFIX, IMOB e CDI
+    - Ações: Top 20 Ações vs IBOV, IPCA e CDI
     """
     resultado = {}
 
-    ibov = benchmarks.get("IBOV")
-    ifix = benchmarks.get("IFIX")
+    # Séries longas para gráficos de mercado, independentes das carteiras.
+    for name in ["IBOV", "IFIX", "IMOB", "CDI", "IPCA"]:
+        if name in benchmarks:
+            resultado[f"{name.lower()}_base100"] = _base100_records_from_date(benchmarks.get(name))
 
-    resultado["ibov_base100"] = _base100_records(ibov)
-    resultado["ifix_base100"] = _base100_records(ifix)
+    carteira_path = os.path.join("data", "backtest", "carteiras_historicas.parquet")
+    fii_hist_path = os.path.join("data", "ml", "historico_fiis.parquet")
+    acoes_hist_path = os.path.join("data", "ml", "historico_acoes.parquet")
 
-    benchmark_base = ibov if ibov is not None and not ibov.empty else ifix
-    if benchmark_base is None or benchmark_base.empty:
-        return resultado
+    fiis_series = _build_portfolio_base100_from_history(
+        tipo="FII",
+        carteira_path=carteira_path,
+        historico_path=fii_hist_path,
+        ticker_col="FUNDOS",
+        price_col="PREÇO ATUAL (R$)",
+    )
+    acoes_series = _build_portfolio_base100_from_history(
+        tipo="ACAO",
+        carteira_path=carteira_path,
+        historico_path=acoes_hist_path,
+        ticker_col="Ação",
+        price_col="Preço",
+    )
 
-    base_data = pd.to_datetime(benchmark_base["data"].min()).normalize()
-    hoje = pd.to_datetime(data_hoje).normalize()
-    total_dias = max((hoje - base_data).days, 1)
+    # Fallback honesto para o primeiro dia: se o parquet ainda não tiver sido
+    # lido por qualquer motivo, cria apenas o ponto inicial em 100. Não inventa
+    # performance; só evita um gráfico vazio.
+    if not fiis_series and top_fiis is not None and not top_fiis.empty:
+        fiis_series = [{"data": data_hoje, "valor": 100.0}]
+    if not acoes_series and top_acoes is not None and not top_acoes.empty:
+        acoes_series = [{"data": data_hoje, "valor": 100.0}]
 
-    if top_fiis is not None and not top_fiis.empty and "DIVIDEND YIELD" in top_fiis.columns:
-        dy_anual = float(top_fiis["DIVIDEND YIELD"].dropna().mean()) * 12
-        retorno_carteira = dy_anual * (total_dias / 365)
-        resultado["carteira_fiis_base100"] = [
-            {"data": base_data.strftime("%Y-%m-%d"), "valor": 100.0},
-            {"data": data_hoje, "valor": round(100 * (1 + retorno_carteira), 4)},
-        ]
+    resultado["carteira_fiis_base100"] = fiis_series
+    resultado["carteira_acoes_base100"] = acoes_series
 
-    if top_acoes is not None and not top_acoes.empty and "Dividend Yield" in top_acoes.columns:
-        dy_anual = float(top_acoes["Dividend Yield"].dropna().mean()) * 12
-        retorno_carteira = dy_anual * (total_dias / 365)
-        resultado["carteira_acoes_base100"] = [
-            {"data": base_data.strftime("%Y-%m-%d"), "valor": 100.0},
-            {"data": data_hoje, "valor": round(100 * (1 + retorno_carteira), 4)},
-        ]
+    fiis_start = _series_start_date(fiis_series)
+    acoes_start = _series_start_date(acoes_series)
+
+    resultado["comparativo_fiis"] = {
+        "inicio": fiis_start.strftime("%Y-%m-%d") if fiis_start is not None else None,
+        "carteira": fiis_series,
+        "benchmarks": _benchmark_dict_from_start(benchmarks, ["IFIX", "IMOB", "CDI"], fiis_start),
+    }
+    resultado["comparativo_acoes"] = {
+        "inicio": acoes_start.strftime("%Y-%m-%d") if acoes_start is not None else None,
+        "carteira": acoes_series,
+        "benchmarks": _benchmark_dict_from_start(benchmarks, ["IBOV", "IPCA", "CDI"], acoes_start),
+    }
 
     return resultado
 

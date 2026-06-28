@@ -19,19 +19,19 @@
       --shadow:0 18px 60px rgba(0,0,0,.35); --radius:22px;
       --max:1240px;
     }
-    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,rgba(214,180,111,.16),transparent 34%),radial-gradient(circle at 80% 10%,rgba(125,211,252,.10),transparent 28%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.45}
-    a{color:inherit} button,input{font:inherit}.wrap{width:min(var(--max),calc(100% - 32px));margin-inline:auto}.mono{font-family:"JetBrains Mono",monospace}.muted{color:var(--muted)}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,rgba(214,180,111,.16),transparent 34%),radial-gradient(circle at 80% 10%,rgba(125,211,252,.10),transparent 28%),var(--bg);color:var(--text);font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.45}
+    a{color:inherit} button,input{font:inherit}.wrap{width:min(var(--max),calc(100% - 32px));margin-inline:auto}.mono{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif}.muted{color:var(--muted)}
     .topbar{position:sticky;top:0;z-index:20;background:rgba(8,12,24,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
     .nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:12px;font-weight:800}.logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#8b6f35);display:grid;place-items:center;color:#111827;box-shadow:0 10px 30px rgba(214,180,111,.25)}
     .tabs{display:flex;gap:8px;flex-wrap:wrap}.tab{border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);padding:9px 12px;border-radius:999px;cursor:pointer}.tab.active{color:#111827;background:var(--accent);border-color:transparent;font-weight:800}
-    .hero{padding:42px 0 22px}.eyebrow{color:var(--accent);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:end}.hero h1{font-family:Fraunces,serif;font-size:clamp(38px,6vw,74px);line-height:.95;margin:10px 0 14px;letter-spacing:-.04em}.hero p{font-size:17px;color:var(--muted);max-width:760px;margin:0}.asof{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-    .asof strong{display:block;font-size:24px;margin-top:3px}.data-select{margin-top:12px;width:100%;background:#0b1224;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:10px}
-    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:10px 0 28px}.kpi{background:rgba(18,27,50,.78);border:1px solid var(--border);border-radius:18px;padding:16px;min-height:112px}.kpi .label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}.kpi .value{font-family:"JetBrains Mono",monospace;font-size:26px;font-weight:800;margin-top:8px}.kpi .note{font-size:12px;color:var(--muted2);margin-top:4px}.kpi.good .value{color:var(--good)}.kpi.bad .value{color:var(--bad)}
+    .hero{padding:42px 0 22px}.eyebrow{color:var(--accent);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:end}.hero h1{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;font-size:clamp(38px,6vw,74px);line-height:.95;margin:10px 0 14px;letter-spacing:-.04em}.hero p{font-size:17px;color:var(--muted);max-width:760px;margin:0}.asof{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .asof strong{display:block;font-size:24px;margin-top:3px}.update-note{display:block;margin-top:10px;color:var(--muted);font-size:13px;line-height:1.45}.update-note b{color:var(--text)}
+    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:10px 0 28px}.kpi{background:rgba(18,27,50,.78);border:1px solid var(--border);border-radius:18px;padding:16px;min-height:112px}.kpi .label{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em}.kpi .value{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;font-size:26px;font-weight:800;margin-top:8px}.kpi .note{font-size:11px;color:var(--muted2);margin-top:4px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kpi .note b{color:var(--muted);font-weight:700}.kpi .delta-pos{color:var(--good);font-weight:800}.kpi .delta-neg{color:var(--bad);font-weight:800}.kpi .delta-neu{color:var(--muted);font-weight:800}.kpi.good .value{color:var(--good)}.kpi.bad .value{color:var(--bad)}
     .section{display:none;padding-bottom:46px}.section.active{display:block}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:20px 0 16px}.section h2{font-size:26px;margin:0}.section .desc{color:var(--muted);margin:6px 0 0}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.search{background:#0b1224;border:1px solid var(--border);border-radius:999px;color:var(--text);padding:10px 14px;min-width:240px}
     .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.asset-card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.022));border:1px solid var(--border);border-radius:20px;padding:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.18)}.asset-card:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),transparent)}
-    .asset-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.rank{font-family:"JetBrains Mono",monospace;color:#111827;background:var(--accent);padding:4px 8px;border-radius:999px;font-weight:900;font-size:12px}.ticker{font-size:22px;font-weight:900;letter-spacing:-.03em}.name{font-size:12px;color:var(--muted);min-height:34px;margin-top:2px}.score-wrap{margin:14px 0 12px}.score-line{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700}.bar{height:9px;background:rgba(148,163,184,.18);border-radius:999px;overflow:hidden;margin-top:6px}.bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{border:1px solid rgba(148,163,184,.12);background:rgba(0,0,0,.12);border-radius:13px;padding:9px}.metric b{display:block;font-size:13px}.metric span{font-size:11px;color:var(--muted)}.trend{font-size:11px;margin-left:4px}.trend.subindo{color:var(--good)}.trend.caindo{color:var(--bad)}.trend.estavel{color:var(--muted)}
-    .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:rgba(18,27,50,.70);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}.panel h3{margin:0 0 4px;font-size:18px}.panel p{margin:0 0 12px;color:var(--muted);font-size:13px}.chart-box{height:300px}.wide{grid-column:1/-1}.mini-note{font-size:12px;color:var(--muted2);margin-top:10px}
-    .info-card{background:rgba(18,27,50,.72);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}.info-card h3{margin-top:0}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:12px;border-bottom:1px solid var(--border);text-align:left}.table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+    .asset-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.rank{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#111827;background:var(--accent);padding:4px 8px;border-radius:999px;font-weight:900;font-size:12px}.ticker{font-size:22px;font-weight:900;letter-spacing:-.03em}.name{font-size:12px;color:var(--muted);min-height:34px;margin-top:2px}.score-wrap{margin:14px 0 12px}.score-line{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700}.bar{height:9px;background:rgba(148,163,184,.18);border-radius:999px;overflow:hidden;margin-top:6px}.bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{border:1px solid rgba(148,163,184,.12);background:rgba(0,0,0,.12);border-radius:13px;padding:9px}.metric b{display:block;font-size:13px}.metric span{font-size:11px;color:var(--muted)}.trend{font-size:11px;margin-left:4px}.trend.subindo{color:var(--good)}.trend.caindo{color:var(--bad)}.trend.estavel{color:var(--muted)}
+    .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:rgba(18,27,50,.70);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}.panel h3{margin:0 0 4px;font-size:18px}.panel p{margin:0 0 12px;color:var(--muted);font-size:13px}.chart-box{height:300px}.wide{grid-column:1/-1}.mini-note{font-size:12px;color:var(--muted2);margin-top:10px}.chart-explain{font-size:13px;color:var(--muted);line-height:1.55;margin-top:12px;padding-top:12px;border-top:1px solid rgba(148,163,184,.14)}.chart-explain b{color:var(--text)}
+    .info-card{background:rgba(18,27,50,.72);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}.info-card h3{margin-top:0}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:12px;border-bottom:1px solid var(--border);text-align:left}.table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.rank-table-wrap{max-height:300px;overflow:auto;border:1px solid rgba(148,163,184,.12);border-radius:16px}.rank-table td:first-child,.rank-table th:first-child{width:70px;color:var(--accent);font-weight:900}.rank-table td{font-weight:800}.rank-table .muted-cell{color:var(--muted);font-weight:600}
     .empty{border:1px dashed var(--border-strong);border-radius:18px;padding:28px;text-align:center;color:var(--muted)} footer{border-top:1px solid var(--border);padding:24px 0 36px;color:var(--muted2);font-size:13px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:5px 9px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--good)}
     @media(max-width:1050px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.hero-grid,.charts{grid-template-columns:1fr}}@media(max-width:620px){.wrap{width:min(100% - 20px,var(--max))}.nav{height:auto;padding:12px 0;align-items:flex-start;flex-direction:column}.kpis{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1}.hero{padding-top:26px}.kpi .value{font-size:22px}.search{min-width:100%;width:100%}}
   </style>
@@ -56,13 +56,13 @@
       <div class="hero-grid">
         <div>
           <div class="eyebrow">Boletim diário · filtro quantitativo</div>
-          <h1>Ranking com contexto, não só lista.</h1>
+          <h1>Rank de ativos BR</h1>
           <p>Top 20 FIIs e Ações BR, score multifatorial, comparação contra benchmarks e leitura visual das principais métricas do dia.</p>
         </div>
         <aside class="asof">
           <span class="pill"><span class="dot"></span> Atualizado automaticamente</span>
           <strong id="asOf">Carregando...</strong>
-          <select id="dateSelect" class="data-select" aria-label="Selecionar data"></select>
+          <span class="update-note">Este painel mostra sempre o <b>snapshot mais recente</b> disponível. Atualização diária prevista: <b>09h BRT</b>, em dias úteis.</span>
         </aside>
       </div>
     </section>
@@ -70,11 +70,12 @@
     <section class="kpis" id="kpis"></section>
 
     <section id="overview" class="section active">
-      <div class="section-head"><div><h2>Visão geral</h2><p class="desc">Resumo executivo do dia: carteira, score, alpha e concentração.</p></div></div>
+      <div class="section-head"><div><h2>Visão geral</h2><p class="desc">Resumo executivo do dia: carteira, score, comparativos e concentração.</p></div></div>
       <div class="charts">
-        <div class="panel"><h3>Score dos Top 20</h3><p>Distribuição por faixa. Ajuda a separar ranking forte de ranking apenas “menos pior”.</p><div class="chart-box"><canvas id="scoreChart"></canvas></div></div>
-        <div class="panel"><h3>Composição dos FIIs</h3><p>Concentração por setor da carteira Top 20 de FIIs.</p><div class="chart-box"><canvas id="sectorChart"></canvas></div></div>
-        <div class="panel wide"><h3>Backtest FIIs · base 100</h3><p>Carteira Top 20 FIIs contra IFIX e IBOV. Tudo começa em 100 para comparar crescimento contra crescimento.</p><div class="chart-box"><canvas id="backtestChart"></canvas></div><div class="mini-note" id="backtestNote"></div></div>
+        <div class="panel"><h3>Score dos Top 20</h3><p>Distribuição por faixa. Ajuda a separar ranking forte de ranking apenas “menos pior”.</p><div class="chart-box"><canvas id="scoreChart"></canvas></div><div class="chart-explain"><b>Como ler:</b> quanto mais ativos nas faixas altas, mais forte está o ranking do dia. Se muitos ativos aparecem abaixo de 55, o mercado analisado está oferecendo menos oportunidades claras pelos critérios do modelo.</div></div>
+        <div class="panel"><h3>Rank comparado</h3><p>Top 20 lado a lado por posição no ranking.</p><div class="rank-table-wrap"><table class="table rank-table"><thead><tr><th>Rank</th><th>Ação</th><th>FII</th></tr></thead><tbody id="rankTableBody"></tbody></table></div><div class="chart-explain"><b>Como ler:</b> cada linha mostra a ação e o FII que ocupam a mesma posição no ranking do dia. Serve para comparar rapidamente quem está no topo em cada classe de ativo.</div></div>
+        <div class="panel wide"><h3>Backtest FIIs Top 20 · base 100</h3><p>Carteira real registrada no histórico contra IFIX, IMOB e CDI.</p><div class="chart-box"><canvas id="overviewFiisBacktestChart"></canvas></div><div class="mini-note" id="overviewFiisBacktestNote"></div><div class="chart-explain"><b>Como ler:</b> todas as linhas começam em 100 na primeira data real da carteira. Se a linha da carteira ficar acima dos benchmarks, o Top 20 FIIs está crescendo mais que as referências comparadas no mesmo período.</div></div>
+        <div class="panel wide"><h3>Backtest Ações Top 20 · base 100</h3><p>Carteira real registrada no histórico contra IBOV, IPCA e CDI.</p><div class="chart-box"><canvas id="overviewAcoesBacktestChart"></canvas></div><div class="mini-note" id="overviewAcoesBacktestNote"></div><div class="chart-explain"><b>Como ler:</b> compara a evolução da carteira de ações com bolsa, inflação e renda fixa. A carteira só aparece a partir da primeira data em que o robô salvou uma carteira Top 20 real.</div></div>
       </div>
     </section>
 
@@ -91,10 +92,10 @@
     <section id="indicadores" class="section">
       <div class="section-head"><div><h2>Indicadores</h2><p class="desc">Mercado, juros, inflação e câmbio em blocos separados para leitura mais limpa.</p></div></div>
       <div class="charts">
-        <div class="panel"><h3>Mercado · IBOV e IFIX</h3><p>Índices em base 100 para comparação visual.</p><div class="chart-box"><canvas id="marketChart"></canvas></div></div>
-        <div class="panel"><h3>Macro · IPCA, IGP-M e Selic</h3><p>Séries disponíveis no payload diário.</p><div class="chart-box"><canvas id="macroChart"></canvas></div></div>
-        <div class="panel wide"><h3>Carteira FIIs (DY proxy) · base 100</h3><p>Comparação visual de crescimento: carteira, IFIX e IBOV partem de 100. Não mistura pontos de índice com retorno.</p><div class="chart-box"><canvas id="proxyFiisChart"></canvas></div><div class="mini-note" id="proxyFiisNote"></div></div>
-        <div class="panel wide"><h3>Carteira Ações (DY proxy) · base 100</h3><p>Comparação visual de crescimento: carteira, IBOV e IFIX partem de 100. Escala corrigida para leitura justa.</p><div class="chart-box"><canvas id="proxyAcoesChart"></canvas></div><div class="mini-note" id="proxyAcoesNote"></div></div>
+        <div class="panel"><h3>Mercado · IBOV e IFIX</h3><p>Índices em base 100 para comparação visual.</p><div class="chart-box"><canvas id="marketChart"></canvas></div><div class="chart-explain"><b>Como ler:</b> base 100 significa que os dois índices partem do mesmo valor inicial. Assim, o gráfico compara crescimento relativo, e não pontos absolutos do índice.</div></div>
+        <div class="panel"><h3>Macro · IPCA, IGP-M e Selic</h3><p>Séries disponíveis no payload diário.</p><div class="chart-box"><canvas id="macroChart"></canvas></div><div class="chart-explain"><b>Como ler:</b> essas linhas ajudam a entender o pano de fundo econômico. Juros e inflação afetam o custo de oportunidade, dividendos, FIIs e valuation das ações.</div></div>
+        <div class="panel wide"><h3>Carteira FIIs Top 20 · base 100</h3><p>Carteira real registrada no histórico contra IFIX, IMOB e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyFiisChart"></canvas></div><div class="mini-note" id="proxyFiisNote"></div><div class="chart-explain"><b>Como ler:</b> IFIX representa fundos imobiliários, IMOB representa o setor imobiliário listado e CDI representa a referência de renda fixa. A carteira precisa superar essas linhas para mostrar valor incremental.</div></div>
+        <div class="panel wide"><h3>Carteira Ações Top 20 · base 100</h3><p>Carteira real registrada no histórico contra IBOV, IPCA e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyAcoesChart"></canvas></div><div class="mini-note" id="proxyAcoesNote"></div><div class="chart-explain"><b>Como ler:</b> IBOV mede a bolsa brasileira, IPCA mede inflação e CDI mede a alternativa conservadora. O objetivo é ver se o ranking de ações compensa o risco assumido.</div></div>
         <div class="panel wide"><h3>Câmbio e cripto</h3><p>Valores de referência coletados via API gratuita.</p><div id="fxGrid" class="kpis" style="margin:0;grid-template-columns:repeat(4,1fr)"></div></div>
       </div>
     </section>
@@ -119,7 +120,7 @@
   <footer><div class="wrap">Atualizado automaticamente em dias úteis · GitHub Pages · dados públicos e APIs gratuitas</div></footer>
 
   <script>
-    const state = { data:null, charts:{}, allDates:[] };
+    const state = { data:null, charts:{}, allDates:[], selectedDate:null };
     const BR = 'pt-BR';
     const fmtNum = (v,d=2)=> v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{maximumFractionDigits:d,minimumFractionDigits:d});
     const fmtMoney = v => v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{style:'currency',currency:'BRL',maximumFractionDigits:2});
@@ -131,12 +132,11 @@
 
     async function init(){
       try{
-        const dates = await fetch('data/index.json').then(r=>r.json());
-        state.allDates = dates;
-        const select = document.getElementById('dateSelect');
-        select.innerHTML = dates.map(d=>`<option value="${d}">${d}</option>`).join('');
-        select.addEventListener('change',()=>loadDate(select.value));
-        await loadDate(dates[0]);
+        const dates = await fetch('data/index.json', {cache:'no-store'}).then(r=>r.json());
+        state.allDates = [...new Set(dates || [])].sort();
+        const latest = state.allDates[state.allDates.length - 1];
+        if(!latest) throw new Error('index.json sem datas disponíveis');
+        await loadDate(latest);
       }catch(e){
         document.getElementById('asOf').textContent='Erro ao carregar dados';
         console.error(e);
@@ -144,31 +144,90 @@
     }
 
     async function loadDate(date){
+      state.selectedDate = date;
       state.data = await fetch(`data/${date}.json`, {cache:'no-store'}).then(r=>r.json());
-      document.getElementById('asOf').textContent = new Date(`${state.data.data}T12:00:00`).toLocaleDateString(BR,{day:'2-digit',month:'long',year:'numeric'});
-      document.getElementById('dateSelect').value = date;
+      const dataBase = state.data.data || date;
+      document.getElementById('asOf').textContent = `Dados de ${new Date(`${dataBase}T12:00:00`).toLocaleDateString(BR,{day:'2-digit',month:'long',year:'numeric'})}`;
       renderAll();
     }
 
-    function renderAll(){ renderKpis(); renderCards('fiis'); renderCards('acoes'); renderCharts(); renderFx(); }
+    function renderAll(){ renderKpis(); renderCards('fiis'); renderCards('acoes'); renderRankTable(); renderCharts(); renderFx(); }
 
     function kpi(label,value,note,kind='') { return `<article class="kpi ${kind}"><div class="label">${label}</div><div class="value">${value}</div><div class="note">${note||''}</div></article>`; }
+    function deltaClass(v, higherIsBetter=true){
+      if(v==null || !Number.isFinite(Number(v))) return 'delta-neu';
+      const n=Number(v);
+      if(n===0) return 'delta-neu';
+      const good = higherIsBetter ? n>0 : n<0;
+      return good ? 'delta-pos' : 'delta-neg';
+    }
+    function signed(v,dec=2){ if(v==null || !Number.isFinite(Number(v))) return '—'; const n=Number(v); return `${n>=0?'+':''}${fmtNum(n,dec)}`; }
+    function comparePctNote(ref,val,label='Geral',higherIsBetter=true){
+      if(ref==null || val==null) return `${label}: —`;
+      const diff = Number(val)-Number(ref);
+      return `<b>${label}</b> ${fmtPct(ref)} · <span class="${deltaClass(diff,higherIsBetter)}">${signed(diff*100,2)} p.p.</span>`;
+    }
+    function compareNumNote(ref,val,label='Geral',dec=2,suffix='',higherIsBetter=true){
+      if(ref==null || val==null) return `${label}: —`;
+      const diff = Number(val)-Number(ref);
+      return `<b>${label}</b> ${fmtNum(ref,dec)}${suffix} · <span class="${deltaClass(diff,higherIsBetter)}">${signed(diff,dec)}${suffix}</span>`;
+    }
+    function seriesReturnPct(series){
+      const clean=(series||[]).filter(x=>x && x.valor!=null && Number.isFinite(Number(x.valor))).sort((a,b)=>String(a.data).localeCompare(String(b.data)));
+      if(!clean.length) return null;
+      const first=Number(clean[0].valor), last=Number(clean[clean.length-1].valor);
+      if(!first) return null;
+      return (last/first)-1;
+    }
+    function portfolioKpi(comparisonKey, benchmarkName){
+      const comp=portfolioComparisonData(comparisonKey);
+      let carteira=comp.carteira||[];
+      if(!carteira.length && comparisonKey==='comparativo_fiis'){
+        const legacy=legacyFiisBacktestComparison();
+        if(legacy) carteira=legacy.carteira||[];
+      }
+      if(!carteira.length) carteira=fallbackPortfolioPoint();
+      const firstDate=(comp.inicio||carteira[0]?.data||state.data?.data);
+      const benchRaw=(comp.benchmarks && comp.benchmarks[benchmarkName] && comp.benchmarks[benchmarkName].length) ? comp.benchmarks[benchmarkName] : benchSeries(benchmarkName);
+      const bench=base100FromStart(benchRaw, firstDate);
+      const retCarteira=seriesReturnPct(carteira);
+      const retBench=seriesReturnPct(bench);
+      const diff = retCarteira!=null && retBench!=null ? retCarteira-retBench : null;
+      return {
+        value: retCarteira==null ? '—' : fmtPct(retCarteira),
+        note: `<b>vs ${benchmarkName}:</b> ${retBench==null?'—':fmtPct(retBench)} · <span class="${deltaClass(diff,true)}">${diff==null?'—':signed(diff*100,2)+' p.p.'}</span>`,
+        kind: diff==null ? '' : diff>=0 ? 'good' : 'bad'
+      };
+    }
     function renderKpis(){
-      const d=state.data, fiis=d.fiis||[], acoes=d.acoes||[], bt=d.backtest||{};
-      const scoreF=avg(fiis.map(scoreOf)); const scoreA=avg(acoes.map(scoreOf));
-      const fiiRet=bt?.carteira_top20_fiis?.retorno_pct, ifix=bt?.ifix?.retorno_pct, ibov=bt?.ibov?.retorno_pct;
-      const alphaIfix = fiiRet!=null && ifix!=null ? fiiRet-ifix : null;
-      const alphaIbov = fiiRet!=null && ibov!=null ? fiiRet-ibov : null;
+      const d=state.data, fiis=d.fiis||[], acoes=d.acoes||[], k=d.kpis||{};
+      const dyFiis = k.dy_medio_fiis_carteira ?? avg(fiis.map(x=>x['DIVIDEND YIELD']));
+      const pvpFiis = k.pvp_medio_fiis_carteira ?? avg(fiis.map(x=>x['P/VP']));
+      const scoreF = k.score_medio_fiis_carteira ?? avg(fiis.map(scoreOf));
+      const scoreA = k.score_medio_acoes_carteira ?? avg(acoes.map(scoreOf));
+      const cartFii = portfolioKpi('comparativo_fiis','IFIX');
+      const cartAcao = portfolioKpi('comparativo_acoes','IBOV');
       document.getElementById('kpis').innerHTML = [
-        kpi('Top FIIs', fiis.length, 'ativos selecionados'),
-        kpi('Top Ações', acoes.length, 'ativos selecionados'),
-        kpi('DY médio FIIs', fmtPct(avg(fiis.map(x=>x['DIVIDEND YIELD']))), 'carteira Top 20'),
-        kpi('P/VP médio', fmtNum(avg(fiis.map(x=>x['P/VP'])),2), 'FIIs Top 20'),
-        kpi('Score médio', fmtNum(scoreF,1), 'FIIs', scoreF>=60?'good':''),
-        kpi('Score médio', fmtNum(scoreA,1), 'Ações', scoreA>=60?'good':''),
-        kpi('Alpha vs IFIX', alphaIfix==null?'—':`${alphaIfix>=0?'+':''}${fmtNum(alphaIfix,2)} pp`, 'backtest FIIs', alphaIfix>=0?'good':'bad'),
-        kpi('Alpha vs IBOV', alphaIbov==null?'—':`${alphaIbov>=0?'+':''}${fmtNum(alphaIbov,2)} pp`, 'backtest FIIs', alphaIbov>=0?'good':'bad')
+        kpi('DY médio FIIs', fmtPct(dyFiis), comparePctNote(k.dy_medio_fiis_mercado, dyFiis, 'Geral', true)),
+        kpi('P/VP médio FIIs', fmtNum(pvpFiis,2), compareNumNote(k.pvp_medio_fiis_mercado, pvpFiis, 'Geral', 2, '', false)),
+        kpi('Score médio FIIs', fmtNum(scoreF,1), compareNumNote(k.score_medio_fiis_mercado, scoreF, 'Geral', 1, ' pts', true), scoreF>=60?'good':''),
+        kpi('Score médio Ações', fmtNum(scoreA,1), compareNumNote(k.score_medio_acoes_mercado, scoreA, 'Geral', 1, ' pts', true), scoreA>=60?'good':''),
+        kpi('Carteira Top FIIs', cartFii.value, cartFii.note, cartFii.kind),
+        kpi('Carteira Top Ações', cartAcao.value, cartAcao.note, cartAcao.kind)
       ].join('');
+    }
+
+
+    function renderRankTable(){
+      const body=document.getElementById('rankTableBody');
+      if(!body) return;
+      const fiis=state.data.fiis||[];
+      const acoes=state.data.acoes||[];
+      body.innerHTML = Array.from({length:20},(_,i)=>{
+        const acao=acoes[i]?.['Ação'] || '—';
+        const fii=fiis[i]?.FUNDOS || '—';
+        return `<tr><td>#${i+1}</td><td class="${acao==='—'?'muted-cell':''}">${acao}</td><td class="${fii==='—'?'muted-cell':''}">${fii}</td></tr>`;
+      }).join('');
     }
 
     function trendIcon(rec,col){ const t=rec.tendencias?.[col]; if(!t) return ''; const icon=t==='subindo'?'▲':t==='caindo'?'▼':'●'; return `<span class="trend ${t}" title="${t}">${icon}</span>`; }
@@ -185,24 +244,58 @@
     }
 
     function destroy(id){ if(state.charts[id]){ state.charts[id].destroy(); delete state.charts[id]; } }
-    function makeChart(id,cfg){ destroy(id); state.charts[id]=new Chart(document.getElementById(id), cfg); }
+    function makeChart(id,cfg){ const el=document.getElementById(id); if(!el) return; destroy(id); state.charts[id]=new Chart(el, cfg); }
     function baseOptions(extra={}){ return Object.assign({responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:css('--muted'),boxWidth:10}},tooltip:{mode:'index',intersect:false}},scales:{x:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}},y:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}}, extra); }
-    function renderCharts(){ renderScoreChart(); renderSectorChart(); renderBacktestChart(); renderMarketChart(); renderMacroChart(); renderProxyCharts(); }
+    function renderCharts(){ renderScoreChart(); renderOverviewBacktestCharts(); renderMarketChart(); renderMacroChart(); renderProxyCharts(); }
+    function shortNames(names,limit=14){
+      const clean=(names||[]).filter(Boolean);
+      if(!clean.length) return ['Sem ativos nesta faixa'];
+      const head=clean.slice(0,limit);
+      return clean.length>limit ? [...head, `+${clean.length-limit} outros`] : head;
+    }
     function renderScoreChart(){
-      const bins=['<40','40-55','55-70','70+']; const count=(arr)=>[arr.filter(x=>scoreOf(x)<40).length,arr.filter(x=>scoreOf(x)>=40&&scoreOf(x)<55).length,arr.filter(x=>scoreOf(x)>=55&&scoreOf(x)<70).length,arr.filter(x=>scoreOf(x)>=70).length];
-      makeChart('scoreChart',{type:'bar',data:{labels:bins,datasets:[{label:'FIIs',data:count(state.data.fiis||[])},{label:'Ações',data:count(state.data.acoes||[])}]},options:baseOptions()});
+      const bins=['<40','40-55','55-70','70+'];
+      const inBin=(r,idx)=>{ const s=scoreOf(r); return idx===0 ? s<40 : idx===1 ? s>=40&&s<55 : idx===2 ? s>=55&&s<70 : s>=70; };
+      const namesFor=(arr,type)=>bins.map((_,idx)=>arr.filter(r=>inBin(r,idx)).map(r=>type==='fiis'?r.FUNDOS:r['Ação']).filter(Boolean));
+      const count=(names)=>names.map(x=>x.length);
+      const fiiNames=namesFor(state.data.fiis||[],'fiis');
+      const acaoNames=namesFor(state.data.acoes||[],'acoes');
+      makeChart('scoreChart',{
+        type:'bar',
+        data:{labels:bins,datasets:[
+          {label:'FIIs',data:count(fiiNames),assetNames:fiiNames},
+          {label:'Ações',data:count(acaoNames),assetNames:acaoNames}
+        ]},
+        options:baseOptions({
+          plugins:{
+            legend:{labels:{color:css('--muted'),boxWidth:10}},
+            tooltip:{
+              mode:'nearest',
+              intersect:true,
+              callbacks:{
+                label:(ctx)=>`${ctx.dataset.label}: ${ctx.parsed.y} ativos`,
+                afterLabel:(ctx)=>shortNames(ctx.dataset.assetNames?.[ctx.dataIndex]).map(x=>`• ${x}`)
+              }
+            }
+          }
+        })
+      });
     }
-    function renderSectorChart(){
-      const counts={}; (state.data.fiis||[]).forEach(r=>{ const s=r.SETOR||'Não informado'; counts[s]=(counts[s]||0)+1; }); const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,10);
-      makeChart('sectorChart',{type:'bar',data:{labels:entries.map(x=>x[0]),datasets:[{label:'FIIs',data:entries.map(x=>x[1])}]},options:baseOptions({indexAxis:'y',plugins:{legend:{display:false}}})});
-    }
-    function renderBacktestChart(){
-      const bt=state.data.backtest||{}; const periods=bt.periodos||[]; const note=document.getElementById('backtestNote');
-      if(!bt.disponivel||!periods.length){ note.textContent=bt.motivo||'Backtest ainda indisponível.'; makeChart('backtestChart',{type:'line',data:{labels:[],datasets:[]},options:baseOptions()}); return; }
-      let c=100, f=100, i=100; const labels=['Início'], carteira=[100], ifix=[100], ibov=[100];
-      periods.forEach(p=>{ c*=1+(Number(p.carteira_retorno_pct||0)/100); f*=1+(Number(p.ifix_retorno_pct||0)/100); i*=1+(Number(p.ibov_retorno_pct||0)/100); labels.push(p.fim); carteira.push(c); ifix.push(f); ibov.push(i); });
-      note.textContent=`Rebalanceamentos: ${bt.rebalanceamentos||periods.length}. Carteira ${fmtNum((c-100),2)}%, IFIX ${fmtNum((f-100),2)}%, IBOV ${fmtNum((i-100),2)}%.`;
-      makeChart('backtestChart',{type:'line',data:{labels,datasets:[{label:'Carteira FIIs',data:carteira,borderWidth:3,tension:.25},{label:'IFIX',data:ifix,borderWidth:2,tension:.25},{label:'IBOV',data:ibov,borderWidth:2,tension:.25}]},options:baseOptions()});
+    function renderOverviewBacktestCharts(){
+      renderPortfolioComparison(
+        'overviewFiisBacktestChart',
+        'overviewFiisBacktestNote',
+        'comparativo_fiis',
+        'Carteira FIIs Top 20',
+        ['IFIX','IMOB','CDI']
+      );
+      renderPortfolioComparison(
+        'overviewAcoesBacktestChart',
+        'overviewAcoesBacktestNote',
+        'comparativo_acoes',
+        'Carteira Ações Top 20',
+        ['IBOV','IPCA','CDI']
+      );
     }
     function normalizeSeries(arr){
       if(!arr||!arr.length) return [];
@@ -219,25 +312,192 @@
       const key=`${String(name).toLowerCase()}_base100`;
       return normalizeSeries(cv[key]||benchSeries(name));
     }
+    function base100FromStart(arr,startDate){
+      const clean=(arr||[])
+        .filter(x=>x && x.data && x.valor!=null && Number.isFinite(Number(x.valor)))
+        .map(x=>({data:String(x.data), valor:Number(x.valor)}))
+        .sort((a,b)=>a.data.localeCompare(b.data));
+      if(!clean.length) return [];
+      if(!startDate) return normalizeSeries(clean);
+      const before=clean.filter(x=>x.data<=startDate);
+      const after=clean.filter(x=>x.data>=startDate);
+      const base=(before.length?before[before.length-1]:after[0]);
+      if(!base || !base.valor) return [];
+      const out=after.map(x=>({data:x.data, valor:x.valor/base.valor*100}));
+      if(!out.length || out[0].data!==startDate){
+        out.unshift({data:startDate, valor:100});
+      }
+      return out;
+    }
+    function fallbackPortfolioPoint(){
+      const d=state.data?.data || state.selectedDate || new Date().toISOString().slice(0,10);
+      return [{data:d, valor:100}];
+    }
     function seriesMap(arr){ return Object.fromEntries((arr||[]).map(x=>[x.data,x.valor])); }
     function renderMarketChart(){ const ibov=benchmarkBase100('IBOV'), ifix=benchmarkBase100('IFIX'); const labels=[...new Set([...ibov,...ifix].map(x=>x.data))].sort(); const mi=seriesMap(ibov), mf=seriesMap(ifix); makeChart('marketChart',{type:'line',data:{labels,datasets:[{label:'IBOV base 100',data:labels.map(d=>mi[d]??null),spanGaps:true,tension:.25},{label:'IFIX base 100',data:labels.map(d=>mf[d]??null),spanGaps:true,tension:.25}]},options:baseOptions({scales:{x:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}},y:{title:{display:true,text:'Base 100',color:css('--muted')},ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}})}); }
     function renderMacroChart(){ const ind=state.data.indicadores||{}; const series=[['IPCA 12M',ind.ipca_12m||[]],['IGP-M',ind.igpm||[]],['Selic',ind.selic||[]]]; const labels=[...new Set(series.flatMap(s=>s[1].map(x=>x.data)))].sort(); const datasets=series.map(([label,arr])=>{ const m=Object.fromEntries(arr.map(x=>[x.data,x.valor])); return {label,data:labels.map(d=>m[d]??null),spanGaps:true,tension:.25}; }); makeChart('macroChart',{type:'line',data:{labels,datasets},options:baseOptions()}); }
-    function renderProxyCharts(){ renderProxyChart('proxyFiisChart','proxyFiisNote','carteira_fiis_base100','Carteira FIIs'); renderProxyChart('proxyAcoesChart','proxyAcoesNote','carteira_acoes_base100','Carteira Ações'); }
-    function renderProxyChart(chartId,noteId,portfolioKey,portfolioLabel){
-      const carteira=carteiraVsSeries(portfolioKey), ifix=benchmarkBase100('IFIX'), ibov=benchmarkBase100('IBOV');
-      const note=document.getElementById(noteId);
-      if(!carteira.length){ if(note) note.textContent='Série da carteira ainda indisponível no JSON.'; makeChart(chartId,{type:'line',data:{labels:[],datasets:[]},options:baseOptions()}); return; }
-      const labels=[...new Set([...carteira,...ifix,...ibov].map(x=>x.data))].sort();
-      const mc=seriesMap(carteira), mf=seriesMap(ifix), mi=seriesMap(ibov);
-      const first=labels[0], last=labels[labels.length-1];
-      if(note) note.textContent=`Base 100 de ${first} até ${last}. Carteira e benchmarks estão na mesma escala.`;
-      makeChart(chartId,{type:'line',data:{labels,datasets:[
-        {label:`${portfolioLabel} base 100`,data:labels.map(d=>mc[d]??null),spanGaps:true,borderWidth:3,tension:.25},
-        {label:'IFIX base 100',data:labels.map(d=>mf[d]??null),spanGaps:true,borderWidth:2,tension:.25},
-        {label:'IBOV base 100',data:labels.map(d=>mi[d]??null),spanGaps:true,borderWidth:2,tension:.25}
-      ]},options:baseOptions({scales:{x:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}},y:{title:{display:true,text:'Base 100',color:css('--muted')},ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}})});
+    function renderProxyCharts(){
+      renderPortfolioComparison(
+        'proxyFiisChart',
+        'proxyFiisNote',
+        'comparativo_fiis',
+        'Carteira FIIs Top 20',
+        ['IFIX','IMOB','CDI']
+      );
+      renderPortfolioComparison(
+        'proxyAcoesChart',
+        'proxyAcoesNote',
+        'comparativo_acoes',
+        'Carteira Ações Top 20',
+        ['IBOV','IPCA','CDI']
+      );
     }
-    function renderFx(){ const c=state.data.indicadores?.cambio||{}; const entries=Object.entries(c).slice(0,4); document.getElementById('fxGrid').innerHTML=entries.length?entries.map(([k,v])=>kpi(k, typeof v==='number'?fmtNum(v,2):String(v),'câmbio/cripto')).join(''):'<div class="empty">Sem dados de câmbio.</div>'; }
+    function portfolioComparisonData(key){
+      const cv=state.data.carteira_vs||{};
+      const comp=cv[key]||{};
+      return {
+        carteira: normalizeSeries(comp.carteira||[]),
+        benchmarks: comp.benchmarks||{},
+        inicio: comp.inicio||null
+      };
+    }
+    function legacyFiisBacktestComparison(){
+      const bt=state.data.backtest||{};
+      const periodos=bt.periodos||[];
+      if(!periodos.length) return null;
+      let carteira=100, ifix=100, ibov=100;
+      const outCarteira=[];
+      const outIfix=[];
+      const outIbov=[];
+      const firstDate=periodos[0]?.inicio;
+      if(firstDate){
+        outCarteira.push({data:firstDate, valor:100});
+        outIfix.push({data:firstDate, valor:100});
+        outIbov.push({data:firstDate, valor:100});
+      }
+      periodos.forEach(p=>{
+        const end=p.fim;
+        if(!end) return;
+        if(p.carteira_retorno_pct!=null) carteira *= (1 + Number(p.carteira_retorno_pct)/100);
+        if(p.ifix_retorno_pct!=null) ifix *= (1 + Number(p.ifix_retorno_pct)/100);
+        if(p.ibov_retorno_pct!=null) ibov *= (1 + Number(p.ibov_retorno_pct)/100);
+        outCarteira.push({data:end, valor:Number(carteira.toFixed(4))});
+        outIfix.push({data:end, valor:Number(ifix.toFixed(4))});
+        outIbov.push({data:end, valor:Number(ibov.toFixed(4))});
+      });
+      return {carteira:outCarteira, benchmarks:{IFIX:outIfix, IBOV:outIbov}, inicio:firstDate || null, legacy:true};
+    }
+    function emptyPortfolioChart(chartId,noteId,message){
+      const note=document.getElementById(noteId);
+      if(note) note.textContent=message;
+      makeChart(chartId,{
+        type:'line',
+        data:{labels:['Aguardando histórico'],datasets:[{label:'Aguardando dados',data:[100],pointRadius:4}]},
+        options:baseOptions({plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{ticks:{color:css('--muted')},grid:{display:false}},y:{min:99,max:101,ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}})
+      });
+    }
+    function renderPortfolioComparison(chartId,noteId,comparisonKey,portfolioLabel,benchmarkNames){
+      const note=document.getElementById(noteId);
+      let comp=portfolioComparisonData(comparisonKey);
+      let carteira=comp.carteira||[];
+
+      // Fallback temporário: enquanto o JSON novo não foi regenerado com carteira_vs,
+      // usa o backtest legado de FIIs para evitar gráfico em branco.
+      if(!carteira.length && comparisonKey==='comparativo_fiis'){
+        const legacy=legacyFiisBacktestComparison();
+        if(legacy){
+          comp=legacy;
+          carteira=legacy.carteira||[];
+        }
+      }
+
+      if(!carteira.length){
+        carteira=fallbackPortfolioPoint();
+        comp={...comp, inicio:carteira[0].data, fallbackInicial:true};
+      }
+
+      const firstDate = comp.inicio || carteira[0]?.data || state.data?.data;
+      const availableBenchmarks = comp.benchmarks||{};
+      const benchmarkSeries = benchmarkNames
+        .map(name=>{
+          const raw = Array.isArray(availableBenchmarks[name]) && availableBenchmarks[name].length
+            ? availableBenchmarks[name]
+            : benchSeries(name);
+          return {name, data: base100FromStart(raw, firstDate)};
+        })
+        .filter(x=>x.data.length);
+
+      const allSeries = [carteira, ...benchmarkSeries.map(x=>x.data)];
+      const labels=[...new Set(allSeries.flatMap(arr=>arr.map(x=>x.data)))].sort();
+      const mc=seriesMap(carteira);
+      const datasets=[{
+        label:`${portfolioLabel} base 100`,
+        data:labels.map(d=>mc[d]??null),
+        spanGaps:false,
+        borderWidth:3,
+        pointRadius: labels.length <= 2 ? 4 : 2,
+        tension:.18
+      }];
+
+      benchmarkSeries.forEach(({name,data})=>{
+        const m=seriesMap(data);
+        datasets.push({
+          label:`${name} base 100`,
+          data:labels.map(d=>m[d]??null),
+          spanGaps:true,
+          borderWidth:2,
+          pointRadius: labels.length <= 2 ? 4 : 1.5,
+          tension:.18
+        });
+      });
+
+      const values=datasets.flatMap(ds=>ds.data).filter(v=>v!=null && Number.isFinite(Number(v))).map(Number);
+      const minVal=values.length?Math.min(...values):98;
+      const maxVal=values.length?Math.max(...values):102;
+      const padding=Math.max(1, (maxVal-minVal)*0.18);
+      const yMin=Math.max(0, minVal-padding);
+      const yMax=maxVal+padding;
+
+      const first=carteira[0]?.data || labels[0];
+      const last=labels[labels.length-1];
+      const missing = benchmarkNames.filter(name => {
+        const raw = (availableBenchmarks[name] && availableBenchmarks[name].length) ? availableBenchmarks[name] : benchSeries(name);
+        return !raw || !raw.length;
+      });
+      const extra = missing.length ? ` Sem dados disponíveis para: ${missing.join(', ')}.` : '';
+      const status = comp.fallbackInicial ? 'Ainda há apenas o ponto inicial da carteira; a linha começa a evoluir quando houver pelo menos dois snapshots reais.' : 'Benchmarks rebaseados na mesma data inicial.';
+      if(note) note.textContent=`Carteira em base 100 de ${first} até ${last}. ${status}${extra}`;
+      makeChart(chartId,{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},scales:{x:{ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}},y:{min:yMin,max:yMax,title:{display:true,text:'Base 100',color:css('--muted')},ticks:{color:css('--muted')},grid:{color:'rgba(148,163,184,.08)'}}}})});
+    }
+    function scalarValue(v){
+      if(v==null) return null;
+      if(typeof v==='number') return v;
+      if(typeof v==='string'){
+        const n=Number(v.replace(',','.'));
+        return Number.isFinite(n)?n:v;
+      }
+      if(typeof v==='object'){
+        for(const key of ['valor','value','bid','ask','close','high','low','pctChange']){
+          if(v[key]!=null){
+            const n=Number(String(v[key]).replace(',','.'));
+            return Number.isFinite(n)?n:v[key];
+          }
+        }
+      }
+      return null;
+    }
+    function renderFx(){
+      const c=state.data.indicadores?.cambio||{};
+      const entries=Object.entries(c).slice(0,4);
+      document.getElementById('fxGrid').innerHTML=entries.length
+        ? entries.map(([k,v])=>{
+            const val=scalarValue(v);
+            const display=typeof val==='number'?fmtNum(val,2):(val==null?'—':String(val));
+            return kpi(k, display, 'câmbio/cripto');
+          }).join('')
+        : '<div class="empty">Sem dados de câmbio.</div>';
+    }
+
 
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');setTimeout(()=>Object.values(state.charts).forEach(c=>c.resize()),50);}));
     init();

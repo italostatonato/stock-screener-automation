@@ -1,22 +1,22 @@
 {
-  "data": "2026-06-25",
+  "data": "2026-06-28",
   "fiis": [
     {
       "FUNDOS": "VIUR11",
       "SETOR": "MISTO",
-      "PREÇO ATUAL (R$)": 2.4,
+      "PREÇO ATUAL (R$)": 2.34,
       "DIVIDEND YIELD": 0.12890000000000001,
-      "P/VP": 0.64,
-      "LIQUIDEZ DIÁRIA (R$)": 135468.7,
+      "P/VP": 0.67,
+      "LIQUIDEZ DIÁRIA (R$)": 162428.36,
       "PATRIMÔNIO LÍQUIDO": 94664702.09,
-      "VOLATILIDADE": 3681.05,
+      "VOLATILIDADE": 3703.3,
       "VPA": 3.51,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 37666.0,
-      "score": 46.3,
+      "score": 46.2,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "caindo",
+        "P/VP": "subindo",
         "LIQUIDEZ DIÁRIA (R$)": "subindo",
         "VOLATILIDADE": "estavel"
       }
@@ -24,52 +24,52 @@
     {
       "FUNDOS": "KOPA11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 341.5,
+      "PREÇO ATUAL (R$)": 341.0,
       "DIVIDEND YIELD": 0.11939999999999999,
       "P/VP": 0.86,
-      "LIQUIDEZ DIÁRIA (R$)": 120535.05,
+      "LIQUIDEZ DIÁRIA (R$)": 122254.9,
       "PATRIMÔNIO LÍQUIDO": 140155422.69,
-      "VOLATILIDADE": 2020.09,
+      "VOLATILIDADE": 2027.29,
       "VPA": 395.16,
       "ÚLTIMO DIVIDENDO": "47,50",
       "NUM. COTISTAS": 3498.0,
-      "score": 61.2,
+      "score": 60.1,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "subindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
     {
-      "FUNDOS": "VHFA11",
-      "SETOR": "MISTO",
-      "PREÇO ATUAL (R$)": 11.0,
-      "DIVIDEND YIELD": 0.0755,
-      "P/VP": 1.1,
-      "LIQUIDEZ DIÁRIA (R$)": 370780.04,
-      "PATRIMÔNIO LÍQUIDO": 95085890.53,
-      "VOLATILIDADE": 5745.54,
-      "VPA": 10.03,
-      "ÚLTIMO DIVIDENDO": "0,83",
-      "NUM. COTISTAS": 230.0,
-      "score": 55.0,
+      "FUNDOS": "FZDB11",
+      "SETOR": "INDEFINIDO",
+      "PREÇO ATUAL (R$)": 154.46,
+      "DIVIDEND YIELD": 0.0339,
+      "P/VP": 0.86,
+      "LIQUIDEZ DIÁRIA (R$)": 937933.63,
+      "PATRIMÔNIO LÍQUIDO": 642871106.93,
+      "VOLATILIDADE": 21675.18,
+      "VPA": 178.58,
+      "ÚLTIMO DIVIDENDO": "3,94",
+      "NUM. COTISTAS": 120.0,
+      "score": 55.2,
       "tendencias": {
-        "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
-        "VOLATILIDADE": "estavel"
+        "DIVIDEND YIELD": "neutro",
+        "P/VP": "neutro",
+        "LIQUIDEZ DIÁRIA (R$)": "neutro",
+        "VOLATILIDADE": "neutro"
       }
     },
     {
       "FUNDOS": "RBIR11",
       "SETOR": "FUNDO DE DESENVOLVIMENTO",
-      "PREÇO ATUAL (R$)": 78.1,
+      "PREÇO ATUAL (R$)": 79.35,
       "DIVIDEND YIELD": 0.0209,
-      "P/VP": 1.0,
-      "LIQUIDEZ DIÁRIA (R$)": 243027.48,
+      "P/VP": 1.01,
+      "LIQUIDEZ DIÁRIA (R$)": 233731.2,
       "PATRIMÔNIO LÍQUIDO": 120414062.37,
-      "VOLATILIDADE": 1392.44,
+      "VOLATILIDADE": 1390.5,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,64",
       "NUM. COTISTAS": 1464.0,
@@ -87,9 +87,9 @@
       "PREÇO ATUAL (R$)": 700.0,
       "DIVIDEND YIELD": 0.0208,
       "P/VP": 1.14,
-      "LIQUIDEZ DIÁRIA (R$)": 1036737.81,
+      "LIQUIDEZ DIÁRIA (R$)": 921544.72,
       "PATRIMÔNIO LÍQUIDO": 73722465.55,
-      "VOLATILIDADE": 30509.97,
+      "VOLATILIDADE": 30076.27,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "13,54",
       "NUM. COTISTAS": 10.0,
@@ -98,18 +98,18 @@
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
         "LIQUIDEZ DIÁRIA (R$)": "caindo",
-        "VOLATILIDADE": "caindo"
+        "VOLATILIDADE": "estavel"
       }
     },
     {
       "FUNDOS": "RZAT11",
       "SETOR": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
-      "PREÇO ATUAL (R$)": 94.76,
+      "PREÇO ATUAL (R$)": 94.5,
       "DIVIDEND YIELD": 0.0175,
       "P/VP": 0.91,
-      "LIQUIDEZ DIÁRIA (R$)": 573823.09,
+      "LIQUIDEZ DIÁRIA (R$)": 525321.5,
       "PATRIMÔNIO LÍQUIDO": 439716792.04,
-      "VOLATILIDADE": 1109.06,
+      "VOLATILIDADE": 1114.0,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,70",
       "NUM. COTISTAS": 34380.0,
@@ -117,19 +117,19 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "caindo",
         "VOLATILIDADE": "estavel"
       }
     },
     {
       "FUNDOS": "DEVA11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 17.79,
+      "PREÇO ATUAL (R$)": 17.8,
       "DIVIDEND YIELD": 0.0165,
       "P/VP": 0.19,
-      "LIQUIDEZ DIÁRIA (R$)": 512278.17,
+      "LIQUIDEZ DIÁRIA (R$)": 485194.64,
       "PATRIMÔNIO LÍQUIDO": 1334067797.89,
-      "VOLATILIDADE": 2241.29,
+      "VOLATILIDADE": 2249.4,
       "VPA": 94.99,
       "ÚLTIMO DIVIDENDO": "0,30",
       "NUM. COTISTAS": 74905.0,
@@ -144,12 +144,12 @@
     {
       "FUNDOS": "KIVO11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 59.1,
+      "PREÇO ATUAL (R$)": 58.9,
       "DIVIDEND YIELD": 0.016399999999999998,
       "P/VP": 0.7,
-      "LIQUIDEZ DIÁRIA (R$)": 479032.48,
+      "LIQUIDEZ DIÁRIA (R$)": 442206.23,
       "PATRIMÔNIO LÍQUIDO": 187570261.88,
-      "VOLATILIDADE": 1481.73,
+      "VOLATILIDADE": 1464.57,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,14",
       "NUM. COTISTAS": 7247.0,
@@ -164,19 +164,19 @@
     {
       "FUNDOS": "GZIT11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 41.81,
+      "PREÇO ATUAL (R$)": 41.23,
       "DIVIDEND YIELD": 0.0161,
-      "P/VP": 0.48,
-      "LIQUIDEZ DIÁRIA (R$)": 430782.36,
+      "P/VP": 0.47,
+      "LIQUIDEZ DIÁRIA (R$)": 453269.57,
       "PATRIMÔNIO LÍQUIDO": 2028146076.2,
-      "VOLATILIDADE": 1686.49,
+      "VOLATILIDADE": 1695.55,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,78",
       "NUM. COTISTAS": 8032.0,
       "score": 63.9,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
+        "P/VP": "caindo",
         "LIQUIDEZ DIÁRIA (R$)": "subindo",
         "VOLATILIDADE": "estavel"
       }
@@ -184,16 +184,16 @@
     {
       "FUNDOS": "HCTR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 16.08,
+      "PREÇO ATUAL (R$)": 16.22,
       "DIVIDEND YIELD": 0.016,
       "P/VP": 0.16,
-      "LIQUIDEZ DIÁRIA (R$)": 520524.36,
+      "LIQUIDEZ DIÁRIA (R$)": 514238.48,
       "PATRIMÔNIO LÍQUIDO": 2216689880.53,
-      "VOLATILIDADE": 2028.71,
+      "VOLATILIDADE": 2034.87,
       "VPA": 100.37,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 123678.0,
-      "score": 72.1,
+      "score": 72.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -204,19 +204,19 @@
     {
       "FUNDOS": "VCRA11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 62.0,
+      "PREÇO ATUAL (R$)": 62.43,
       "DIVIDEND YIELD": 0.0158,
-      "P/VP": 0.59,
-      "LIQUIDEZ DIÁRIA (R$)": 495632.32,
+      "P/VP": 0.61,
+      "LIQUIDEZ DIÁRIA (R$)": 496059.43,
       "PATRIMÔNIO LÍQUIDO": 471637374.73,
-      "VOLATILIDADE": 1319.12,
+      "VOLATILIDADE": 1322.54,
       "VPA": 102.67,
       "ÚLTIMO DIVIDENDO": "1,00",
       "NUM. COTISTAS": 9776.0,
       "score": 60.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
+        "P/VP": "subindo",
         "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
@@ -224,12 +224,12 @@
     {
       "FUNDOS": "SNME11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 9.3,
+      "PREÇO ATUAL (R$)": 9.41,
       "DIVIDEND YIELD": 0.0158,
       "P/VP": 1.0,
-      "LIQUIDEZ DIÁRIA (R$)": 402588.23,
+      "LIQUIDEZ DIÁRIA (R$)": 420959.57,
       "PATRIMÔNIO LÍQUIDO": 69984048.36,
-      "VOLATILIDADE": 1385.26,
+      "VOLATILIDADE": 1394.88,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,15",
       "NUM. COTISTAS": 7492.0,
@@ -237,23 +237,23 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "subindo",
         "VOLATILIDADE": "estavel"
       }
     },
     {
       "FUNDOS": "EGAF11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 88.7,
+      "PREÇO ATUAL (R$)": 88.85,
       "DIVIDEND YIELD": 0.0147,
-      "P/VP": 0.89,
-      "LIQUIDEZ DIÁRIA (R$)": 910964.73,
+      "P/VP": 0.9,
+      "LIQUIDEZ DIÁRIA (R$)": 872032.43,
       "PATRIMÔNIO LÍQUIDO": 310127971.92,
-      "VOLATILIDADE": 1036.16,
+      "VOLATILIDADE": 1040.5,
       "VPA": 99.02,
       "ÚLTIMO DIVIDENDO": "1,32",
       "NUM. COTISTAS": 12644.0,
-      "score": 50.4,
+      "score": 50.5,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -264,16 +264,16 @@
     {
       "FUNDOS": "IAAG11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 8.41,
+      "PREÇO ATUAL (R$)": 8.4,
       "DIVIDEND YIELD": 0.0143,
       "P/VP": 0.87,
-      "LIQUIDEZ DIÁRIA (R$)": 206424.27,
+      "LIQUIDEZ DIÁRIA (R$)": 140846.9,
       "PATRIMÔNIO LÍQUIDO": 100620221.64,
-      "VOLATILIDADE": 1702.69,
+      "VOLATILIDADE": 1709.23,
       "VPA": 9.69,
       "ÚLTIMO DIVIDENDO": "0,12",
       "NUM. COTISTAS": 16132.0,
-      "score": 29.8,
+      "score": 29.5,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -284,20 +284,20 @@
     {
       "FUNDOS": "CACR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 24.95,
+      "PREÇO ATUAL (R$)": 27.42,
       "DIVIDEND YIELD": 0.0141,
-      "P/VP": 0.25,
-      "LIQUIDEZ DIÁRIA (R$)": 1042048.61,
+      "P/VP": 0.28,
+      "LIQUIDEZ DIÁRIA (R$)": 908757.77,
       "PATRIMÔNIO LÍQUIDO": 471926680.37,
-      "VOLATILIDADE": 6399.28,
+      "VOLATILIDADE": 6515.84,
       "VPA": 95.04,
       "ÚLTIMO DIVIDENDO": "1,20",
       "NUM. COTISTAS": 25317.0,
-      "score": 69.9,
+      "score": 69.8,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "P/VP": "subindo",
+        "LIQUIDEZ DIÁRIA (R$)": "caindo",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -307,37 +307,37 @@
       "PREÇO ATUAL (R$)": 4.72,
       "DIVIDEND YIELD": 0.0139,
       "P/VP": 0.56,
-      "LIQUIDEZ DIÁRIA (R$)": 195045.36,
+      "LIQUIDEZ DIÁRIA (R$)": 185299.52,
       "PATRIMÔNIO LÍQUIDO": 174647296.59,
-      "VOLATILIDADE": 1863.23,
+      "VOLATILIDADE": 1874.24,
       "VPA": 8.43,
       "ÚLTIMO DIVIDENDO": "0,07",
       "NUM. COTISTAS": 23191.0,
-      "score": 60.0,
+      "score": 59.8,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "caindo",
-        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "caindo",
         "VOLATILIDADE": "estavel"
       }
     },
     {
       "FUNDOS": "LSAG11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 77.93,
+      "PREÇO ATUAL (R$)": 77.9,
       "DIVIDEND YIELD": 0.0139,
       "P/VP": 0.8,
-      "LIQUIDEZ DIÁRIA (R$)": 102470.91,
+      "LIQUIDEZ DIÁRIA (R$)": 102240.14,
       "PATRIMÔNIO LÍQUIDO": 98794610.7,
-      "VOLATILIDADE": 1667.59,
+      "VOLATILIDADE": 1657.98,
       "VPA": 97.88,
       "ÚLTIMO DIVIDENDO": "1,05",
       "NUM. COTISTAS": 2589.0,
-      "score": 48.0,
+      "score": 48.5,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "subindo",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -366,39 +366,39 @@
       "SETOR": "PAPÉIS",
       "PREÇO ATUAL (R$)": 9.55,
       "DIVIDEND YIELD": 0.0137,
-      "P/VP": 0.96,
-      "LIQUIDEZ DIÁRIA (R$)": 116708.41,
+      "P/VP": 0.97,
+      "LIQUIDEZ DIÁRIA (R$)": 121248.19,
       "PATRIMÔNIO LÍQUIDO": 138137672.46,
-      "VOLATILIDADE": 1292.9,
+      "VOLATILIDADE": 1296.27,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,13",
       "NUM. COTISTAS": 2258.0,
-      "score": 26.0,
+      "score": 25.8,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "subindo",
         "VOLATILIDADE": "estavel"
       }
     },
     {
       "FUNDOS": "CPTR11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 7.99,
+      "PREÇO ATUAL (R$)": 7.91,
       "DIVIDEND YIELD": 0.013600000000000001,
-      "P/VP": 0.78,
-      "LIQUIDEZ DIÁRIA (R$)": 189044.59,
+      "P/VP": 0.79,
+      "LIQUIDEZ DIÁRIA (R$)": 169689.57,
       "PATRIMÔNIO LÍQUIDO": 198071876.54,
-      "VOLATILIDADE": 1107.76,
+      "VOLATILIDADE": 1124.77,
       "VPA": 9.99,
       "ÚLTIMO DIVIDENDO": "0,11",
       "NUM. COTISTAS": 21287.0,
-      "score": 37.2,
+      "score": 36.6,
       "tendencias": {
-        "DIVIDEND YIELD": "neutro",
-        "P/VP": "neutro",
-        "LIQUIDEZ DIÁRIA (R$)": "neutro",
-        "VOLATILIDADE": "neutro"
+        "DIVIDEND YIELD": "estavel",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "VOLATILIDADE": "estavel"
       }
     }
   ],
@@ -406,16 +406,16 @@
     {
       "Ação": "HBRE3",
       "Empresa": "HBR REALTY",
-      "Preço": 2.59,
-      "Preço/VPA": 0.14766458467802,
-      "Preço/Lucro": 8.9134025076708,
-      "Dividend Yield": 0.44997244472201,
+      "Preço": 2.6,
+      "Preço/VPA": 0.14823471820959,
+      "Preço/Lucro": 8.9478171891676,
+      "Dividend Yield": 0.44824178147308,
       "ROA": 0.0058477445013084,
       "Margem Líquida": 0.054338528452338,
-      "Market Cap Empresa": 267259460.79,
-      "EV/EBITDA": 5.0163408019584,
+      "Market Cap Empresa": 268291350.6,
+      "EV/EBITDA": 5.0191999828209,
       "RPL": 0.014693818344338,
-      "EV/EBIT": 5.1163415593896,
+      "EV/EBIT": 5.1192577380246,
       "score": 37.3,
       "tendencias": {
         "Dividend Yield": "estavel",
@@ -427,38 +427,17 @@
     {
       "Ação": "HBOR3",
       "Empresa": "HELBOR",
-      "Preço": 2.19,
-      "Preço/VPA": 0.20248720884513,
-      "Preço/Lucro": 52.168330250934,
-      "Dividend Yield": 0.060820376100457,
+      "Preço": 2.2,
+      "Preço/VPA": 0.20341180797228,
+      "Preço/Lucro": 52.406541804591,
+      "Dividend Yield": 0.060543919845455,
       "ROA": 0.00088008962849066,
       "Margem Líquida": 0.0047786179172233,
-      "Market Cap Empresa": 293133847.68,
-      "EV/EBITDA": 15.421391258574,
+      "Market Cap Empresa": 294472358.4,
+      "EV/EBITDA": 15.431220962033,
       "RPL": 0.0038493657349589,
-      "EV/EBIT": 16.894733075989,
-      "score": 61.5,
-      "tendencias": {
-        "Dividend Yield": "estavel",
-        "Preço/VPA": "estavel",
-        "ROA": "estavel",
-        "Margem Líquida": "estavel"
-      }
-    },
-    {
-      "Ação": "ESPA3",
-      "Empresa": "ESPACOLASER",
-      "Preço": 6.36,
-      "Preço/VPA": 0.26440631377227,
-      "Preço/Lucro": 14.429696557439,
-      "Dividend Yield": 0.060091625943396,
-      "ROA": 0.0069386912400003,
-      "Margem Líquida": 0.014458539932527,
-      "Market Cap Empresa": 229865066.16,
-      "EV/EBITDA": 3.072047474506,
-      "RPL": 0.018355579727512,
-      "EV/EBIT": 4.9151877453553,
-      "score": 59.3,
+      "EV/EBIT": 16.905501897904,
+      "score": 61.6,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -469,20 +448,41 @@
     {
       "Ação": "ETER3",
       "Empresa": "ETERNIT",
-      "Preço": 3.6,
-      "Preço/VPA": 0.26772144630178,
-      "Preço/Lucro": 4.6843809503749,
-      "Dividend Yield": 0.047421353325,
+      "Preço": 3.61,
+      "Preço/VPA": 0.26846511698595,
+      "Preço/Lucro": 4.6973931196815,
+      "Dividend Yield": 0.047289992235457,
       "ROA": 0.036419593980902,
       "Margem Líquida": 0.041937706481989,
-      "Market Cap Empresa": 222395670.0,
-      "EV/EBITDA": 3.4253695532009,
+      "Market Cap Empresa": 223013435.75,
+      "EV/EBITDA": 3.4311572908176,
       "RPL": 0.059695036771871,
-      "EV/EBIT": 6.629200572962,
-      "score": 60.8,
+      "EV/EBIT": 6.6404017216057,
+      "score": 59.6,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
+      "Ação": "ESPA3",
+      "Empresa": "ESPACOLASER",
+      "Preço": 7,
+      "Preço/VPA": 0.2910132384286,
+      "Preço/Lucro": 15.881741494036,
+      "Dividend Yield": 0.054597534428571,
+      "ROA": 0.0069386912400003,
+      "Margem Líquida": 0.014458539932527,
+      "Market Cap Empresa": 252996142.0,
+      "EV/EBITDA": 3.1550750803137,
+      "RPL": 0.018355579727512,
+      "EV/EBIT": 5.0480295305097,
+      "score": 60.8,
+      "tendencias": {
+        "Dividend Yield": "caindo",
+        "Preço/VPA": "subindo",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -490,38 +490,17 @@
     {
       "Ação": "ALLD3",
       "Empresa": "ALLIED",
-      "Preço": 4.83,
-      "Preço/VPA": 0.30145043948576,
-      "Preço/Lucro": 1.3539081810375,
-      "Dividend Yield": 0.6328446477764,
+      "Preço": 4.81,
+      "Preço/VPA": 0.30020219750031,
+      "Preço/Lucro": 1.3483019359814,
+      "Dividend Yield": 0.63547601845322,
       "ROA": 0.099670567546755,
       "Margem Líquida": 0.062619868617136,
-      "Market Cap Empresa": 463494218.88,
-      "EV/EBITDA": 1.0682963752502,
+      "Market Cap Empresa": 461574988.16,
+      "EV/EBITDA": 1.0648691102147,
       "RPL": 0.21373749356143,
-      "EV/EBIT": 1.1633343488364,
+      "EV/EBIT": 1.1596021868346,
       "score": 48.6,
-      "tendencias": {
-        "Dividend Yield": "estavel",
-        "Preço/VPA": "estavel",
-        "ROA": "estavel",
-        "Margem Líquida": "estavel"
-      }
-    },
-    {
-      "Ação": "MYPK3",
-      "Empresa": "IOCHP-MAXION",
-      "Preço": 9.04,
-      "Preço/VPA": 0.33908448678532,
-      "Preço/Lucro": 15.201947173097,
-      "Dividend Yield": 0.033975453539823,
-      "ROA": 0.0059632181559577,
-      "Margem Líquida": 0.0059997427115836,
-      "Market Cap Empresa": 1389625193.04,
-      "EV/EBITDA": 3.4963397022064,
-      "RPL": 0.021224792496894,
-      "EV/EBIT": 5.5430315235645,
-      "score": 57.6,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -532,17 +511,17 @@
     {
       "Ação": "MTRE3",
       "Empresa": "MITRE REALTY",
-      "Preço": 3.29,
-      "Preço/VPA": 0.34149269743576,
-      "Preço/Lucro": 5.7144595520379,
-      "Dividend Yield": 0.12356351742857,
+      "Preço": 3.34,
+      "Preço/VPA": 0.3466825560594,
+      "Preço/Lucro": 5.8013054418865,
+      "Dividend Yield": 0.12171376417365,
       "ROA": 0.027376088785954,
       "Margem Líquida": 0.055324951645858,
-      "Market Cap Empresa": 347999157.8,
-      "EV/EBITDA": 6.273393915067,
+      "Market Cap Empresa": 353287898.8,
+      "EV/EBITDA": 6.313222670894,
       "RPL": 0.061071749126264,
-      "EV/EBIT": 8.2808151117827,
-      "score": 47.8,
+      "EV/EBIT": 8.3333886577135,
+      "score": 57.6,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -551,19 +530,40 @@
       }
     },
     {
+      "Ação": "MYPK3",
+      "Empresa": "IOCHP-MAXION",
+      "Preço": 9.27,
+      "Preço/VPA": 0.34771163633848,
+      "Preço/Lucro": 15.588722377723,
+      "Dividend Yield": 0.033132481121899,
+      "ROA": 0.0059632181559577,
+      "Margem Líquida": 0.0059997427115836,
+      "Market Cap Empresa": 1424980701.27,
+      "EV/EBITDA": 3.5199708992358,
+      "RPL": 0.021224792496894,
+      "EV/EBIT": 5.5804959810344,
+      "score": 51.2,
+      "tendencias": {
+        "Dividend Yield": "caindo",
+        "Preço/VPA": "subindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
       "Ação": "COGN3",
       "Empresa": "COGNA ON",
-      "Preço": 2.28,
-      "Preço/VPA": 0.34603704317853,
-      "Preço/Lucro": 7.0052531635154,
-      "Dividend Yield": 0.056592718574561,
+      "Preço": 2.3,
+      "Preço/VPA": 0.34907245583799,
+      "Preço/Lucro": 7.066702752669,
+      "Dividend Yield": 0.056100607978261,
       "ROA": 0.027758166645596,
       "Margem Líquida": 0.089162901983673,
-      "Market Cap Empresa": 4706528374.68,
-      "EV/EBITDA": 5.3537981939189,
+      "Market Cap Empresa": 4747813711.3,
+      "EV/EBITDA": 5.3734695496947,
       "RPL": 0.053988215849685,
-      "EV/EBIT": 7.9334454369313,
-      "score": 72.4,
+      "EV/EBIT": 7.9625951400142,
+      "score": 72.5,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -574,38 +574,17 @@
     {
       "Ação": "POSI3",
       "Empresa": "POSITIVO TEC",
-      "Preço": 3.94,
-      "Preço/VPA": 0.3588738893828,
-      "Preço/Lucro": 56.829620587936,
-      "Dividend Yield": 0.045579655520305,
+      "Preço": 3.99,
+      "Preço/VPA": 0.3634281265577,
+      "Preço/Lucro": 57.550808666463,
+      "Dividend Yield": 0.045008481892231,
       "ROA": 0.0023319041298257,
       "Margem Líquida": 0.0029078279758429,
-      "Market Cap Empresa": 558692000.0,
-      "EV/EBITDA": 3.5824916745667,
+      "Market Cap Empresa": 565782000.0,
+      "EV/EBITDA": 3.604034492817,
       "RPL": 0.0061151217861555,
-      "EV/EBIT": 4.7598787262216,
-      "score": 58.1,
-      "tendencias": {
-        "Dividend Yield": "caindo",
-        "Preço/VPA": "subindo",
-        "ROA": "estavel",
-        "Margem Líquida": "estavel"
-      }
-    },
-    {
-      "Ação": "MLAS3",
-      "Empresa": "MULTILASER",
-      "Preço": 1.67,
-      "Preço/VPA": 0.44357175829864,
-      "Preço/Lucro": 7.5830382264563,
-      "Dividend Yield": 0.030221355245509,
-      "ROA": 0.034236305648253,
-      "Margem Líquida": 0.044810243474957,
-      "Market Cap Empresa": 1370300505.75,
-      "EV/EBITDA": 4.6676184823948,
-      "RPL": 0.061185109792645,
-      "EV/EBIT": 5.9529310217339,
-      "score": 64.9,
+      "EV/EBIT": 4.7885015986823,
+      "score": 58.3,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -614,19 +593,19 @@
       }
     },
     {
-      "Ação": "ANIM3",
-      "Empresa": "ANIMA",
-      "Preço": 2.63,
-      "Preço/VPA": 0.44463172898091,
-      "Preço/Lucro": 7.9122713652006,
-      "Dividend Yield": 0.029575941342205,
-      "ROA": 0.013470200027112,
-      "Margem Líquida": 0.032710701665555,
-      "Market Cap Empresa": 1062174957.15,
-      "EV/EBITDA": 4.7310828406233,
-      "RPL": 0.056649061419189,
-      "EV/EBIT": 6.6783183211685,
-      "score": 70.4,
+      "Ação": "MLAS3",
+      "Empresa": "MULTILASER",
+      "Preço": 1.69,
+      "Preço/VPA": 0.44888399492497,
+      "Preço/Lucro": 7.6738530555156,
+      "Dividend Yield": 0.029863706071006,
+      "ROA": 0.034236305648253,
+      "Margem Líquida": 0.044810243474957,
+      "Market Cap Empresa": 1386711290.25,
+      "EV/EBITDA": 4.7325651325189,
+      "RPL": 0.061185109792645,
+      "EV/EBIT": 6.0357618978519,
+      "score": 65.4,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -637,17 +616,17 @@
     {
       "Ação": "ROMI3",
       "Empresa": "ROMI",
-      "Preço": 6,
-      "Preço/VPA": 0.45005058379229,
-      "Preço/Lucro": 7.2161987143078,
-      "Dividend Yield": 0.07,
+      "Preço": 6.04,
+      "Preço/VPA": 0.45305092101757,
+      "Preço/Lucro": 7.2643067057365,
+      "Dividend Yield": 0.06953642384106,
       "ROA": 0.031230812832418,
       "Margem Líquida": 0.060778855598829,
-      "Market Cap Empresa": 559024482.0,
-      "EV/EBITDA": 7.5686749361117,
+      "Market Cap Empresa": 562751311.88,
+      "EV/EBITDA": 7.593095549964,
       "RPL": 0.063600643001286,
-      "EV/EBIT": 14.05638691541,
-      "score": 49.3,
+      "EV/EBIT": 14.101740375549,
+      "score": 70.6,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -656,40 +635,40 @@
       }
     },
     {
-      "Ação": "AZZA3",
-      "Empresa": "AZZAS 2154",
-      "Preço": 19.31,
-      "Preço/VPA": 0.498069686095,
-      "Preço/Lucro": 4.7923404261561,
-      "Dividend Yield": 0.12823417137183,
-      "ROA": 0.054227635244838,
-      "Margem Líquida": 0.0717104632054,
-      "Market Cap Empresa": 3987318289.03,
-      "EV/EBITDA": 4.166743206623,
-      "RPL": 0.10660955156203,
-      "EV/EBIT": 7.069536437972,
-      "score": 48.0,
+      "Ação": "ANIM3",
+      "Empresa": "ANIMA",
+      "Preço": 2.74,
+      "Preço/VPA": 0.46322849331091,
+      "Preço/Lucro": 8.2432028671672,
+      "Dividend Yield": 0.028388586032847,
+      "ROA": 0.013470200027112,
+      "Margem Líquida": 0.032710701665555,
+      "Market Cap Empresa": 1106600525.7,
+      "EV/EBITDA": 4.7618465950136,
+      "RPL": 0.056649061419189,
+      "EV/EBIT": 6.7217439282639,
+      "score": 49.6,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "caindo",
+        "Preço/VPA": "subindo",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
     },
     {
-      "Ação": "EVEN3",
-      "Empresa": "EVEN",
-      "Preço": 5.61,
-      "Preço/VPA": 0.58209814735073,
-      "Preço/Lucro": 5.1874078217973,
-      "Dividend Yield": 0.16333123172906,
-      "ROA": 0.042014590004555,
-      "Margem Líquida": 0.11305725492492,
-      "Market Cap Empresa": 1122000000.0,
-      "EV/EBITDA": 11.188704662769,
-      "RPL": 0.11473340197403,
-      "EV/EBIT": 11.403876749528,
-      "score": 74.4,
+      "Ação": "AZZA3",
+      "Empresa": "AZZAS 2154",
+      "Preço": 18.99,
+      "Preço/VPA": 0.48981581247768,
+      "Preço/Lucro": 4.7129230809273,
+      "Dividend Yield": 0.13039504208478,
+      "ROA": 0.054227635244838,
+      "Margem Líquida": 0.0717104632054,
+      "Market Cap Empresa": 3921241548.87,
+      "EV/EBITDA": 4.1279751731945,
+      "RPL": 0.10660955156203,
+      "EV/EBIT": 7.0037603602632,
+      "score": 47.8,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -700,17 +679,17 @@
     {
       "Ação": "CAML3",
       "Empresa": "CAMIL",
-      "Preço": 5.03,
-      "Preço/VPA": 0.58385237771021,
-      "Preço/Lucro": 11.865686228255,
-      "Dividend Yield": 0.058289042767396,
+      "Preço": 5.11,
+      "Preço/VPA": 0.59313830021852,
+      "Preço/Lucro": 12.054404895901,
+      "Dividend Yield": 0.057376494152642,
       "ROA": 0.013358639619073,
       "Margem Líquida": 0.013348534408853,
-      "Market Cap Empresa": 1760500000.0,
-      "EV/EBITDA": 5.4997492584277,
+      "Market Cap Empresa": 1788500000.0,
+      "EV/EBITDA": 5.5303408228038,
       "RPL": 0.04291442914487,
-      "EV/EBIT": 7.9983189325063,
-      "score": 52.4,
+      "EV/EBIT": 8.0428084313956,
+      "score": 74.5,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -719,19 +698,40 @@
       }
     },
     {
+      "Ação": "EVEN3",
+      "Empresa": "EVEN",
+      "Preço": 5.77,
+      "Preço/VPA": 0.59869987704344,
+      "Preço/Lucro": 5.3353552819555,
+      "Dividend Yield": 0.15880211611785,
+      "ROA": 0.042014590004555,
+      "Margem Líquida": 0.11305725492492,
+      "Market Cap Empresa": 1154000000.0,
+      "EV/EBITDA": 11.325555636336,
+      "RPL": 0.11473340197403,
+      "EV/EBIT": 11.543359529943,
+      "score": 51.9,
+      "tendencias": {
+        "Dividend Yield": "caindo",
+        "Preço/VPA": "subindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
+      }
+    },
+    {
       "Ação": "PFRM3",
       "Empresa": "PROFARMA",
-      "Preço": 6.42,
-      "Preço/VPA": 0.59257740857067,
-      "Preço/Lucro": 7.535817241752,
-      "Dividend Yield": 0.10036080616044,
+      "Preço": 6.59,
+      "Preço/VPA": 0.60826871066678,
+      "Preço/Lucro": 7.7353638042283,
+      "Dividend Yield": 0.097771832405159,
       "ROA": 0.018223426674549,
       "Margem Líquida": 0.0090822024564826,
-      "Market Cap Empresa": 794878002.66,
-      "EV/EBITDA": 2.7375543934337,
+      "Market Cap Empresa": 815926174.07,
+      "EV/EBITDA": 2.7749808833952,
       "RPL": 0.080210609883517,
-      "EV/EBIT": 4.3146582964615,
-      "score": 50.7,
+      "EV/EBIT": 4.3736461711161,
+      "score": 52.7,
       "tendencias": {
         "Dividend Yield": "caindo",
         "Preço/VPA": "subindo",
@@ -742,19 +742,19 @@
     {
       "Ação": "MELK3",
       "Empresa": "MELNICK",
-      "Preço": 3.19,
-      "Preço/VPA": 0.61054008533653,
-      "Preço/Lucro": 5.3206478405259,
-      "Dividend Yield": 0.16448370110345,
+      "Preço": 3.24,
+      "Preço/VPA": 0.62010967915059,
+      "Preço/Lucro": 5.4040435747035,
+      "Dividend Yield": 0.12859524096605,
       "ROA": 0.049685460808553,
       "Margem Líquida": 0.10198773366365,
-      "Market Cap Empresa": 657999197.79,
-      "EV/EBITDA": 10.474744617243,
+      "Market Cap Empresa": 668312664.84,
+      "EV/EBITDA": 10.554857304738,
       "RPL": 0.11418681287227,
-      "EV/EBIT": 10.898891897403,
-      "score": 48.4,
+      "EV/EBIT": 10.982248537829,
+      "score": 49.5,
       "tendencias": {
-        "Dividend Yield": "estavel",
+        "Dividend Yield": "caindo",
         "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
@@ -763,17 +763,17 @@
     {
       "Ação": "SOJA3",
       "Empresa": "BOA SAFRA",
-      "Preço": 6.01,
-      "Preço/VPA": 0.63810130404333,
-      "Preço/Lucro": 34.024941347696,
-      "Dividend Yield": 0.049476338264559,
+      "Preço": 6.03,
+      "Preço/VPA": 0.64022476928142,
+      "Preço/Lucro": 34.138169105925,
+      "Dividend Yield": 0.049312237640133,
       "ROA": 0.0072132713833279,
       "Margem Líquida": 0.0094768542061693,
-      "Market Cap Empresa": 852835154.88,
-      "EV/EBITDA": 14.224604361977,
+      "Market Cap Empresa": 855673208.64,
+      "EV/EBITDA": 14.242738079703,
       "RPL": 0.01860093372012,
-      "EV/EBIT": 19.032008436747,
-      "score": 46.7,
+      "EV/EBIT": 19.056270698104,
+      "score": 46.6,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -784,17 +784,17 @@
     {
       "Ação": "LOGG3",
       "Empresa": "LOG COM PROP",
-      "Preço": 27.3,
-      "Preço/VPA": 0.64106892735067,
-      "Preço/Lucro": 5.9617050414215,
-      "Dividend Yield": 0.25468223885934,
+      "Preço": 27.82,
+      "Preço/VPA": 0.65327976406211,
+      "Preço/Lucro": 6.0752613279248,
+      "Dividend Yield": 0.24992182317973,
       "ROA": 0.059713439252889,
       "Margem Líquida": 1.5503452687393,
-      "Market Cap Empresa": 2398554904.2,
-      "EV/EBITDA": 6.9174870437986,
+      "Market Cap Empresa": 2444241664.28,
+      "EV/EBITDA": 6.9860502656732,
       "RPL": 0.10953876194928,
-      "EV/EBIT": 6.9826667740201,
-      "score": 46.3,
+      "EV/EBIT": 7.051876029964,
+      "score": 47.0,
       "tendencias": {
         "Dividend Yield": "estavel",
         "Preço/VPA": "estavel",
@@ -805,46 +805,46 @@
     {
       "Ação": "SMTO3",
       "Empresa": "SAO MARTINHO",
-      "Preço": 14.72,
-      "Preço/VPA": 0.66448978378157,
-      "Preço/Lucro": 5.8521688057912,
-      "Dividend Yield": 0.03101310455163,
+      "Preço": 15.04,
+      "Preço/VPA": 0.67893521386378,
+      "Preço/Lucro": 5.9793898667866,
+      "Dividend Yield": 0.030353251263298,
       "ROA": 0.038410688993804,
       "Margem Líquida": 0.11251391829532,
-      "Market Cap Empresa": 4893448955.52,
-      "EV/EBITDA": 4.3417648833791,
+      "Market Cap Empresa": 4999828280.64,
+      "EV/EBITDA": 4.3700118215806,
       "RPL": 0.12481442262711,
-      "EV/EBIT": 11.723030708696,
-      "score": 48.3,
+      "EV/EBIT": 11.799299169301,
+      "score": 48.1,
       "tendencias": {
-        "Dividend Yield": "neutro",
-        "Preço/VPA": "neutro",
-        "ROA": "neutro",
-        "Margem Líquida": "neutro"
+        "Dividend Yield": "caindo",
+        "Preço/VPA": "subindo",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
       }
     }
   ],
   "indicadores": {
     "cambio": {
       "USD/BRL": {
-        "valor": 5.1938,
-        "variacao_pct": -0.220734,
-        "atualizado_em": "2026-06-25 20:30:47"
+        "valor": 5.172,
+        "variacao_pct": -0.425481,
+        "atualizado_em": "2026-06-26 18:20:30"
       },
       "EUR/BRL": {
-        "valor": 5.89623,
-        "variacao_pct": -0.235934,
-        "atualizado_em": "2026-06-25 20:30:27"
+        "valor": 5.90319,
+        "variacao_pct": 0.058949,
+        "atualizado_em": "2026-06-26 18:01:54"
       },
       "GBP/BRL": {
-        "valor": 6.83995,
-        "variacao_pct": -0.231121,
-        "atualizado_em": "2026-06-25 20:30:53"
+        "valor": 6.82575,
+        "variacao_pct": -0.026553,
+        "atualizado_em": "2026-06-27 03:08:23"
       },
       "BTC/BRL": {
-        "valor": 314441.0,
-        "variacao_pct": -2.158,
-        "atualizado_em": "2026-06-25 20:31:01"
+        "valor": 312752.0,
+        "variacao_pct": -1.788,
+        "atualizado_em": "2026-06-28 13:25:46"
       }
     },
     "ipca_12m": [
@@ -902,18 +902,6 @@
       }
     ],
     "selic": [
-      {
-        "data": "2025-05-18",
-        "valor": 14.75
-      },
-      {
-        "data": "2025-05-19",
-        "valor": 14.75
-      },
-      {
-        "data": "2025-05-20",
-        "valor": 14.75
-      },
       {
         "data": "2025-05-21",
         "valor": 14.75
@@ -2741,18 +2729,6 @@
   "benchmarks": {
     "IBOV": [
       {
-        "data": "2025-05-19",
-        "valor": 139636.0
-      },
-      {
-        "data": "2025-05-20",
-        "valor": 140110.0
-      },
-      {
-        "data": "2025-05-21",
-        "valor": 137881.0
-      },
-      {
         "data": "2025-05-22",
         "valor": 137273.0
       },
@@ -3843,21 +3819,17 @@
       {
         "data": "2026-06-24",
         "valor": 170507.0
+      },
+      {
+        "data": "2026-06-25",
+        "valor": 171990.0
+      },
+      {
+        "data": "2026-06-26",
+        "valor": 173295.0
       }
     ],
     "IFIX": [
-      {
-        "data": "2025-05-19",
-        "valor": 12.2
-      },
-      {
-        "data": "2025-05-20",
-        "valor": 12.2
-      },
-      {
-        "data": "2025-05-21",
-        "valor": 12.17
-      },
       {
         "data": "2025-05-22",
         "valor": 12.2
@@ -4945,6 +4917,20 @@
       {
         "data": "2026-06-24",
         "valor": 13.33
+      },
+      {
+        "data": "2026-06-25",
+        "valor": 13.36
+      },
+      {
+        "data": "2026-06-26",
+        "valor": 13.44
+      }
+    ],
+    "IMOB": [
+      {
+        "data": "2026-06-26",
+        "valor": 1380.11
       }
     ],
     "IPCA": [
@@ -4954,51 +4940,51 @@
       },
       {
         "data": "2025-06-01",
-        "valor": 100.5
+        "valor": 100.5006
       },
       {
         "data": "2025-07-01",
-        "valor": 100.76
+        "valor": 100.7619
       },
       {
         "data": "2025-08-01",
-        "valor": 100.65
+        "valor": 100.6511
       },
       {
         "data": "2025-09-01",
-        "valor": 101.13
+        "valor": 101.1342
       },
       {
         "data": "2025-10-01",
-        "valor": 101.23
+        "valor": 101.2252
       },
       {
         "data": "2025-11-01",
-        "valor": 101.41
+        "valor": 101.4074
       },
       {
         "data": "2025-12-01",
-        "valor": 101.74
+        "valor": 101.7421
       },
       {
         "data": "2026-01-01",
-        "valor": 102.08
+        "valor": 102.0778
       },
       {
         "data": "2026-02-01",
-        "valor": 102.79
+        "valor": 102.7924
       },
       {
         "data": "2026-03-01",
-        "valor": 103.7
+        "valor": 103.697
       },
       {
         "data": "2026-04-01",
-        "valor": 104.39
+        "valor": 104.3917
       },
       {
         "data": "2026-05-01",
-        "valor": 105.0
+        "valor": 104.9972
       }
     ],
     "IGPM": [
@@ -5008,1174 +4994,2268 @@
       },
       {
         "data": "2025-06-01",
-        "valor": 97.85
+        "valor": 97.8482
       },
       {
         "data": "2025-07-01",
-        "valor": 97.09
+        "valor": 97.0948
       },
       {
         "data": "2025-08-01",
-        "valor": 97.44
+        "valor": 97.4443
       },
       {
         "data": "2025-09-01",
-        "valor": 97.85
+        "valor": 97.8536
       },
       {
         "data": "2025-10-01",
-        "valor": 97.5
+        "valor": 97.5013
       },
       {
         "data": "2025-11-01",
-        "valor": 97.76
+        "valor": 97.7645
       },
       {
         "data": "2025-12-01",
-        "valor": 97.75
+        "valor": 97.7548
       },
       {
         "data": "2026-01-01",
-        "valor": 98.16
+        "valor": 98.1556
       },
       {
         "data": "2026-02-01",
-        "valor": 97.44
+        "valor": 97.439
       },
       {
         "data": "2026-03-01",
-        "valor": 97.95
+        "valor": 97.9457
       },
       {
         "data": "2026-04-01",
-        "valor": 100.62
+        "valor": 100.6196
       },
       {
         "data": "2026-05-01",
-        "valor": 101.46
+        "valor": 101.4648
+      }
+    ],
+    "CDI": [
+      {
+        "data": "2025-05-21",
+        "valor": 100.0543
+      },
+      {
+        "data": "2025-05-22",
+        "valor": 100.1086
+      },
+      {
+        "data": "2025-05-23",
+        "valor": 100.1629
+      },
+      {
+        "data": "2025-05-26",
+        "valor": 100.2172
+      },
+      {
+        "data": "2025-05-27",
+        "valor": 100.2716
+      },
+      {
+        "data": "2025-05-28",
+        "valor": 100.326
+      },
+      {
+        "data": "2025-05-29",
+        "valor": 100.3805
+      },
+      {
+        "data": "2025-05-30",
+        "valor": 100.435
+      },
+      {
+        "data": "2025-06-02",
+        "valor": 100.4895
+      },
+      {
+        "data": "2025-06-03",
+        "valor": 100.544
+      },
+      {
+        "data": "2025-06-04",
+        "valor": 100.5985
+      },
+      {
+        "data": "2025-06-05",
+        "valor": 100.6531
+      },
+      {
+        "data": "2025-06-06",
+        "valor": 100.7078
+      },
+      {
+        "data": "2025-06-09",
+        "valor": 100.7624
+      },
+      {
+        "data": "2025-06-10",
+        "valor": 100.8171
+      },
+      {
+        "data": "2025-06-11",
+        "valor": 100.8718
+      },
+      {
+        "data": "2025-06-12",
+        "valor": 100.9265
+      },
+      {
+        "data": "2025-06-13",
+        "valor": 100.9813
+      },
+      {
+        "data": "2025-06-16",
+        "valor": 101.0361
+      },
+      {
+        "data": "2025-06-17",
+        "valor": 101.0909
+      },
+      {
+        "data": "2025-06-18",
+        "valor": 101.1458
+      },
+      {
+        "data": "2025-06-20",
+        "valor": 101.2016
+      },
+      {
+        "data": "2025-06-23",
+        "valor": 101.2573
+      },
+      {
+        "data": "2025-06-24",
+        "valor": 101.3132
+      },
+      {
+        "data": "2025-06-25",
+        "valor": 101.369
+      },
+      {
+        "data": "2025-06-26",
+        "valor": 101.4249
+      },
+      {
+        "data": "2025-06-27",
+        "valor": 101.4808
+      },
+      {
+        "data": "2025-06-30",
+        "valor": 101.5368
+      },
+      {
+        "data": "2025-07-01",
+        "valor": 101.5928
+      },
+      {
+        "data": "2025-07-02",
+        "valor": 101.6488
+      },
+      {
+        "data": "2025-07-03",
+        "valor": 101.7048
+      },
+      {
+        "data": "2025-07-04",
+        "valor": 101.7609
+      },
+      {
+        "data": "2025-07-07",
+        "valor": 101.817
+      },
+      {
+        "data": "2025-07-08",
+        "valor": 101.8731
+      },
+      {
+        "data": "2025-07-09",
+        "valor": 101.9293
+      },
+      {
+        "data": "2025-07-10",
+        "valor": 101.9855
+      },
+      {
+        "data": "2025-07-11",
+        "valor": 102.0417
+      },
+      {
+        "data": "2025-07-14",
+        "valor": 102.0979
+      },
+      {
+        "data": "2025-07-15",
+        "valor": 102.1542
+      },
+      {
+        "data": "2025-07-16",
+        "valor": 102.2106
+      },
+      {
+        "data": "2025-07-17",
+        "valor": 102.2669
+      },
+      {
+        "data": "2025-07-18",
+        "valor": 102.3233
+      },
+      {
+        "data": "2025-07-21",
+        "valor": 102.3797
+      },
+      {
+        "data": "2025-07-22",
+        "valor": 102.4361
+      },
+      {
+        "data": "2025-07-23",
+        "valor": 102.4926
+      },
+      {
+        "data": "2025-07-24",
+        "valor": 102.5491
+      },
+      {
+        "data": "2025-07-25",
+        "valor": 102.6057
+      },
+      {
+        "data": "2025-07-28",
+        "valor": 102.6622
+      },
+      {
+        "data": "2025-07-29",
+        "valor": 102.7188
+      },
+      {
+        "data": "2025-07-30",
+        "valor": 102.7755
+      },
+      {
+        "data": "2025-07-31",
+        "valor": 102.8321
+      },
+      {
+        "data": "2025-08-01",
+        "valor": 102.8888
+      },
+      {
+        "data": "2025-08-04",
+        "valor": 102.9455
+      },
+      {
+        "data": "2025-08-05",
+        "valor": 103.0023
+      },
+      {
+        "data": "2025-08-06",
+        "valor": 103.0591
+      },
+      {
+        "data": "2025-08-07",
+        "valor": 103.1159
+      },
+      {
+        "data": "2025-08-08",
+        "valor": 103.1727
+      },
+      {
+        "data": "2025-08-11",
+        "valor": 103.2296
+      },
+      {
+        "data": "2025-08-12",
+        "valor": 103.2865
+      },
+      {
+        "data": "2025-08-13",
+        "valor": 103.3435
+      },
+      {
+        "data": "2025-08-14",
+        "valor": 103.4004
+      },
+      {
+        "data": "2025-08-15",
+        "valor": 103.4575
+      },
+      {
+        "data": "2025-08-18",
+        "valor": 103.5145
+      },
+      {
+        "data": "2025-08-19",
+        "valor": 103.5716
+      },
+      {
+        "data": "2025-08-20",
+        "valor": 103.6287
+      },
+      {
+        "data": "2025-08-21",
+        "valor": 103.6858
+      },
+      {
+        "data": "2025-08-22",
+        "valor": 103.743
+      },
+      {
+        "data": "2025-08-25",
+        "valor": 103.8001
+      },
+      {
+        "data": "2025-08-26",
+        "valor": 103.8574
+      },
+      {
+        "data": "2025-08-27",
+        "valor": 103.9146
+      },
+      {
+        "data": "2025-08-28",
+        "valor": 103.9719
+      },
+      {
+        "data": "2025-08-29",
+        "valor": 104.0292
+      },
+      {
+        "data": "2025-09-01",
+        "valor": 104.0866
+      },
+      {
+        "data": "2025-09-02",
+        "valor": 104.144
+      },
+      {
+        "data": "2025-09-03",
+        "valor": 104.2014
+      },
+      {
+        "data": "2025-09-04",
+        "valor": 104.2588
+      },
+      {
+        "data": "2025-09-05",
+        "valor": 104.3163
+      },
+      {
+        "data": "2025-09-08",
+        "valor": 104.3738
+      },
+      {
+        "data": "2025-09-09",
+        "valor": 104.4314
+      },
+      {
+        "data": "2025-09-10",
+        "valor": 104.4889
+      },
+      {
+        "data": "2025-09-11",
+        "valor": 104.5466
+      },
+      {
+        "data": "2025-09-12",
+        "valor": 104.6042
+      },
+      {
+        "data": "2025-09-15",
+        "valor": 104.6619
+      },
+      {
+        "data": "2025-09-16",
+        "valor": 104.7196
+      },
+      {
+        "data": "2025-09-17",
+        "valor": 104.7773
+      },
+      {
+        "data": "2025-09-18",
+        "valor": 104.8351
+      },
+      {
+        "data": "2025-09-19",
+        "valor": 104.8929
+      },
+      {
+        "data": "2025-09-22",
+        "valor": 104.9507
+      },
+      {
+        "data": "2025-09-23",
+        "valor": 105.0085
+      },
+      {
+        "data": "2025-09-24",
+        "valor": 105.0664
+      },
+      {
+        "data": "2025-09-25",
+        "valor": 105.1244
+      },
+      {
+        "data": "2025-09-26",
+        "valor": 105.1823
+      },
+      {
+        "data": "2025-09-29",
+        "valor": 105.2403
+      },
+      {
+        "data": "2025-09-30",
+        "valor": 105.2983
+      },
+      {
+        "data": "2025-10-01",
+        "valor": 105.3564
+      },
+      {
+        "data": "2025-10-02",
+        "valor": 105.4145
+      },
+      {
+        "data": "2025-10-03",
+        "valor": 105.4726
+      },
+      {
+        "data": "2025-10-06",
+        "valor": 105.5307
+      },
+      {
+        "data": "2025-10-07",
+        "valor": 105.5889
+      },
+      {
+        "data": "2025-10-08",
+        "valor": 105.6471
+      },
+      {
+        "data": "2025-10-09",
+        "valor": 105.7054
+      },
+      {
+        "data": "2025-10-10",
+        "valor": 105.7636
+      },
+      {
+        "data": "2025-10-13",
+        "valor": 105.8219
+      },
+      {
+        "data": "2025-10-14",
+        "valor": 105.8803
+      },
+      {
+        "data": "2025-10-15",
+        "valor": 105.9387
+      },
+      {
+        "data": "2025-10-16",
+        "valor": 105.9971
+      },
+      {
+        "data": "2025-10-17",
+        "valor": 106.0555
+      },
+      {
+        "data": "2025-10-20",
+        "valor": 106.114
+      },
+      {
+        "data": "2025-10-21",
+        "valor": 106.1725
+      },
+      {
+        "data": "2025-10-22",
+        "valor": 106.231
+      },
+      {
+        "data": "2025-10-23",
+        "valor": 106.2896
+      },
+      {
+        "data": "2025-10-24",
+        "valor": 106.3482
+      },
+      {
+        "data": "2025-10-27",
+        "valor": 106.4068
+      },
+      {
+        "data": "2025-10-28",
+        "valor": 106.4655
+      },
+      {
+        "data": "2025-10-29",
+        "valor": 106.5242
+      },
+      {
+        "data": "2025-10-30",
+        "valor": 106.5829
+      },
+      {
+        "data": "2025-10-31",
+        "valor": 106.6416
+      },
+      {
+        "data": "2025-11-03",
+        "valor": 106.7004
+      },
+      {
+        "data": "2025-11-04",
+        "valor": 106.7593
+      },
+      {
+        "data": "2025-11-05",
+        "valor": 106.8181
+      },
+      {
+        "data": "2025-11-06",
+        "valor": 106.877
+      },
+      {
+        "data": "2025-11-07",
+        "valor": 106.9359
+      },
+      {
+        "data": "2025-11-10",
+        "valor": 106.9949
+      },
+      {
+        "data": "2025-11-11",
+        "valor": 107.0539
+      },
+      {
+        "data": "2025-11-12",
+        "valor": 107.1129
+      },
+      {
+        "data": "2025-11-13",
+        "valor": 107.1719
+      },
+      {
+        "data": "2025-11-14",
+        "valor": 107.231
+      },
+      {
+        "data": "2025-11-17",
+        "valor": 107.2902
+      },
+      {
+        "data": "2025-11-18",
+        "valor": 107.3493
+      },
+      {
+        "data": "2025-11-19",
+        "valor": 107.4085
+      },
+      {
+        "data": "2025-11-21",
+        "valor": 107.4677
+      },
+      {
+        "data": "2025-11-24",
+        "valor": 107.5269
+      },
+      {
+        "data": "2025-11-25",
+        "valor": 107.5862
+      },
+      {
+        "data": "2025-11-26",
+        "valor": 107.6455
+      },
+      {
+        "data": "2025-11-27",
+        "valor": 107.7049
+      },
+      {
+        "data": "2025-11-28",
+        "valor": 107.7643
+      },
+      {
+        "data": "2025-12-01",
+        "valor": 107.8237
+      },
+      {
+        "data": "2025-12-02",
+        "valor": 107.8831
+      },
+      {
+        "data": "2025-12-03",
+        "valor": 107.9426
+      },
+      {
+        "data": "2025-12-04",
+        "valor": 108.0021
+      },
+      {
+        "data": "2025-12-05",
+        "valor": 108.0617
+      },
+      {
+        "data": "2025-12-08",
+        "valor": 108.1212
+      },
+      {
+        "data": "2025-12-09",
+        "valor": 108.1808
+      },
+      {
+        "data": "2025-12-10",
+        "valor": 108.2405
+      },
+      {
+        "data": "2025-12-11",
+        "valor": 108.3002
+      },
+      {
+        "data": "2025-12-12",
+        "valor": 108.3599
+      },
+      {
+        "data": "2025-12-15",
+        "valor": 108.4196
+      },
+      {
+        "data": "2025-12-16",
+        "valor": 108.4794
+      },
+      {
+        "data": "2025-12-17",
+        "valor": 108.5392
+      },
+      {
+        "data": "2025-12-18",
+        "valor": 108.599
+      },
+      {
+        "data": "2025-12-19",
+        "valor": 108.6589
+      },
+      {
+        "data": "2025-12-22",
+        "valor": 108.7188
+      },
+      {
+        "data": "2025-12-23",
+        "valor": 108.7787
+      },
+      {
+        "data": "2025-12-24",
+        "valor": 108.8387
+      },
+      {
+        "data": "2025-12-26",
+        "valor": 108.8987
+      },
+      {
+        "data": "2025-12-29",
+        "valor": 108.9587
+      },
+      {
+        "data": "2025-12-30",
+        "valor": 109.0188
+      },
+      {
+        "data": "2025-12-31",
+        "valor": 109.0789
+      },
+      {
+        "data": "2026-01-02",
+        "valor": 109.1391
+      },
+      {
+        "data": "2026-01-05",
+        "valor": 109.1992
+      },
+      {
+        "data": "2026-01-06",
+        "valor": 109.2594
+      },
+      {
+        "data": "2026-01-07",
+        "valor": 109.3197
+      },
+      {
+        "data": "2026-01-08",
+        "valor": 109.3799
+      },
+      {
+        "data": "2026-01-09",
+        "valor": 109.4402
+      },
+      {
+        "data": "2026-01-12",
+        "valor": 109.5006
+      },
+      {
+        "data": "2026-01-13",
+        "valor": 109.5609
+      },
+      {
+        "data": "2026-01-14",
+        "valor": 109.6213
+      },
+      {
+        "data": "2026-01-15",
+        "valor": 109.6818
+      },
+      {
+        "data": "2026-01-16",
+        "valor": 109.7422
+      },
+      {
+        "data": "2026-01-19",
+        "valor": 109.8027
+      },
+      {
+        "data": "2026-01-20",
+        "valor": 109.8633
+      },
+      {
+        "data": "2026-01-21",
+        "valor": 109.9238
+      },
+      {
+        "data": "2026-01-22",
+        "valor": 109.9844
+      },
+      {
+        "data": "2026-01-23",
+        "valor": 110.0451
+      },
+      {
+        "data": "2026-01-26",
+        "valor": 110.1058
+      },
+      {
+        "data": "2026-01-27",
+        "valor": 110.1665
+      },
+      {
+        "data": "2026-01-28",
+        "valor": 110.2272
+      },
+      {
+        "data": "2026-01-29",
+        "valor": 110.288
+      },
+      {
+        "data": "2026-01-30",
+        "valor": 110.3488
+      },
+      {
+        "data": "2026-02-02",
+        "valor": 110.4096
+      },
+      {
+        "data": "2026-02-03",
+        "valor": 110.4705
+      },
+      {
+        "data": "2026-02-04",
+        "valor": 110.5314
+      },
+      {
+        "data": "2026-02-05",
+        "valor": 110.5923
+      },
+      {
+        "data": "2026-02-06",
+        "valor": 110.6533
+      },
+      {
+        "data": "2026-02-09",
+        "valor": 110.7143
+      },
+      {
+        "data": "2026-02-10",
+        "valor": 110.7753
+      },
+      {
+        "data": "2026-02-11",
+        "valor": 110.8364
+      },
+      {
+        "data": "2026-02-12",
+        "valor": 110.8975
+      },
+      {
+        "data": "2026-02-13",
+        "valor": 110.9586
+      },
+      {
+        "data": "2026-02-18",
+        "valor": 111.0198
+      },
+      {
+        "data": "2026-02-19",
+        "valor": 111.081
+      },
+      {
+        "data": "2026-02-20",
+        "valor": 111.1423
+      },
+      {
+        "data": "2026-02-23",
+        "valor": 111.2035
+      },
+      {
+        "data": "2026-02-24",
+        "valor": 111.2648
+      },
+      {
+        "data": "2026-02-25",
+        "valor": 111.3262
+      },
+      {
+        "data": "2026-02-26",
+        "valor": 111.3876
+      },
+      {
+        "data": "2026-02-27",
+        "valor": 111.449
+      },
+      {
+        "data": "2026-03-02",
+        "valor": 111.5104
+      },
+      {
+        "data": "2026-03-03",
+        "valor": 111.5719
+      },
+      {
+        "data": "2026-03-04",
+        "valor": 111.6334
+      },
+      {
+        "data": "2026-03-05",
+        "valor": 111.6949
+      },
+      {
+        "data": "2026-03-06",
+        "valor": 111.7565
+      },
+      {
+        "data": "2026-03-09",
+        "valor": 111.8181
+      },
+      {
+        "data": "2026-03-10",
+        "valor": 111.8798
+      },
+      {
+        "data": "2026-03-11",
+        "valor": 111.9415
+      },
+      {
+        "data": "2026-03-12",
+        "valor": 112.0032
+      },
+      {
+        "data": "2026-03-13",
+        "valor": 112.0649
+      },
+      {
+        "data": "2026-03-16",
+        "valor": 112.1267
+      },
+      {
+        "data": "2026-03-17",
+        "valor": 112.1885
+      },
+      {
+        "data": "2026-03-18",
+        "valor": 112.2504
+      },
+      {
+        "data": "2026-03-19",
+        "valor": 112.3113
+      },
+      {
+        "data": "2026-03-20",
+        "valor": 112.3722
+      },
+      {
+        "data": "2026-03-23",
+        "valor": 112.4332
+      },
+      {
+        "data": "2026-03-24",
+        "valor": 112.4942
+      },
+      {
+        "data": "2026-03-25",
+        "valor": 112.5553
+      },
+      {
+        "data": "2026-03-26",
+        "valor": 112.6164
+      },
+      {
+        "data": "2026-03-27",
+        "valor": 112.6775
+      },
+      {
+        "data": "2026-03-30",
+        "valor": 112.7386
+      },
+      {
+        "data": "2026-03-31",
+        "valor": 112.7998
+      },
+      {
+        "data": "2026-04-01",
+        "valor": 112.861
+      },
+      {
+        "data": "2026-04-02",
+        "valor": 112.9222
+      },
+      {
+        "data": "2026-04-06",
+        "valor": 112.9835
+      },
+      {
+        "data": "2026-04-07",
+        "valor": 113.0448
+      },
+      {
+        "data": "2026-04-08",
+        "valor": 113.1062
+      },
+      {
+        "data": "2026-04-09",
+        "valor": 113.1676
+      },
+      {
+        "data": "2026-04-10",
+        "valor": 113.229
+      },
+      {
+        "data": "2026-04-13",
+        "valor": 113.2904
+      },
+      {
+        "data": "2026-04-14",
+        "valor": 113.3519
+      },
+      {
+        "data": "2026-04-15",
+        "valor": 113.4134
+      },
+      {
+        "data": "2026-04-16",
+        "valor": 113.4749
+      },
+      {
+        "data": "2026-04-17",
+        "valor": 113.5365
+      },
+      {
+        "data": "2026-04-20",
+        "valor": 113.5981
+      },
+      {
+        "data": "2026-04-22",
+        "valor": 113.6598
+      },
+      {
+        "data": "2026-04-23",
+        "valor": 113.7215
+      },
+      {
+        "data": "2026-04-24",
+        "valor": 113.7832
+      },
+      {
+        "data": "2026-04-27",
+        "valor": 113.8449
+      },
+      {
+        "data": "2026-04-28",
+        "valor": 113.9067
+      },
+      {
+        "data": "2026-04-29",
+        "valor": 113.9685
+      },
+      {
+        "data": "2026-04-30",
+        "valor": 114.0294
+      },
+      {
+        "data": "2026-05-04",
+        "valor": 114.0903
+      },
+      {
+        "data": "2026-05-05",
+        "valor": 114.1512
+      },
+      {
+        "data": "2026-05-06",
+        "valor": 114.2121
+      },
+      {
+        "data": "2026-05-07",
+        "valor": 114.2731
+      },
+      {
+        "data": "2026-05-08",
+        "valor": 114.3342
+      },
+      {
+        "data": "2026-05-11",
+        "valor": 114.3952
+      },
+      {
+        "data": "2026-05-12",
+        "valor": 114.4563
+      },
+      {
+        "data": "2026-05-13",
+        "valor": 114.5174
+      },
+      {
+        "data": "2026-05-14",
+        "valor": 114.5786
+      },
+      {
+        "data": "2026-05-15",
+        "valor": 114.6398
+      },
+      {
+        "data": "2026-05-18",
+        "valor": 114.701
+      },
+      {
+        "data": "2026-05-19",
+        "valor": 114.7622
+      },
+      {
+        "data": "2026-05-20",
+        "valor": 114.8235
+      },
+      {
+        "data": "2026-05-21",
+        "valor": 114.8848
+      },
+      {
+        "data": "2026-05-22",
+        "valor": 114.9462
+      },
+      {
+        "data": "2026-05-25",
+        "valor": 115.0075
+      },
+      {
+        "data": "2026-05-26",
+        "valor": 115.069
+      },
+      {
+        "data": "2026-05-27",
+        "valor": 115.1304
+      },
+      {
+        "data": "2026-05-28",
+        "valor": 115.1919
+      },
+      {
+        "data": "2026-05-29",
+        "valor": 115.2534
+      },
+      {
+        "data": "2026-06-01",
+        "valor": 115.3149
+      },
+      {
+        "data": "2026-06-02",
+        "valor": 115.3765
+      },
+      {
+        "data": "2026-06-03",
+        "valor": 115.4381
+      },
+      {
+        "data": "2026-06-05",
+        "valor": 115.4998
+      },
+      {
+        "data": "2026-06-08",
+        "valor": 115.5615
+      },
+      {
+        "data": "2026-06-09",
+        "valor": 115.6232
+      },
+      {
+        "data": "2026-06-10",
+        "valor": 115.6849
+      },
+      {
+        "data": "2026-06-11",
+        "valor": 115.7467
+      },
+      {
+        "data": "2026-06-12",
+        "valor": 115.8085
+      },
+      {
+        "data": "2026-06-15",
+        "valor": 115.8703
+      },
+      {
+        "data": "2026-06-16",
+        "valor": 115.9322
+      },
+      {
+        "data": "2026-06-17",
+        "valor": 115.9941
+      },
+      {
+        "data": "2026-06-18",
+        "valor": 116.0551
+      },
+      {
+        "data": "2026-06-19",
+        "valor": 116.116
+      },
+      {
+        "data": "2026-06-22",
+        "valor": 116.177
+      },
+      {
+        "data": "2026-06-23",
+        "valor": 116.238
+      },
+      {
+        "data": "2026-06-24",
+        "valor": 116.2991
+      },
+      {
+        "data": "2026-06-25",
+        "valor": 116.3602
       }
     ]
   },
   "carteira_vs": {
     "ibov_base100": [
       {
-        "data": "2025-05-19",
-        "valor": 100.0
-      },
-      {
-        "data": "2025-05-20",
-        "valor": 100.3395
-      },
-      {
-        "data": "2025-05-21",
-        "valor": 98.7432
-      },
-      {
         "data": "2025-05-22",
-        "valor": 98.3077
+        "valor": 100.0
       },
       {
         "data": "2025-05-23",
-        "valor": 98.7023
+        "valor": 100.4014
       },
       {
         "data": "2025-05-26",
-        "valor": 98.9258
+        "valor": 100.6287
       },
       {
         "data": "2025-05-27",
-        "valor": 99.932
+        "valor": 101.6522
       },
       {
         "data": "2025-05-28",
-        "valor": 99.4643
+        "valor": 101.1765
       },
       {
         "data": "2025-05-29",
-        "valor": 99.2108
+        "valor": 100.9186
       },
       {
         "data": "2025-05-30",
-        "valor": 98.1316
+        "valor": 99.8208
       },
       {
         "data": "2025-06-02",
-        "valor": 97.9597
+        "valor": 99.646
       },
       {
         "data": "2025-06-03",
-        "valor": 98.5033
+        "valor": 100.1989
       },
       {
         "data": "2025-06-04",
-        "valor": 98.1137
+        "valor": 99.8026
       },
       {
         "data": "2025-06-05",
-        "valor": 97.5651
+        "valor": 99.2446
       },
       {
         "data": "2025-06-06",
-        "valor": 97.4691
+        "valor": 99.147
       },
       {
         "data": "2025-06-09",
-        "valor": 97.1805
+        "valor": 98.8534
       },
       {
         "data": "2025-06-10",
-        "valor": 97.7083
+        "valor": 99.3903
       },
       {
         "data": "2025-06-11",
-        "valor": 98.2039
+        "valor": 99.8944
       },
       {
         "data": "2025-06-12",
-        "valor": 98.6852
+        "valor": 100.3839
       },
       {
         "data": "2025-06-13",
-        "valor": 98.2648
+        "valor": 99.9563
       },
       {
         "data": "2025-06-16",
-        "valor": 99.7279
+        "valor": 101.4446
       },
       {
         "data": "2025-06-17",
-        "valor": 99.4299
+        "valor": 101.1415
       },
       {
         "data": "2025-06-18",
-        "valor": 99.3419
+        "valor": 101.0519
       },
       {
         "data": "2025-06-20",
-        "valor": 98.1953
+        "valor": 99.8856
       },
       {
         "data": "2025-06-23",
-        "valor": 97.7907
+        "valor": 99.474
       },
       {
         "data": "2025-06-24",
-        "valor": 98.2304
+        "valor": 99.9213
       },
       {
         "data": "2025-06-25",
-        "valor": 97.2292
+        "valor": 98.9029
       },
       {
         "data": "2025-06-26",
-        "valor": 98.1939
+        "valor": 99.8842
       },
       {
         "data": "2025-06-27",
-        "valor": 98.0163
+        "valor": 99.7035
       },
       {
         "data": "2025-06-30",
-        "valor": 99.4407
+        "valor": 101.1524
       },
       {
         "data": "2025-07-01",
-        "valor": 99.9377
+        "valor": 101.658
       },
       {
         "data": "2025-07-02",
-        "valor": 99.5811
+        "valor": 101.2952
       },
       {
         "data": "2025-07-03",
-        "valor": 100.9253
+        "valor": 102.6626
       },
       {
         "data": "2025-07-04",
-        "valor": 101.3191
+        "valor": 103.0632
       },
       {
         "data": "2025-07-07",
-        "valor": 99.8954
+        "valor": 101.615
       },
       {
         "data": "2025-07-08",
-        "valor": 99.7615
+        "valor": 101.4788
       },
       {
         "data": "2025-07-09",
-        "valor": 98.4567
+        "valor": 100.1515
       },
       {
         "data": "2025-07-10",
-        "valor": 97.9282
+        "valor": 99.6139
       },
       {
         "data": "2025-07-11",
-        "valor": 97.53
+        "valor": 99.2089
       },
       {
         "data": "2025-07-14",
-        "valor": 96.8941
+        "valor": 98.562
       },
       {
         "data": "2025-07-15",
-        "valor": 96.859
+        "valor": 98.5263
       },
       {
         "data": "2025-07-16",
-        "valor": 97.0459
+        "valor": 98.7164
       },
       {
         "data": "2025-07-17",
-        "valor": 97.0846
+        "valor": 98.7558
       },
       {
         "data": "2025-07-18",
-        "valor": 95.5212
+        "valor": 97.1655
       },
       {
         "data": "2025-07-21",
-        "valor": 96.0834
+        "valor": 97.7374
       },
       {
         "data": "2025-07-22",
-        "valor": 95.9896
+        "valor": 97.6419
       },
       {
         "data": "2025-07-23",
-        "valor": 96.9435
+        "valor": 98.6123
       },
       {
         "data": "2025-07-24",
-        "valor": 95.8263
+        "valor": 97.4758
       },
       {
         "data": "2025-07-25",
-        "valor": 95.6229
+        "valor": 97.2689
       },
       {
         "data": "2025-07-28",
-        "valor": 94.6239
+        "valor": 96.2527
       },
       {
         "data": "2025-07-29",
-        "valor": 95.0514
+        "valor": 96.6876
       },
       {
         "data": "2025-07-30",
-        "valor": 95.9566
+        "valor": 97.6084
       },
       {
         "data": "2025-07-31",
-        "valor": 95.2985
+        "valor": 96.9389
       },
       {
         "data": "2025-08-01",
-        "valor": 94.8445
+        "valor": 96.4771
       },
       {
         "data": "2025-08-04",
-        "valor": 95.2269
+        "valor": 96.8661
       },
       {
         "data": "2025-08-05",
-        "valor": 95.3558
+        "valor": 96.9972
       },
       {
         "data": "2025-08-06",
-        "valor": 96.3491
+        "valor": 98.0076
       },
       {
         "data": "2025-08-07",
-        "valor": 97.7742
+        "valor": 99.4573
       },
       {
         "data": "2025-08-08",
-        "valor": 97.3338
+        "valor": 99.0093
       },
       {
         "data": "2025-08-11",
-        "valor": 97.1261
+        "valor": 98.798
       },
       {
         "data": "2025-08-12",
-        "valor": 98.7668
+        "valor": 100.467
       },
       {
         "data": "2025-08-13",
-        "valor": 97.8881
+        "valor": 99.5731
       },
       {
         "data": "2025-08-14",
-        "valor": 97.651
+        "valor": 99.332
       },
       {
         "data": "2025-08-15",
-        "valor": 97.6403
+        "valor": 99.3211
       },
       {
         "data": "2025-08-18",
-        "valor": 98.3428
+        "valor": 100.0357
       },
       {
         "data": "2025-08-19",
-        "valor": 96.2732
+        "valor": 97.9304
       },
       {
         "data": "2025-08-20",
-        "valor": 96.4415
+        "valor": 98.1016
       },
       {
         "data": "2025-08-21",
-        "valor": 96.3297
+        "valor": 97.988
       },
       {
         "data": "2025-08-22",
-        "valor": 98.8055
+        "valor": 100.5063
       },
       {
         "data": "2025-08-25",
-        "valor": 98.8463
+        "valor": 100.5478
       },
       {
         "data": "2025-08-26",
-        "valor": 98.6644
+        "valor": 100.3628
       },
       {
         "data": "2025-08-27",
-        "valor": 99.6921
+        "valor": 101.4081
       },
       {
         "data": "2025-08-28",
-        "valor": 101.0119
+        "valor": 102.7507
       },
       {
         "data": "2025-08-29",
-        "valor": 101.279
+        "valor": 103.0224
       },
       {
         "data": "2025-09-01",
-        "valor": 101.0663
+        "valor": 102.8061
       },
       {
         "data": "2025-09-02",
-        "valor": 100.5006
+        "valor": 102.2306
       },
       {
         "data": "2025-09-03",
-        "valor": 100.1633
+        "valor": 101.8875
       },
       {
         "data": "2025-09-04",
-        "valor": 100.9718
+        "valor": 102.7099
       },
       {
         "data": "2025-09-05",
-        "valor": 102.1513
+        "valor": 103.9097
       },
       {
         "data": "2025-09-08",
-        "valor": 101.544
+        "valor": 103.292
       },
       {
         "data": "2025-09-09",
-        "valor": 101.4194
+        "valor": 103.1652
       },
       {
         "data": "2025-09-10",
-        "valor": 101.9429
+        "valor": 103.6977
       },
       {
         "data": "2025-09-11",
-        "valor": 102.5173
+        "valor": 104.282
       },
       {
         "data": "2025-09-12",
-        "valor": 101.8878
+        "valor": 103.6416
       },
       {
         "data": "2025-09-15",
-        "valor": 102.8009
+        "valor": 104.5705
       },
       {
         "data": "2025-09-16",
-        "valor": 103.1697
+        "valor": 104.9456
       },
       {
         "data": "2025-09-17",
-        "valor": 104.2668
+        "valor": 106.0616
       },
       {
         "data": "2025-09-18",
-        "valor": 104.1995
+        "valor": 105.9932
       },
       {
         "data": "2025-09-19",
-        "valor": 104.4609
+        "valor": 106.2591
       },
       {
         "data": "2025-09-22",
-        "valor": 103.9195
+        "valor": 105.7083
       },
       {
         "data": "2025-09-23",
-        "valor": 104.8619
+        "valor": 106.667
       },
       {
         "data": "2025-09-24",
-        "valor": 104.9099
+        "valor": 106.7158
       },
       {
         "data": "2025-09-25",
-        "valor": 104.0606
+        "valor": 105.8518
       },
       {
         "data": "2025-09-26",
-        "valor": 104.1615
+        "valor": 105.9546
       },
       {
         "data": "2025-09-29",
-        "valor": 104.7989
+        "valor": 106.6029
       },
       {
         "data": "2025-09-30",
-        "valor": 104.7273
+        "valor": 106.5301
       },
       {
         "data": "2025-10-01",
-        "valor": 104.2117
+        "valor": 106.0056
       },
       {
         "data": "2025-10-02",
-        "valor": 103.0895
+        "valor": 104.864
       },
       {
         "data": "2025-10-03",
-        "valor": 103.2692
+        "valor": 105.0469
       },
       {
         "data": "2025-10-06",
-        "valor": 102.8445
+        "valor": 104.6149
       },
       {
         "data": "2025-10-07",
-        "valor": 101.2318
+        "valor": 102.9744
       },
       {
         "data": "2025-10-08",
-        "valor": 101.7968
+        "valor": 103.5491
       },
       {
         "data": "2025-10-09",
-        "valor": 101.4839
+        "valor": 103.2308
       },
       {
         "data": "2025-10-10",
-        "valor": 100.7477
+        "valor": 102.4819
       },
       {
         "data": "2025-10-13",
-        "valor": 101.5376
+        "valor": 103.2854
       },
       {
         "data": "2025-10-14",
-        "valor": 101.466
+        "valor": 103.2126
       },
       {
         "data": "2025-10-15",
-        "valor": 102.1255
+        "valor": 103.8835
       },
       {
         "data": "2025-10-16",
-        "valor": 101.8362
+        "valor": 103.5892
       },
       {
         "data": "2025-10-17",
-        "valor": 102.6949
+        "valor": 104.4626
       },
       {
         "data": "2025-10-20",
-        "valor": 103.4898
+        "valor": 105.2712
       },
       {
         "data": "2025-10-21",
-        "valor": 103.1861
+        "valor": 104.9624
       },
       {
         "data": "2025-10-22",
-        "valor": 103.7505
+        "valor": 105.5364
       },
       {
         "data": "2025-10-23",
-        "valor": 104.3578
+        "valor": 106.1542
       },
       {
         "data": "2025-10-24",
-        "valor": 104.6807
+        "valor": 106.4827
       },
       {
         "data": "2025-10-27",
-        "valor": 105.2515
+        "valor": 107.0633
       },
       {
         "data": "2025-10-28",
-        "valor": 105.5809
+        "valor": 107.3984
       },
       {
         "data": "2025-10-29",
-        "valor": 106.4432
+        "valor": 108.2755
       },
       {
         "data": "2025-10-30",
-        "valor": 106.5485
+        "valor": 108.3826
       },
       {
         "data": "2025-10-31",
-        "valor": 107.0927
+        "valor": 108.9362
       },
       {
         "data": "2025-11-03",
-        "valor": 107.7473
+        "valor": 109.602
       },
       {
         "data": "2025-11-04",
-        "valor": 107.9263
+        "valor": 109.7842
       },
       {
         "data": "2025-11-05",
-        "valor": 109.7811
+        "valor": 111.6709
       },
       {
         "data": "2025-11-06",
-        "valor": 109.8134
+        "valor": 111.7037
       },
       {
         "data": "2025-11-07",
-        "valor": 110.3326
+        "valor": 112.2318
       },
       {
         "data": "2025-11-10",
-        "valor": 111.1869
+        "valor": 113.1009
       },
       {
         "data": "2025-11-11",
-        "valor": 112.9716
+        "valor": 114.9163
       },
       {
         "data": "2025-11-12",
-        "valor": 112.8885
+        "valor": 114.8318
       },
       {
         "data": "2025-11-13",
-        "valor": 112.5512
+        "valor": 114.4886
       },
       {
         "data": "2025-11-14",
-        "valor": 112.9644
+        "valor": 114.909
       },
       {
         "data": "2025-11-17",
-        "valor": 112.4302
+        "valor": 114.3655
       },
       {
         "data": "2025-11-18",
-        "valor": 112.0929
+        "valor": 114.0224
       },
       {
         "data": "2025-11-19",
-        "valor": 111.2757
+        "valor": 113.1912
       },
       {
         "data": "2025-11-21",
-        "valor": 110.8382
+        "valor": 112.7461
       },
       {
         "data": "2025-11-24",
-        "valor": 111.202
+        "valor": 113.1162
       },
       {
         "data": "2025-11-25",
-        "valor": 111.6546
+        "valor": 113.5766
       },
       {
         "data": "2025-11-26",
-        "valor": 113.5488
+        "valor": 115.5034
       },
       {
         "data": "2025-11-27",
-        "valor": 113.3605
+        "valor": 115.3118
       },
       {
         "data": "2025-11-28",
-        "valor": 113.919
+        "valor": 115.88
       },
       {
         "data": "2025-12-01",
-        "valor": 113.5889
+        "valor": 115.5442
       },
       {
         "data": "2025-12-02",
-        "valor": 115.3657
+        "valor": 117.3516
       },
       {
         "data": "2025-12-03",
-        "valor": 115.8405
+        "valor": 117.8345
       },
       {
         "data": "2025-12-04",
-        "valor": 117.7748
+        "valor": 119.8021
       },
       {
         "data": "2025-12-05",
-        "valor": 112.6994
+        "valor": 114.6394
       },
       {
         "data": "2025-12-08",
-        "valor": 113.2853
+        "valor": 115.2353
       },
       {
         "data": "2025-12-09",
-        "valor": 113.1377
+        "valor": 115.0853
       },
       {
         "data": "2025-12-10",
-        "valor": 113.9212
+        "valor": 115.8822
       },
       {
         "data": "2025-12-11",
-        "valor": 114.0028
+        "valor": 115.9653
       },
       {
         "data": "2025-12-12",
-        "valor": 115.1322
+        "valor": 117.1141
       },
       {
         "data": "2025-12-15",
-        "valor": 116.3611
+        "valor": 118.3641
       },
       {
         "data": "2025-12-16",
-        "valor": 113.5653
+        "valor": 115.5202
       },
       {
         "data": "2025-12-17",
-        "valor": 112.6694
+        "valor": 114.6088
       },
       {
         "data": "2025-12-18",
-        "valor": 113.0962
+        "valor": 115.043
       },
       {
         "data": "2025-12-19",
-        "valor": 113.4901
+        "valor": 115.4437
       },
       {
         "data": "2025-12-22",
-        "valor": 113.253
+        "valor": 115.2026
       },
       {
         "data": "2025-12-23",
-        "valor": 114.9102
+        "valor": 116.8882
       },
       {
         "data": "2025-12-26",
-        "valor": 115.226
+        "valor": 117.2095
       },
       {
         "data": "2025-12-29",
-        "valor": 114.9345
+        "valor": 116.913
       },
       {
         "data": "2025-12-30",
-        "valor": 115.3893
+        "valor": 117.3756
       },
       {
         "data": "2026-01-02",
-        "valor": 114.9696
+        "valor": 116.9487
       },
       {
         "data": "2026-01-05",
-        "valor": 115.9228
+        "valor": 117.9183
       },
       {
         "data": "2026-01-06",
-        "valor": 117.2076
+        "valor": 119.2252
       },
       {
         "data": "2026-01-07",
-        "valor": 115.998
+        "valor": 117.9948
       },
       {
         "data": "2026-01-08",
-        "valor": 116.687
+        "valor": 118.6956
       },
       {
         "data": "2026-01-09",
-        "valor": 116.997
+        "valor": 119.011
       },
       {
         "data": "2026-01-12",
-        "valor": 116.8395
+        "valor": 118.8508
       },
       {
         "data": "2026-01-13",
-        "valor": 115.9966
+        "valor": 117.9933
       },
       {
         "data": "2026-01-14",
-        "valor": 118.2689
+        "valor": 120.3048
       },
       {
         "data": "2026-01-15",
-        "valor": 118.5711
+        "valor": 120.6122
       },
       {
         "data": "2026-01-16",
-        "valor": 118.0211
+        "valor": 120.0527
       },
       {
         "data": "2026-01-19",
-        "valor": 118.0562
+        "valor": 120.0884
       },
       {
         "data": "2026-01-20",
-        "valor": 119.0789
+        "valor": 121.1287
       },
       {
         "data": "2026-01-21",
-        "valor": 123.0463
+        "valor": 125.1645
       },
       {
         "data": "2026-01-22",
-        "valor": 125.7477
+        "valor": 127.9123
       },
       {
         "data": "2026-01-23",
-        "valor": 128.0895
+        "valor": 130.2944
       },
       {
         "data": "2026-01-26",
-        "valor": 127.9906
+        "valor": 130.1938
       },
       {
         "data": "2026-01-27",
-        "valor": 130.2809
+        "valor": 132.5235
       },
       {
         "data": "2026-01-28",
-        "valor": 132.266
+        "valor": 134.5428
       },
       {
         "data": "2026-01-29",
-        "valor": 131.151
+        "valor": 133.4086
       },
       {
         "data": "2026-01-30",
-        "valor": 129.8834
+        "valor": 132.1192
       },
       {
         "data": "2026-02-02",
-        "valor": 130.9068
+        "valor": 133.1602
       },
       {
         "data": "2026-02-03",
-        "valor": 132.97
+        "valor": 135.2589
       },
       {
         "data": "2026-02-04",
-        "valor": 130.1298
+        "valor": 132.3698
       },
       {
         "data": "2026-02-05",
-        "valor": 130.4298
+        "valor": 132.675
       },
       {
         "data": "2026-02-06",
-        "valor": 131.0192
+        "valor": 133.2746
       },
       {
         "data": "2026-02-09",
-        "valor": 133.3761
+        "valor": 135.672
       },
       {
         "data": "2026-02-10",
-        "valor": 133.1526
+        "valor": 135.4447
       },
       {
         "data": "2026-02-11",
-        "valor": 135.8525
+        "valor": 138.191
       },
       {
         "data": "2026-02-12",
-        "valor": 134.4682
+        "valor": 136.7829
       },
       {
         "data": "2026-02-13",
-        "valor": 133.5358
+        "valor": 135.8344
       },
       {
         "data": "2026-02-18",
-        "valor": 133.2149
+        "valor": 135.5081
       },
       {
         "data": "2026-02-19",
-        "valor": 135.0182
+        "valor": 137.3424
       },
       {
         "data": "2026-02-20",
-        "valor": 136.4505
+        "valor": 138.7993
       },
       {
         "data": "2026-02-23",
-        "valor": 135.2474
+        "valor": 137.5755
       },
       {
         "data": "2026-02-24",
-        "valor": 137.1351
+        "valor": 139.4957
       },
       {
         "data": "2026-02-25",
-        "valor": 136.9618
+        "valor": 139.3195
       },
       {
         "data": "2026-02-26",
-        "valor": 136.7878
+        "valor": 139.1424
       },
       {
         "data": "2026-02-27",
-        "valor": 135.1994
+        "valor": 137.5267
       },
       {
         "data": "2026-03-02",
-        "valor": 135.5718
+        "valor": 137.9055
       },
       {
         "data": "2026-03-03",
-        "valor": 131.1302
+        "valor": 133.3875
       },
       {
         "data": "2026-03-04",
-        "valor": 132.7494
+        "valor": 135.0346
       },
       {
         "data": "2026-03-05",
-        "valor": 129.2389
+        "valor": 131.4636
       },
       {
         "data": "2026-03-06",
-        "valor": 128.4518
+        "valor": 130.663
       },
       {
         "data": "2026-03-09",
-        "valor": 129.5619
+        "valor": 131.7921
       },
       {
         "data": "2026-03-10",
-        "valor": 131.3751
+        "valor": 133.6366
       },
       {
         "data": "2026-03-11",
-        "valor": 131.749
+        "valor": 134.0169
       },
       {
         "data": "2026-03-12",
-        "valor": 128.3945
+        "valor": 130.6047
       },
       {
         "data": "2026-03-13",
-        "valor": 127.2258
+        "valor": 129.4158
       },
       {
         "data": "2026-03-16",
-        "valor": 128.8171
+        "valor": 131.0345
       },
       {
         "data": "2026-03-17",
-        "valor": 129.2002
+        "valor": 131.4242
       },
       {
         "data": "2026-03-18",
-        "valor": 128.6488
+        "valor": 130.8633
       },
       {
         "data": "2026-03-19",
-        "valor": 129.1007
+        "valor": 131.323
       },
       {
         "data": "2026-03-20",
-        "valor": 126.1988
+        "valor": 128.3712
       },
       {
         "data": "2026-03-23",
-        "valor": 130.2902
+        "valor": 132.533
       },
       {
         "data": "2026-03-24",
-        "valor": 130.7034
+        "valor": 132.9533
       },
       {
         "data": "2026-03-25",
-        "valor": 132.791
+        "valor": 135.0768
       },
       {
         "data": "2026-03-26",
-        "valor": 130.8638
+        "valor": 133.1165
       },
       {
         "data": "2026-03-27",
-        "valor": 130.0216
+        "valor": 132.2598
       },
       {
         "data": "2026-03-30",
-        "valor": 130.707
+        "valor": 132.957
       },
       {
         "data": "2026-03-31",
-        "valor": 134.2505
+        "valor": 136.5615
       },
       {
         "data": "2026-04-01",
-        "valor": 134.6021
+        "valor": 136.9191
       },
       {
         "data": "2026-04-02",
-        "valor": 134.673
+        "valor": 136.9913
       },
       {
         "data": "2026-04-06",
-        "valor": 134.7518
+        "valor": 137.0714
       },
       {
         "data": "2026-04-07",
-        "valor": 134.8212
+        "valor": 137.142
       },
       {
         "data": "2026-04-08",
-        "valor": 137.6443
+        "valor": 140.0137
       },
       {
         "data": "2026-04-09",
-        "valor": 139.7412
+        "valor": 142.1467
       },
       {
         "data": "2026-04-10",
-        "valor": 141.3131
+        "valor": 143.7457
       },
       {
         "data": "2026-04-13",
-        "valor": 141.798
+        "valor": 144.2389
       },
       {
         "data": "2026-04-14",
-        "valor": 142.2678
+        "valor": 144.7167
       },
       {
         "data": "2026-04-15",
-        "valor": 141.6096
+        "valor": 144.0473
       },
       {
         "data": "2026-04-16",
-        "valor": 140.9515
+        "valor": 143.3778
       },
       {
         "data": "2026-04-17",
-        "valor": 140.1745
+        "valor": 142.5874
       },
       {
         "data": "2026-04-20",
-        "valor": 140.4595
+        "valor": 142.8773
       },
       {
         "data": "2026-04-22",
-        "valor": 138.137
+        "valor": 140.5149
       },
       {
         "data": "2026-04-23",
-        "valor": 137.0549
+        "valor": 139.4142
       },
       {
         "data": "2026-04-24",
-        "valor": 136.6016
+        "valor": 138.953
       },
       {
         "data": "2026-04-27",
-        "valor": 135.7666
+        "valor": 138.1036
       },
       {
         "data": "2026-04-28",
-        "valor": 135.0791
+        "valor": 137.4043
       },
       {
         "data": "2026-04-29",
-        "valor": 132.3083
+        "valor": 134.5858
       },
       {
         "data": "2026-04-30",
-        "valor": 134.1474
+        "valor": 136.4566
       },
       {
         "data": "2026-05-04",
-        "valor": 132.917
+        "valor": 135.205
       },
       {
         "data": "2026-05-05",
-        "valor": 133.7434
+        "valor": 136.0457
       },
       {
         "data": "2026-05-06",
-        "valor": 134.4145
+        "valor": 136.7283
       },
       {
         "data": "2026-05-07",
-        "valor": 131.2111
+        "valor": 133.4698
       },
       {
         "data": "2026-05-08",
-        "valor": 131.8485
+        "valor": 134.1181
       },
       {
         "data": "2026-05-11",
-        "valor": 130.2737
+        "valor": 132.5162
       },
       {
         "data": "2026-05-12",
-        "valor": 129.1515
+        "valor": 131.3747
       },
       {
         "data": "2026-05-13",
-        "valor": 126.8283
+        "valor": 129.0115
       },
       {
         "data": "2026-05-14",
-        "valor": 127.7364
+        "valor": 129.9352
       },
       {
         "data": "2026-05-15",
-        "valor": 126.9615
+        "valor": 129.147
       },
       {
         "data": "2026-05-18",
-        "valor": 126.741
+        "valor": 128.9227
       },
       {
         "data": "2026-05-19",
-        "valor": 124.8095
+        "valor": 126.958
       },
       {
         "data": "2026-05-20",
-        "valor": 127.0131
+        "valor": 129.1995
       },
       {
         "data": "2026-05-21",
-        "valor": 127.2236
+        "valor": 129.4137
       },
       {
         "data": "2026-05-22",
-        "valor": 126.1924
+        "valor": 128.3646
       },
       {
         "data": "2026-05-25",
-        "valor": 127.0152
+        "valor": 129.2017
       },
       {
         "data": "2026-05-26",
-        "valor": 126.4638
+        "valor": 128.6407
       },
       {
         "data": "2026-05-27",
-        "valor": 125.8587
+        "valor": 128.0252
       },
       {
         "data": "2026-05-28",
-        "valor": 125.371
+        "valor": 127.5291
       },
       {
         "data": "2026-05-29",
-        "valor": 124.4579
+        "valor": 126.6003
       },
       {
         "data": "2026-06-01",
-        "valor": 123.3192
+        "valor": 125.442
       },
       {
         "data": "2026-06-02",
-        "valor": 124.7515
+        "valor": 126.899
       },
       {
         "data": "2026-06-03",
-        "valor": 121.9822
+        "valor": 124.0819
       },
       {
         "data": "2026-06-05",
-        "valor": 121.0426
+        "valor": 123.1262
       },
       {
         "data": "2026-06-08",
-        "valor": 120.7919
+        "valor": 122.8712
       },
       {
         "data": "2026-06-09",
-        "valor": 121.6112
+        "valor": 123.7046
       },
       {
         "data": "2026-06-10",
-        "valor": 120.7561
+        "valor": 122.8348
       },
       {
         "data": "2026-06-11",
-        "valor": 122.8172
+        "valor": 124.9313
       },
       {
         "data": "2026-06-12",
-        "valor": 122.5565
+        "valor": 124.6662
       },
       {
         "data": "2026-06-15",
-        "valor": 122.0423
+        "valor": 124.1431
       },
       {
         "data": "2026-06-16",
-        "valor": 121.4937
+        "valor": 123.5851
       },
       {
         "data": "2026-06-17",
-        "valor": 120.6379
+        "valor": 122.7146
       },
       {
         "data": "2026-06-18",
-        "valor": 120.5119
+        "valor": 122.5864
       },
       {
         "data": "2026-06-19",
-        "valor": 120.7253
+        "valor": 122.8035
       },
       {
         "data": "2026-06-22",
-        "valor": 122.0101
+        "valor": 124.1103
       },
       {
         "data": "2026-06-23",
-        "valor": 122.6467
+        "valor": 124.758
       },
       {
         "data": "2026-06-24",
-        "valor": 122.1082
+        "valor": 124.2102
+      },
+      {
+        "data": "2026-06-25",
+        "valor": 125.2905
+      },
+      {
+        "data": "2026-06-26",
+        "valor": 126.2411
       }
     ],
     "ifix_base100": [
-      {
-        "data": "2025-05-19",
-        "valor": 100.0
-      },
-      {
-        "data": "2025-05-20",
-        "valor": 100.0
-      },
-      {
-        "data": "2025-05-21",
-        "valor": 99.7541
-      },
       {
         "data": "2025-05-22",
         "valor": 100.0
@@ -7263,6 +8343,1130 @@
       {
         "data": "2026-06-24",
         "valor": 109.2623
+      },
+      {
+        "data": "2026-06-25",
+        "valor": 109.5082
+      },
+      {
+        "data": "2026-06-26",
+        "valor": 110.1639
+      }
+    ],
+    "imob_base100": [
+      {
+        "data": "2026-06-26",
+        "valor": 100.0
+      }
+    ],
+    "cdi_base100": [
+      {
+        "data": "2025-05-21",
+        "valor": 100.0
+      },
+      {
+        "data": "2025-05-22",
+        "valor": 100.0543
+      },
+      {
+        "data": "2025-05-23",
+        "valor": 100.1086
+      },
+      {
+        "data": "2025-05-26",
+        "valor": 100.1629
+      },
+      {
+        "data": "2025-05-27",
+        "valor": 100.2172
+      },
+      {
+        "data": "2025-05-28",
+        "valor": 100.2716
+      },
+      {
+        "data": "2025-05-29",
+        "valor": 100.326
+      },
+      {
+        "data": "2025-05-30",
+        "valor": 100.3805
+      },
+      {
+        "data": "2025-06-02",
+        "valor": 100.435
+      },
+      {
+        "data": "2025-06-03",
+        "valor": 100.4895
+      },
+      {
+        "data": "2025-06-04",
+        "valor": 100.544
+      },
+      {
+        "data": "2025-06-05",
+        "valor": 100.5985
+      },
+      {
+        "data": "2025-06-06",
+        "valor": 100.6531
+      },
+      {
+        "data": "2025-06-09",
+        "valor": 100.7078
+      },
+      {
+        "data": "2025-06-10",
+        "valor": 100.7624
+      },
+      {
+        "data": "2025-06-11",
+        "valor": 100.8171
+      },
+      {
+        "data": "2025-06-12",
+        "valor": 100.8718
+      },
+      {
+        "data": "2025-06-13",
+        "valor": 100.9265
+      },
+      {
+        "data": "2025-06-16",
+        "valor": 100.9813
+      },
+      {
+        "data": "2025-06-17",
+        "valor": 101.0361
+      },
+      {
+        "data": "2025-06-18",
+        "valor": 101.0909
+      },
+      {
+        "data": "2025-06-20",
+        "valor": 101.1467
+      },
+      {
+        "data": "2025-06-23",
+        "valor": 101.2024
+      },
+      {
+        "data": "2025-06-24",
+        "valor": 101.2582
+      },
+      {
+        "data": "2025-06-25",
+        "valor": 101.314
+      },
+      {
+        "data": "2025-06-26",
+        "valor": 101.3699
+      },
+      {
+        "data": "2025-06-27",
+        "valor": 101.4258
+      },
+      {
+        "data": "2025-06-30",
+        "valor": 101.4817
+      },
+      {
+        "data": "2025-07-01",
+        "valor": 101.5377
+      },
+      {
+        "data": "2025-07-02",
+        "valor": 101.5936
+      },
+      {
+        "data": "2025-07-03",
+        "valor": 101.6496
+      },
+      {
+        "data": "2025-07-04",
+        "valor": 101.7057
+      },
+      {
+        "data": "2025-07-07",
+        "valor": 101.7618
+      },
+      {
+        "data": "2025-07-08",
+        "valor": 101.8179
+      },
+      {
+        "data": "2025-07-09",
+        "valor": 101.874
+      },
+      {
+        "data": "2025-07-10",
+        "valor": 101.9302
+      },
+      {
+        "data": "2025-07-11",
+        "valor": 101.9863
+      },
+      {
+        "data": "2025-07-14",
+        "valor": 102.0426
+      },
+      {
+        "data": "2025-07-15",
+        "valor": 102.0988
+      },
+      {
+        "data": "2025-07-16",
+        "valor": 102.1551
+      },
+      {
+        "data": "2025-07-17",
+        "valor": 102.2114
+      },
+      {
+        "data": "2025-07-18",
+        "valor": 102.2678
+      },
+      {
+        "data": "2025-07-21",
+        "valor": 102.3242
+      },
+      {
+        "data": "2025-07-22",
+        "valor": 102.3806
+      },
+      {
+        "data": "2025-07-23",
+        "valor": 102.437
+      },
+      {
+        "data": "2025-07-24",
+        "valor": 102.4935
+      },
+      {
+        "data": "2025-07-25",
+        "valor": 102.55
+      },
+      {
+        "data": "2025-07-28",
+        "valor": 102.6065
+      },
+      {
+        "data": "2025-07-29",
+        "valor": 102.6631
+      },
+      {
+        "data": "2025-07-30",
+        "valor": 102.7197
+      },
+      {
+        "data": "2025-07-31",
+        "valor": 102.7763
+      },
+      {
+        "data": "2025-08-01",
+        "valor": 102.833
+      },
+      {
+        "data": "2025-08-04",
+        "valor": 102.8897
+      },
+      {
+        "data": "2025-08-05",
+        "valor": 102.9464
+      },
+      {
+        "data": "2025-08-06",
+        "valor": 103.0032
+      },
+      {
+        "data": "2025-08-07",
+        "valor": 103.06
+      },
+      {
+        "data": "2025-08-08",
+        "valor": 103.1168
+      },
+      {
+        "data": "2025-08-11",
+        "valor": 103.1736
+      },
+      {
+        "data": "2025-08-12",
+        "valor": 103.2305
+      },
+      {
+        "data": "2025-08-13",
+        "valor": 103.2874
+      },
+      {
+        "data": "2025-08-14",
+        "valor": 103.3444
+      },
+      {
+        "data": "2025-08-15",
+        "valor": 103.4013
+      },
+      {
+        "data": "2025-08-18",
+        "valor": 103.4583
+      },
+      {
+        "data": "2025-08-19",
+        "valor": 103.5154
+      },
+      {
+        "data": "2025-08-20",
+        "valor": 103.5725
+      },
+      {
+        "data": "2025-08-21",
+        "valor": 103.6296
+      },
+      {
+        "data": "2025-08-22",
+        "valor": 103.6867
+      },
+      {
+        "data": "2025-08-25",
+        "valor": 103.7438
+      },
+      {
+        "data": "2025-08-26",
+        "valor": 103.801
+      },
+      {
+        "data": "2025-08-27",
+        "valor": 103.8583
+      },
+      {
+        "data": "2025-08-28",
+        "valor": 103.9155
+      },
+      {
+        "data": "2025-08-29",
+        "valor": 103.9728
+      },
+      {
+        "data": "2025-09-01",
+        "valor": 104.0301
+      },
+      {
+        "data": "2025-09-02",
+        "valor": 104.0875
+      },
+      {
+        "data": "2025-09-03",
+        "valor": 104.1449
+      },
+      {
+        "data": "2025-09-04",
+        "valor": 104.2023
+      },
+      {
+        "data": "2025-09-05",
+        "valor": 104.2597
+      },
+      {
+        "data": "2025-09-08",
+        "valor": 104.3172
+      },
+      {
+        "data": "2025-09-09",
+        "valor": 104.3747
+      },
+      {
+        "data": "2025-09-10",
+        "valor": 104.4323
+      },
+      {
+        "data": "2025-09-11",
+        "valor": 104.4898
+      },
+      {
+        "data": "2025-09-12",
+        "valor": 104.5475
+      },
+      {
+        "data": "2025-09-15",
+        "valor": 104.6051
+      },
+      {
+        "data": "2025-09-16",
+        "valor": 104.6628
+      },
+      {
+        "data": "2025-09-17",
+        "valor": 104.7205
+      },
+      {
+        "data": "2025-09-18",
+        "valor": 104.7782
+      },
+      {
+        "data": "2025-09-19",
+        "valor": 104.836
+      },
+      {
+        "data": "2025-09-22",
+        "valor": 104.8938
+      },
+      {
+        "data": "2025-09-23",
+        "valor": 104.9516
+      },
+      {
+        "data": "2025-09-24",
+        "valor": 105.0095
+      },
+      {
+        "data": "2025-09-25",
+        "valor": 105.0673
+      },
+      {
+        "data": "2025-09-26",
+        "valor": 105.1253
+      },
+      {
+        "data": "2025-09-29",
+        "valor": 105.1832
+      },
+      {
+        "data": "2025-09-30",
+        "valor": 105.2412
+      },
+      {
+        "data": "2025-10-01",
+        "valor": 105.2992
+      },
+      {
+        "data": "2025-10-02",
+        "valor": 105.3573
+      },
+      {
+        "data": "2025-10-03",
+        "valor": 105.4154
+      },
+      {
+        "data": "2025-10-06",
+        "valor": 105.4735
+      },
+      {
+        "data": "2025-10-07",
+        "valor": 105.5316
+      },
+      {
+        "data": "2025-10-08",
+        "valor": 105.5898
+      },
+      {
+        "data": "2025-10-09",
+        "valor": 105.648
+      },
+      {
+        "data": "2025-10-10",
+        "valor": 105.7063
+      },
+      {
+        "data": "2025-10-13",
+        "valor": 105.7646
+      },
+      {
+        "data": "2025-10-14",
+        "valor": 105.8229
+      },
+      {
+        "data": "2025-10-15",
+        "valor": 105.8812
+      },
+      {
+        "data": "2025-10-16",
+        "valor": 105.9396
+      },
+      {
+        "data": "2025-10-17",
+        "valor": 105.998
+      },
+      {
+        "data": "2025-10-20",
+        "valor": 106.0564
+      },
+      {
+        "data": "2025-10-21",
+        "valor": 106.1149
+      },
+      {
+        "data": "2025-10-22",
+        "valor": 106.1734
+      },
+      {
+        "data": "2025-10-23",
+        "valor": 106.2319
+      },
+      {
+        "data": "2025-10-24",
+        "valor": 106.2905
+      },
+      {
+        "data": "2025-10-27",
+        "valor": 106.3491
+      },
+      {
+        "data": "2025-10-28",
+        "valor": 106.4077
+      },
+      {
+        "data": "2025-10-29",
+        "valor": 106.4664
+      },
+      {
+        "data": "2025-10-30",
+        "valor": 106.5251
+      },
+      {
+        "data": "2025-10-31",
+        "valor": 106.5838
+      },
+      {
+        "data": "2025-11-03",
+        "valor": 106.6426
+      },
+      {
+        "data": "2025-11-04",
+        "valor": 106.7014
+      },
+      {
+        "data": "2025-11-05",
+        "valor": 106.7602
+      },
+      {
+        "data": "2025-11-06",
+        "valor": 106.819
+      },
+      {
+        "data": "2025-11-07",
+        "valor": 106.8779
+      },
+      {
+        "data": "2025-11-10",
+        "valor": 106.9369
+      },
+      {
+        "data": "2025-11-11",
+        "valor": 106.9958
+      },
+      {
+        "data": "2025-11-12",
+        "valor": 107.0548
+      },
+      {
+        "data": "2025-11-13",
+        "valor": 107.1138
+      },
+      {
+        "data": "2025-11-14",
+        "valor": 107.1729
+      },
+      {
+        "data": "2025-11-17",
+        "valor": 107.232
+      },
+      {
+        "data": "2025-11-18",
+        "valor": 107.2911
+      },
+      {
+        "data": "2025-11-19",
+        "valor": 107.3502
+      },
+      {
+        "data": "2025-11-21",
+        "valor": 107.4094
+      },
+      {
+        "data": "2025-11-24",
+        "valor": 107.4686
+      },
+      {
+        "data": "2025-11-25",
+        "valor": 107.5279
+      },
+      {
+        "data": "2025-11-26",
+        "valor": 107.5872
+      },
+      {
+        "data": "2025-11-27",
+        "valor": 107.6465
+      },
+      {
+        "data": "2025-11-28",
+        "valor": 107.7058
+      },
+      {
+        "data": "2025-12-01",
+        "valor": 107.7652
+      },
+      {
+        "data": "2025-12-02",
+        "valor": 107.8246
+      },
+      {
+        "data": "2025-12-03",
+        "valor": 107.8841
+      },
+      {
+        "data": "2025-12-04",
+        "valor": 107.9435
+      },
+      {
+        "data": "2025-12-05",
+        "valor": 108.003
+      },
+      {
+        "data": "2025-12-08",
+        "valor": 108.0626
+      },
+      {
+        "data": "2025-12-09",
+        "valor": 108.1222
+      },
+      {
+        "data": "2025-12-10",
+        "valor": 108.1818
+      },
+      {
+        "data": "2025-12-11",
+        "valor": 108.2414
+      },
+      {
+        "data": "2025-12-12",
+        "valor": 108.3011
+      },
+      {
+        "data": "2025-12-15",
+        "valor": 108.3608
+      },
+      {
+        "data": "2025-12-16",
+        "valor": 108.4205
+      },
+      {
+        "data": "2025-12-17",
+        "valor": 108.4803
+      },
+      {
+        "data": "2025-12-18",
+        "valor": 108.5401
+      },
+      {
+        "data": "2025-12-19",
+        "valor": 108.6
+      },
+      {
+        "data": "2025-12-22",
+        "valor": 108.6598
+      },
+      {
+        "data": "2025-12-23",
+        "valor": 108.7197
+      },
+      {
+        "data": "2025-12-24",
+        "valor": 108.7797
+      },
+      {
+        "data": "2025-12-26",
+        "valor": 108.8396
+      },
+      {
+        "data": "2025-12-29",
+        "valor": 108.8996
+      },
+      {
+        "data": "2025-12-30",
+        "valor": 108.9597
+      },
+      {
+        "data": "2025-12-31",
+        "valor": 109.0198
+      },
+      {
+        "data": "2026-01-02",
+        "valor": 109.0799
+      },
+      {
+        "data": "2026-01-05",
+        "valor": 109.14
+      },
+      {
+        "data": "2026-01-06",
+        "valor": 109.2002
+      },
+      {
+        "data": "2026-01-07",
+        "valor": 109.2604
+      },
+      {
+        "data": "2026-01-08",
+        "valor": 109.3206
+      },
+      {
+        "data": "2026-01-09",
+        "valor": 109.3809
+      },
+      {
+        "data": "2026-01-12",
+        "valor": 109.4412
+      },
+      {
+        "data": "2026-01-13",
+        "valor": 109.5015
+      },
+      {
+        "data": "2026-01-14",
+        "valor": 109.5619
+      },
+      {
+        "data": "2026-01-15",
+        "valor": 109.6223
+      },
+      {
+        "data": "2026-01-16",
+        "valor": 109.6827
+      },
+      {
+        "data": "2026-01-19",
+        "valor": 109.7432
+      },
+      {
+        "data": "2026-01-20",
+        "valor": 109.8037
+      },
+      {
+        "data": "2026-01-21",
+        "valor": 109.8642
+      },
+      {
+        "data": "2026-01-22",
+        "valor": 109.9248
+      },
+      {
+        "data": "2026-01-23",
+        "valor": 109.9854
+      },
+      {
+        "data": "2026-01-26",
+        "valor": 110.046
+      },
+      {
+        "data": "2026-01-27",
+        "valor": 110.1067
+      },
+      {
+        "data": "2026-01-28",
+        "valor": 110.1674
+      },
+      {
+        "data": "2026-01-29",
+        "valor": 110.2281
+      },
+      {
+        "data": "2026-01-30",
+        "valor": 110.2889
+      },
+      {
+        "data": "2026-02-02",
+        "valor": 110.3497
+      },
+      {
+        "data": "2026-02-03",
+        "valor": 110.4106
+      },
+      {
+        "data": "2026-02-04",
+        "valor": 110.4714
+      },
+      {
+        "data": "2026-02-05",
+        "valor": 110.5323
+      },
+      {
+        "data": "2026-02-06",
+        "valor": 110.5933
+      },
+      {
+        "data": "2026-02-09",
+        "valor": 110.6542
+      },
+      {
+        "data": "2026-02-10",
+        "valor": 110.7152
+      },
+      {
+        "data": "2026-02-11",
+        "valor": 110.7763
+      },
+      {
+        "data": "2026-02-12",
+        "valor": 110.8374
+      },
+      {
+        "data": "2026-02-13",
+        "valor": 110.8985
+      },
+      {
+        "data": "2026-02-18",
+        "valor": 110.9596
+      },
+      {
+        "data": "2026-02-19",
+        "valor": 111.0208
+      },
+      {
+        "data": "2026-02-20",
+        "valor": 111.082
+      },
+      {
+        "data": "2026-02-23",
+        "valor": 111.1432
+      },
+      {
+        "data": "2026-02-24",
+        "valor": 111.2045
+      },
+      {
+        "data": "2026-02-25",
+        "valor": 111.2658
+      },
+      {
+        "data": "2026-02-26",
+        "valor": 111.3271
+      },
+      {
+        "data": "2026-02-27",
+        "valor": 111.3885
+      },
+      {
+        "data": "2026-03-02",
+        "valor": 111.4499
+      },
+      {
+        "data": "2026-03-03",
+        "valor": 111.5114
+      },
+      {
+        "data": "2026-03-04",
+        "valor": 111.5728
+      },
+      {
+        "data": "2026-03-05",
+        "valor": 111.6344
+      },
+      {
+        "data": "2026-03-06",
+        "valor": 111.6959
+      },
+      {
+        "data": "2026-03-09",
+        "valor": 111.7575
+      },
+      {
+        "data": "2026-03-10",
+        "valor": 111.8191
+      },
+      {
+        "data": "2026-03-11",
+        "valor": 111.8807
+      },
+      {
+        "data": "2026-03-12",
+        "valor": 111.9424
+      },
+      {
+        "data": "2026-03-13",
+        "valor": 112.0041
+      },
+      {
+        "data": "2026-03-16",
+        "valor": 112.0659
+      },
+      {
+        "data": "2026-03-17",
+        "valor": 112.1277
+      },
+      {
+        "data": "2026-03-18",
+        "valor": 112.1895
+      },
+      {
+        "data": "2026-03-19",
+        "valor": 112.2504
+      },
+      {
+        "data": "2026-03-20",
+        "valor": 112.3113
+      },
+      {
+        "data": "2026-03-23",
+        "valor": 112.3722
+      },
+      {
+        "data": "2026-03-24",
+        "valor": 112.4332
+      },
+      {
+        "data": "2026-03-25",
+        "valor": 112.4942
+      },
+      {
+        "data": "2026-03-26",
+        "valor": 112.5553
+      },
+      {
+        "data": "2026-03-27",
+        "valor": 112.6164
+      },
+      {
+        "data": "2026-03-30",
+        "valor": 112.6775
+      },
+      {
+        "data": "2026-03-31",
+        "valor": 112.7386
+      },
+      {
+        "data": "2026-04-01",
+        "valor": 112.7998
+      },
+      {
+        "data": "2026-04-02",
+        "valor": 112.861
+      },
+      {
+        "data": "2026-04-06",
+        "valor": 112.9222
+      },
+      {
+        "data": "2026-04-07",
+        "valor": 112.9835
+      },
+      {
+        "data": "2026-04-08",
+        "valor": 113.0448
+      },
+      {
+        "data": "2026-04-09",
+        "valor": 113.1062
+      },
+      {
+        "data": "2026-04-10",
+        "valor": 113.1676
+      },
+      {
+        "data": "2026-04-13",
+        "valor": 113.229
+      },
+      {
+        "data": "2026-04-14",
+        "valor": 113.2904
+      },
+      {
+        "data": "2026-04-15",
+        "valor": 113.3519
+      },
+      {
+        "data": "2026-04-16",
+        "valor": 113.4134
+      },
+      {
+        "data": "2026-04-17",
+        "valor": 113.4749
+      },
+      {
+        "data": "2026-04-20",
+        "valor": 113.5365
+      },
+      {
+        "data": "2026-04-22",
+        "valor": 113.5981
+      },
+      {
+        "data": "2026-04-23",
+        "valor": 113.6598
+      },
+      {
+        "data": "2026-04-24",
+        "valor": 113.7215
+      },
+      {
+        "data": "2026-04-27",
+        "valor": 113.7832
+      },
+      {
+        "data": "2026-04-28",
+        "valor": 113.8449
+      },
+      {
+        "data": "2026-04-29",
+        "valor": 113.9067
+      },
+      {
+        "data": "2026-04-30",
+        "valor": 113.9675
+      },
+      {
+        "data": "2026-05-04",
+        "valor": 114.0284
+      },
+      {
+        "data": "2026-05-05",
+        "valor": 114.0893
+      },
+      {
+        "data": "2026-05-06",
+        "valor": 114.1502
+      },
+      {
+        "data": "2026-05-07",
+        "valor": 114.2112
+      },
+      {
+        "data": "2026-05-08",
+        "valor": 114.2721
+      },
+      {
+        "data": "2026-05-11",
+        "valor": 114.3332
+      },
+      {
+        "data": "2026-05-12",
+        "valor": 114.3942
+      },
+      {
+        "data": "2026-05-13",
+        "valor": 114.4553
+      },
+      {
+        "data": "2026-05-14",
+        "valor": 114.5164
+      },
+      {
+        "data": "2026-05-15",
+        "valor": 114.5776
+      },
+      {
+        "data": "2026-05-18",
+        "valor": 114.6388
+      },
+      {
+        "data": "2026-05-19",
+        "valor": 114.7
+      },
+      {
+        "data": "2026-05-20",
+        "valor": 114.7612
+      },
+      {
+        "data": "2026-05-21",
+        "valor": 114.8225
+      },
+      {
+        "data": "2026-05-22",
+        "valor": 114.8838
+      },
+      {
+        "data": "2026-05-25",
+        "valor": 114.9452
+      },
+      {
+        "data": "2026-05-26",
+        "valor": 115.0066
+      },
+      {
+        "data": "2026-05-27",
+        "valor": 115.068
+      },
+      {
+        "data": "2026-05-28",
+        "valor": 115.1294
+      },
+      {
+        "data": "2026-05-29",
+        "valor": 115.1909
+      },
+      {
+        "data": "2026-06-01",
+        "valor": 115.2524
+      },
+      {
+        "data": "2026-06-02",
+        "valor": 115.3139
+      },
+      {
+        "data": "2026-06-03",
+        "valor": 115.3755
+      },
+      {
+        "data": "2026-06-05",
+        "valor": 115.4371
+      },
+      {
+        "data": "2026-06-08",
+        "valor": 115.4988
+      },
+      {
+        "data": "2026-06-09",
+        "valor": 115.5605
+      },
+      {
+        "data": "2026-06-10",
+        "valor": 115.6222
+      },
+      {
+        "data": "2026-06-11",
+        "valor": 115.6839
+      },
+      {
+        "data": "2026-06-12",
+        "valor": 115.7457
+      },
+      {
+        "data": "2026-06-15",
+        "valor": 115.8075
+      },
+      {
+        "data": "2026-06-16",
+        "valor": 115.8693
+      },
+      {
+        "data": "2026-06-17",
+        "valor": 115.9312
+      },
+      {
+        "data": "2026-06-18",
+        "valor": 115.9921
+      },
+      {
+        "data": "2026-06-19",
+        "valor": 116.053
+      },
+      {
+        "data": "2026-06-22",
+        "valor": 116.114
+      },
+      {
+        "data": "2026-06-23",
+        "valor": 116.175
+      },
+      {
+        "data": "2026-06-24",
+        "valor": 116.236
+      },
+      {
+        "data": "2026-06-25",
+        "valor": 116.2971
       }
     ],
     "ipca_base100": [
@@ -7323,12 +9527,20 @@
       {
         "data": "2026-06-25",
         "valor": 100.0
+      },
+      {
+        "data": "2026-06-28",
+        "valor": 100.3964
       }
     ],
     "carteira_acoes_base100": [
       {
         "data": "2026-06-25",
         "valor": 100.0
+      },
+      {
+        "data": "2026-06-28",
+        "valor": 101.7219
       }
     ],
     "comparativo_fiis": {
@@ -7337,12 +9549,39 @@
         {
           "data": "2026-06-25",
           "valor": 100.0
+        },
+        {
+          "data": "2026-06-28",
+          "valor": 100.3964
         }
       ],
       "benchmarks": {
-        "IFIX": [],
-        "IMOB": [],
-        "CDI": []
+        "IFIX": [
+          {
+            "data": "2026-06-25",
+            "valor": 100.0
+          },
+          {
+            "data": "2026-06-26",
+            "valor": 100.5988
+          }
+        ],
+        "IMOB": [
+          {
+            "data": "2026-06-25",
+            "valor": 100.0
+          },
+          {
+            "data": "2026-06-26",
+            "valor": 100.0
+          }
+        ],
+        "CDI": [
+          {
+            "data": "2026-06-25",
+            "valor": 100.0
+          }
+        ]
       }
     },
     "comparativo_acoes": {
@@ -7351,12 +9590,35 @@
         {
           "data": "2026-06-25",
           "valor": 100.0
+        },
+        {
+          "data": "2026-06-28",
+          "valor": 101.7219
         }
       ],
       "benchmarks": {
-        "IBOV": [],
-        "IPCA": [],
-        "CDI": []
+        "IBOV": [
+          {
+            "data": "2026-06-25",
+            "valor": 100.0
+          },
+          {
+            "data": "2026-06-26",
+            "valor": 100.7588
+          }
+        ],
+        "IPCA": [
+          {
+            "data": "2026-06-25",
+            "valor": 100.0
+          }
+        ],
+        "CDI": [
+          {
+            "data": "2026-06-25",
+            "valor": 100.0
+          }
+        ]
       }
     }
   },
@@ -7364,20 +9626,20 @@
     "disponivel": true,
     "periodo": {
       "inicio": "2026-06-23",
-      "fim": "2026-06-25"
+      "fim": "2026-06-28"
     },
-    "rebalanceamentos": 3,
+    "rebalanceamentos": 4,
     "carteira_top20_fiis": {
-      "retorno_pct": 0.15,
-      "base100": 100.15
+      "retorno_pct": 0.64,
+      "base100": 100.64
     },
     "ifix": {
-      "retorno_pct": -0.0,
-      "base100": 100.0
+      "retorno_pct": 0.6,
+      "base100": 100.6
     },
     "ibov": {
-      "retorno_pct": 0.43,
-      "base100": 100.43
+      "retorno_pct": 1.19,
+      "base100": 101.19
     },
     "bateu_ifix": true,
     "bateu_ibov": false,
@@ -7394,26 +9656,39 @@
         "inicio": "2026-06-24",
         "fim": "2026-06-25",
         "ativos": 20,
-        "carteira_retorno_pct": 0.37,
+        "carteira_retorno_pct": 0.39,
         "ifix_retorno_pct": 0.23,
         "ibov_retorno_pct": 0.87
+      },
+      {
+        "inicio": "2026-06-25",
+        "fim": "2026-06-28",
+        "ativos": 21,
+        "carteira_retorno_pct": 0.47,
+        "ifix_retorno_pct": 0.6,
+        "ibov_retorno_pct": 0.76
       }
     ],
     "metodologia": "Camada 3 — carteira equal-weight Top 20 FIIs rebalanceada a cada snapshot diário, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
   },
   "kpis": {
-    "dy_medio_fiis_carteira": 0.0296,
-    "pvp_medio_fiis": 0.7555,
+    "dy_medio_fiis_carteira": 0.0275,
     "dy_medio_fiis_mercado": 0.0344,
+    "pvp_medio_fiis_carteira": 0.749,
+    "pvp_medio_fiis_mercado": 2.2426,
+    "score_medio_fiis_carteira": 66.655,
+    "score_medio_fiis_mercado": 50.0272,
+    "dy_medio_acoes_carteira": 0.1266,
+    "dy_medio_acoes_mercado": 0.0813,
+    "score_medio_acoes_carteira": 53.945,
+    "score_medio_acoes_mercado": 50.0026,
     "total_fiis_universo": 537,
-    "dy_medio_acoes_carteira": 0.1295,
-    "dy_medio_acoes_mercado": 0.0816,
-    "total_acoes_universo": 425
+    "total_acoes_universo": 424
   },
   "resumo": {
     "total_fiis": 20,
     "total_acoes": 20,
-    "dy_medio_fiis": 0.0296,
-    "pvp_medio_fiis": 0.7555
+    "dy_medio_fiis": 0.0275,
+    "pvp_medio_fiis": 0.749
   }
 }
