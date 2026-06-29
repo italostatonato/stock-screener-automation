@@ -18,6 +18,8 @@ from src.scorer import score_fiis, score_acoes
 from src.benchmark import get_benchmarks
 from src.backtest import run_backtest, save_portfolio_snapshot
 from src.ml_storage import append_historical_data
+from src.dataset_builder import build_all_datasets
+from src.ml_models import run_ml_pipeline
 
 
 def setup_logging(logs_dir: str):
@@ -43,9 +45,9 @@ def main():
 
     paths = cfg["paths"]
     data_hoje = datetime.today().strftime("%Y-%m-%d")
-
-    ml_dir = os.path.join(paths["data_dir"], "ml")
-    backtest_dir = os.path.join(paths["data_dir"], "backtest")
+    data_dir = paths.get("data_dir", "data")
+    ml_dir = os.path.join(data_dir, "ml")
+    backtest_dir = os.path.join(data_dir, "backtest")
     os.makedirs(ml_dir, exist_ok=True)
     os.makedirs(backtest_dir, exist_ok=True)
 
@@ -128,17 +130,17 @@ def main():
             acoes_base = pd.DataFrame()
             acoes_scores_top = pd.Series(dtype=float)
 
-        # Histórico ML — salva a base processada quando existir; se falhar, salva a base bruta.
-        try:
-            acoes_hist_source = acoes_base if acoes_base is not None and not acoes_base.empty else df_acoes_raw
-            append_historical_data(
-                df=acoes_hist_source,
-                data_execucao=data_hoje,
-                output_file=os.path.join(ml_dir, "historico_acoes.parquet"),
-                subset_cols=["Data_Execucao", "Ação"],
-            )
-        except Exception as e:
-            logger.error(f"Falha ao salvar historico ML Acoes: {e}")
+    # Histórico ML — salva a base processada quando existir; se falhar, salva a base bruta.
+    try:
+        acoes_hist_source = acoes_base if acoes_base is not None and not acoes_base.empty else df_acoes_raw
+        append_historical_data(
+            df=acoes_hist_source,
+            data_execucao=data_hoje,
+            output_file=os.path.join(ml_dir, "historico_acoes.parquet"),
+            subset_cols=["Data_Execucao", "Ação"],
+        )
+    except Exception as e:
+        logger.error(f"Falha ao salvar historico ML Acoes: {e}")
 
     # ── Indicadores de mercado ───────────────────────────────────────────────
     try:
@@ -174,6 +176,17 @@ def main():
         )
     except Exception as e:
         logger.error(f"Falha ao salvar carteira historica de backtest: {e}")
+
+    # ── Datasets e modelos ML em modo sombra ─────────────────────────────────
+    try:
+        build_all_datasets(data_dir=data_dir, horizons=(7, 30, 60, 90))
+    except Exception as e:
+        logger.error(f"Falha ao gerar datasets ML: {e}")
+
+    try:
+        run_ml_pipeline(data_dir=data_dir, horizon=30)
+    except Exception as e:
+        logger.error(f"Falha ao executar pipeline ML sombra: {e}")
 
     # ── Snapshot Excel ────────────────────────────────────────────────────────
     snapshot_path = os.path.join(

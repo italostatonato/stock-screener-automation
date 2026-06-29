@@ -585,6 +585,109 @@ def _calc_recorrentes(
         "fiis": build("FII"),
     }
 
+
+def _latest_records_from_predictions(path: str, top_n: int = 50) -> list:
+    """Lê parquet de previsões ML e devolve o snapshot mais recente para o dashboard."""
+    df = _load_parquet_safe(path)
+    if df.empty or "Data_Execucao" not in df.columns or "Ticker" not in df.columns:
+        return []
+
+    base = df.copy()
+    base["Data_Execucao"] = pd.to_datetime(base["Data_Execucao"], errors="coerce")
+    base = base.dropna(subset=["Data_Execucao", "Ticker"])
+    if base.empty:
+        return []
+
+    latest_date = base["Data_Execucao"].max()
+    latest = base[base["Data_Execucao"].eq(latest_date)].copy()
+
+    # Ordena pelo ensemble quando existir; caso contrário usa o score oficial.
+    if "score_ensemble" in latest.columns and pd.to_numeric(latest["score_ensemble"], errors="coerce").notna().any():
+        latest["_rank_score"] = pd.to_numeric(latest["score_ensemble"], errors="coerce")
+    else:
+        latest["_rank_score"] = pd.to_numeric(latest.get("score_top"), errors="coerce")
+
+    latest = latest.sort_values(["_rank_score", "Ticker"], ascending=[False, True]).head(top_n)
+
+    cols = [
+        "Data_Execucao", "Tipo", "Ticker", "Nome", "preco_atual", "dy_atual", "multiplo_atual",
+        "score_top", "score_ridge", "score_random_forest", "score_extra_trees", "score_xgboost",
+        "score_lightgbm", "score_catboost", "score_ensemble", "retorno_esperado_30d",
+        "modelo_lider", "status_modelos", "motivo_status",
+    ]
+    existing = [c for c in cols if c in latest.columns]
+    records = []
+    for pos, (_, row) in enumerate(latest[existing].iterrows(), start=1):
+        payload = {col: _safe(row[col]) for col in existing}
+        if isinstance(payload.get("Data_Execucao"), pd.Timestamp):
+            payload["Data_Execucao"] = payload["Data_Execucao"].strftime("%Y-%m-%d")
+        payload["rank_modelo"] = pos
+        records.append(payload)
+    return records
+
+
+def _performance_records(path: str) -> list:
+    df = _load_parquet_safe(path)
+    if df.empty:
+        return []
+
+    preferred_order = ["Score Top", "Ridge", "Random Forest", "Extra Trees", "XGBoost", "LightGBM", "CatBoost", "Ensemble"]
+    if "Modelo" in df.columns:
+        df["_modelo_ordem"] = df["Modelo"].apply(lambda x: preferred_order.index(x) if x in preferred_order else 999)
+    else:
+        df["_modelo_ordem"] = 999
+
+    sort_cols = [c for c in ["Tipo", "Horizonte", "_modelo_ordem", "Modelo"] if c in df.columns]
+    if sort_cols:
+        df = df.sort_values(sort_cols)
+
+    cols = [
+        "Tipo", "Modelo", "Horizonte", "Janelas_Validas", "Retorno_Medio_Top20",
+        "Hit_Rate_Top20", "Spearman_IC", "Alpha_vs_Score_Top", "Status",
+    ]
+    existing = [c for c in cols if c in df.columns]
+    return [{col: _safe(row[col]) for col in existing} for _, row in df[existing].iterrows()]
+
+
+def _calc_modelos_ml() -> dict:
+    """Carrega previsões e métricas dos modelos ML em modo sombra.
+
+    O ranking oficial do screener continua sendo o Score Top. Esta seção é
+    apenas para acompanhar, no tempo, quais modelos começam a superar o baseline.
+    """
+    ml_dir = os.path.join("data", "ml")
+    acoes = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_acoes.parquet"), top_n=50)
+    fiis = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_fiis.parquet"), top_n=50)
+    performance = _performance_records(os.path.join(ml_dir, "model_performance.parquet"))
+
+    statuses = [r.get("status_modelos") for r in acoes + fiis if r.get("status_modelos")]
+    if any(str(s).lower() == "ativo" for s in statuses):
+        status = "Ativo"
+    elif acoes or fiis or performance:
+        status = "Aquecendo"
+    else:
+        status = "Sem dados"
+
+    return {
+        "status": status,
+        "horizonte_principal": "30d",
+        "ranking": {
+            "acoes": acoes,
+            "fiis": fiis,
+        },
+        "performance": performance,
+        "modelos": [
+            "Score Top",
+            "Ridge",
+            "Random Forest",
+            "Extra Trees",
+            "XGBoost",
+            "LightGBM",
+            "CatBoost",
+            "Ensemble",
+        ],
+    }
+
 def export_dashboard_json(
     output_dir: str,
     data_hoje: str,
@@ -666,6 +769,7 @@ def export_dashboard_json(
             fii_universe=fii_universe,
             acoes_universe=acoes_universe,
         ),
+        "modelos_ml": _calc_modelos_ml(),
         "resumo": {
             "total_fiis": len(top_fiis) if top_fiis is not None else 0,
             "total_acoes": len(top_acoes) if top_acoes is not None else 0,

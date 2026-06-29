@@ -47,6 +47,7 @@
         <button class="tab" data-tab="fiis">FIIs</button>
         <button class="tab" data-tab="acoes">Ações</button>
         <button class="tab" data-tab="recorrentes">Recorrentes</button>
+        <button class="tab" data-tab="modelos">Modelos ML</button>
         <button class="tab" data-tab="indicadores">Indicadores</button>
         <button class="tab" data-tab="score">Score</button>
         <button class="tab" data-tab="info">Info</button>
@@ -107,6 +108,35 @@
       </div>
     </section>
 
+
+
+    <section id="modelos" class="section">
+      <div class="section-head"><div><h2>Modelos ML</h2><p class="desc">Comparação em modo sombra entre o Score Top atual e modelos supervisionados.</p></div></div>
+      <div class="panel wide">
+        <h3>Ranking dos modelos</h3>
+        <p>Resultado diário por ativo, com Score Top, modelos de árvore, regressão, boosting e ensemble. O ranking oficial ainda não muda automaticamente.</p>
+        <div class="mini-note" id="mlStatusNote"></div>
+        <div class="rec-table-wrap">
+          <table class="table rec-table">
+            <thead><tr><th>Rank</th><th>Tipo</th><th>Ativo</th><th>Score Top</th><th>Ridge</th><th>Random Forest</th><th>Extra Trees</th><th>XGBoost</th><th>LightGBM</th><th>CatBoost</th><th>Ensemble</th><th>Modelo líder</th><th>Ret. esp. 30d</th><th>Status</th></tr></thead>
+            <tbody id="mlRankingBody"></tbody>
+          </table>
+        </div>
+        <div class="chart-explain"><b>Como ler:</b> o Score Top é o modelo atual de regras e percentis. Os demais modelos ficam em modo sombra até existir histórico suficiente com retorno futuro. O Ensemble é a média dos modelos supervisionados disponíveis; ele só deve virar candidato oficial quando bater o Score Top com consistência.</div>
+      </div>
+      <div class="panel wide">
+        <h3>Performance dos modelos</h3>
+        <p>Métricas acumuladas conforme os retornos futuros de 30 dias passam a ficar disponíveis.</p>
+        <div class="rec-table-wrap">
+          <table class="table rec-table">
+            <thead><tr><th>Tipo</th><th>Modelo</th><th>Horizonte</th><th>Janelas válidas</th><th>Retorno médio Top 20</th><th>Hit rate</th><th>Spearman IC</th><th>Alpha vs Score Top</th><th>Status</th></tr></thead>
+            <tbody id="mlPerformanceBody"></tbody>
+          </table>
+        </div>
+        <div class="chart-explain"><b>Como ler:</b> retorno médio Top 20 mede o desempenho dos ativos escolhidos pelo modelo. Hit rate mostra a proporção de escolhas com retorno positivo. Spearman IC mede se scores maiores realmente ordenaram retornos maiores. Alpha positivo indica ganho contra o Score Top atual.</div>
+      </div>
+    </section>
+
     <section id="indicadores" class="section">
       <div class="section-head"><div><h2>Indicadores</h2><p class="desc">Mercado, juros, inflação e câmbio em blocos separados para leitura mais limpa.</p></div></div>
       <div class="charts">
@@ -129,7 +159,7 @@
 
     <section id="info" class="section">
       <div class="section-head"><div><h2>Sobre o projeto</h2><p class="desc">Pipeline gratuito, automatizado e versionado.</p></div></div>
-      <div class="info-card"><h3>Arquitetura</h3><p>Screener automático de FIIs e Ações brasileiras, com coleta via Selenium, filtros fixos + quartis, score multifatorial, snapshot Excel, JSON para dashboard, histórico ML em Parquet e camada inicial de backtest.</p></div>
+      <div class="info-card"><h3>Arquitetura</h3><p>Screener automático de FIIs e Ações brasileiras, com coleta via Selenium, filtros fixos + quartis, score multifatorial, snapshot Excel, JSON para dashboard, histórico ML em Parquet, camada de backtest e modelos ML em modo sombra.</p></div>
       <div class="info-card"><h3>Fontes</h3><table class="table"><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Investsite</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio e cripto</td><td>AwesomeAPI</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table></div>
       <div class="info-card"><h3>Disclaimer</h3><p>Este dashboard é uma ferramenta educacional e quantitativa de triagem. Não constitui recomendação de investimento.</p></div>
     </section>
@@ -206,7 +236,7 @@
       renderAll();
     }
 
-    function renderAll(){ renderKpis(); renderCards('fiis'); renderCards('acoes'); renderRankTable(); renderRecorrentesTable(); renderCharts(); renderFx(); }
+    function renderAll(){ renderKpis(); renderCards('fiis'); renderCards('acoes'); renderRankTable(); renderRecorrentesTable(); renderMlModelsTables(); renderCharts(); renderFx(); }
 
     function kpi(label,value,note,kind='') { return `<article class="kpi ${kind}"><div class="label">${label}</div><div class="value">${value}</div><div class="note">${note||''}</div></article>`; }
     function getKpi(primaryKey, fallbackKey){
@@ -335,6 +365,74 @@
           <td class="num">${fii ? recNum(fii.multiplo_atual,2) : '—'}</td>
         </tr>`;
       }).join('');
+    }
+
+
+    function mlAssetCell(rec){
+      if(!rec) return '<span class="muted-cell">—</span>';
+      const tipo = String(rec.Tipo || '').toUpperCase();
+      const isAcao = tipo === 'ACAO';
+      const ticker = rec.Ticker || '—';
+      const nome = rec.Nome || '';
+      const detalhe = [nome, fmtMoney(rec.preco_atual)].filter(x=>x && x !== '—').join(' · ');
+      return `<div class="rec-asset"><span class="rec-badge ${isAcao?'acao':'fii'}"></span><span><span class="rec-name">${ticker}</span><span class="rec-sub">${detalhe}</span></span></div>`;
+    }
+    function mlScore(v){ return v==null || Number.isNaN(Number(v)) ? '—' : fmtNum(v,1); }
+    function mlReturn(v){ return v==null || Number.isNaN(Number(v)) ? '—' : fmtPct(v); }
+    function mlStatusClass(status){
+      const s=String(status||'').toLowerCase();
+      if(s.includes('ativo')) return 'delta-pos';
+      if(s.includes('aquec')) return 'delta-neu';
+      return 'delta-neu';
+    }
+    function renderMlModelsTables(){
+      const body=document.getElementById('mlRankingBody');
+      const perfBody=document.getElementById('mlPerformanceBody');
+      const note=document.getElementById('mlStatusNote');
+      if(!body || !perfBody) return;
+      const ml=state.data.modelos_ml||{};
+      const ranking=ml.ranking||{};
+      const rows=[...(ranking.acoes||[]), ...(ranking.fiis||[])];
+      if(note){
+        note.textContent = `Status: ${ml.status || 'Sem dados'} · horizonte principal: ${ml.horizonte_principal || '30d'}.`;
+      }
+      if(!rows.length){
+        body.innerHTML='<tr><td colspan="14" class="muted-cell">Ainda não há previsões dos modelos. Rode o pipeline para gerar os parquets de ML.</td></tr>';
+      }else{
+        body.innerHTML=rows.map((r,i)=>`<tr>
+          <td>#${r.rank_modelo || i+1}</td>
+          <td>${r.Tipo === 'ACAO' ? 'Ação' : 'FII'}</td>
+          <td>${mlAssetCell(r)}</td>
+          <td class="num">${mlScore(r.score_top)}</td>
+          <td class="num">${mlScore(r.score_ridge)}</td>
+          <td class="num">${mlScore(r.score_random_forest)}</td>
+          <td class="num">${mlScore(r.score_extra_trees)}</td>
+          <td class="num">${mlScore(r.score_xgboost)}</td>
+          <td class="num">${mlScore(r.score_lightgbm)}</td>
+          <td class="num">${mlScore(r.score_catboost)}</td>
+          <td class="num"><b>${mlScore(r.score_ensemble)}</b></td>
+          <td>${r.modelo_lider || '—'}</td>
+          <td class="num">${mlReturn(r.retorno_esperado_30d)}</td>
+          <td><span class="${mlStatusClass(r.status_modelos)}">${r.status_modelos || '—'}</span></td>
+        </tr>`).join('');
+      }
+
+      const perf=ml.performance||[];
+      if(!perf.length){
+        perfBody.innerHTML='<tr><td colspan="9" class="muted-cell">Performance ainda não disponível. Ela aparece quando houver retornos futuros realizados para comparar com as previsões.</td></tr>';
+      }else{
+        perfBody.innerHTML=perf.map(r=>`<tr>
+          <td>${r.Tipo === 'ACAO' ? 'Ação' : 'FII'}</td>
+          <td>${r.Modelo || '—'}</td>
+          <td>${r.Horizonte || '—'}</td>
+          <td class="num">${r.Janelas_Validas ?? '—'}</td>
+          <td class="num">${mlReturn(r.Retorno_Medio_Top20)}</td>
+          <td class="num">${mlReturn(r.Hit_Rate_Top20)}</td>
+          <td class="num">${r.Spearman_IC==null ? '—' : fmtNum(r.Spearman_IC,3)}</td>
+          <td class="num"><span class="${deltaClass(r.Alpha_vs_Score_Top,true)}">${r.Alpha_vs_Score_Top==null ? '—' : signed(Number(r.Alpha_vs_Score_Top)*100,2)+'p.p.'}</span></td>
+          <td><span class="${mlStatusClass(r.Status)}">${r.Status || '—'}</span></td>
+        </tr>`).join('');
+      }
     }
 
     function trendIcon(rec,col){ const t=rec.tendencias?.[col]; if(!t) return ''; const icon=t==='subindo'?'▲':t==='caindo'?'▼':'●'; return `<span class="trend ${t}" title="${t}">${icon}</span>`; }
