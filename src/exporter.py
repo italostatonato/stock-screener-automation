@@ -275,6 +275,40 @@ def _load_parquet_safe(path: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
+def _combine_current_frames(*frames: pd.DataFrame) -> pd.DataFrame:
+    """Combina universo atual e Top 20 para buscar indicadores correntes."""
+    valid = [f for f in frames if isinstance(f, pd.DataFrame) and not f.empty]
+    if not valid:
+        return pd.DataFrame()
+    return pd.concat(valid, ignore_index=True, sort=False)
+
+
+def _current_indicator_lookup(df: pd.DataFrame, ticker_col: str, field_map: dict) -> dict:
+    """Cria lookup ticker -> indicadores atuais para a aba Recorrentes.
+
+    A recorrência vem do histórico de carteiras; os indicadores atuais vêm do
+    último universo processado no dia. Assim, um ativo recorrente exibe preço,
+    DY e múltiplo de valuation do snapshot mais recente, quando disponível.
+    """
+    if df is None or df.empty or ticker_col not in df.columns:
+        return {}
+
+    current = df.copy()
+    current["Ticker_norm"] = _normalize_ticker_series(current[ticker_col])
+    current = current.dropna(subset=["Ticker_norm"])
+    current = current[current["Ticker_norm"].ne("")]
+    current = current.drop_duplicates("Ticker_norm", keep="last")
+
+    out = {}
+    for _, row in current.iterrows():
+        ticker = row.get("Ticker_norm")
+        payload = {}
+        for out_key, col in field_map.items():
+            payload[out_key] = _safe(row.get(col)) if col in current.columns else None
+        out[ticker] = payload
+    return out
+
+
 def _build_portfolio_base100_from_history(
     tipo: str,
     carteira_path: str,
@@ -451,11 +485,20 @@ def _calc_carteira_vs_benchmarks(
 
 
 
-def _calc_recorrentes(top_n: int | None = None) -> dict:
+def _calc_recorrentes(
+    top_n: int | None = None,
+    top_fiis: pd.DataFrame = None,
+    top_acoes: pd.DataFrame = None,
+    fii_universe: pd.DataFrame = None,
+    acoes_universe: pd.DataFrame = None,
+) -> dict:
     """Calcula ativos mais recorrentes no Top 20 a partir da carteira histórica.
 
     Usa data/backtest/carteiras_historicas.parquet, que salva diariamente:
     Data_Carteira, Tipo, Ticker, Preco_Entrada, Score e Posicao.
+
+    Também enriquece a saída com indicadores atuais vindos do universo do dia:
+    preço, Dividend Yield e P/VPA para ações; preço, Dividend Yield e P/VP para FIIs.
     """
     carteira_path = os.path.join("data", "backtest", "carteiras_historicas.parquet")
     df = _load_parquet_safe(carteira_path)
@@ -476,6 +519,29 @@ def _calc_recorrentes(top_n: int | None = None) -> dict:
     base["Data_Carteira"] = pd.to_datetime(base["Data_Carteira"], errors="coerce")
     base = base.dropna(subset=["Ticker"])
     base = base[base["Ticker"].ne("")]
+
+    acoes_lookup = _current_indicator_lookup(
+        _combine_current_frames(acoes_universe, top_acoes),
+        "Ação",
+        {
+            "empresa": "Empresa",
+            "preco_atual": "Preço",
+            "dy_atual": "Dividend Yield",
+            "multiplo_atual": "Preço/VPA",
+            "multiplo_label": "Preço/VPA",
+        },
+    )
+    fiis_lookup = _current_indicator_lookup(
+        _combine_current_frames(fii_universe, top_fiis),
+        "FUNDOS",
+        {
+            "setor": "SETOR",
+            "preco_atual": "PREÇO ATUAL (R$)",
+            "dy_atual": "DIVIDEND YIELD",
+            "multiplo_atual": "P/VP",
+            "multiplo_label": "P/VP",
+        },
+    )
 
     def build(tipo: str) -> list:
         parte = base[base["Tipo"].eq(tipo)].copy()
@@ -498,16 +564,20 @@ def _calc_recorrentes(top_n: int | None = None) -> dict:
         if top_n is not None:
             grouped = grouped.head(top_n)
 
+        current_lookup = acoes_lookup if tipo == "ACAO" else fiis_lookup
         out = []
         for _, row in grouped.iterrows():
             ultima = row.get("ultima_aparicao")
-            out.append({
-                "ticker": _safe(row.get("Ticker")),
+            ticker = str(row.get("Ticker", "")).upper().strip()
+            payload = {
+                "ticker": _safe(ticker),
                 "aparicoes": int(row.get("aparicoes", 0)),
                 "score_medio": _safe(row.get("score_medio")),
                 "melhor_posicao": int(row.get("melhor_posicao")) if pd.notna(row.get("melhor_posicao")) else None,
                 "ultima_aparicao": ultima.strftime("%Y-%m-%d") if pd.notna(ultima) else None,
-            })
+            }
+            payload.update(current_lookup.get(ticker, {}))
+            out.append(payload)
         return out
 
     return {
@@ -589,7 +659,13 @@ def export_dashboard_json(
         "carteira_vs": carteira_vs,
         "backtest": backtest or {"disponivel": False},
         "kpis": kpis,
-        "recorrentes": _calc_recorrentes(top_n=None),
+        "recorrentes": _calc_recorrentes(
+            top_n=None,
+            top_fiis=top_fiis,
+            top_acoes=top_acoes,
+            fii_universe=fii_universe,
+            acoes_universe=acoes_universe,
+        ),
         "resumo": {
             "total_fiis": len(top_fiis) if top_fiis is not None else 0,
             "total_acoes": len(top_acoes) if top_acoes is not None else 0,

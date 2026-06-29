@@ -4,12 +4,12 @@
     {
       "FUNDOS": "VIUR11",
       "SETOR": "MISTO",
-      "PREÇO ATUAL (R$)": 2.34,
+      "PREÇO ATUAL (R$)": 2.31,
       "DIVIDEND YIELD": 0.12890000000000001,
       "P/VP": 0.67,
       "LIQUIDEZ DIÁRIA (R$)": 163245.38,
       "PATRIMÔNIO LÍQUIDO": 94664702.09,
-      "VOLATILIDADE": 3703.3,
+      "VOLATILIDADE": 3696.33,
       "VPA": 3.51,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 37666.0,
@@ -27,13 +27,13 @@
       "PREÇO ATUAL (R$)": 341.0,
       "DIVIDEND YIELD": 0.11939999999999999,
       "P/VP": 0.86,
-      "LIQUIDEZ DIÁRIA (R$)": 125515.1,
+      "LIQUIDEZ DIÁRIA (R$)": 125532.15,
       "PATRIMÔNIO LÍQUIDO": 140155422.69,
-      "VOLATILIDADE": 2027.29,
+      "VOLATILIDADE": 2023.2,
       "VPA": 395.16,
       "ÚLTIMO DIVIDENDO": "47,50",
       "NUM. COTISTAS": 3498.0,
-      "score": 60.0,
+      "score": 60.1,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -64,12 +64,12 @@
     {
       "FUNDOS": "RBIR11",
       "SETOR": "FUNDO DE DESENVOLVIMENTO",
-      "PREÇO ATUAL (R$)": 79.35,
+      "PREÇO ATUAL (R$)": 79.29,
       "DIVIDEND YIELD": 0.0209,
       "P/VP": 1.01,
-      "LIQUIDEZ DIÁRIA (R$)": 235136.74,
+      "LIQUIDEZ DIÁRIA (R$)": 235149.26,
       "PATRIMÔNIO LÍQUIDO": 120414062.37,
-      "VOLATILIDADE": 1390.5,
+      "VOLATILIDADE": 1387.75,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,64",
       "NUM. COTISTAS": 1464.0,
@@ -104,12 +104,12 @@
     {
       "FUNDOS": "RZAT11",
       "SETOR": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
-      "PREÇO ATUAL (R$)": 94.5,
+      "PREÇO ATUAL (R$)": 94.9,
       "DIVIDEND YIELD": 0.0175,
       "P/VP": 0.91,
-      "LIQUIDEZ DIÁRIA (R$)": 536067.05,
+      "LIQUIDEZ DIÁRIA (R$)": 536103.1,
       "PATRIMÔNIO LÍQUIDO": 439716792.04,
-      "VOLATILIDADE": 1114.0,
+      "VOLATILIDADE": 1112.08,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,70",
       "NUM. COTISTAS": 34380.0,
@@ -124,12 +124,12 @@
     {
       "FUNDOS": "DEVA11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 17.8,
+      "PREÇO ATUAL (R$)": 17.78,
       "DIVIDEND YIELD": 0.0165,
       "P/VP": 0.19,
       "LIQUIDEZ DIÁRIA (R$)": 479579.57,
       "PATRIMÔNIO LÍQUIDO": 1334067797.89,
-      "VOLATILIDADE": 2249.4,
+      "VOLATILIDADE": 2244.91,
       "VPA": 94.99,
       "ÚLTIMO DIVIDENDO": "0,30",
       "NUM. COTISTAS": 74905.0,
@@ -144,12 +144,12 @@
     {
       "FUNDOS": "KIVO11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 58.9,
+      "PREÇO ATUAL (R$)": 58.8,
       "DIVIDEND YIELD": 0.016399999999999998,
       "P/VP": 0.7,
       "LIQUIDEZ DIÁRIA (R$)": 430638.38,
       "PATRIMÔNIO LÍQUIDO": 187570261.88,
-      "VOLATILIDADE": 1464.57,
+      "VOLATILIDADE": 1461.88,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "1,14",
       "NUM. COTISTAS": 7247.0,
@@ -164,12 +164,12 @@
     {
       "FUNDOS": "GZIT11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 41.23,
+      "PREÇO ATUAL (R$)": 41.15,
       "DIVIDEND YIELD": 0.0161,
       "P/VP": 0.47,
       "LIQUIDEZ DIÁRIA (R$)": 460000.4,
       "PATRIMÔNIO LÍQUIDO": 2028146076.2,
-      "VOLATILIDADE": 1695.55,
+      "VOLATILIDADE": 1692.18,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,78",
       "NUM. COTISTAS": 8032.0,
@@ -184,12 +184,12 @@
     {
       "FUNDOS": "HCTR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 16.22,
+      "PREÇO ATUAL (R$)": 16.14,
       "DIVIDEND YIELD": 0.016,
       "P/VP": 0.16,
       "LIQUIDEZ DIÁRIA (R$)": 507812.85,
       "PATRIMÔNIO LÍQUIDO": 2216689880.53,
-      "VOLATILIDADE": 2034.87,
+      "VOLATILIDADE": 2031.21,
       "VPA": 100.37,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 123678.0,
@@ -204,12 +204,12 @@
     {
       "FUNDOS": "VCRA11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 62.43,
+      "PREÇO ATUAL (R$)": 62.82,
       "DIVIDEND YIELD": 0.0158,
       "P/VP": 0.61,
       "LIQUIDEZ DIÁRIA (R$)": 498740.75,
       "PATRIMÔNIO LÍQUIDO": 471637374.73,
-      "VOLATILIDADE": 1322.54,
+      "VOLATILIDADE": 1320.85,
       "VPA": 102.67,
       "ÚLTIMO DIVIDENDO": "1,00",
       "NUM. COTISTAS": 9776.0,
@@ -229,7 +229,7 @@
       "P/VP": 1.0,
       "LIQUIDEZ DIÁRIA (R$)": 434117.85,
       "PATRIMÔNIO LÍQUIDO": 69984048.36,
-      "VOLATILIDADE": 1394.88,
+      "VOLATILIDADE": 1392.09,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,15",
       "NUM. COTISTAS": 7492.0,
@@ -244,12 +244,12 @@
     {
       "FUNDOS": "EGAF11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 88.85,
+      "PREÇO ATUAL (R$)": 89.32,
       "DIVIDEND YIELD": 0.0147,
       "P/VP": 0.9,
       "LIQUIDEZ DIÁRIA (R$)": 861866.1,
       "PATRIMÔNIO LÍQUIDO": 310127971.92,
-      "VOLATILIDADE": 1040.5,
+      "VOLATILIDADE": 1038.93,
       "VPA": 99.02,
       "ÚLTIMO DIVIDENDO": "1,32",
       "NUM. COTISTAS": 12644.0,
@@ -264,12 +264,12 @@
     {
       "FUNDOS": "IAAG11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 8.4,
+      "PREÇO ATUAL (R$)": 8.45,
       "DIVIDEND YIELD": 0.0143,
       "P/VP": 0.87,
       "LIQUIDEZ DIÁRIA (R$)": 127355.8,
       "PATRIMÔNIO LÍQUIDO": 100620221.64,
-      "VOLATILIDADE": 1709.23,
+      "VOLATILIDADE": 1706.44,
       "VPA": 9.69,
       "ÚLTIMO DIVIDENDO": "0,12",
       "NUM. COTISTAS": 16132.0,
@@ -284,12 +284,12 @@
     {
       "FUNDOS": "CACR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 27.42,
+      "PREÇO ATUAL (R$)": 27.7,
       "DIVIDEND YIELD": 0.0141,
       "P/VP": 0.28,
-      "LIQUIDEZ DIÁRIA (R$)": 767722.19,
+      "LIQUIDEZ DIÁRIA (R$)": 768299.81,
       "PATRIMÔNIO LÍQUIDO": 471926680.37,
-      "VOLATILIDADE": 6515.84,
+      "VOLATILIDADE": 6503.0,
       "VPA": 95.04,
       "ÚLTIMO DIVIDENDO": "1,20",
       "NUM. COTISTAS": 25317.0,
@@ -304,12 +304,12 @@
     {
       "FUNDOS": "ARRI11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 4.72,
+      "PREÇO ATUAL (R$)": 4.79,
       "DIVIDEND YIELD": 0.0139,
       "P/VP": 0.56,
       "LIQUIDEZ DIÁRIA (R$)": 190691.6,
       "PATRIMÔNIO LÍQUIDO": 174647296.59,
-      "VOLATILIDADE": 1874.24,
+      "VOLATILIDADE": 1871.95,
       "VPA": 8.43,
       "ÚLTIMO DIVIDENDO": "0,07",
       "NUM. COTISTAS": 23191.0,
@@ -344,16 +344,16 @@
     {
       "FUNDOS": "EXES11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 9.55,
+      "PREÇO ATUAL (R$)": 9.61,
       "DIVIDEND YIELD": 0.0137,
       "P/VP": 0.97,
       "LIQUIDEZ DIÁRIA (R$)": 125851.3,
       "PATRIMÔNIO LÍQUIDO": 138137672.46,
-      "VOLATILIDADE": 1296.27,
+      "VOLATILIDADE": 1293.7,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,13",
       "NUM. COTISTAS": 2258.0,
-      "score": 64.6,
+      "score": 64.8,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -364,16 +364,16 @@
     {
       "FUNDOS": "CPTR11",
       "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 7.91,
+      "PREÇO ATUAL (R$)": 7.96,
       "DIVIDEND YIELD": 0.013600000000000001,
       "P/VP": 0.79,
       "LIQUIDEZ DIÁRIA (R$)": 174124.55,
       "PATRIMÔNIO LÍQUIDO": 198071876.54,
-      "VOLATILIDADE": 1124.77,
+      "VOLATILIDADE": 1125.28,
       "VPA": 9.99,
       "ÚLTIMO DIVIDENDO": "0,11",
       "NUM. COTISTAS": 21287.0,
-      "score": 25.8,
+      "score": 25.9,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
@@ -384,12 +384,12 @@
     {
       "FUNDOS": "JSCR11",
       "SETOR": "PAPÉIS",
-      "PREÇO ATUAL (R$)": 8.21,
+      "PREÇO ATUAL (R$)": 8.22,
       "DIVIDEND YIELD": 0.013600000000000001,
       "P/VP": 0.87,
       "LIQUIDEZ DIÁRIA (R$)": 208312.3,
       "PATRIMÔNIO LÍQUIDO": 209607782.1,
-      "VOLATILIDADE": 1653.51,
+      "VOLATILIDADE": 1650.22,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,12",
       "NUM. COTISTAS": 3544.0,
@@ -825,7 +825,28 @@
     }
   ],
   "indicadores": {
-    "cambio": {},
+    "cambio": {
+      "USD/BRL": {
+        "valor": 5.1924,
+        "variacao_pct": 0.431322,
+        "atualizado_em": "2026-06-29 13:06:18"
+      },
+      "EUR/BRL": {
+        "valor": 5.92768,
+        "variacao_pct": 0.82978,
+        "atualizado_em": "2026-06-29 13:01:53"
+      },
+      "GBP/BRL": {
+        "valor": 6.88323,
+        "variacao_pct": 0.885275,
+        "atualizado_em": "2026-06-29 13:06:18"
+      },
+      "BTC/BRL": {
+        "valor": 312972.0,
+        "variacao_pct": -0.116,
+        "atualizado_em": "2026-06-29 13:06:19"
+      }
+    },
     "ipca_12m": [
       {
         "data": "2025-05-01",
@@ -3805,7 +3826,7 @@
       },
       {
         "data": "2026-06-29",
-        "valor": 173318.875
+        "valor": 172610.8906
       }
     ],
     "IFIX": [
@@ -4903,13 +4924,13 @@
       },
       {
         "data": "2026-06-29",
-        "valor": 13.44
+        "valor": 13.46
       }
     ],
     "IMOB": [
       {
         "data": "2026-06-29",
-        "valor": 1377.4399
+        "valor": 1374.0
       }
     ],
     "IPCA": [
@@ -7235,7 +7256,7 @@
       },
       {
         "data": "2026-06-29",
-        "valor": 125.7538
+        "valor": 125.2401
       }
     ],
     "ifix_base100": [
@@ -8333,7 +8354,7 @@
       },
       {
         "data": "2026-06-29",
-        "valor": 110.4355
+        "valor": 110.5998
       }
     ],
     "imob_base100": [
@@ -9517,7 +9538,7 @@
       },
       {
         "data": "2026-06-29",
-        "valor": 100.3964
+        "valor": 100.584
       }
     ],
     "carteira_acoes_base100": [
@@ -9547,7 +9568,7 @@
         },
         {
           "data": "2026-06-29",
-          "valor": 100.3964
+          "valor": 100.584
         }
       ],
       "benchmarks": {
@@ -9562,7 +9583,7 @@
           },
           {
             "data": "2026-06-29",
-            "valor": 100.5988
+            "valor": 100.7485
           }
         ],
         "IMOB": [
@@ -9615,7 +9636,7 @@
           },
           {
             "data": "2026-06-29",
-            "valor": 100.7726
+            "valor": 100.361
           }
         ],
         "IPCA": [
@@ -9638,8 +9659,53 @@
     }
   },
   "backtest": {
-    "disponivel": false,
-    "motivo": "Nao foi possivel calcular retorno da carteira Top 20"
+    "disponivel": true,
+    "periodo": {
+      "inicio": "2026-06-23",
+      "fim": "2026-06-29"
+    },
+    "rebalanceamentos": 5,
+    "carteira_top20_fiis": {
+      "retorno_pct": 0.64,
+      "base100": 100.64
+    },
+    "ifix": {
+      "retorno_pct": 0.6,
+      "base100": 100.6
+    },
+    "ibov": {
+      "retorno_pct": 1.19,
+      "base100": 101.19
+    },
+    "bateu_ifix": true,
+    "bateu_ibov": false,
+    "periodos": [
+      {
+        "inicio": "2026-06-23",
+        "fim": "2026-06-24",
+        "ativos": 20,
+        "carteira_retorno_pct": -0.22,
+        "ifix_retorno_pct": -0.22,
+        "ibov_retorno_pct": -0.44
+      },
+      {
+        "inicio": "2026-06-24",
+        "fim": "2026-06-25",
+        "ativos": 20,
+        "carteira_retorno_pct": 0.39,
+        "ifix_retorno_pct": 0.23,
+        "ibov_retorno_pct": 0.87
+      },
+      {
+        "inicio": "2026-06-25",
+        "fim": "2026-06-28",
+        "ativos": 21,
+        "carteira_retorno_pct": 0.47,
+        "ifix_retorno_pct": 0.6,
+        "ibov_retorno_pct": 0.76
+      }
+    ],
+    "metodologia": "Camada 3 — carteira equal-weight Top 20 FIIs rebalanceada a cada snapshot diário, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
   },
   "kpis": {
     "dy_medio_fiis_carteira": 0.0275,
@@ -9648,9 +9714,9 @@
     "pvp_medio_fiis_carteira": 0.7525,
     "pvp_medio_fiis_mercado": 2.2426,
     "pvp_medio_fiis_geral": 2.2426,
-    "score_medio_fiis_carteira": 66.685,
-    "score_medio_fiis_mercado": 50.0277,
-    "score_medio_fiis_geral": 50.0277,
+    "score_medio_fiis_carteira": 66.695,
+    "score_medio_fiis_mercado": 50.0296,
+    "score_medio_fiis_geral": 50.0296,
     "dy_medio_acoes_carteira": 0.1266,
     "dy_medio_acoes_mercado": 0.0813,
     "dy_medio_acoes_geral": 0.0813,
@@ -9667,140 +9733,240 @@
         "aparicoes": 3,
         "score_medio": 74.46666666666667,
         "melhor_posicao": 5,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "ALLIED",
+        "preco_atual": 4.81,
+        "dy_atual": 0.63547601845322,
+        "multiplo_atual": 0.30020219750031,
+        "multiplo_label": 0.30020219750031
       },
       {
         "ticker": "LOGG3",
         "aparicoes": 3,
         "score_medio": 65.83333333333333,
         "melhor_posicao": 19,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "LOG COM PROP",
+        "preco_atual": 27.82,
+        "dy_atual": 0.24992182317973,
+        "multiplo_atual": 0.65327976406211,
+        "multiplo_label": 0.65327976406211
       },
       {
         "ticker": "AZZA3",
         "aparicoes": 3,
         "score_medio": 64.46666666666665,
         "melhor_posicao": 13,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "AZZAS 2154",
+        "preco_atual": 18.99,
+        "dy_atual": 0.13039504208478,
+        "multiplo_atual": 0.48981581247768,
+        "multiplo_label": 0.48981581247768
       },
       {
         "ticker": "HBRE3",
         "aparicoes": 3,
         "score_medio": 59.5,
         "melhor_posicao": 1,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "HBR REALTY",
+        "preco_atual": 2.6,
+        "dy_atual": 0.44824178147308,
+        "multiplo_atual": 0.14823471820959,
+        "multiplo_label": 0.14823471820959
       },
       {
         "ticker": "ETER3",
         "aparicoes": 3,
         "score_medio": 59.46666666666667,
         "melhor_posicao": 3,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "ETERNIT",
+        "preco_atual": 3.61,
+        "dy_atual": 0.047289992235457,
+        "multiplo_atual": 0.26846511698595,
+        "multiplo_label": 0.26846511698595
       },
       {
         "ticker": "EVEN3",
         "aparicoes": 3,
         "score_medio": 58.0,
         "melhor_posicao": 14,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "EVEN",
+        "preco_atual": 5.77,
+        "dy_atual": 0.15880211611785,
+        "multiplo_atual": 0.59869987704344,
+        "multiplo_label": 0.59869987704344
       },
       {
         "ticker": "MTRE3",
         "aparicoes": 3,
         "score_medio": 57.70000000000001,
         "melhor_posicao": 6,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "MITRE REALTY",
+        "preco_atual": 3.34,
+        "dy_atual": 0.12171376417365,
+        "multiplo_atual": 0.3466825560594,
+        "multiplo_label": 0.3466825560594
       },
       {
         "ticker": "MELK3",
         "aparicoes": 3,
         "score_medio": 57.4,
         "melhor_posicao": 17,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "MELNICK",
+        "preco_atual": 3.24,
+        "dy_atual": 0.12859524096605,
+        "multiplo_atual": 0.62010967915059,
+        "multiplo_label": 0.62010967915059
       },
       {
         "ticker": "COGN3",
         "aparicoes": 3,
         "score_medio": 56.13333333333333,
         "melhor_posicao": 8,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "COGNA ON",
+        "preco_atual": 2.3,
+        "dy_atual": 0.056100607978261,
+        "multiplo_atual": 0.34907245583799,
+        "multiplo_label": 0.34907245583799
       },
       {
         "ticker": "PFRM3",
         "aparicoes": 3,
         "score_medio": 55.5,
         "melhor_posicao": 16,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "PROFARMA",
+        "preco_atual": 6.59,
+        "dy_atual": 0.097771832405159,
+        "multiplo_atual": 0.60826871066678,
+        "multiplo_label": 0.60826871066678
       },
       {
         "ticker": "SMTO3",
         "aparicoes": 3,
         "score_medio": 55.300000000000004,
         "melhor_posicao": 20,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "SAO MARTINHO",
+        "preco_atual": 15.04,
+        "dy_atual": 0.030353251263298,
+        "multiplo_atual": 0.67893521386378,
+        "multiplo_label": 0.67893521386378
       },
       {
         "ticker": "ROMI3",
         "aparicoes": 3,
         "score_medio": 52.53333333333333,
         "melhor_posicao": 11,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "ROMI",
+        "preco_atual": 6.04,
+        "dy_atual": 0.06953642384106,
+        "multiplo_atual": 0.45305092101757,
+        "multiplo_label": 0.45305092101757
       },
       {
         "ticker": "MLAS3",
         "aparicoes": 3,
         "score_medio": 52.13333333333333,
         "melhor_posicao": 10,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "MULTILASER",
+        "preco_atual": 1.69,
+        "dy_atual": 0.029863706071006,
+        "multiplo_atual": 0.44888399492497,
+        "multiplo_label": 0.44888399492497
       },
       {
         "ticker": "ESPA3",
         "aparicoes": 3,
         "score_medio": 50.6,
         "melhor_posicao": 3,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "ESPACOLASER",
+        "preco_atual": 7,
+        "dy_atual": 0.054597534428571,
+        "multiplo_atual": 0.2910132384286,
+        "multiplo_label": 0.2910132384286
       },
       {
         "ticker": "ANIM3",
         "aparicoes": 3,
         "score_medio": 48.800000000000004,
         "melhor_posicao": 11,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "ANIMA",
+        "preco_atual": 2.74,
+        "dy_atual": 0.028388586032847,
+        "multiplo_atual": 0.46322849331091,
+        "multiplo_label": 0.46322849331091
       },
       {
         "ticker": "MYPK3",
         "aparicoes": 3,
         "score_medio": 46.76666666666667,
         "melhor_posicao": 6,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "IOCHP-MAXION",
+        "preco_atual": 9.27,
+        "dy_atual": 0.033132481121899,
+        "multiplo_atual": 0.34771163633848,
+        "multiplo_label": 0.34771163633848
       },
       {
         "ticker": "CAML3",
         "aparicoes": 3,
         "score_medio": 46.56666666666666,
         "melhor_posicao": 14,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "CAMIL",
+        "preco_atual": 5.11,
+        "dy_atual": 0.057376494152642,
+        "multiplo_atual": 0.59313830021852,
+        "multiplo_label": 0.59313830021852
       },
       {
         "ticker": "POSI3",
         "aparicoes": 3,
         "score_medio": 44.53333333333333,
         "melhor_posicao": 9,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "POSITIVO TEC",
+        "preco_atual": 3.99,
+        "dy_atual": 0.045008481892231,
+        "multiplo_atual": 0.3634281265577,
+        "multiplo_label": 0.3634281265577
       },
       {
         "ticker": "HBOR3",
         "aparicoes": 3,
         "score_medio": 38.76666666666667,
         "melhor_posicao": 2,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "HELBOR",
+        "preco_atual": 2.2,
+        "dy_atual": 0.060543919845455,
+        "multiplo_atual": 0.20341180797228,
+        "multiplo_label": 0.20341180797228
       },
       {
         "ticker": "SOJA3",
         "aparicoes": 3,
         "score_medio": 35.96666666666667,
         "melhor_posicao": 18,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "empresa": "BOA SAFRA",
+        "preco_atual": 6.03,
+        "dy_atual": 0.049312237640133,
+        "multiplo_atual": 0.64022476928142,
+        "multiplo_label": 0.64022476928142
       }
     ],
     "fiis": [
@@ -9809,161 +9975,276 @@
         "aparicoes": 3,
         "score_medio": 81.7,
         "melhor_posicao": 10,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "PAPÉIS",
+        "preco_atual": 16.14,
+        "dy_atual": 0.016,
+        "multiplo_atual": 0.16,
+        "multiplo_label": 0.16
       },
       {
         "ticker": "DEVA11",
         "aparicoes": 3,
-        "score_medio": 80.23333333333333,
+        "score_medio": 80.26666666666667,
         "melhor_posicao": 7,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "PAPÉIS",
+        "preco_atual": 17.78,
+        "dy_atual": 0.0165,
+        "multiplo_atual": 0.19,
+        "multiplo_label": 0.19
       },
       {
         "ticker": "GZIT11",
         "aparicoes": 3,
         "score_medio": 80.10000000000001,
         "melhor_posicao": 9,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "INDEFINIDO",
+        "preco_atual": 41.15,
+        "dy_atual": 0.0161,
+        "multiplo_atual": 0.47,
+        "multiplo_label": 0.47
       },
       {
         "ticker": "VCRA11",
         "aparicoes": 3,
         "score_medio": 77.13333333333333,
         "melhor_posicao": 11,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "INDEFINIDO",
+        "preco_atual": 62.82,
+        "dy_atual": 0.0158,
+        "multiplo_atual": 0.61,
+        "multiplo_label": 0.61
       },
       {
         "ticker": "CACR11",
         "aparicoes": 3,
         "score_medio": 76.73333333333333,
         "melhor_posicao": 15,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "PAPÉIS",
+        "preco_atual": 27.7,
+        "dy_atual": 0.0141,
+        "multiplo_atual": 0.28,
+        "multiplo_label": 0.28
       },
       {
         "ticker": "KIVO11",
         "aparicoes": 3,
-        "score_medio": 71.03333333333335,
+        "score_medio": 71.06666666666666,
         "melhor_posicao": 8,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "PAPÉIS",
+        "preco_atual": 58.8,
+        "dy_atual": 0.016399999999999998,
+        "multiplo_atual": 0.7,
+        "multiplo_label": 0.7
       },
       {
         "ticker": "ARRI11",
         "aparicoes": 3,
         "score_medio": 69.83333333333333,
         "melhor_posicao": 16,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "PAPÉIS",
+        "preco_atual": 4.79,
+        "dy_atual": 0.0139,
+        "multiplo_atual": 0.56,
+        "multiplo_label": 0.56
       },
       {
         "ticker": "EGAF11",
         "aparicoes": 3,
         "score_medio": 69.0,
         "melhor_posicao": 13,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "INDEFINIDO",
+        "preco_atual": 89.32,
+        "dy_atual": 0.0147,
+        "multiplo_atual": 0.9,
+        "multiplo_label": 0.9
       },
       {
         "ticker": "RZAT11",
         "aparicoes": 3,
         "score_medio": 68.93333333333334,
         "melhor_posicao": 6,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
+        "preco_atual": 94.9,
+        "dy_atual": 0.0175,
+        "multiplo_atual": 0.91,
+        "multiplo_label": 0.91
       },
       {
         "ticker": "CPTR11",
         "aparicoes": 3,
         "score_medio": 67.0,
         "melhor_posicao": 19,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "INDEFINIDO",
+        "preco_atual": 7.96,
+        "dy_atual": 0.013600000000000001,
+        "multiplo_atual": 0.79,
+        "multiplo_label": 0.79
       },
       {
         "ticker": "VIUR11",
         "aparicoes": 3,
         "score_medio": 65.16666666666667,
         "melhor_posicao": 1,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "MISTO",
+        "preco_atual": 2.31,
+        "dy_atual": 0.12890000000000001,
+        "multiplo_atual": 0.67,
+        "multiplo_label": 0.67
       },
       {
         "ticker": "KOPA11",
         "aparicoes": 3,
         "score_medio": 62.06666666666666,
         "melhor_posicao": 2,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "INDEFINIDO",
+        "preco_atual": 341.0,
+        "dy_atual": 0.11939999999999999,
+        "multiplo_atual": 0.86,
+        "multiplo_label": 0.86
       },
       {
         "ticker": "IAAG11",
         "aparicoes": 3,
         "score_medio": 58.6,
         "melhor_posicao": 14,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "INDEFINIDO",
+        "preco_atual": 8.45,
+        "dy_atual": 0.0143,
+        "multiplo_atual": 0.87,
+        "multiplo_label": 0.87
       },
       {
         "ticker": "RBIR11",
         "aparicoes": 3,
         "score_medio": 57.166666666666664,
         "melhor_posicao": 4,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "FUNDO DE DESENVOLVIMENTO",
+        "preco_atual": 79.29,
+        "dy_atual": 0.0209,
+        "multiplo_atual": 1.01,
+        "multiplo_label": 1.01
       },
       {
         "ticker": "EXES11",
         "aparicoes": 3,
         "score_medio": 57.06666666666666,
         "melhor_posicao": 18,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "PAPÉIS",
+        "preco_atual": 9.61,
+        "dy_atual": 0.0137,
+        "multiplo_atual": 0.97,
+        "multiplo_label": 0.97
       },
       {
         "ticker": "OURE11",
         "aparicoes": 3,
         "score_medio": 56.6,
         "melhor_posicao": 17,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "MISTO",
+        "preco_atual": 78.2,
+        "dy_atual": 0.0139,
+        "multiplo_atual": 1.23,
+        "multiplo_label": 1.23
       },
       {
         "ticker": "SNME11",
         "aparicoes": 3,
         "score_medio": 56.0,
         "melhor_posicao": 12,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "INDEFINIDO",
+        "preco_atual": 9.41,
+        "dy_atual": 0.0158,
+        "multiplo_atual": 1.0,
+        "multiplo_label": 1.0
       },
       {
         "ticker": "ICNE11",
         "aparicoes": 3,
         "score_medio": 51.46666666666667,
         "melhor_posicao": 5,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "FUNDO DE DESENVOLVIMENTO",
+        "preco_atual": 700.0,
+        "dy_atual": 0.0208,
+        "multiplo_atual": 1.14,
+        "multiplo_label": 1.14
       },
       {
         "ticker": "FZDB11",
         "aparicoes": 2,
         "score_medio": 67.8,
         "melhor_posicao": 3,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "INDEFINIDO",
+        "preco_atual": 154.46,
+        "dy_atual": 0.0339,
+        "multiplo_atual": 0.86,
+        "multiplo_label": 0.86
       },
       {
         "ticker": "LSAG11",
         "aparicoes": 2,
         "score_medio": 60.2,
         "melhor_posicao": 17,
-        "ultima_aparicao": "2026-06-28"
+        "ultima_aparicao": "2026-06-28",
+        "setor": "INDEFINIDO",
+        "preco_atual": 78.0,
+        "dy_atual": 0.0139,
+        "multiplo_atual": 0.8,
+        "multiplo_label": 0.8
       },
       {
         "ticker": "SMRE11",
         "aparicoes": 1,
         "score_medio": 68.4,
         "melhor_posicao": 7,
-        "ultima_aparicao": "2026-06-25"
+        "ultima_aparicao": "2026-06-25",
+        "setor": "INCORPORAÇÕES",
+        "preco_atual": 51.65,
+        "dy_atual": 0.0,
+        "multiplo_atual": 0.5,
+        "multiplo_label": 0.5
       },
       {
         "ticker": "JSCR11",
         "aparicoes": 1,
         "score_medio": 62.4,
         "melhor_posicao": 20,
-        "ultima_aparicao": "2026-06-29"
+        "ultima_aparicao": "2026-06-29",
+        "setor": "PAPÉIS",
+        "preco_atual": 8.22,
+        "dy_atual": 0.013600000000000001,
+        "multiplo_atual": 0.87,
+        "multiplo_label": 0.87
       },
       {
         "ticker": "VHFA11",
         "aparicoes": 1,
         "score_medio": 52.9,
         "melhor_posicao": 3,
-        "ultima_aparicao": "2026-06-25"
+        "ultima_aparicao": "2026-06-25",
+        "setor": "MISTO",
+        "preco_atual": 11.55,
+        "dy_atual": 0.0755,
+        "multiplo_atual": 1.1,
+        "multiplo_label": 1.1
       }
     ]
   },
