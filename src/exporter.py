@@ -157,34 +157,41 @@ def _mean_numeric(df: pd.DataFrame, col: str):
 
 
 def _calc_kpis(top_fiis, top_acoes, fii_universe, acoes_universe) -> dict:
-    """Calcula KPIs do dashboard e suas bases comparativas.
+    """Calcula KPIs do dashboard com comparativo Top 20 vs universo geral.
 
     Convenção:
     - *_carteira: média dos ativos selecionados no Top 20 do dia.
-    - *_mercado: média do universo completo analisado no mesmo dia.
+    - *_mercado e *_geral: média do universo completo analisado no mesmo dia.
 
-    Isso permite que o frontend mostre, abaixo do valor principal, se a
-    carteira está acima ou abaixo da média geral do mercado filtrado.
+    Exportamos *_mercado e *_geral como aliases para evitar quebra no frontend
+    caso snapshots antigos ou componentes diferentes usem nomenclaturas distintas.
     """
     kpis = {}
 
     kpis["dy_medio_fiis_carteira"] = _mean_numeric(top_fiis, "DIVIDEND YIELD")
     kpis["dy_medio_fiis_mercado"] = _mean_numeric(fii_universe, "DIVIDEND YIELD")
+    kpis["dy_medio_fiis_geral"] = kpis["dy_medio_fiis_mercado"]
+
     kpis["pvp_medio_fiis_carteira"] = _mean_numeric(top_fiis, "P/VP")
     kpis["pvp_medio_fiis_mercado"] = _mean_numeric(fii_universe, "P/VP")
+    kpis["pvp_medio_fiis_geral"] = kpis["pvp_medio_fiis_mercado"]
+
     kpis["score_medio_fiis_carteira"] = _mean_numeric(top_fiis, "Score")
     kpis["score_medio_fiis_mercado"] = _mean_numeric(fii_universe, "Score")
+    kpis["score_medio_fiis_geral"] = kpis["score_medio_fiis_mercado"]
 
     kpis["dy_medio_acoes_carteira"] = _mean_numeric(top_acoes, "Dividend Yield")
     kpis["dy_medio_acoes_mercado"] = _mean_numeric(acoes_universe, "Dividend Yield")
+    kpis["dy_medio_acoes_geral"] = kpis["dy_medio_acoes_mercado"]
+
     kpis["score_medio_acoes_carteira"] = _mean_numeric(top_acoes, "Score")
     kpis["score_medio_acoes_mercado"] = _mean_numeric(acoes_universe, "Score")
+    kpis["score_medio_acoes_geral"] = kpis["score_medio_acoes_mercado"]
 
     kpis["total_fiis_universo"] = int(len(fii_universe)) if fii_universe is not None else 0
     kpis["total_acoes_universo"] = int(len(acoes_universe)) if acoes_universe is not None else 0
 
     return kpis
-
 
 def _base100_records_from_date(df_serie, start_date: pd.Timestamp | None = None) -> list:
     """Converte série absoluta em base 100 a partir de uma data de início.
@@ -443,6 +450,71 @@ def _calc_carteira_vs_benchmarks(
     return resultado
 
 
+
+def _calc_recorrentes(top_n: int | None = None) -> dict:
+    """Calcula ativos mais recorrentes no Top 20 a partir da carteira histórica.
+
+    Usa data/backtest/carteiras_historicas.parquet, que salva diariamente:
+    Data_Carteira, Tipo, Ticker, Preco_Entrada, Score e Posicao.
+    """
+    carteira_path = os.path.join("data", "backtest", "carteiras_historicas.parquet")
+    df = _load_parquet_safe(carteira_path)
+
+    if df.empty:
+        return {"acoes": [], "fiis": []}
+
+    required = {"Data_Carteira", "Tipo", "Ticker", "Score"}
+    if not required.issubset(df.columns):
+        logger.warning(f"Carteira historica sem colunas esperadas para recorrentes: {required}")
+        return {"acoes": [], "fiis": []}
+
+    base = df.copy()
+    base["Tipo"] = base["Tipo"].astype(str).str.upper().str.strip()
+    base["Ticker"] = base["Ticker"].astype(str).str.upper().str.strip()
+    base["Score"] = pd.to_numeric(base["Score"], errors="coerce")
+    base["Posicao"] = pd.to_numeric(base.get("Posicao"), errors="coerce")
+    base["Data_Carteira"] = pd.to_datetime(base["Data_Carteira"], errors="coerce")
+    base = base.dropna(subset=["Ticker"])
+    base = base[base["Ticker"].ne("")]
+
+    def build(tipo: str) -> list:
+        parte = base[base["Tipo"].eq(tipo)].copy()
+        if parte.empty:
+            return []
+
+        grouped = (
+            parte.groupby("Ticker", as_index=False)
+            .agg(
+                aparicoes=("Ticker", "size"),
+                score_medio=("Score", "mean"),
+                melhor_posicao=("Posicao", "min"),
+                ultima_aparicao=("Data_Carteira", "max"),
+            )
+            .sort_values(
+                by=["aparicoes", "score_medio", "melhor_posicao", "Ticker"],
+                ascending=[False, False, True, True],
+            )
+        )
+        if top_n is not None:
+            grouped = grouped.head(top_n)
+
+        out = []
+        for _, row in grouped.iterrows():
+            ultima = row.get("ultima_aparicao")
+            out.append({
+                "ticker": _safe(row.get("Ticker")),
+                "aparicoes": int(row.get("aparicoes", 0)),
+                "score_medio": _safe(row.get("score_medio")),
+                "melhor_posicao": int(row.get("melhor_posicao")) if pd.notna(row.get("melhor_posicao")) else None,
+                "ultima_aparicao": ultima.strftime("%Y-%m-%d") if pd.notna(ultima) else None,
+            })
+        return out
+
+    return {
+        "acoes": build("ACAO"),
+        "fiis": build("FII"),
+    }
+
 def export_dashboard_json(
     output_dir: str,
     data_hoje: str,
@@ -517,6 +589,7 @@ def export_dashboard_json(
         "carteira_vs": carteira_vs,
         "backtest": backtest or {"disponivel": False},
         "kpis": kpis,
+        "recorrentes": _calc_recorrentes(top_n=None),
         "resumo": {
             "total_fiis": len(top_fiis) if top_fiis is not None else 0,
             "total_acoes": len(top_acoes) if top_acoes is not None else 0,

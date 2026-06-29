@@ -33,6 +33,7 @@
     .asset-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.rank{font-family:"Proxima Nova","ProximaNova",Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#111827;background:var(--accent);padding:4px 8px;border-radius:999px;font-weight:900;font-size:12px}.ticker{font-size:22px;font-weight:900;letter-spacing:-.03em}.name{font-size:12px;color:var(--muted);min-height:34px;margin-top:2px}.score-wrap{margin:14px 0 12px}.score-line{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700}.bar{height:9px;background:rgba(148,163,184,.18);border-radius:999px;overflow:hidden;margin-top:6px}.bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{border:1px solid rgba(148,163,184,.12);background:rgba(0,0,0,.12);border-radius:13px;padding:9px}.metric b{display:block;font-size:13px}.metric span{font-size:11px;color:var(--muted)}.trend{font-size:11px;margin-left:4px}.trend.subindo{color:var(--good)}.trend.caindo{color:var(--bad)}.trend.estavel{color:var(--muted)}
     .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:rgba(18,27,50,.70);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}.panel h3{margin:0 0 4px;font-size:18px}.panel p{margin:0 0 12px;color:var(--muted);font-size:13px}.chart-box{height:300px}.wide{grid-column:1/-1}.mini-note{font-size:12px;color:var(--muted2);margin-top:10px}.chart-explain{font-size:13px;color:var(--muted);line-height:1.55;margin-top:12px;padding-top:12px;border-top:1px solid rgba(148,163,184,.14)}.chart-explain b{color:var(--text)}
     .info-card{background:rgba(18,27,50,.72);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}.info-card h3{margin-top:0}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:12px;border-bottom:1px solid var(--border);text-align:left}.table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.rank-table-wrap{max-height:380px;overflow:auto;border:1px solid rgba(148,163,184,.12);border-radius:16px}.rank-table td:first-child,.rank-table th:first-child{width:70px;color:var(--accent);font-weight:900}.rank-table td{font-weight:800;vertical-align:top}.rank-table .muted-cell{color:var(--muted);font-weight:600}.rank-asset{display:flex;flex-direction:column;gap:3px;min-width:0}.rank-asset .asset-name{font-size:14px;font-weight:900;letter-spacing:.01em}.rank-asset.acao .asset-name{color:var(--acao)}.rank-asset.fii .asset-name{color:var(--fii)}.rank-asset.fii{border-left:3px solid var(--fii);padding-left:8px}.rank-asset.acao{border-left:3px solid var(--acao);padding-left:8px}.asset-detail{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .rec-table-wrap{max-height:640px;overflow:auto;border:1px solid rgba(148,163,184,.12);border-radius:16px}.rec-table th,.rec-table td{white-space:nowrap}.rec-table td:first-child,.rec-table th:first-child{width:70px;color:var(--accent);font-weight:900}.rec-asset{display:flex;align-items:center;gap:10px;min-width:0}.rec-badge{display:inline-grid;place-items:center;width:10px;height:10px;border-radius:999px;flex:0 0 auto}.rec-badge.acao{background:var(--acao)}.rec-badge.fii{background:var(--fii)}.rec-name{font-weight:900}.rec-sub{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:2px}
     .empty{border:1px dashed var(--border-strong);border-radius:18px;padding:28px;text-align:center;color:var(--muted)} footer{border-top:1px solid var(--border);padding:24px 0 36px;color:var(--muted2);font-size:13px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:5px 9px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--good)}
     @media(max-width:1050px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.hero-grid,.charts{grid-template-columns:1fr}}@media(max-width:620px){.wrap{width:min(100% - 20px,var(--max))}.nav{height:auto;padding:12px 0;align-items:flex-start;flex-direction:column}.kpis{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.tabs{width:100%}.tab{flex:1}.hero{padding-top:26px}.kpi .value{font-size:22px}.search{min-width:100%;width:100%}}
   </style>
@@ -45,6 +46,7 @@
         <button class="tab active" data-tab="overview">Visão geral</button>
         <button class="tab" data-tab="fiis">FIIs</button>
         <button class="tab" data-tab="acoes">Ações</button>
+        <button class="tab" data-tab="recorrentes">Recorrentes</button>
         <button class="tab" data-tab="indicadores">Indicadores</button>
         <button class="tab" data-tab="score">Score</button>
         <button class="tab" data-tab="info">Info</button>
@@ -63,7 +65,7 @@
         <aside class="asof">
           <span class="pill"><span class="dot"></span> Atualizado automaticamente</span>
           <strong id="asOf">Carregando...</strong>
-          <span class="update-note">Este painel mostra sempre o <b>snapshot mais recente</b> disponível. Atualização diária prevista: <b>09h BRT</b>, em dias úteis.</span>
+          <span class="update-note">Este painel mostra sempre o <b>snapshot mais recente</b> disponível. Atualização diária prevista: <b>08h BRT</b>, em dias úteis.</span>
         </aside>
       </div>
     </section>
@@ -88,6 +90,21 @@
     <section id="acoes" class="section">
       <div class="section-head"><div><h2>Top 20 Ações</h2><p class="desc">Rank, score, valuation, rentabilidade e dividend yield.</p></div><div class="toolbar"><input id="searchAcoes" class="search" placeholder="Buscar ação ou empresa..." /></div></div>
       <div class="grid" id="acoesGrid"></div>
+    </section>
+
+    <section id="recorrentes" class="section">
+      <div class="section-head"><div><h2>Recorrentes</h2><p class="desc">Todos os ativos que já apareceram no Top 20, ordenados por recorrência e score médio.</p></div></div>
+      <div class="panel wide">
+        <h3>Todos os ativos recorrentes no Top 20</h3>
+        <p>Ranking histórico separado por Ações e FIIs, calculado a partir das carteiras salvas diariamente.</p>
+        <div class="rec-table-wrap">
+          <table class="table rec-table">
+            <thead><tr><th>Rank</th><th>Ação</th><th>Aparições</th><th>Score médio</th><th>FII</th><th>Aparições</th><th>Score médio</th></tr></thead>
+            <tbody id="recorrentesTableBody"></tbody>
+          </table>
+        </div>
+        <div class="chart-explain"><b>Como ler:</b> quanto mais aparições, mais vezes o ativo entrou no Top 20 histórico do robô. A tabela não limita em 20 linhas; ela lista todos os ativos encontrados no histórico. O score médio ajuda a separar recorrência com qualidade de recorrência apenas por falta de alternativas no mercado.</div>
+      </div>
     </section>
 
     <section id="indicadores" class="section">
@@ -153,9 +170,15 @@
       renderAll();
     }
 
-    function renderAll(){ renderKpis(); renderCards('fiis'); renderCards('acoes'); renderRankTable(); renderCharts(); renderFx(); }
+    function renderAll(){ renderKpis(); renderCards('fiis'); renderCards('acoes'); renderRankTable(); renderRecorrentesTable(); renderCharts(); renderFx(); }
 
     function kpi(label,value,note,kind='') { return `<article class="kpi ${kind}"><div class="label">${label}</div><div class="value">${value}</div><div class="note">${note||''}</div></article>`; }
+    function getKpi(primaryKey, fallbackKey){
+      const k = state.data?.kpis || {};
+      const primary = k[primaryKey];
+      if(primary !== undefined && primary !== null) return primary;
+      return fallbackKey ? k[fallbackKey] : null;
+    }
     function deltaClass(v, higherIsBetter=true){
       if(v==null || !Number.isFinite(Number(v))) return 'delta-neu';
       const n=Number(v);
@@ -210,10 +233,10 @@
       const cartFii = portfolioKpi('comparativo_fiis','IFIX');
       const cartAcao = portfolioKpi('comparativo_acoes','IBOV');
       document.getElementById('kpis').innerHTML = [
-        kpi('DY médio FIIs', fmtPct(dyFiis), comparePctNote(k.dy_medio_fiis_mercado, dyFiis, 'Geral', true)),
-        kpi('P/VP médio FIIs', fmtNum(pvpFiis,2), compareNumNote(k.pvp_medio_fiis_mercado, pvpFiis, 'Geral', 2, '', false)),
-        kpi('Score médio FIIs', fmtNum(scoreF,1), compareNumNote(k.score_medio_fiis_mercado, scoreF, 'Geral', 1, ' pts', true), scoreF>=60?'good':''),
-        kpi('Score médio Ações', fmtNum(scoreA,1), compareNumNote(k.score_medio_acoes_mercado, scoreA, 'Geral', 1, ' pts', true), scoreA>=60?'good':''),
+        kpi('DY médio FIIs', fmtPct(dyFiis), comparePctNote(getKpi('dy_medio_fiis_mercado','dy_medio_fiis_geral'), dyFiis, 'Geral', true)),
+        kpi('P/VP médio FIIs', fmtNum(pvpFiis,2), compareNumNote(getKpi('pvp_medio_fiis_mercado','pvp_medio_fiis_geral'), pvpFiis, 'Geral', 2, '', false)),
+        kpi('Score médio FIIs', fmtNum(scoreF,1), compareNumNote(getKpi('score_medio_fiis_mercado','score_medio_fiis_geral'), scoreF, 'Geral', 1, ' pts', true), scoreF>=60?'good':''),
+        kpi('Score médio Ações', fmtNum(scoreA,1), compareNumNote(getKpi('score_medio_acoes_mercado','score_medio_acoes_geral'), scoreA, 'Geral', 1, ' pts', true), scoreA>=60?'good':''),
         kpi('Carteira Top FIIs', cartFii.value, cartFii.note, cartFii.kind),
         kpi('Carteira Top Ações', cartAcao.value, cartAcao.note, cartAcao.kind)
       ].join('');
@@ -234,6 +257,38 @@
       const fiis=state.data.fiis||[];
       const acoes=state.data.acoes||[];
       body.innerHTML = Array.from({length:20},(_,i)=>`<tr><td>#${i+1}</td><td>${rankAssetCell(acoes[i],'acao')}</td><td>${rankAssetCell(fiis[i],'fii')}</td></tr>`).join('');
+    }
+
+    function recurringAssetCell(rec,type){
+      if(!rec) return '<span class="muted-cell">—</span>';
+      const isAcao = type === 'acao';
+      const ticker = rec.ticker || rec.Ticker || '—';
+      const ultima = rec.ultima_aparicao ? `Última: ${rec.ultima_aparicao}` : '';
+      return `<div class="rec-asset"><span class="rec-badge ${isAcao?'acao':'fii'}"></span><span><span class="rec-name">${ticker}</span><span class="rec-sub">${ultima}</span></span></div>`;
+    }
+    function renderRecorrentesTable(){
+      const body=document.getElementById('recorrentesTableBody');
+      if(!body) return;
+      const rec=state.data.recorrentes||{};
+      const acoes=rec.acoes||[];
+      const fiis=rec.fiis||[];
+      if(!acoes.length && !fiis.length){
+        body.innerHTML='<tr><td colspan="7" class="muted-cell">Ainda não há histórico suficiente de carteiras recorrentes.</td></tr>';
+        return;
+      }
+      const totalRows = Math.max(acoes.length, fiis.length);
+      body.innerHTML = Array.from({length:totalRows},(_,i)=>{
+        const acao=acoes[i], fii=fiis[i];
+        return `<tr>
+          <td>#${i+1}</td>
+          <td>${recurringAssetCell(acao,'acao')}</td>
+          <td>${acao ? acao.aparicoes : '—'}</td>
+          <td>${acao ? fmtNum(acao.score_medio,1) : '—'}</td>
+          <td>${recurringAssetCell(fii,'fii')}</td>
+          <td>${fii ? fii.aparicoes : '—'}</td>
+          <td>${fii ? fmtNum(fii.score_medio,1) : '—'}</td>
+        </tr>`;
+      }).join('');
     }
 
     function trendIcon(rec,col){ const t=rec.tendencias?.[col]; if(!t) return ''; const icon=t==='subindo'?'▲':t==='caindo'?'▼':'●'; return `<span class="trend ${t}" title="${t}">${icon}</span>`; }
