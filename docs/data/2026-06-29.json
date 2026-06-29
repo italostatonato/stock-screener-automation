@@ -825,28 +825,7 @@
     }
   ],
   "indicadores": {
-    "cambio": {
-      "USD/BRL": {
-        "valor": 5.1683,
-        "variacao_pct": -0.03482,
-        "atualizado_em": "2026-06-29 09:26:11"
-      },
-      "EUR/BRL": {
-        "valor": 5.88928,
-        "variacao_pct": 0.176597,
-        "atualizado_em": "2026-06-29 09:26:03"
-      },
-      "GBP/BRL": {
-        "valor": 6.83914,
-        "variacao_pct": 0.238974,
-        "atualizado_em": "2026-06-29 09:26:11"
-      },
-      "BTC/BRL": {
-        "valor": 317882.0,
-        "variacao_pct": 0.603,
-        "atualizado_em": "2026-06-29 09:26:11"
-      }
-    },
+    "cambio": {},
     "ipca_12m": [
       {
         "data": "2025-05-01",
@@ -3823,6 +3802,10 @@
       {
         "data": "2026-06-26",
         "valor": 173295.0
+      },
+      {
+        "data": "2026-06-29",
+        "valor": 173318.875
       }
     ],
     "IFIX": [
@@ -4917,12 +4900,16 @@
       {
         "data": "2026-06-26",
         "valor": 13.44
+      },
+      {
+        "data": "2026-06-29",
+        "valor": 13.44
       }
     ],
     "IMOB": [
       {
-        "data": "2026-06-26",
-        "valor": 1380.11
+        "data": "2026-06-29",
+        "valor": 1377.4399
       }
     ],
     "IPCA": [
@@ -7245,6 +7232,10 @@
       {
         "data": "2026-06-26",
         "valor": 125.7364
+      },
+      {
+        "data": "2026-06-29",
+        "valor": 125.7538
       }
     ],
     "ifix_base100": [
@@ -8339,11 +8330,15 @@
       {
         "data": "2026-06-26",
         "valor": 110.4355
+      },
+      {
+        "data": "2026-06-29",
+        "valor": 110.4355
       }
     ],
     "imob_base100": [
       {
-        "data": "2026-06-26",
+        "data": "2026-06-29",
         "valor": 100.0
       }
     ],
@@ -9564,6 +9559,10 @@
           {
             "data": "2026-06-26",
             "valor": 100.5988
+          },
+          {
+            "data": "2026-06-29",
+            "valor": 100.5988
           }
         ],
         "IMOB": [
@@ -9572,7 +9571,7 @@
             "valor": 100.0
           },
           {
-            "data": "2026-06-26",
+            "data": "2026-06-29",
             "valor": 100.0
           }
         ],
@@ -9613,6 +9612,10 @@
           {
             "data": "2026-06-26",
             "valor": 100.7588
+          },
+          {
+            "data": "2026-06-29",
+            "valor": 100.7726
           }
         ],
         "IPCA": [
@@ -9635,53 +9638,8 @@
     }
   },
   "backtest": {
-    "disponivel": true,
-    "periodo": {
-      "inicio": "2026-06-23",
-      "fim": "2026-06-29"
-    },
-    "rebalanceamentos": 5,
-    "carteira_top20_fiis": {
-      "retorno_pct": 0.64,
-      "base100": 100.64
-    },
-    "ifix": {
-      "retorno_pct": 0.6,
-      "base100": 100.6
-    },
-    "ibov": {
-      "retorno_pct": 1.19,
-      "base100": 101.19
-    },
-    "bateu_ifix": true,
-    "bateu_ibov": false,
-    "periodos": [
-      {
-        "inicio": "2026-06-23",
-        "fim": "2026-06-24",
-        "ativos": 20,
-        "carteira_retorno_pct": -0.22,
-        "ifix_retorno_pct": -0.22,
-        "ibov_retorno_pct": -0.44
-      },
-      {
-        "inicio": "2026-06-24",
-        "fim": "2026-06-25",
-        "ativos": 20,
-        "carteira_retorno_pct": 0.39,
-        "ifix_retorno_pct": 0.23,
-        "ibov_retorno_pct": 0.87
-      },
-      {
-        "inicio": "2026-06-25",
-        "fim": "2026-06-28",
-        "ativos": 21,
-        "carteira_retorno_pct": 0.47,
-        "ifix_retorno_pct": 0.6,
-        "ibov_retorno_pct": 0.76
-      }
-    ],
-    "metodologia": "Camada 3 — carteira equal-weight Top 20 FIIs rebalanceada a cada snapshot diário, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
+    "disponivel": false,
+    "motivo": "Nao foi possivel calcular retorno da carteira Top 20"
   },
   "kpis": {
     "dy_medio_fiis_carteira": 0.0275,
