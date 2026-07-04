@@ -825,28 +825,7 @@
     }
   ],
   "indicadores": {
-    "cambio": {
-      "USD/BRL": {
-        "valor": 5.165,
-        "variacao_pct": -1.091538,
-        "atualizado_em": "2026-07-03 18:08:17"
-      },
-      "EUR/BRL": {
-        "valor": 5.92768,
-        "variacao_pct": -0.533567,
-        "atualizado_em": "2026-07-03 18:01:38"
-      },
-      "GBP/BRL": {
-        "valor": 6.89837,
-        "variacao_pct": -0.956443,
-        "atualizado_em": "2026-07-03 18:08:17"
-      },
-      "BTC/BRL": {
-        "valor": 333834.0,
-        "variacao_pct": 2.087,
-        "atualizado_em": "2026-07-04 17:01:29"
-      }
-    },
+    "cambio": {},
     "ipca_12m": [
       {
         "data": "2025-05-01",
@@ -9743,61 +9722,8 @@
     }
   },
   "backtest": {
-    "disponivel": true,
-    "periodo": {
-      "inicio": "2026-06-23",
-      "fim": "2026-07-04"
-    },
-    "rebalanceamentos": 6,
-    "carteira_top20_fiis": {
-      "retorno_pct": 1.13,
-      "base100": 101.13
-    },
-    "ifix": {
-      "retorno_pct": 1.35,
-      "base100": 101.35
-    },
-    "ibov": {
-      "retorno_pct": 1.81,
-      "base100": 101.81
-    },
-    "bateu_ifix": false,
-    "bateu_ibov": false,
-    "periodos": [
-      {
-        "inicio": "2026-06-23",
-        "fim": "2026-06-24",
-        "ativos": 20,
-        "carteira_retorno_pct": -0.12,
-        "ifix_retorno_pct": -0.22,
-        "ibov_retorno_pct": -0.44
-      },
-      {
-        "inicio": "2026-06-24",
-        "fim": "2026-06-25",
-        "ativos": 20,
-        "carteira_retorno_pct": 0.23,
-        "ifix_retorno_pct": 0.23,
-        "ibov_retorno_pct": 0.87
-      },
-      {
-        "inicio": "2026-06-25",
-        "fim": "2026-06-28",
-        "ativos": 21,
-        "carteira_retorno_pct": 0.76,
-        "ifix_retorno_pct": 0.6,
-        "ibov_retorno_pct": 0.76
-      },
-      {
-        "inicio": "2026-06-29",
-        "fim": "2026-07-04",
-        "ativos": 20,
-        "carteira_retorno_pct": 0.26,
-        "ifix_retorno_pct": 0.74,
-        "ibov_retorno_pct": 0.61
-      }
-    ],
-    "metodologia": "Camada 3 — carteira equal-weight Top 20 FIIs rebalanceada a cada snapshot diário, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
+    "disponivel": false,
+    "motivo": "Nao foi possivel calcular retorno da carteira Top 20"
   },
   "kpis": {
     "dy_medio_fiis_carteira": 0.0344,

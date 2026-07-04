@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T17:07:06",
+  "generated_at": "2026-07-04T20:38:07",
   "status": "ok",
   "checks": [
     {
@@ -18,42 +18,42 @@
       "detail": "ok"
     },
     {
-      "name": "data/ml/historico_fiis.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_fiis.parquet",
       "status": "ok",
       "detail": "2118 linhas"
     },
     {
-      "name": "data/ml/historico_acoes.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_acoes.parquet",
       "status": "ok",
       "detail": "1212 linhas"
     },
     {
-      "name": "data/backtest/carteiras_historicas.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
       "status": "ok",
       "detail": "162 linhas"
     },
     {
-      "name": "data/ml/dataset_fiis.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_fiis.parquet",
       "status": "ok",
       "detail": "1965 linhas"
     },
     {
-      "name": "data/ml/dataset_acoes.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_acoes.parquet",
       "status": "ok",
       "detail": "1212 linhas"
     },
     {
-      "name": "data/ml/model_predictions_fiis.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
       "status": "ok",
       "detail": "983 linhas"
     },
     {
-      "name": "data/ml/model_predictions_acoes.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
       "status": "ok",
       "detail": "606 linhas"
     },
     {
-      "name": "data/ml/model_performance.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_performance.parquet",
       "status": "ok",
       "detail": "16 linhas"
     },
