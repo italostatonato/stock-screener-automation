@@ -158,3 +158,57 @@ __pycache__/
 .pytest_cache/
 logs/
 ```
+
+## Entrega automática do Excel final
+
+A entrega do Excel final é feita pela camada `src/delivery.py`. Ela é separada do ranking, do lake, do dashboard e dos modelos para que uma falha no OneDrive não corrompa a execução principal.
+
+### Fase 1: cópia local para OneDrive sincronizado
+
+Quando o pipeline roda no notebook Windows, o Excel final é copiado para a pasta configurada em `paths.onedrive_output_dir`:
+
+```yaml
+paths:
+  onedrive_output_dir: "C:/Users/Ítalo/OneDrive/Tabelas Acoes/Recomendacoes"
+```
+
+A entrega gera duas saídas:
+
+```text
+Top20_Ranking_YYYY-MM-DD.xlsx
+Top20_Ranking_Atual.xlsx
+```
+
+O primeiro arquivo mantém histórico por data. O segundo é sempre a versão atual para consulta rápida.
+
+### Segurança no GitHub Actions
+
+O runner do GitHub Actions é Linux e não tem acesso ao caminho local `C:/Users/...`. Por isso, quando o destino configurado é um path Windows local, a entrega é ignorada com segurança no Actions. O Excel continua disponível como artifact do workflow.
+
+### Teste manual da entrega
+
+Depois de rodar `python main.py`, teste a entrega com:
+
+```powershell
+python scripts/test_delivery.py
+```
+
+Ou informe um arquivo específico:
+
+```powershell
+python scripts/test_delivery.py --file data/output/Top20_Ranking_2026-07-04.xlsx
+```
+
+### Log de entrega
+
+Quando a entrega é executada localmente, o projeto registra um log em:
+
+```text
+data/delivery/delivery_log.jsonl
+```
+
+O log registra status, hash SHA256, tamanho do arquivo e nomes dos arquivos entregues, sem gravar tokens ou credenciais.
+
+### Fase 2 futura: Microsoft Graph
+
+A automação 100% remota deve usar Microsoft Graph com credenciais em GitHub Secrets ou OIDC. Não colocar tokens no código, no `config.yaml` ou em arquivos versionados.

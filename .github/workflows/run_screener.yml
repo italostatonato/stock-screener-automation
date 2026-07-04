@@ -90,6 +90,7 @@ jobs:
           [ -d data/lake ] && git add data/lake/
           [ -d data/ml ] && git add data/ml/
           [ -d data/backtest ] && git add data/backtest/
+          [ -d data/delivery ] && git add data/delivery/
 
           if git diff --cached --quiet; then
             echo "Sem alterações de dados para commitar."

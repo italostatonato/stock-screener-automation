@@ -1,6 +1,5 @@
 import logging
 import os
-import shutil
 import sys
 from datetime import datetime
 
@@ -21,6 +20,7 @@ from src.ml_storage import append_historical_data
 from src.dataset_builder import build_all_datasets
 from src.ml_models import run_ml_pipeline
 from src.data_lake import save_lake_snapshot, run_data_quality_checks
+from src.delivery import deliver_excel
 
 
 def setup_logging(logs_dir: str):
@@ -259,16 +259,21 @@ def main():
     except Exception as e:
         logger.error(f"Falha nas checagens de qualidade: {e}")
 
-    # ── Copia para o OneDrive ───────────────────────────────────────────────
-    onedrive_dir = paths.get("onedrive_output_dir")
-    if onedrive_dir:
-        try:
-            os.makedirs(onedrive_dir, exist_ok=True)
-            destino = os.path.join(onedrive_dir, os.path.basename(snapshot_path))
-            shutil.copy2(snapshot_path, destino)
-            logger.info(f"Copia salva no OneDrive: {destino}")
-        except Exception as e:
-            logger.error(f"Falha ao copiar para o OneDrive: {e}")
+    # ── Entrega segura do Excel final ───────────────────────────────────────
+    # Fase 1: cópia local para pasta sincronizada do OneDrive.
+    # Em GitHub Actions/Linux, paths Windows locais são ignorados com segurança.
+    try:
+        delivery_result = deliver_excel(
+            snapshot_path=snapshot_path,
+            cfg=cfg,
+            data_execucao=data_hoje,
+        )
+        logger.info(
+            "Entrega do Excel final: %s",
+            delivery_result.to_dict(),
+        )
+    except Exception as e:
+        logger.error(f"Falha inesperada na entrega do Excel final: {e}")
 
     logger.info("=== Screener finalizado com sucesso ===")
 
