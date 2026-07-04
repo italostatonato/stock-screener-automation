@@ -449,22 +449,37 @@
     }
 
     function destroy(id){ if(state.charts[id]){ state.charts[id].destroy(); delete state.charts[id]; } }
-    function datasetColor(label){
+    const chartPalette=['#38BDF8','#D6B46F','#34D399','#A78BFA','#FBBF24','#FB7185','#22C55E','#F97316','#E879F9','#94A3B8'];
+    function datasetColor(label,index=0){
       const l=String(label||'').toLowerCase();
-      if(l.includes('ação') || l.includes('ações') || l.includes('acoes') || l.includes('ibov')) return css('--acao');
-      if(l.includes('fii') || l.includes('ifix') || l.includes('imob')) return css('--fii');
-      if(l.includes('cdi')) return css('--accent');
-      if(l.includes('ipca')) return css('--warn');
-      return css('--accent2');
+
+      // Carteiras oficiais mantêm as cores do projeto.
+      if(l.includes('carteira') && (l.includes('ação') || l.includes('ações') || l.includes('acoes'))) return css('--acao');
+      if(l.includes('carteira') && l.includes('fii')) return css('--fii');
+
+      // Benchmarks precisam ter cores próprias; antes IFIX/IMOB herdavam a cor de FII
+      // e IBOV herdava a cor de Ações, deixando várias linhas iguais.
+      if(l.includes('ibov')) return '#38BDF8';
+      if(l.includes('ifix')) return '#D6B46F';
+      if(l.includes('imob')) return '#A78BFA';
+      if(l.includes('cdi')) return '#34D399';
+      if(l.includes('ipca')) return '#FBBF24';
+      if(l.includes('igp')) return '#FB7185';
+      if(l.includes('selic')) return '#22C55E';
+
+      if(l.includes('ação') || l.includes('ações') || l.includes('acoes')) return css('--acao');
+      if(l.includes('fii')) return css('--fii');
+      return chartPalette[index % chartPalette.length];
     }
     function applyDatasetColors(cfg){
-      (cfg?.data?.datasets||[]).forEach(ds=>{
-        const c=datasetColor(ds.label);
+      (cfg?.data?.datasets||[]).forEach((ds,index)=>{
+        const c=datasetColor(ds.label,index);
         if(!ds.borderColor) ds.borderColor=c;
         if(!ds.backgroundColor) ds.backgroundColor=cfg.type==='bar' ? c : c;
         if(!ds.pointBackgroundColor) ds.pointBackgroundColor=c;
         if(!ds.pointBorderColor) ds.pointBorderColor=c;
-        if(ds.label && String(ds.label).toLowerCase().includes('fii')) ds.borderWidth = ds.borderWidth || 2;
+        if(!ds.hoverBackgroundColor) ds.hoverBackgroundColor=c;
+        if(ds.label && String(ds.label).toLowerCase().includes('carteira')) ds.borderWidth = ds.borderWidth || 3;
       });
       return cfg;
     }
@@ -595,22 +610,50 @@
       const d=state.data?.data || state.selectedDate || new Date().toISOString().slice(0,10);
       return [{data:d, valor:100}];
     }
-    function seriesMap(arr){ return Object.fromEntries((arr||[]).map(x=>[x.data,x.valor])); }
+    function seriesMap(arr){ return Object.fromEntries((arr||[]).map(x=>[String(x.data),Number(x.valor)])); }
+    function alignSeriesToLabels(arr,labels,{fillForward=false}={}){
+      const map=seriesMap(arr);
+      let last=null;
+      return labels.map(label=>{
+        const key=String(label);
+        if(map[key]!=null && Number.isFinite(Number(map[key]))){
+          last=Number(map[key]);
+          return last;
+        }
+        return fillForward ? last : null;
+      });
+    }
+    function emptyLineChart(chartId,message='Sem dados suficientes para montar este gráfico.'){
+      makeChart(chartId,{
+        type:'line',
+        data:{labels:['Sem dados'],datasets:[{label:message,data:[100],pointRadius:4}]},
+        options:baseOptions({plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{title:axisTitle('Status'),grid:{display:false}},y:{min:99,max:101,title:axisTitle('Base 100')}}})
+      });
+    }
     function renderMarketChart(){
       const ibov=benchmarkBase100('IBOV'), ifix=benchmarkBase100('IFIX');
-      const labels=[...new Set([...ibov,...ifix].map(x=>x.data))].sort();
-      const mi=seriesMap(ibov), mf=seriesMap(ifix);
+      const labels=[...new Set([...ibov,...ifix].map(x=>String(x.data)))].sort();
+      if(!labels.length){
+        emptyLineChart('marketChart','Aguardando séries de IBOV e IFIX');
+        return;
+      }
       makeChart('marketChart',{type:'line',data:{labels,datasets:[
-        {label:'IBOV base 100',data:labels.map(d=>mi[d]??null),spanGaps:true,tension:.25},
-        {label:'IFIX base 100',data:labels.map(d=>mf[d]??null),spanGaps:true,tension:.25}
-      ]},options:baseOptions({scales:{x:{title:axisTitle('Data')},y:{title:axisTitle('Base 100')}}})});
+        {label:'IBOV base 100',data:alignSeriesToLabels(ibov,labels),spanGaps:true,tension:.25},
+        {label:'IFIX base 100',data:alignSeriesToLabels(ifix,labels),spanGaps:true,tension:.25}
+      ]},options:baseOptions({interaction:{mode:'index',intersect:false},scales:{x:{title:axisTitle('Data')},y:{title:axisTitle('Base 100')}}})});
     }
     function renderMacroChart(){
       const ind=state.data.indicadores||{};
       const series=[['IPCA 12M',ind.ipca_12m||[]],['IGP-M',ind.igpm||[]],['Selic',ind.selic||[]]];
-      const labels=[...new Set(series.flatMap(s=>s[1].map(x=>x.data)))].sort();
-      const datasets=series.map(([label,arr])=>{ const m=Object.fromEntries(arr.map(x=>[x.data,x.valor])); return {label,data:labels.map(d=>m[d]??null),spanGaps:true,tension:.25}; });
-      makeChart('macroChart',{type:'line',data:{labels,datasets},options:baseOptions({scales:{x:{title:axisTitle('Data')},y:{title:axisTitle('Taxa / indicador')}}})});
+      const labels=[...new Set(series.flatMap(s=>s[1].map(x=>String(x.data))))].sort();
+      if(!labels.length){
+        emptyLineChart('macroChart','Aguardando séries macroeconômicas');
+        return;
+      }
+      const datasets=series
+        .filter(([,arr])=>Array.isArray(arr) && arr.length)
+        .map(([label,arr])=>({label,data:alignSeriesToLabels(arr,labels),spanGaps:true,tension:.25}));
+      makeChart('macroChart',{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},scales:{x:{title:axisTitle('Data')},y:{title:axisTitle('Taxa / indicador')}}})});
     }
     function renderProxyCharts(){
       renderPortfolioComparison(
@@ -704,22 +747,21 @@
         .filter(x=>x.data.length);
 
       const allSeries = [carteira, ...benchmarkSeries.map(x=>x.data)];
-      const labels=[...new Set(allSeries.flatMap(arr=>arr.map(x=>x.data)))].sort();
-      const mc=seriesMap(carteira);
+      const labels=[...new Set(allSeries.flatMap(arr=>arr.map(x=>String(x.data))))].sort();
       const datasets=[{
         label:`${portfolioLabel} base 100`,
-        data:labels.map(d=>mc[d]??null),
-        spanGaps:false,
+        data:alignSeriesToLabels(carteira,labels,{fillForward:true}),
+        spanGaps:true,
+        stepped:'before',
         borderWidth:3,
         pointRadius: labels.length <= 2 ? 4 : 2,
-        tension:.18
+        tension:0
       }];
 
       benchmarkSeries.forEach(({name,data})=>{
-        const m=seriesMap(data);
         datasets.push({
           label:`${name} base 100`,
-          data:labels.map(d=>m[d]??null),
+          data:alignSeriesToLabels(data,labels),
           spanGaps:true,
           borderWidth:2,
           pointRadius: labels.length <= 2 ? 4 : 1.5,
