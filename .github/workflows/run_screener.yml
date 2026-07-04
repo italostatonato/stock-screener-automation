@@ -2,55 +2,111 @@ name: Daily FII Screener
 
 on:
   schedule:
-    - cron: "0 11 * * 1-5"   # 08:00 BRT (11:00 UTC)
+    - cron: "0 11 * * 1-5" # 08:00 BRT (11:00 UTC)
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: screener-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.11"
-      - run: pip install -r requirements.txt pytest
-      - run: pytest tests/ -v
+          cache: "pip"
+          cache-dependency-path: "requirements.txt"
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Rodar testes
+        run: pytest tests/ -v
 
   screener:
     needs: test
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.11"
-      - run: pip install -r requirements.txt
+          cache: "pip"
+          cache-dependency-path: "requirements.txt"
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - uses: browser-actions/setup-chrome@v2
+
+      - name: Sincronizar com remoto antes da execução
+        run: git pull --rebase origin main
+
       - name: Rodar screener
         run: python main.py
-      - name: Salvar Excel como artefato
+
+      - name: Healthcheck dos dados
+        run: python scripts/healthcheck_data.py
+
+      - name: Salvar Excel e relatórios como artefato
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: Top20-Ranking-${{ github.run_id }}
-          path: data/output/
+          name: stock-screener-output-${{ github.run_id }}
+          path: |
+            data/output/
+            docs/data/
+            data/lake/quality_report.json
+            data/lake/manifest.json
           retention-days: 90
-      - name: Commitar dados do dashboard
+
+      - name: Commitar dados gerados
         if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/data/
-          git diff --cached --quiet || git commit -m "chore: atualiza dashboard com snapshot do dia"
-          git push
+
+          [ -d docs/data ] && git add docs/data/
+          [ -d data/lake ] && git add data/lake/
+          [ -d data/ml ] && git add data/ml/
+          [ -d data/backtest ] && git add data/backtest/
+
+          if git diff --cached --quiet; then
+            echo "Sem alterações de dados para commitar."
+            exit 0
+          fi
+
+          git commit -m "chore: atualiza dados do screener"
+          git pull --rebase origin main
+          git push origin main
+
       - name: Notificar falha no Telegram
         if: failure()
         run: |
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d text="Screener falhou: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          if [ -n "${{ secrets.TELEGRAM_BOT_TOKEN }}" ] && [ -n "${{ secrets.TELEGRAM_CHAT_ID }}" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+              -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+              -d text="Screener falhou: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          else
+            echo "Secrets do Telegram não configurados; pulando notificação."
+          fi

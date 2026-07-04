@@ -1,0 +1,91 @@
+{
+  "generated_at": "2026-07-04T11:09:41",
+  "status": "ok",
+  "checks": [
+    {
+      "name": "lake_snapshots",
+      "status": "ok",
+      "detail": "1 snapshots encontrados"
+    },
+    {
+      "name": "lake_manifest",
+      "status": "ok",
+      "detail": "latest=2026-07-04"
+    },
+    {
+      "name": "snapshot_2026-07-04_files",
+      "status": "ok",
+      "detail": "ok"
+    },
+    {
+      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/historico_fiis.parquet",
+      "status": "ok",
+      "detail": "2118 linhas"
+    },
+    {
+      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/historico_acoes.parquet",
+      "status": "ok",
+      "detail": "1212 linhas"
+    },
+    {
+      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
+      "status": "ok",
+      "detail": "161 linhas"
+    },
+    {
+      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/dataset_fiis.parquet",
+      "status": "ok",
+      "detail": "1965 linhas"
+    },
+    {
+      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/dataset_acoes.parquet",
+      "status": "ok",
+      "detail": "1212 linhas"
+    },
+    {
+      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
+      "status": "ok",
+      "detail": "983 linhas"
+    },
+    {
+      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
+      "status": "ok",
+      "detail": "606 linhas"
+    },
+    {
+      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/model_performance.parquet",
+      "status": "ok",
+      "detail": "16 linhas"
+    },
+    {
+      "name": "duplicatas_historico_fiis.parquet",
+      "status": "ok",
+      "detail": "0 duplicatas em ['Data_Execucao', 'FUNDOS']"
+    },
+    {
+      "name": "duplicatas_historico_acoes.parquet",
+      "status": "ok",
+      "detail": "0 duplicatas em ['Data_Execucao', 'Ação']"
+    },
+    {
+      "name": "duplicatas_carteiras_historicas.parquet",
+      "status": "ok",
+      "detail": "0 duplicatas em ['Data_Carteira', 'Tipo', 'Ticker']"
+    },
+    {
+      "name": "carteira_tamanho_top",
+      "status": "ok",
+      "detail": "tamanhos dentro do esperado"
+    },
+    {
+      "name": "dashboard_index",
+      "status": "ok",
+      "detail": "9 datas no index.json"
+    },
+    {
+      "name": "dashboard_latest_vs_lake",
+      "status": "ok",
+      "detail": "dashboard_latest=2026-07-04, lake_latest=2026-07-04"
+    }
+  ]
+}

@@ -20,6 +20,7 @@ from src.backtest import run_backtest, save_portfolio_snapshot
 from src.ml_storage import append_historical_data
 from src.dataset_builder import build_all_datasets
 from src.ml_models import run_ml_pipeline
+from src.data_lake import save_lake_snapshot, run_data_quality_checks
 
 
 def setup_logging(logs_dir: str):
@@ -167,15 +168,40 @@ def main():
         backtest = {"disponivel": False, "motivo": str(e)}
 
     # ── Histórico de carteiras para backtest futuro ───────────────────────────
+    carteira_snapshot = pd.DataFrame()
+    carteira_path = os.path.join(backtest_dir, "carteiras_historicas.parquet")
     try:
         save_portfolio_snapshot(
             top_fiis=top_fiis,
             top_acoes=top_actions,
             data_execucao=data_hoje,
-            output_file=os.path.join(backtest_dir, "carteiras_historicas.parquet"),
+            output_file=carteira_path,
         )
+
+        if os.path.exists(carteira_path):
+            carteira_all = pd.read_parquet(carteira_path)
+            if "Data_Carteira" in carteira_all.columns:
+                carteira_dates = pd.to_datetime(carteira_all["Data_Carteira"], errors="coerce").dt.strftime("%Y-%m-%d")
+                carteira_snapshot = carteira_all[carteira_dates.eq(data_hoje)].copy()
     except Exception as e:
         logger.error(f"Falha ao salvar carteira historica de backtest: {e}")
+
+    # ── Data lake incremental ────────────────────────────────────────────────
+    # Mantém os parquets consolidados atuais por compatibilidade, mas também
+    # salva snapshots diários separados. Isso prepara o projeto para crescer sem
+    # depender de um único arquivo binário sendo regravado todos os dias.
+    try:
+        save_lake_snapshot(
+            data_dir=data_dir,
+            data_execucao=data_hoje,
+            fii_universe=fii_hist_source if "fii_hist_source" in locals() else df_clean,
+            acoes_universe=acoes_hist_source if "acoes_hist_source" in locals() else df_acoes_raw,
+            top_fiis=top_fiis,
+            top_acoes=top_actions,
+            carteira_snapshot=carteira_snapshot,
+        )
+    except Exception as e:
+        logger.error(f"Falha ao salvar snapshot incremental do data lake: {e}")
 
     # ── Datasets e modelos ML em modo sombra ─────────────────────────────────
     try:
@@ -222,6 +248,16 @@ def main():
         )
     except Exception as e:
         logger.error(f"Falha ao exportar JSON do dashboard: {e}")
+
+    # ── Checagens de qualidade e reconstrução robusta do índice ──────────────
+    try:
+        quality_report = run_data_quality_checks(
+            data_dir=data_dir,
+            dashboard_dir=os.path.join("docs", "data"),
+        )
+        logger.info(f"Data quality status: {quality_report.get('status')}")
+    except Exception as e:
+        logger.error(f"Falha nas checagens de qualidade: {e}")
 
     # ── Copia para o OneDrive ───────────────────────────────────────────────
     onedrive_dir = paths.get("onedrive_output_dir")

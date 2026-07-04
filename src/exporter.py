@@ -785,18 +785,23 @@ def export_dashboard_json(
         json.dump(payload, f, ensure_ascii=False, indent=2)
     logger.info(f"JSON do dashboard salvo: {file_path}")
 
+    # Reconstrói o índice a partir dos arquivos existentes em docs/data.
+    # Isso evita o problema de um snapshot existir no repo, mas não aparecer
+    # no dashboard porque ficou fora do index.json após conflito/rebase.
     index_path = os.path.join(output_dir, "index.json")
     datas = []
-    if os.path.exists(index_path):
-        with open(index_path, encoding="utf-8") as f:
-            datas = json.load(f)
-
-    if data_hoje not in datas:
-        datas.append(data_hoje)
+    for filename in os.listdir(output_dir):
+        if not filename.endswith(".json") or filename == "index.json":
+            continue
+        stem = filename[:-5]
+        try:
+            datas.append(pd.to_datetime(stem).strftime("%Y-%m-%d"))
+        except Exception:
+            continue
 
     datas = sorted(set(datas), reverse=True)
 
     with open(index_path, "w", encoding="utf-8") as f:
         json.dump(datas, f, ensure_ascii=False, indent=2)
 
-    logger.info(f"Indice atualizado: {len(datas)} datas disponíveis.")
+    logger.info(f"Indice reconstruido a partir dos arquivos: {len(datas)} datas disponíveis.")
