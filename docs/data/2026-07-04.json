@@ -13,11 +13,11 @@
       "VPA": 3.51,
       "ÚLTIMO DIVIDENDO": "0,26",
       "NUM. COTISTAS": 37666.0,
-      "score": 45.5,
+      "score": 45.4,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "caindo",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -26,7 +26,7 @@
       "SETOR": "INDEFINIDO",
       "PREÇO ATUAL (R$)": 342.46,
       "DIVIDEND YIELD": 0.11939999999999999,
-      "P/VP": 0.86,
+      "P/VP": 0.87,
       "LIQUIDEZ DIÁRIA (R$)": 139699.55,
       "PATRIMÔNIO LÍQUIDO": 140155422.69,
       "VOLATILIDADE": 2022.08,
@@ -53,12 +53,12 @@
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "5,23",
       "NUM. COTISTAS": 1464.0,
-      "score": 54.4,
+      "score": 54.3,
       "tendencias": {
-        "DIVIDEND YIELD": "subindo",
-        "P/VP": "caindo",
+        "DIVIDEND YIELD": "estavel",
+        "P/VP": "subindo",
         "LIQUIDEZ DIÁRIA (R$)": "caindo",
-        "VOLATILIDADE": "subindo"
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -66,7 +66,7 @@
       "SETOR": "FUNDO DE DESENVOLVIMENTO",
       "PREÇO ATUAL (R$)": 180.05,
       "DIVIDEND YIELD": 0.0575,
-      "P/VP": 1.83,
+      "P/VP": 1.82,
       "LIQUIDEZ DIÁRIA (R$)": 1286934.91,
       "PATRIMÔNIO LÍQUIDO": 402558572.7,
       "VOLATILIDADE": 4893.62,
@@ -75,10 +75,10 @@
       "NUM. COTISTAS": 803.0,
       "score": 69.6,
       "tendencias": {
-        "DIVIDEND YIELD": "neutro",
-        "P/VP": "neutro",
-        "LIQUIDEZ DIÁRIA (R$)": "neutro",
-        "VOLATILIDADE": "neutro"
+        "DIVIDEND YIELD": "estavel",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -86,7 +86,7 @@
       "SETOR": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
       "PREÇO ATUAL (R$)": 57.65,
       "DIVIDEND YIELD": 0.042800000000000005,
-      "P/VP": 0.71,
+      "P/VP": 0.72,
       "LIQUIDEZ DIÁRIA (R$)": 1172526.32,
       "PATRIMÔNIO LÍQUIDO": 615586359.16,
       "VOLATILIDADE": 2822.77,
@@ -95,10 +95,10 @@
       "NUM. COTISTAS": 42290.0,
       "score": 63.6,
       "tendencias": {
-        "DIVIDEND YIELD": "neutro",
-        "P/VP": "neutro",
-        "LIQUIDEZ DIÁRIA (R$)": "neutro",
-        "VOLATILIDADE": "neutro"
+        "DIVIDEND YIELD": "estavel",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -117,8 +117,8 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "subindo",
-        "VOLATILIDADE": "caindo"
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -126,7 +126,7 @@
       "SETOR": "FUNDO DE FUNDOS",
       "PREÇO ATUAL (R$)": 72.97,
       "DIVIDEND YIELD": 0.0246,
-      "P/VP": 0.9,
+      "P/VP": 0.89,
       "LIQUIDEZ DIÁRIA (R$)": 284267.27,
       "PATRIMÔNIO LÍQUIDO": 79940394.8,
       "VOLATILIDADE": 1679.4,
@@ -135,10 +135,10 @@
       "NUM. COTISTAS": 1875.0,
       "score": 68.4,
       "tendencias": {
-        "DIVIDEND YIELD": "neutro",
-        "P/VP": "neutro",
-        "LIQUIDEZ DIÁRIA (R$)": "neutro",
-        "VOLATILIDADE": "neutro"
+        "DIVIDEND YIELD": "estavel",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -146,7 +146,7 @@
       "SETOR": "HOTÉIS",
       "PREÇO ATUAL (R$)": 136.17,
       "DIVIDEND YIELD": 0.021099999999999997,
-      "P/VP": 0.92,
+      "P/VP": 0.91,
       "LIQUIDEZ DIÁRIA (R$)": 529915.86,
       "PATRIMÔNIO LÍQUIDO": 430803119.92,
       "VOLATILIDADE": 1035.42,
@@ -155,10 +155,10 @@
       "NUM. COTISTAS": 33089.0,
       "score": 60.6,
       "tendencias": {
-        "DIVIDEND YIELD": "neutro",
-        "P/VP": "neutro",
-        "LIQUIDEZ DIÁRIA (R$)": "neutro",
-        "VOLATILIDADE": "neutro"
+        "DIVIDEND YIELD": "estavel",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -175,10 +175,10 @@
       "NUM. COTISTAS": 1233.0,
       "score": 63.9,
       "tendencias": {
-        "DIVIDEND YIELD": "neutro",
-        "P/VP": "neutro",
-        "LIQUIDEZ DIÁRIA (R$)": "neutro",
-        "VOLATILIDADE": "neutro"
+        "DIVIDEND YIELD": "estavel",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -186,7 +186,7 @@
       "SETOR": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
       "PREÇO ATUAL (R$)": 93.57,
       "DIVIDEND YIELD": 0.0175,
-      "P/VP": 0.89,
+      "P/VP": 0.9,
       "LIQUIDEZ DIÁRIA (R$)": 591943.87,
       "PATRIMÔNIO LÍQUIDO": 439716792.04,
       "VOLATILIDADE": 1134.61,
@@ -196,9 +196,9 @@
       "score": 72.0,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "caindo",
+        "P/VP": "estavel",
         "LIQUIDEZ DIÁRIA (R$)": "subindo",
-        "VOLATILIDADE": "subindo"
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -206,7 +206,7 @@
       "SETOR": "PAPÉIS",
       "PREÇO ATUAL (R$)": 19.1,
       "DIVIDEND YIELD": 0.0165,
-      "P/VP": 0.19,
+      "P/VP": 0.2,
       "LIQUIDEZ DIÁRIA (R$)": 481108.04,
       "PATRIMÔNIO LÍQUIDO": 1334067797.89,
       "VOLATILIDADE": 2314.49,
@@ -216,8 +216,8 @@
       "score": 60.1,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "P/VP": "subindo",
+        "LIQUIDEZ DIÁRIA (R$)": "subindo",
         "VOLATILIDADE": "subindo"
       }
     },
@@ -237,7 +237,7 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "subindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -246,7 +246,7 @@
       "SETOR": "INDEFINIDO",
       "PREÇO ATUAL (R$)": 42.49,
       "DIVIDEND YIELD": 0.0161,
-      "P/VP": 0.48,
+      "P/VP": 0.49,
       "LIQUIDEZ DIÁRIA (R$)": 430484.32,
       "PATRIMÔNIO LÍQUIDO": 2028146076.2,
       "VOLATILIDADE": 1693.23,
@@ -257,7 +257,7 @@
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "subindo",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "subindo",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -266,7 +266,7 @@
       "SETOR": "PAPÉIS",
       "PREÇO ATUAL (R$)": 16.88,
       "DIVIDEND YIELD": 0.016,
-      "P/VP": 0.16,
+      "P/VP": 0.17,
       "LIQUIDEZ DIÁRIA (R$)": 538234.32,
       "PATRIMÔNIO LÍQUIDO": 2216689880.53,
       "VOLATILIDADE": 2074.88,
@@ -276,9 +276,9 @@
       "score": 29.7,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
-        "P/VP": "estavel",
+        "P/VP": "subindo",
         "LIQUIDEZ DIÁRIA (R$)": "subindo",
-        "VOLATILIDADE": "subindo"
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -293,11 +293,11 @@
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,15",
       "NUM. COTISTAS": 7492.0,
-      "score": 69.5,
+      "score": 69.4,
       "tendencias": {
         "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
         "VOLATILIDADE": "estavel"
       }
     },
@@ -313,12 +313,12 @@
       "VPA": 102.67,
       "ÚLTIMO DIVIDENDO": "0,97",
       "NUM. COTISTAS": 9776.0,
-      "score": 59.7,
+      "score": 61.3,
       "tendencias": {
-        "DIVIDEND YIELD": "caindo",
+        "DIVIDEND YIELD": "estavel",
         "P/VP": "caindo",
         "LIQUIDEZ DIÁRIA (R$)": "subindo",
-        "VOLATILIDADE": "subindo"
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -326,19 +326,19 @@
       "SETOR": "OUTROS",
       "PREÇO ATUAL (R$)": 8.29,
       "DIVIDEND YIELD": 0.015300000000000001,
-      "P/VP": 0.95,
+      "P/VP": 0.96,
       "LIQUIDEZ DIÁRIA (R$)": 195234.74,
       "PATRIMÔNIO LÍQUIDO": 307573206.43,
       "VOLATILIDADE": 2233.61,
       "VPA": null,
       "ÚLTIMO DIVIDENDO": "0,13",
       "NUM. COTISTAS": 2714.0,
-      "score": 55.5,
+      "score": 54.8,
       "tendencias": {
-        "DIVIDEND YIELD": "neutro",
-        "P/VP": "neutro",
-        "LIQUIDEZ DIÁRIA (R$)": "neutro",
-        "VOLATILIDADE": "neutro"
+        "DIVIDEND YIELD": "estavel",
+        "P/VP": "estavel",
+        "LIQUIDEZ DIÁRIA (R$)": "estavel",
+        "VOLATILIDADE": "estavel"
       }
     },
     {
@@ -355,10 +355,30 @@
       "NUM. COTISTAS": 23191.0,
       "score": 64.2,
       "tendencias": {
-        "DIVIDEND YIELD": "subindo",
+        "DIVIDEND YIELD": "estavel",
         "P/VP": "estavel",
         "LIQUIDEZ DIÁRIA (R$)": "caindo",
         "VOLATILIDADE": "estavel"
+      }
+    },
+    {
+      "FUNDOS": "MCLO11",
+      "SETOR": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
+      "PREÇO ATUAL (R$)": 9.98,
+      "DIVIDEND YIELD": 0.015,
+      "P/VP": 0.72,
+      "LIQUIDEZ DIÁRIA (R$)": 538255.91,
+      "PATRIMÔNIO LÍQUIDO": 1723795824.67,
+      "VOLATILIDADE": 11677.2,
+      "VPA": null,
+      "ÚLTIMO DIVIDENDO": "0,15",
+      "NUM. COTISTAS": 247.0,
+      "score": 26.1,
+      "tendencias": {
+        "DIVIDEND YIELD": "neutro",
+        "P/VP": "neutro",
+        "LIQUIDEZ DIÁRIA (R$)": "neutro",
+        "VOLATILIDADE": "neutro"
       }
     },
     {
@@ -366,39 +386,19 @@
       "SETOR": "INDEFINIDO",
       "PREÇO ATUAL (R$)": 87.4,
       "DIVIDEND YIELD": 0.015,
-      "P/VP": 0.91,
+      "P/VP": 0.88,
       "LIQUIDEZ DIÁRIA (R$)": 821015.91,
       "PATRIMÔNIO LÍQUIDO": 310127971.92,
       "VOLATILIDADE": 1070.61,
       "VPA": 99.02,
       "ÚLTIMO DIVIDENDO": "1,35",
       "NUM. COTISTAS": 12644.0,
-      "score": 26.1,
+      "score": 54.0,
       "tendencias": {
         "DIVIDEND YIELD": "subindo",
-        "P/VP": "estavel",
-        "LIQUIDEZ DIÁRIA (R$)": "caindo",
+        "P/VP": "caindo",
+        "LIQUIDEZ DIÁRIA (R$)": "subindo",
         "VOLATILIDADE": "subindo"
-      }
-    },
-    {
-      "FUNDOS": "JGPX11",
-      "SETOR": "INDEFINIDO",
-      "PREÇO ATUAL (R$)": 63.37,
-      "DIVIDEND YIELD": 0.014499999999999999,
-      "P/VP": 0.67,
-      "LIQUIDEZ DIÁRIA (R$)": 441536.17,
-      "PATRIMÔNIO LÍQUIDO": 203790923.2,
-      "VOLATILIDADE": 2318.01,
-      "VPA": 94.57,
-      "ÚLTIMO DIVIDENDO": "0,90",
-      "NUM. COTISTAS": 5902.0,
-      "score": 54.9,
-      "tendencias": {
-        "DIVIDEND YIELD": "neutro",
-        "P/VP": "neutro",
-        "LIQUIDEZ DIÁRIA (R$)": "neutro",
-        "VOLATILIDADE": "neutro"
       }
     }
   ],
@@ -460,8 +460,8 @@
       "EV/EBIT": 5.0874669354774,
       "score": 59.6,
       "tendencias": {
-        "Dividend Yield": "caindo",
-        "Preço/VPA": "subindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -502,8 +502,8 @@
       "EV/EBIT": 5.5381448551989,
       "score": 48.5,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -586,8 +586,8 @@
       "EV/EBIT": 6.6234924110093,
       "score": 58.4,
       "tendencias": {
-        "Dividend Yield": "subindo",
-        "Preço/VPA": "caindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -607,8 +607,8 @@
       "EV/EBIT": 6.0357618978519,
       "score": 65.2,
       "tendencias": {
-        "Dividend Yield": "estavel",
-        "Preço/VPA": "estavel",
+        "Dividend Yield": "caindo",
+        "Preço/VPA": "subindo",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -649,8 +649,8 @@
       "EV/EBIT": 14.283154216105,
       "score": 49.5,
       "tendencias": {
-        "Dividend Yield": "caindo",
-        "Preço/VPA": "subindo",
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
         "ROA": "estavel",
         "Margem Líquida": "estavel"
       }
@@ -796,10 +796,10 @@
       "EV/EBIT": 9.3649546903129,
       "score": 46.2,
       "tendencias": {
-        "Dividend Yield": "neutro",
-        "Preço/VPA": "neutro",
-        "ROA": "neutro",
-        "Margem Líquida": "neutro"
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
       }
     },
     {
@@ -817,10 +817,10 @@
       "EV/EBIT": 11.671146027899,
       "score": 48.1,
       "tendencias": {
-        "Dividend Yield": "neutro",
-        "Preço/VPA": "neutro",
-        "ROA": "neutro",
-        "Margem Líquida": "neutro"
+        "Dividend Yield": "estavel",
+        "Preço/VPA": "estavel",
+        "ROA": "estavel",
+        "Margem Líquida": "estavel"
       }
     }
   ],
@@ -842,9 +842,9 @@
         "atualizado_em": "2026-07-03 18:08:17"
       },
       "BTC/BRL": {
-        "valor": 330227.0,
-        "variacao_pct": 0.843,
-        "atualizado_em": "2026-07-04 10:51:40"
+        "valor": 333834.0,
+        "variacao_pct": 2.087,
+        "atualizado_em": "2026-07-04 17:01:29"
       }
     },
     "ipca_12m": [
@@ -9750,8 +9750,8 @@
     },
     "rebalanceamentos": 6,
     "carteira_top20_fiis": {
-      "retorno_pct": 0.64,
-      "base100": 100.64
+      "retorno_pct": 1.13,
+      "base100": 101.13
     },
     "ifix": {
       "retorno_pct": 1.35,
@@ -9768,7 +9768,7 @@
         "inicio": "2026-06-23",
         "fim": "2026-06-24",
         "ativos": 20,
-        "carteira_retorno_pct": -0.22,
+        "carteira_retorno_pct": -0.12,
         "ifix_retorno_pct": -0.22,
         "ibov_retorno_pct": -0.44
       },
@@ -9776,7 +9776,7 @@
         "inicio": "2026-06-24",
         "fim": "2026-06-25",
         "ativos": 20,
-        "carteira_retorno_pct": 0.39,
+        "carteira_retorno_pct": 0.23,
         "ifix_retorno_pct": 0.23,
         "ibov_retorno_pct": 0.87
       },
@@ -9784,7 +9784,7 @@
         "inicio": "2026-06-25",
         "fim": "2026-06-28",
         "ativos": 21,
-        "carteira_retorno_pct": 0.47,
+        "carteira_retorno_pct": 0.76,
         "ifix_retorno_pct": 0.6,
         "ibov_retorno_pct": 0.76
       },
@@ -9792,7 +9792,7 @@
         "inicio": "2026-06-29",
         "fim": "2026-07-04",
         "ativos": 20,
-        "carteira_retorno_pct": -0.01,
+        "carteira_retorno_pct": 0.26,
         "ifix_retorno_pct": 0.74,
         "ibov_retorno_pct": 0.61
       }
@@ -9800,15 +9800,15 @@
     "metodologia": "Camada 3 — carteira equal-weight Top 20 FIIs rebalanceada a cada snapshot diário, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
   },
   "kpis": {
-    "dy_medio_fiis_carteira": 0.0343,
+    "dy_medio_fiis_carteira": 0.0344,
     "dy_medio_fiis_mercado": 0.0345,
     "dy_medio_fiis_geral": 0.0345,
-    "pvp_medio_fiis_carteira": 0.7635,
+    "pvp_medio_fiis_carteira": 0.7665,
     "pvp_medio_fiis_mercado": 2.2363,
     "pvp_medio_fiis_geral": 2.2363,
-    "score_medio_fiis_carteira": 68.22,
-    "score_medio_fiis_mercado": 50.0273,
-    "score_medio_fiis_geral": 50.0273,
+    "score_medio_fiis_carteira": 68.335,
+    "score_medio_fiis_mercado": 50.0284,
+    "score_medio_fiis_geral": 50.0284,
     "dy_medio_acoes_carteira": 0.1335,
     "dy_medio_acoes_mercado": 0.0852,
     "dy_medio_acoes_geral": 0.0852,
@@ -10089,14 +10089,14 @@
       {
         "ticker": "HCTR11",
         "aparicoes": 4,
-        "score_medio": 81.55,
+        "score_medio": 81.525,
         "melhor_posicao": 10,
         "ultima_aparicao": "2026-07-04",
         "setor": "PAPÉIS",
         "preco_atual": 16.88,
         "dy_atual": 0.016,
-        "multiplo_atual": 0.16,
-        "multiplo_label": 0.16
+        "multiplo_atual": 0.17,
+        "multiplo_label": 0.17
       },
       {
         "ticker": "DEVA11",
@@ -10107,20 +10107,20 @@
         "setor": "PAPÉIS",
         "preco_atual": 19.1,
         "dy_atual": 0.0165,
-        "multiplo_atual": 0.19,
-        "multiplo_label": 0.19
+        "multiplo_atual": 0.2,
+        "multiplo_label": 0.2
       },
       {
         "ticker": "GZIT11",
         "aparicoes": 4,
-        "score_medio": 79.92500000000001,
+        "score_medio": 79.9,
         "melhor_posicao": 9,
         "ultima_aparicao": "2026-07-04",
         "setor": "INDEFINIDO",
         "preco_atual": 42.49,
         "dy_atual": 0.0161,
-        "multiplo_atual": 0.48,
-        "multiplo_label": 0.48
+        "multiplo_atual": 0.49,
+        "multiplo_label": 0.49
       },
       {
         "ticker": "VCRA11",
@@ -10149,7 +10149,7 @@
       {
         "ticker": "ARRI11",
         "aparicoes": 4,
-        "score_medio": 69.75,
+        "score_medio": 69.725,
         "melhor_posicao": 16,
         "ultima_aparicao": "2026-07-04",
         "setor": "PAPÉIS",
@@ -10161,26 +10161,26 @@
       {
         "ticker": "RZAT11",
         "aparicoes": 4,
-        "score_medio": 69.075,
+        "score_medio": 69.0,
         "melhor_posicao": 6,
         "ultima_aparicao": "2026-07-04",
         "setor": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
         "preco_atual": 93.57,
         "dy_atual": 0.0175,
-        "multiplo_atual": 0.89,
-        "multiplo_label": 0.89
+        "multiplo_atual": 0.9,
+        "multiplo_label": 0.9
       },
       {
         "ticker": "EGAF11",
         "aparicoes": 4,
-        "score_medio": 68.65,
+        "score_medio": 68.975,
         "melhor_posicao": 13,
         "ultima_aparicao": "2026-07-04",
         "setor": "INDEFINIDO",
         "preco_atual": 87.4,
         "dy_atual": 0.015,
-        "multiplo_atual": 0.91,
-        "multiplo_label": 0.91
+        "multiplo_atual": 0.88,
+        "multiplo_label": 0.88
       },
       {
         "ticker": "VIUR11",
@@ -10197,14 +10197,14 @@
       {
         "ticker": "KOPA11",
         "aparicoes": 4,
-        "score_medio": 62.15,
+        "score_medio": 62.0,
         "melhor_posicao": 2,
         "ultima_aparicao": "2026-07-04",
         "setor": "INDEFINIDO",
         "preco_atual": 342.46,
         "dy_atual": 0.11939999999999999,
-        "multiplo_atual": 0.86,
-        "multiplo_label": 0.86
+        "multiplo_atual": 0.87,
+        "multiplo_label": 0.87
       },
       {
         "ticker": "RBIR11",
@@ -10221,7 +10221,7 @@
       {
         "ticker": "SNME11",
         "aparicoes": 4,
-        "score_medio": 55.9,
+        "score_medio": 55.875,
         "melhor_posicao": 12,
         "ultima_aparicao": "2026-07-04",
         "setor": "INDEFINIDO",
@@ -10239,13 +10239,13 @@
         "setor": "PAPÉIS",
         "preco_atual": 22.96,
         "dy_atual": 0.0141,
-        "multiplo_atual": 0.23,
-        "multiplo_label": 0.23
+        "multiplo_atual": 0.24,
+        "multiplo_label": 0.24
       },
       {
         "ticker": "FZDB11",
         "aparicoes": 3,
-        "score_medio": 68.03333333333333,
+        "score_medio": 68.06666666666666,
         "melhor_posicao": 3,
         "ultima_aparicao": "2026-07-04",
         "setor": "INDEFINIDO",
@@ -10335,20 +10335,32 @@
         "setor": "INDEFINIDO",
         "preco_atual": 77.73,
         "dy_atual": 0.0126,
-        "multiplo_atual": 0.8,
-        "multiplo_label": 0.8
+        "multiplo_atual": 0.79,
+        "multiplo_label": 0.79
       },
       {
         "ticker": "TRBL11",
         "aparicoes": 1,
-        "score_medio": 75.3,
+        "score_medio": 75.0,
         "melhor_posicao": 5,
         "ultima_aparicao": "2026-07-04",
         "setor": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
         "preco_atual": 57.65,
         "dy_atual": 0.042800000000000005,
-        "multiplo_atual": 0.71,
-        "multiplo_label": 0.71
+        "multiplo_atual": 0.72,
+        "multiplo_label": 0.72
+      },
+      {
+        "ticker": "MCLO11",
+        "aparicoes": 1,
+        "score_medio": 71.5,
+        "melhor_posicao": 19,
+        "ultima_aparicao": "2026-07-04",
+        "setor": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
+        "preco_atual": 9.98,
+        "dy_atual": 0.015,
+        "multiplo_atual": 0.72,
+        "multiplo_label": 0.72
       },
       {
         "ticker": "JGPX11",
@@ -10365,14 +10377,14 @@
       {
         "ticker": "HTMX11",
         "aparicoes": 1,
-        "score_medio": 68.3,
+        "score_medio": 68.6,
         "melhor_posicao": 8,
         "ultima_aparicao": "2026-07-04",
         "setor": "HOTÉIS",
         "preco_atual": 136.17,
         "dy_atual": 0.021099999999999997,
-        "multiplo_atual": 0.92,
-        "multiplo_label": 0.92
+        "multiplo_atual": 0.91,
+        "multiplo_label": 0.91
       },
       {
         "ticker": "JSCR11",
@@ -10383,8 +10395,8 @@
         "setor": "PAPÉIS",
         "preco_atual": 8.14,
         "dy_atual": 0.0123,
-        "multiplo_atual": 0.87,
-        "multiplo_label": 0.87
+        "multiplo_atual": 0.86,
+        "multiplo_label": 0.86
       },
       {
         "ticker": "TRXB11",
@@ -10395,32 +10407,32 @@
         "setor": "FUNDO DE DESENVOLVIMENTO",
         "preco_atual": 180.05,
         "dy_atual": 0.0575,
-        "multiplo_atual": 1.83,
-        "multiplo_label": 1.83
-      },
-      {
-        "ticker": "TRXY11",
-        "aparicoes": 1,
-        "score_medio": 59.5,
-        "melhor_posicao": 17,
-        "ultima_aparicao": "2026-07-04",
-        "setor": "OUTROS",
-        "preco_atual": 8.29,
-        "dy_atual": 0.015300000000000001,
-        "multiplo_atual": 0.95,
-        "multiplo_label": 0.95
+        "multiplo_atual": 1.82,
+        "multiplo_label": 1.82
       },
       {
         "ticker": "TMPS11",
         "aparicoes": 1,
-        "score_medio": 59.1,
+        "score_medio": 59.5,
         "melhor_posicao": 7,
         "ultima_aparicao": "2026-07-04",
         "setor": "FUNDO DE FUNDOS",
         "preco_atual": 72.97,
         "dy_atual": 0.0246,
-        "multiplo_atual": 0.9,
-        "multiplo_label": 0.9
+        "multiplo_atual": 0.89,
+        "multiplo_label": 0.89
+      },
+      {
+        "ticker": "TRXY11",
+        "aparicoes": 1,
+        "score_medio": 59.2,
+        "melhor_posicao": 17,
+        "ultima_aparicao": "2026-07-04",
+        "setor": "OUTROS",
+        "preco_atual": 8.29,
+        "dy_atual": 0.015300000000000001,
+        "multiplo_atual": 0.96,
+        "multiplo_label": 0.96
       },
       {
         "ticker": "VHFA11",
@@ -10431,8 +10443,8 @@
         "setor": "MISTO",
         "preco_atual": 11.4,
         "dy_atual": 0.0755,
-        "multiplo_atual": 1.07,
-        "multiplo_label": 1.07
+        "multiplo_atual": 1.14,
+        "multiplo_label": 1.14
       }
     ]
   },
@@ -11572,8 +11584,8 @@
           "Nome": "PAPÉIS",
           "preco_atual": 16.88,
           "dy_atual": 0.016,
-          "multiplo_atual": 0.16,
-          "score_top": 81.1,
+          "multiplo_atual": 0.17,
+          "score_top": 81.0,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11594,7 +11606,7 @@
           "Nome": "PAPÉIS",
           "preco_atual": 19.1,
           "dy_atual": 0.0165,
-          "multiplo_atual": 0.19,
+          "multiplo_atual": 0.2,
           "score_top": 79.5,
           "score_ridge": null,
           "score_random_forest": null,
@@ -11616,8 +11628,8 @@
           "Nome": "INDEFINIDO",
           "preco_atual": 42.49,
           "dy_atual": 0.0161,
-          "multiplo_atual": 0.48,
-          "score_top": 79.4,
+          "multiplo_atual": 0.49,
+          "score_top": 79.3,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11726,8 +11738,8 @@
           "Nome": "PAPÉIS",
           "preco_atual": 22.96,
           "dy_atual": 0.0141,
-          "multiplo_atual": 0.23,
-          "score_top": 75.4,
+          "multiplo_atual": 0.24,
+          "score_top": 75.2,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11748,8 +11760,8 @@
           "Nome": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
           "preco_atual": 57.65,
           "dy_atual": 0.042800000000000005,
-          "multiplo_atual": 0.71,
-          "score_top": 75.3,
+          "multiplo_atual": 0.72,
+          "score_top": 75.0,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11771,7 +11783,7 @@
           "preco_atual": 61.2,
           "dy_atual": 0.013500000000000002,
           "multiplo_atual": 0.58,
-          "score_top": 74.8,
+          "score_top": 74.7,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11793,7 +11805,7 @@
           "preco_atual": 7.58,
           "dy_atual": 0.011899999999999999,
           "multiplo_atual": 0.86,
-          "score_top": 74.4,
+          "score_top": 74.5,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11815,7 +11827,7 @@
           "preco_atual": 89.78,
           "dy_atual": 0.0125,
           "multiplo_atual": 0.89,
-          "score_top": 73.1,
+          "score_top": 73.2,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11837,7 +11849,7 @@
           "preco_atual": 5.98,
           "dy_atual": 0.0116,
           "multiplo_atual": 0.71,
-          "score_top": 72.7,
+          "score_top": 72.6,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11859,7 +11871,7 @@
           "preco_atual": 6.86,
           "dy_atual": 0.0134,
           "multiplo_atual": 0.71,
-          "score_top": 72.6,
+          "score_top": 72.5,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11881,7 +11893,7 @@
           "preco_atual": 71.0,
           "dy_atual": 0.012,
           "multiplo_atual": 0.75,
-          "score_top": 72.4,
+          "score_top": 72.2,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11903,7 +11915,7 @@
           "preco_atual": 78.18,
           "dy_atual": 0.0116,
           "multiplo_atual": 0.84,
-          "score_top": 71.9,
+          "score_top": 71.8,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11924,8 +11936,8 @@
           "Nome": "PAPÉIS",
           "preco_atual": 83.0,
           "dy_atual": 0.013600000000000001,
-          "multiplo_atual": 0.93,
-          "score_top": 71.9,
+          "multiplo_atual": 0.94,
+          "score_top": 71.6,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -11938,6 +11950,28 @@
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
           "rank_modelo": 18
+        },
+        {
+          "Data_Execucao": "2026-07-04",
+          "Tipo": "FII",
+          "Ticker": "MCLO11",
+          "Nome": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
+          "preco_atual": 9.98,
+          "dy_atual": 0.015,
+          "multiplo_atual": 0.72,
+          "score_top": 71.5,
+          "score_ridge": null,
+          "score_random_forest": null,
+          "score_extra_trees": null,
+          "score_xgboost": null,
+          "score_lightgbm": null,
+          "score_catboost": null,
+          "score_ensemble": null,
+          "retorno_esperado_30d": null,
+          "modelo_lider": "Score Top",
+          "status_modelos": "Aquecendo",
+          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
+          "rank_modelo": 19
         },
         {
           "Data_Execucao": "2026-07-04",
@@ -11959,16 +11993,16 @@
           "modelo_lider": "Score Top",
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 19
+          "rank_modelo": 20
         },
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "BROF11",
-          "Nome": "LAJES CORPORATIVAS",
-          "preco_atual": 62.29,
-          "dy_atual": 0.0103,
-          "multiplo_atual": 0.57,
+          "Ticker": "XPCA11",
+          "Nome": "INDEFINIDO",
+          "preco_atual": 7.84,
+          "dy_atual": 0.0127,
+          "multiplo_atual": 0.8,
           "score_top": 70.7,
           "score_ridge": null,
           "score_random_forest": null,
@@ -11981,7 +12015,51 @@
           "modelo_lider": "Score Top",
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 20
+          "rank_modelo": 21
+        },
+        {
+          "Data_Execucao": "2026-07-04",
+          "Tipo": "FII",
+          "Ticker": "BROF11",
+          "Nome": "LAJES CORPORATIVAS",
+          "preco_atual": 62.29,
+          "dy_atual": 0.0103,
+          "multiplo_atual": 0.57,
+          "score_top": 70.6,
+          "score_ridge": null,
+          "score_random_forest": null,
+          "score_extra_trees": null,
+          "score_xgboost": null,
+          "score_lightgbm": null,
+          "score_catboost": null,
+          "score_ensemble": null,
+          "retorno_esperado_30d": null,
+          "modelo_lider": "Score Top",
+          "status_modelos": "Aquecendo",
+          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
+          "rank_modelo": 22
+        },
+        {
+          "Data_Execucao": "2026-07-04",
+          "Tipo": "FII",
+          "Ticker": "VGIR11",
+          "Nome": "PAPÉIS",
+          "preco_atual": 9.75,
+          "dy_atual": 0.013300000000000001,
+          "multiplo_atual": 0.99,
+          "score_top": 70.4,
+          "score_ridge": null,
+          "score_random_forest": null,
+          "score_extra_trees": null,
+          "score_xgboost": null,
+          "score_lightgbm": null,
+          "score_catboost": null,
+          "score_ensemble": null,
+          "retorno_esperado_30d": null,
+          "modelo_lider": "Score Top",
+          "status_modelos": "Aquecendo",
+          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
+          "rank_modelo": 23
         },
         {
           "Data_Execucao": "2026-07-04",
@@ -12003,29 +12081,7 @@
           "modelo_lider": "Score Top",
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 21
-        },
-        {
-          "Data_Execucao": "2026-07-04",
-          "Tipo": "FII",
-          "Ticker": "XPCA11",
-          "Nome": "INDEFINIDO",
-          "preco_atual": 7.84,
-          "dy_atual": 0.0127,
-          "multiplo_atual": 0.81,
-          "score_top": 70.3,
-          "score_ridge": null,
-          "score_random_forest": null,
-          "score_extra_trees": null,
-          "score_xgboost": null,
-          "score_lightgbm": null,
-          "score_catboost": null,
-          "score_ensemble": null,
-          "retorno_esperado_30d": null,
-          "modelo_lider": "Score Top",
-          "status_modelos": "Aquecendo",
-          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 22
+          "rank_modelo": 24
         },
         {
           "Data_Execucao": "2026-07-04",
@@ -12047,29 +12103,7 @@
           "modelo_lider": "Score Top",
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 23
-        },
-        {
-          "Data_Execucao": "2026-07-04",
-          "Tipo": "FII",
-          "Ticker": "VGIR11",
-          "Nome": "PAPÉIS",
-          "preco_atual": 9.75,
-          "dy_atual": 0.013300000000000001,
-          "multiplo_atual": 1.0,
-          "score_top": 69.9,
-          "score_ridge": null,
-          "score_random_forest": null,
-          "score_extra_trees": null,
-          "score_xgboost": null,
-          "score_lightgbm": null,
-          "score_catboost": null,
-          "score_ensemble": null,
-          "retorno_esperado_30d": null,
-          "modelo_lider": "Score Top",
-          "status_modelos": "Aquecendo",
-          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 24
+          "rank_modelo": 25
         },
         {
           "Data_Execucao": "2026-07-04",
@@ -12079,29 +12113,7 @@
           "preco_atual": 42.3,
           "dy_atual": 0.0084,
           "multiplo_atual": 0.52,
-          "score_top": 69.8,
-          "score_ridge": null,
-          "score_random_forest": null,
-          "score_extra_trees": null,
-          "score_xgboost": null,
-          "score_lightgbm": null,
-          "score_catboost": null,
-          "score_ensemble": null,
-          "retorno_esperado_30d": null,
-          "modelo_lider": "Score Top",
-          "status_modelos": "Aquecendo",
-          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 25
-        },
-        {
-          "Data_Execucao": "2026-07-04",
-          "Tipo": "FII",
-          "Ticker": "ARRI11",
-          "Nome": "PAPÉIS",
-          "preco_atual": 4.64,
-          "dy_atual": 0.0152,
-          "multiplo_atual": 0.55,
-          "score_top": 69.5,
+          "score_top": 69.7,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12118,12 +12130,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "RZAT11",
-          "Nome": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
-          "preco_atual": 93.57,
-          "dy_atual": 0.0175,
-          "multiplo_atual": 0.89,
-          "score_top": 69.5,
+          "Ticker": "ARRI11",
+          "Nome": "PAPÉIS",
+          "preco_atual": 4.64,
+          "dy_atual": 0.0152,
+          "multiplo_atual": 0.55,
+          "score_top": 69.4,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12145,7 +12157,7 @@
           "preco_atual": 80.4,
           "dy_atual": 0.0111,
           "multiplo_atual": 0.79,
-          "score_top": 69.4,
+          "score_top": 69.3,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12167,7 +12179,7 @@
           "preco_atual": 63.37,
           "dy_atual": 0.014499999999999999,
           "multiplo_atual": 0.67,
-          "score_top": 69.4,
+          "score_top": 69.2,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12184,12 +12196,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "RZAK11",
-          "Nome": "PAPÉIS",
-          "preco_atual": 82.2,
-          "dy_atual": 0.0129,
-          "multiplo_atual": 0.92,
-          "score_top": 69.4,
+          "Ticker": "RZAT11",
+          "Nome": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
+          "preco_atual": 93.57,
+          "dy_atual": 0.0175,
+          "multiplo_atual": 0.9,
+          "score_top": 69.2,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12206,12 +12218,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "BTRA11",
-          "Nome": "INDEFINIDO",
-          "preco_atual": 65.61,
-          "dy_atual": 0.0123,
-          "multiplo_atual": 0.56,
-          "score_top": 69.1,
+          "Ticker": "VCJR11",
+          "Nome": "PAPÉIS",
+          "preco_atual": 74.95,
+          "dy_atual": 0.0109,
+          "multiplo_atual": 0.8,
+          "score_top": 69.2,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12224,6 +12236,28 @@
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
           "rank_modelo": 31
+        },
+        {
+          "Data_Execucao": "2026-07-04",
+          "Tipo": "FII",
+          "Ticker": "BTCI11",
+          "Nome": "PAPÉIS",
+          "preco_atual": 9.23,
+          "dy_atual": 0.011399999999999999,
+          "multiplo_atual": 0.9,
+          "score_top": 69.1,
+          "score_ridge": null,
+          "score_random_forest": null,
+          "score_extra_trees": null,
+          "score_xgboost": null,
+          "score_lightgbm": null,
+          "score_catboost": null,
+          "score_ensemble": null,
+          "retorno_esperado_30d": null,
+          "modelo_lider": "Score Top",
+          "status_modelos": "Aquecendo",
+          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
+          "rank_modelo": 32
         },
         {
           "Data_Execucao": "2026-07-04",
@@ -12245,7 +12279,7 @@
           "modelo_lider": "Score Top",
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 32
+          "rank_modelo": 33
         },
         {
           "Data_Execucao": "2026-07-04",
@@ -12267,17 +12301,17 @@
           "modelo_lider": "Score Top",
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 33
+          "rank_modelo": 34
         },
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "VCJR11",
-          "Nome": "PAPÉIS",
-          "preco_atual": 74.95,
-          "dy_atual": 0.0109,
-          "multiplo_atual": 0.8,
-          "score_top": 69.1,
+          "Ticker": "JSRE11",
+          "Nome": "MISTO",
+          "preco_atual": 59.07,
+          "dy_atual": 0.0069,
+          "multiplo_atual": 0.57,
+          "score_top": 69.0,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12289,7 +12323,29 @@
           "modelo_lider": "Score Top",
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 34
+          "rank_modelo": 35
+        },
+        {
+          "Data_Execucao": "2026-07-04",
+          "Tipo": "FII",
+          "Ticker": "RZAK11",
+          "Nome": "PAPÉIS",
+          "preco_atual": 82.2,
+          "dy_atual": 0.0129,
+          "multiplo_atual": 0.93,
+          "score_top": 69.0,
+          "score_ridge": null,
+          "score_random_forest": null,
+          "score_extra_trees": null,
+          "score_xgboost": null,
+          "score_lightgbm": null,
+          "score_catboost": null,
+          "score_ensemble": null,
+          "retorno_esperado_30d": null,
+          "modelo_lider": "Score Top",
+          "status_modelos": "Aquecendo",
+          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
+          "rank_modelo": 36
         },
         {
           "Data_Execucao": "2026-07-04",
@@ -12311,61 +12367,17 @@
           "modelo_lider": "Score Top",
           "status_modelos": "Aquecendo",
           "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 35
-        },
-        {
-          "Data_Execucao": "2026-07-04",
-          "Tipo": "FII",
-          "Ticker": "BTCI11",
-          "Nome": "PAPÉIS",
-          "preco_atual": 9.23,
-          "dy_atual": 0.011399999999999999,
-          "multiplo_atual": 0.91,
-          "score_top": 68.8,
-          "score_ridge": null,
-          "score_random_forest": null,
-          "score_extra_trees": null,
-          "score_xgboost": null,
-          "score_lightgbm": null,
-          "score_catboost": null,
-          "score_ensemble": null,
-          "retorno_esperado_30d": null,
-          "modelo_lider": "Score Top",
-          "status_modelos": "Aquecendo",
-          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
-          "rank_modelo": 36
-        },
-        {
-          "Data_Execucao": "2026-07-04",
-          "Tipo": "FII",
-          "Ticker": "JSRE11",
-          "Nome": "MISTO",
-          "preco_atual": 59.07,
-          "dy_atual": 0.0069,
-          "multiplo_atual": 0.58,
-          "score_top": 68.8,
-          "score_ridge": null,
-          "score_random_forest": null,
-          "score_extra_trees": null,
-          "score_xgboost": null,
-          "score_lightgbm": null,
-          "score_catboost": null,
-          "score_ensemble": null,
-          "retorno_esperado_30d": null,
-          "modelo_lider": "Score Top",
-          "status_modelos": "Aquecendo",
-          "motivo_status": "Aguardando dados: 0 linhas treináveis e 0 datas com target 30d. Mínimo: 80 linhas e 5 datas.",
           "rank_modelo": 37
         },
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "GGRC11",
-          "Nome": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
-          "preco_atual": 9.69,
-          "dy_atual": 0.01,
-          "multiplo_atual": 0.88,
-          "score_top": 68.6,
+          "Ticker": "BTRA11",
+          "Nome": "INDEFINIDO",
+          "preco_atual": 65.61,
+          "dy_atual": 0.0123,
+          "multiplo_atual": 0.57,
+          "score_top": 68.9,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12382,12 +12394,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "KORE11",
-          "Nome": "LAJES CORPORATIVAS",
-          "preco_atual": 62.09,
-          "dy_atual": 0.009399999999999999,
-          "multiplo_atual": 0.59,
-          "score_top": 68.6,
+          "Ticker": "EGAF11",
+          "Nome": "INDEFINIDO",
+          "preco_atual": 87.4,
+          "dy_atual": 0.015,
+          "multiplo_atual": 0.88,
+          "score_top": 68.9,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12404,12 +12416,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "VRTM11",
-          "Nome": "MISTO",
-          "preco_atual": 6.97,
-          "dy_atual": 0.0127,
-          "multiplo_atual": 0.73,
-          "score_top": 68.6,
+          "Ticker": "KORE11",
+          "Nome": "LAJES CORPORATIVAS",
+          "preco_atual": 62.09,
+          "dy_atual": 0.009399999999999999,
+          "multiplo_atual": 0.58,
+          "score_top": 68.8,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12431,7 +12443,7 @@
           "preco_atual": 154.46,
           "dy_atual": 0.0339,
           "multiplo_atual": 0.86,
-          "score_top": 68.5,
+          "score_top": 68.6,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12452,8 +12464,8 @@
           "Nome": "HOTÉIS",
           "preco_atual": 136.17,
           "dy_atual": 0.021099999999999997,
-          "multiplo_atual": 0.92,
-          "score_top": 68.3,
+          "multiplo_atual": 0.91,
+          "score_top": 68.6,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12470,12 +12482,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "CPSH11",
-          "Nome": "INDEFINIDO",
-          "preco_atual": 9.99,
-          "dy_atual": 0.011000000000000001,
-          "multiplo_atual": 0.86,
-          "score_top": 68.2,
+          "Ticker": "GGRC11",
+          "Nome": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
+          "preco_atual": 9.69,
+          "dy_atual": 0.01,
+          "multiplo_atual": 0.88,
+          "score_top": 68.5,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12492,12 +12504,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "MCRE11",
-          "Nome": "PAPÉIS",
-          "preco_atual": 9.11,
-          "dy_atual": 0.0121,
-          "multiplo_atual": 0.89,
-          "score_top": 68.2,
+          "Ticker": "CPSH11",
+          "Nome": "INDEFINIDO",
+          "preco_atual": 9.99,
+          "dy_atual": 0.011000000000000001,
+          "multiplo_atual": 0.86,
+          "score_top": 68.3,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12514,12 +12526,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "RBRX11",
-          "Nome": "INDEFINIDO",
-          "preco_atual": 8.18,
-          "dy_atual": 0.0108,
-          "multiplo_atual": 0.83,
-          "score_top": 68.2,
+          "Ticker": "VRTM11",
+          "Nome": "MISTO",
+          "preco_atual": 6.97,
+          "dy_atual": 0.0127,
+          "multiplo_atual": 0.74,
+          "score_top": 68.3,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12536,12 +12548,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "BBGO11",
-          "Nome": "INDEFINIDO",
-          "preco_atual": 67.0,
-          "dy_atual": 0.0116,
-          "multiplo_atual": 0.71,
-          "score_top": 68.1,
+          "Ticker": "XPIN11",
+          "Nome": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
+          "preco_atual": 61.53,
+          "dy_atual": 0.013300000000000001,
+          "multiplo_atual": 0.82,
+          "score_top": 68.2,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12558,12 +12570,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "PSEC11",
-          "Nome": "FUNDO DE FUNDOS",
-          "preco_atual": 56.71,
-          "dy_atual": 0.0095,
-          "multiplo_atual": 0.76,
-          "score_top": 68.1,
+          "Ticker": "BBGO11",
+          "Nome": "INDEFINIDO",
+          "preco_atual": 67.0,
+          "dy_atual": 0.0116,
+          "multiplo_atual": 0.71,
+          "score_top": 67.9,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12580,12 +12592,12 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "XPIN11",
-          "Nome": "IMÓVEIS INDUSTRIAIS E LOGÍSTICOS",
-          "preco_atual": 61.53,
-          "dy_atual": 0.013300000000000001,
-          "multiplo_atual": 0.82,
-          "score_top": 68.1,
+          "Ticker": "MCRE11",
+          "Nome": "PAPÉIS",
+          "preco_atual": 9.11,
+          "dy_atual": 0.0121,
+          "multiplo_atual": 0.9,
+          "score_top": 67.8,
           "score_ridge": null,
           "score_random_forest": null,
           "score_extra_trees": null,
@@ -12602,11 +12614,11 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "VSLH11",
-          "Nome": "PAPÉIS",
-          "preco_atual": 1.79,
-          "dy_atual": 0.011699999999999999,
-          "multiplo_atual": 0.16,
+          "Ticker": "RBRX11",
+          "Nome": "INDEFINIDO",
+          "preco_atual": 8.18,
+          "dy_atual": 0.0108,
+          "multiplo_atual": 0.84,
           "score_top": 67.8,
           "score_ridge": null,
           "score_random_forest": null,
@@ -12624,11 +12636,11 @@
         {
           "Data_Execucao": "2026-07-04",
           "Tipo": "FII",
-          "Ticker": "IRIM11",
-          "Nome": "INDEFINIDO",
-          "preco_atual": 66.9,
-          "dy_atual": 0.0102,
-          "multiplo_atual": 0.79,
+          "Ticker": "PSEC11",
+          "Nome": "FUNDO DE FUNDOS",
+          "preco_atual": 56.71,
+          "dy_atual": 0.0095,
+          "multiplo_atual": 0.77,
           "score_top": 67.7,
           "score_ridge": null,
           "score_random_forest": null,
@@ -12837,7 +12849,7 @@
   "resumo": {
     "total_fiis": 20,
     "total_acoes": 20,
-    "dy_medio_fiis": 0.0343,
-    "pvp_medio_fiis": 0.7635
+    "dy_medio_fiis": 0.0344,
+    "pvp_medio_fiis": 0.7665
   }
 }

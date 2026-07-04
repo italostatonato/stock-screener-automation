@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T11:09:41",
+  "generated_at": "2026-07-04T17:07:06",
   "status": "ok",
   "checks": [
     {
@@ -18,42 +18,42 @@
       "detail": "ok"
     },
     {
-      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/historico_fiis.parquet",
+      "name": "data/ml/historico_fiis.parquet",
       "status": "ok",
       "detail": "2118 linhas"
     },
     {
-      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/historico_acoes.parquet",
+      "name": "data/ml/historico_acoes.parquet",
       "status": "ok",
       "detail": "1212 linhas"
     },
     {
-      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
+      "name": "data/backtest/carteiras_historicas.parquet",
       "status": "ok",
-      "detail": "161 linhas"
+      "detail": "162 linhas"
     },
     {
-      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/dataset_fiis.parquet",
+      "name": "data/ml/dataset_fiis.parquet",
       "status": "ok",
       "detail": "1965 linhas"
     },
     {
-      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/dataset_acoes.parquet",
+      "name": "data/ml/dataset_acoes.parquet",
       "status": "ok",
       "detail": "1212 linhas"
     },
     {
-      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
+      "name": "data/ml/model_predictions_fiis.parquet",
       "status": "ok",
       "detail": "983 linhas"
     },
     {
-      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
+      "name": "data/ml/model_predictions_acoes.parquet",
       "status": "ok",
       "detail": "606 linhas"
     },
     {
-      "name": "C:/Users/Ítalo/OneDrive/stock-screener-automation/data/ml/model_performance.parquet",
+      "name": "data/ml/model_performance.parquet",
       "status": "ok",
       "detail": "16 linhas"
     },
@@ -80,7 +80,7 @@
     {
       "name": "dashboard_index",
       "status": "ok",
-      "detail": "9 datas no index.json"
+      "detail": "13 datas no index.json"
     },
     {
       "name": "dashboard_latest_vs_lake",
