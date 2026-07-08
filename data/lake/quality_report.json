@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-07-07T13:18:48",
+  "generated_at": "2026-07-08T12:21:09",
   "status": "ok",
   "checks": [
     {
       "name": "lake_snapshots",
       "status": "ok",
-      "detail": "3 snapshots encontrados"
+      "detail": "4 snapshots encontrados"
     },
     {
       "name": "lake_manifest",
       "status": "ok",
-      "detail": "latest=2026-07-07"
+      "detail": "latest=2026-07-08"
     },
     {
       "name": "snapshot_2026-07-04_files",
@@ -28,39 +28,44 @@
       "detail": "ok"
     },
     {
+      "name": "snapshot_2026-07-08_files",
+      "status": "ok",
+      "detail": "ok"
+    },
+    {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_fiis.parquet",
       "status": "ok",
-      "detail": "3188 linhas"
+      "detail": "3727 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_acoes.parquet",
       "status": "ok",
-      "detail": "1818 linhas"
+      "detail": "2121 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
       "status": "ok",
-      "detail": "242 linhas"
+      "detail": "282 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_fiis.parquet",
       "status": "ok",
-      "detail": "2958 linhas"
+      "detail": "3459 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_acoes.parquet",
       "status": "ok",
-      "detail": "1818 linhas"
+      "detail": "2121 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
       "status": "ok",
-      "detail": "1976 linhas"
+      "detail": "2477 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
       "status": "ok",
-      "detail": "1212 linhas"
+      "detail": "1515 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_performance.parquet",
@@ -90,12 +95,12 @@
     {
       "name": "dashboard_index",
       "status": "ok",
-      "detail": "15 datas no index.json"
+      "detail": "16 datas no index.json"
     },
     {
       "name": "dashboard_latest_vs_lake",
       "status": "ok",
-      "detail": "dashboard_latest=2026-07-07, lake_latest=2026-07-07"
+      "detail": "dashboard_latest=2026-07-08, lake_latest=2026-07-08"
     }
   ]
 }
