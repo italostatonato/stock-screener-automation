@@ -7,6 +7,7 @@ import os
 import numpy as np
 import pandas as pd
 
+from src.ml_confidence import add_confidence_to_performance_records, build_ml_confidence_summary
 logger = logging.getLogger(__name__)
 
 
@@ -643,7 +644,7 @@ def _performance_records(path: str) -> list:
 
     cols = [
         "Tipo", "Modelo", "Horizonte", "Janelas_Validas", "Retorno_Medio_Top20",
-        "Hit_Rate_Top20", "Spearman_IC", "Alpha_vs_Score_Top", "Status",
+        "Hit_Rate_Top20", "Spearman_IC", "Alpha_vs_Score_Top", "Confiabilidade_Pct", "Nivel_Confiabilidade", "Status",
     ]
     existing = [c for c in cols if c in df.columns]
     return [{col: _safe(row[col]) for col in existing} for _, row in df[existing].iterrows()]
@@ -659,6 +660,12 @@ def _calc_modelos_ml() -> dict:
     acoes = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_acoes.parquet"), top_n=50)
     fiis = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_fiis.parquet"), top_n=50)
     performance = _performance_records(os.path.join(ml_dir, "model_performance.parquet"))
+    confidence = build_ml_confidence_summary(
+        performance_records=performance,
+        docs_data_dir=os.path.join("docs", "data"),
+        horizon_days=30,
+    )
+    performance = add_confidence_to_performance_records(performance, confidence)
 
     statuses = [r.get("status_modelos") for r in acoes + fiis if r.get("status_modelos")]
     if any(str(s).lower() == "ativo" for s in statuses):
@@ -671,6 +678,7 @@ def _calc_modelos_ml() -> dict:
     return {
         "status": status,
         "horizonte_principal": "30d",
+        "confiabilidade": confidence,
         "ranking": {
             "acoes": acoes,
             "fiis": fiis,

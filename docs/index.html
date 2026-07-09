@@ -113,7 +113,12 @@
     <section id="modelos" class="section">
       <div class="section-head"><div><h2>Modelos ML</h2><p class="desc">Comparação em modo sombra entre o Score Top atual e modelos supervisionados.</p></div></div>
       <div class="panel wide">
-        <h3>Ranking dos modelos</h3>
+        <div id="ml-confidence-panel" style="margin: 16px 0 22px; padding: 16px; border: 1px solid rgba(148,163,184,.25); border-radius: 16px; background: rgba(15,23,42,.45);">
+  <h3 style="margin:0 0 10px;">Status e confiabilidade dos modelos</h3>
+  <div id="ml-confidence-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;"></div>
+  <p id="ml-confidence-message" style="margin:12px 0 0; color:#94a3b8; font-size:.92rem;"></p>
+</div>
+<h3>Ranking dos modelos</h3>
         <p>Resultado diário por ativo, com Score Top, modelos de árvore, regressão, boosting e ensemble. O ranking oficial ainda não muda automaticamente.</p>
         <div class="mini-note" id="mlStatusNote"></div>
         <div class="rec-table-wrap">
@@ -820,5 +825,57 @@
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');setTimeout(()=>Object.values(state.charts).forEach(c=>c.resize()),50);}));
     init();
   </script>
+<script id="ml-confidence-renderer">
+(function () {
+  function fmtPct(v) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return "—";
+    return `${n.toFixed(1)}%`;
+  }
+
+  function card(label, value, sub) {
+    return `
+      <div style="padding:12px; border:1px solid rgba(148,163,184,.18); border-radius:14px; background:rgba(2,6,23,.28);">
+        <div style="color:#94a3b8; font-size:.82rem; margin-bottom:6px;">${label}</div>
+        <div style="font-size:1.45rem; font-weight:700;">${value}</div>
+        <div style="color:#94a3b8; font-size:.78rem; margin-top:4px;">${sub || ""}</div>
+      </div>`;
+  }
+
+  function render(conf) {
+    const grid = document.getElementById("ml-confidence-grid");
+    const msg = document.getElementById("ml-confidence-message");
+    if (!grid || !msg) return;
+
+    conf = conf || {};
+    const leader = conf.modelo_mais_confiavel;
+    grid.innerHTML = [
+      card("Maturidade dos dados", fmtPct(conf.maturidade_dados_pct), `${conf.dias_historico || 0} dias de histórico · alvo ${conf.horizonte_dias || 30}d`),
+      card("Confiabilidade preditiva", fmtPct(conf.confiabilidade_preditiva_pct), conf.nivel_confiabilidade || "Não mensurável"),
+      card("Janelas válidas", `${conf.janelas_validas_max || 0}/${conf.min_janelas_validas || 5}`, "mínimo para liberar confiança real"),
+      card("Modelo mais confiável", leader ? `${leader.Modelo} · ${leader.Tipo}` : "—", leader ? fmtPct(leader.Confiabilidade_Pct) : "aguardando validação")
+    ].join("");
+    msg.textContent = conf.mensagem || "Aguardando dados de retorno futuro para calcular confiabilidade real.";
+  }
+
+  async function loadLatestConfidence() {
+    try {
+      const index = await fetch("data/index.json", { cache: "no-store" }).then(r => r.json());
+      const latest = Array.isArray(index) ? index[0] : null;
+      if (!latest) return render({});
+      const payload = await fetch(`data/${latest}.json`, { cache: "no-store" }).then(r => r.json());
+      render(payload && payload.modelos_ml && payload.modelos_ml.confiabilidade);
+    } catch (err) {
+      render({ mensagem: "Não foi possível carregar a confiabilidade dos modelos neste momento." });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadLatestConfidence);
+  } else {
+    loadLatestConfidence();
+  }
+})();
+</script>
 </body>
 </html>
