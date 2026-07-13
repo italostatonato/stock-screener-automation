@@ -40,6 +40,78 @@
 
     @media(max-width:1180px){.tabs{flex-wrap:wrap}.nav{align-items:flex-start;padding:12px 0}.kpis{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:1050px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.hero-grid,.charts{grid-template-columns:1fr}}@media(max-width:620px){.wrap{width:min(100% - 20px,var(--max))}.nav{height:auto;padding:12px 0;align-items:flex-start;flex-direction:column}.brand-area{width:100%;justify-content:space-between}.kpis{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.tabs{width:100%;overflow:auto;justify-content:flex-start}.tab{flex:0 0 auto}.hero{padding-top:26px}.hero-grid,.charts{grid-template-columns:1fr}.kpi .value{font-size:22px}.kpi .note{max-width:100%;white-space:normal}.kpi-spark{position:relative;right:auto;bottom:auto;width:100%;height:42px;margin-top:10px}.search{min-width:100%;width:100%}.about-panel{grid-template-columns:1fr}.chart-ai{position:static;width:100%;margin-bottom:10px}}
+
+
+    /* Patch: abas congeladas + KPIs mobile compactos */
+    body{padding-top:var(--topbar-h,68px)}
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,12,24,.88);box-shadow:0 10px 30px rgba(0,0,0,.22)}
+    .tabs{scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .tabs::-webkit-scrollbar{display:none}
+
+    @media(max-width:1180px){
+      .nav{align-items:center;padding:10px 0;gap:12px}
+      .tabs{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;max-width:100%}
+      .tab{flex:0 0 auto;white-space:nowrap}
+    }
+
+    @media(max-width:620px){
+      .nav{height:auto;padding:8px 0;align-items:flex-start;flex-direction:column;gap:8px}
+      .brand-area{width:100%;justify-content:space-between;gap:10px}
+      .brand{gap:9px}
+      .brand small{display:none}
+      .logo{width:32px;height:32px;border-radius:12px}
+      .github-top{padding:7px 10px;font-size:12px}
+      .tabs{width:100%;gap:6px;padding-bottom:2px;overflow-x:auto;justify-content:flex-start}
+      .tab{padding:7px 10px;font-size:13px;line-height:1}
+      .hero{padding-top:18px}
+      .kpi-windowbar{gap:7px;margin:10px 0 8px}
+      .kpi-windowbar .window-label{flex-basis:100%;font-size:10px;margin:0 0 2px}
+      .kpi-window{padding:7px 10px;font-size:11px}
+      .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 20px}
+      .kpi{border-radius:14px;padding:10px;min-height:92px}
+      .kpi .label{font-size:9px;letter-spacing:.045em;line-height:1.15}
+      .kpi .value{font-size:20px;margin-top:4px;line-height:1.05}
+      .kpi .note{font-size:9.5px;line-height:1.2;max-width:100%;white-space:normal;margin-top:5px}
+      .kpi-spark{position:relative;right:auto;bottom:auto;width:100%;height:28px;margin-top:6px}
+    }
+
+    @media(max-width:380px){
+      .tab{font-size:12px;padding:7px 9px}
+      .kpi{min-height:88px;padding:9px}
+      .kpi .value{font-size:18px}
+      .kpi .note{font-size:9px}
+    }
+
+  
+    /* Patch: rótulo Resumo + KPIs responsivos sem cortar números */
+    @media(max-width:1180px){
+      .kpis{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+      .kpi{min-height:116px;padding:12px}
+      .kpi .value{font-size:24px;line-height:1.02;white-space:nowrap}
+      .kpi .note{max-width:100%;white-space:normal;overflow:visible;text-overflow:clip;font-size:10px;line-height:1.2}
+      .kpi-spark{position:relative;right:auto;bottom:auto;width:100%;height:30px;margin-top:auto}
+    }
+    @media(max-width:620px){
+      .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0 20px}
+      .kpi{border-radius:14px;padding:9px;min-height:104px}
+      .kpi .label{font-size:8.5px;letter-spacing:.035em;line-height:1.12}
+      .kpi .value{font-size:20px;line-height:1;margin-top:4px;white-space:nowrap}
+      .kpi .note{font-size:8.4px;line-height:1.15;margin-top:4px;max-width:100%;white-space:normal;overflow:visible;text-overflow:clip}
+      .kpi-spark{height:22px;margin-top:auto}
+    }
+    @media(max-width:380px){
+      .kpi{min-height:100px;padding:8px}
+      .kpi .label{font-size:8px}
+      .kpi .value{font-size:18px}
+      .kpi .note{font-size:7.6px}
+      .kpi-spark{height:20px}
+    }
+
+  
+    /* Patch: notas dos KPIs curtas no padrão 'WoW -x,xx%' */
+    .kpi .note{white-space:nowrap;overflow:visible;text-overflow:clip;max-width:100%}
+    @media(max-width:620px){.kpi .note{font-size:8.8px;white-space:nowrap}.kpi .value{font-size:20px}.kpi-spark{height:22px}}
+
   </style>
 </head>
 <body>
@@ -305,7 +377,7 @@
       const diff = retCarteira!=null && retBench!=null ? retCarteira-retBench : null;
       return {
         value: retCarteira==null ? '—' : fmtPct(retCarteira),
-        note: `<b>vs ${benchmarkName}</b> ${retBench==null?'—':fmtPct(retBench)} · <span class="${deltaClass(diff,true)}">${diff==null?'—':signed(diff*100,2)+'p.p.'}</span>`,
+        note: `<b>vs ${benchmarkName}</b> <span class="${deltaClass(diff,true)}">${diff==null?'—':signed(diff*100,2)+'p.p.'}</span>`,
         kind: diff==null ? '' : diff>=0 ? 'good' : 'bad'
       };
     }
@@ -371,9 +443,9 @@
     }
     function windowNote(key,formatter,higherIsBetter=true,suffix=''){
       const w=windowDiff(key);
-      if(w.diff==null) return `${w.label}: aguardando histórico`;
-      const val = key==='dyFiis' ? `${signed(w.diff*100,2)}p.p.` : `${signed(w.diff, key.includes('score')?1:2)}${suffix}`;
-      return `<b>${w.label}</b> ${formatter(w.prev)} → ${formatter(w.cur)} · <span class="${deltaClass(w.diff,higherIsBetter)}">${val}</span>`;
+      if(w.diff==null) return `<b>${w.label}</b> aguardando histórico`;
+      const val = key==='dyFiis' ? `${signed(w.diff*100,2)}%` : `${signed(w.diff, key.includes('score')?1:2)}${suffix}`;
+      return `<b>${w.label}</b> <span class="${deltaClass(w.diff,higherIsBetter)}">${val}</span>`;
     }
     function sparklineValues(metricKey){
       const win=KPI_WINDOWS[state.kpiWindow] || KPI_WINDOWS.WoW;
@@ -865,7 +937,7 @@ function renderKpis(){
       const el=document.createElement('div');
       el.className='chart-ai';
       el.dataset.chart=chartId;
-      el.innerHTML=`<b>Resumo IA</b>${text}`;
+      el.innerHTML=`<b>Resumo</b>${text}`;
 
       let wrap=box.closest('.compare-layout');
       if(!wrap){
@@ -955,7 +1027,19 @@ function renderKpis(){
 
 
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');setTimeout(()=>Object.values(state.charts).forEach(c=>c.resize()),50);}));
+
+    function syncStickyTabBar(){
+      const topbar=document.querySelector('.topbar');
+      if(!topbar) return;
+      const h=Math.ceil(topbar.getBoundingClientRect().height);
+      if(h>0) document.documentElement.style.setProperty('--topbar-h', `${h}px`);
+    }
+    window.addEventListener('resize', syncStickyTabBar);
+    window.addEventListener('orientationchange', ()=>setTimeout(syncStickyTabBar,120));
+    window.addEventListener('load', syncStickyTabBar);
+    syncStickyTabBar();
     init();
+    setTimeout(syncStickyTabBar,300);
   </script>
 <script id="ml-confidence-renderer">
 (function () {
