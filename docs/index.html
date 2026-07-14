@@ -112,6 +112,753 @@
     .kpi .note{white-space:nowrap;overflow:visible;text-overflow:clip;max-width:100%}
     @media(max-width:620px){.kpi .note{font-size:8.8px;white-space:nowrap}.kpi .value{font-size:20px}.kpi-spark{height:22px}}
 
+
+
+    /* Refinamento visual final: proporção, densidade e score/info */
+    .hero{padding:30px 0 18px !important}
+    .hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(320px,.62fr) !important;gap:18px !important;align-items:center !important}
+    .hero h1{font-size:clamp(34px,4.8vw,58px) !important;line-height:.96 !important;margin:8px 0 10px !important;letter-spacing:-.035em !important}
+    .hero p{font-size:15.5px !important;max-width:680px !important;line-height:1.48 !important}
+    .author-row{margin-top:18px !important}
+    .asof{padding:16px 18px !important;border-radius:20px !important;max-width:460px !important;justify-self:end !important;width:100% !important}
+    .asof strong{font-size:21px !important;line-height:1.15 !important}
+    .update-note{font-size:12.5px !important;margin-top:8px !important}
+
+    .kpis{gap:12px !important;margin:8px 0 24px !important}
+    .kpi{min-height:110px !important;padding:14px !important;border-radius:18px !important;display:flex !important;flex-direction:column !important;justify-content:flex-start !important}
+    .kpi .label{font-size:10.8px !important;letter-spacing:.075em !important;line-height:1.15 !important}
+    .kpi .value{font-size:25px !important;line-height:1.02 !important;margin-top:6px !important}
+    .kpi .note{font-size:10px !important;line-height:1.12 !important;max-width:58% !important;white-space:nowrap !important;overflow:visible !important;text-overflow:clip !important;margin-top:4px !important}
+    .kpi-spark{position:absolute !important;right:14px !important;bottom:12px !important;width:38% !important;height:34px !important;margin:0 !important}
+    .kpi-spark .spark-line{stroke-width:2.8 !important}
+
+    .grid{grid-template-columns:repeat(auto-fit,minmax(235px,1fr)) !important;gap:12px !important}
+    .asset-card{padding:13px !important;border-radius:18px !important;box-shadow:0 8px 24px rgba(0,0,0,.16) !important}
+    .ticker{font-size:19px !important;line-height:1 !important;letter-spacing:-.025em !important}
+    .rank{font-size:11px !important;padding:3px 7px !important}
+    .name{font-size:10.8px !important;line-height:1.22 !important;min-height:0 !important;margin-top:2px !important;display:-webkit-box !important;-webkit-line-clamp:2 !important;-webkit-box-orient:vertical !important;overflow:hidden !important}
+    .score-wrap{margin:10px 0 9px !important}
+    .score-line{font-size:11px !important}
+    .bar{height:7px !important;margin-top:5px !important}
+    .metrics{gap:7px !important}
+    .metric{padding:7px 8px !important;border-radius:11px !important;min-width:0 !important}
+    .metric b{font-size:12px !important;line-height:1.1 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important}
+    .metric span{font-size:9.8px !important;line-height:1.1 !important}
+
+    .score-info-section .info-card{line-height:1.55}
+    .score-guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}
+    .score-primer{min-height:220px}
+    .info-kicker{display:inline-flex;align-items:center;border:1px solid rgba(214,180,111,.28);background:rgba(214,180,111,.08);color:var(--accent);font-weight:900;text-transform:uppercase;letter-spacing:.1em;font-size:10px;border-radius:999px;padding:5px 8px;margin-bottom:10px}
+    .score-band-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:6px}
+    .score-band-grid div{display:flex;align-items:center;gap:10px;border:1px solid rgba(148,163,184,.13);border-radius:12px;padding:8px 10px;background:rgba(0,0,0,.10)}
+    .score-band-grid b{min-width:48px;color:var(--accent);font-size:15px}
+    .score-band-grid span{color:var(--muted);font-size:12px}
+    .score-detail-grid{margin-bottom:16px}
+    .lower-info-grid{align-items:stretch}
+    .compact-source-table td{padding:8px 10px !important}
+
+    @media(min-width:1500px){
+      .grid{grid-template-columns:repeat(auto-fit,minmax(245px,1fr)) !important}
+      .chart-box{height:320px !important}
+    }
+    @media(max-width:1180px){
+      .hero-grid{grid-template-columns:1fr !important;gap:16px !important}
+      .asof{justify-self:start !important;max-width:100% !important}
+      .kpis{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+      .kpi{min-height:104px !important;padding:12px !important}
+      .kpi .note{max-width:100% !important}
+      .kpi-spark{position:relative !important;right:auto !important;bottom:auto !important;width:100% !important;height:24px !important;margin-top:auto !important}
+      .score-guide-grid{grid-template-columns:1fr !important}
+      .score-primer{min-height:0}
+    }
+    @media(max-width:720px){
+      .hero{padding:20px 0 14px !important}
+      .hero h1{font-size:clamp(32px,10vw,42px) !important}
+      .hero p{font-size:14px !important}
+      .kpis{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:8px !important}
+      .kpi{min-height:88px !important;padding:9px !important;border-radius:14px !important}
+      .kpi .label{font-size:8.4px !important;letter-spacing:.04em !important}
+      .kpi .value{font-size:20px !important;margin-top:4px !important}
+      .kpi .note{font-size:8.8px !important;margin-top:3px !important;white-space:nowrap !important;max-width:100% !important}
+      .kpi-spark{height:18px !important;margin-top:auto !important}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:9px !important}
+      .asset-card{padding:10px !important;border-radius:15px !important}
+      .ticker{font-size:16px !important}
+      .name{font-size:9.6px !important;-webkit-line-clamp:1 !important}
+      .score-wrap{margin:8px 0 7px !important}
+      .metrics{gap:5px !important}
+      .metric{padding:6px !important;border-radius:9px !important}
+      .metric b{font-size:10.8px !important}
+      .metric span{font-size:8.8px !important}
+    }
+    @media(max-width:390px){
+      .kpi{min-height:84px !important;padding:8px !important}
+      .kpi .value{font-size:18px !important}
+      .kpi .note{font-size:8.2px !important}
+      .kpi-spark{height:16px !important}
+      .grid{grid-template-columns:1fr !important}
+    }
+
+  
+    /* Patch final: proporção, alinhamento e densidade visual */
+    .hero{
+      padding:32px 0 18px;
+    }
+    .hero-grid{
+      grid-template-columns:minmax(0,1.1fr) minmax(320px,.62fr);
+      gap:24px;
+      align-items:center;
+    }
+    .hero h1{
+      font-size:clamp(38px,5.2vw,64px);
+      line-height:.98;
+      margin:8px 0 12px;
+      letter-spacing:-.04em;
+    }
+    .hero p{
+      font-size:16px;
+      max-width:720px;
+    }
+    .asof{
+      padding:16px;
+      border-radius:20px;
+    }
+    .asof strong{
+      font-size:22px;
+    }
+
+    .kpi-windowbar{
+      margin:16px 0 12px;
+      gap:9px;
+      align-items:center;
+    }
+    .kpis{
+      gap:14px;
+      margin:10px 0 30px;
+    }
+    .kpi{
+      min-height:112px;
+      padding:14px 16px;
+      border-radius:20px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(84px,34%);
+      grid-template-rows:auto auto auto;
+      column-gap:14px;
+      align-items:center;
+    }
+    .kpi .label{
+      grid-column:1;
+      grid-row:1;
+      font-size:11px;
+      line-height:1.15;
+      letter-spacing:.07em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .kpi .value{
+      grid-column:1;
+      grid-row:2;
+      font-size:27px;
+      line-height:1;
+      margin-top:5px;
+      white-space:nowrap;
+    }
+    .kpi .note{
+      grid-column:1;
+      grid-row:3;
+      font-size:10px;
+      line-height:1.15;
+      margin-top:5px;
+      max-width:100%;
+      white-space:nowrap;
+      overflow:visible;
+      text-overflow:clip;
+    }
+    .kpi-spark{
+      grid-column:2;
+      grid-row:1 / 4;
+      position:static;
+      width:100%;
+      height:42px;
+      align-self:center;
+      justify-self:stretch;
+      margin:0;
+    }
+    .kpi-spark .spark-line{
+      stroke-width:2.6;
+    }
+
+    .section-head{
+      margin:22px 0 14px;
+    }
+    .section h2{
+      font-size:28px;
+      line-height:1.05;
+    }
+    .section .desc{
+      font-size:15px;
+      line-height:1.35;
+      margin-top:8px;
+    }
+    .grid{
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:14px;
+      align-items:stretch;
+    }
+    @media(min-width:1500px){
+      #fiis .grid,
+      #acoes .grid{
+        grid-template-columns:repeat(5,minmax(0,1fr));
+      }
+    }
+    .asset-card{
+      padding:14px;
+      border-radius:18px;
+      min-height:auto;
+      display:flex;
+      flex-direction:column;
+    }
+    .asset-top{
+      gap:8px;
+      align-items:flex-start;
+    }
+    .ticker{
+      font-size:20px;
+      line-height:1;
+      letter-spacing:-.035em;
+    }
+    .name{
+      font-size:11px;
+      line-height:1.2;
+      min-height:16px;
+      margin-top:3px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .rank{
+      padding:4px 8px;
+      font-size:11px;
+      line-height:1.1;
+    }
+    .score-wrap{
+      margin:10px 0 10px;
+    }
+    .score-line{
+      font-size:11.5px;
+      line-height:1.2;
+    }
+    .bar{
+      height:7px;
+      margin-top:5px;
+    }
+    .metrics{
+      gap:7px;
+      margin-top:auto;
+    }
+    .metric{
+      padding:8px 9px;
+      border-radius:12px;
+      min-height:auto;
+    }
+    .metric span{
+      font-size:10.5px;
+      line-height:1.15;
+    }
+    .metric b{
+      font-size:12.5px;
+      line-height:1.15;
+      margin-top:3px;
+    }
+
+    @media(max-width:1180px){
+      .hero-grid{
+        grid-template-columns:1fr;
+        align-items:start;
+      }
+      .kpis{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:10px;
+      }
+      .kpi{
+        min-height:104px;
+        padding:12px;
+        grid-template-columns:minmax(0,1fr) 78px;
+        column-gap:10px;
+      }
+      .kpi .value{
+        font-size:24px;
+      }
+      .kpi .note{
+        font-size:9.2px;
+      }
+      .kpi-spark{
+        height:34px;
+      }
+      .grid{
+        grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      }
+    }
+
+    @media(max-width:700px){
+      .hero{
+        padding:22px 0 14px;
+      }
+      .hero h1{
+        font-size:clamp(34px,11vw,44px);
+      }
+      .kpi-windowbar{
+        gap:7px;
+      }
+      .kpis{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
+      }
+      .kpi{
+        min-height:96px;
+        padding:10px;
+        border-radius:16px;
+        grid-template-columns:minmax(0,1fr) 58px;
+        column-gap:8px;
+      }
+      .kpi .label{
+        font-size:8.5px;
+        letter-spacing:.035em;
+      }
+      .kpi .value{
+        font-size:20px;
+        margin-top:4px;
+      }
+      .kpi .note{
+        font-size:8px;
+        margin-top:4px;
+      }
+      .kpi-spark{
+        height:26px;
+      }
+      .section h2{
+        font-size:24px;
+      }
+      .section .desc{
+        font-size:14px;
+      }
+      .grid{
+        grid-template-columns:1fr;
+        gap:10px;
+      }
+      .asset-card{
+        padding:13px;
+      }
+    }
+
+  
+    /* Correção final dos KPIs: layout limpo, proporcional e sem desalinhamento */
+    .kpi-windowbar{
+      margin:18px 0 12px !important;
+      gap:9px !important;
+      align-items:center !important;
+    }
+    .kpis{
+      grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+      gap:12px !important;
+      margin:10px 0 28px !important;
+      align-items:stretch !important;
+    }
+    .kpi{
+      position:relative !important;
+      display:block !important;
+      min-height:116px !important;
+      height:116px !important;
+      padding:15px 16px !important;
+      border-radius:18px !important;
+      text-align:left !important;
+      overflow:hidden !important;
+    }
+    .kpi .label{
+      display:block !important;
+      width:62% !important;
+      max-width:62% !important;
+      text-align:left !important;
+      font-size:10.8px !important;
+      line-height:1.12 !important;
+      letter-spacing:.07em !important;
+      white-space:nowrap !important;
+      overflow:hidden !important;
+      text-overflow:ellipsis !important;
+      margin:0 !important;
+    }
+    .kpi .value{
+      display:block !important;
+      width:62% !important;
+      max-width:62% !important;
+      text-align:left !important;
+      font-size:27px !important;
+      line-height:1 !important;
+      margin:7px 0 0 !important;
+      white-space:nowrap !important;
+    }
+    .kpi .note{
+      display:block !important;
+      width:62% !important;
+      max-width:62% !important;
+      text-align:left !important;
+      font-size:9.8px !important;
+      line-height:1.1 !important;
+      margin:5px 0 0 !important;
+      white-space:nowrap !important;
+      overflow:visible !important;
+      text-overflow:clip !important;
+    }
+    .kpi-spark{
+      position:absolute !important;
+      right:16px !important;
+      top:50% !important;
+      bottom:auto !important;
+      left:auto !important;
+      width:32% !important;
+      height:44px !important;
+      margin:0 !important;
+      transform:translateY(-42%) !important;
+    }
+    .kpi-spark svg{
+      width:100% !important;
+      height:100% !important;
+    }
+    .kpi-spark .spark-line{
+      stroke-width:2.6 !important;
+    }
+
+    @media(max-width:1180px){
+      .kpis{
+        grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+        gap:10px !important;
+      }
+      .kpi{
+        height:108px !important;
+        min-height:108px !important;
+        padding:13px 14px !important;
+      }
+      .kpi .label,
+      .kpi .value,
+      .kpi .note{
+        width:64% !important;
+        max-width:64% !important;
+      }
+      .kpi .value{
+        font-size:24px !important;
+      }
+      .kpi .note{
+        font-size:9.2px !important;
+      }
+      .kpi-spark{
+        right:14px !important;
+        width:30% !important;
+        height:38px !important;
+      }
+    }
+
+    @media(max-width:720px){
+      .kpis{
+        grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+        gap:8px !important;
+        margin:8px 0 22px !important;
+      }
+      .kpi{
+        height:96px !important;
+        min-height:96px !important;
+        padding:10px !important;
+        border-radius:14px !important;
+      }
+      .kpi .label{
+        font-size:8.2px !important;
+        letter-spacing:.035em !important;
+      }
+      .kpi .value{
+        font-size:20px !important;
+        margin-top:5px !important;
+      }
+      .kpi .note{
+        font-size:8px !important;
+        margin-top:4px !important;
+      }
+      .kpi .label,
+      .kpi .value,
+      .kpi .note{
+        width:62% !important;
+        max-width:62% !important;
+      }
+      .kpi-spark{
+        right:10px !important;
+        width:33% !important;
+        height:28px !important;
+        transform:translateY(-38%) !important;
+      }
+      .kpi-spark .spark-line{
+        stroke-width:2.4 !important;
+      }
+    }
+
+    @media(max-width:390px){
+      .kpi{
+        height:90px !important;
+        min-height:90px !important;
+        padding:9px !important;
+      }
+      .kpi .value{
+        font-size:18px !important;
+      }
+      .kpi .note{
+        font-size:7.6px !important;
+      }
+      .kpi-spark{
+        height:24px !important;
+      }
+    }
+
+  
+    /* Correção dos espaços vazios nos KPIs */
+    .kpis{
+      gap:10px !important;
+      margin:8px 0 24px !important;
+    }
+    .kpi{
+      height:96px !important;
+      min-height:96px !important;
+      padding:12px 14px !important;
+      border-radius:17px !important;
+    }
+    .kpi .label{
+      width:50% !important;
+      max-width:50% !important;
+      font-size:10px !important;
+      line-height:1.1 !important;
+      letter-spacing:.06em !important;
+    }
+    .kpi .value{
+      width:50% !important;
+      max-width:50% !important;
+      font-size:25px !important;
+      line-height:.95 !important;
+      margin-top:6px !important;
+    }
+    .kpi .note{
+      width:50% !important;
+      max-width:50% !important;
+      font-size:9px !important;
+      line-height:1.05 !important;
+      margin-top:4px !important;
+      white-space:nowrap !important;
+    }
+    .kpi-spark{
+      right:13px !important;
+      left:43% !important;
+      width:auto !important;
+      height:36px !important;
+      top:54% !important;
+      transform:translateY(-50%) !important;
+    }
+    .kpi-spark .spark-line{
+      stroke-width:2.6 !important;
+    }
+
+    @media(max-width:1180px){
+      .kpi{
+        height:92px !important;
+        min-height:92px !important;
+        padding:11px 12px !important;
+      }
+      .kpi .label,
+      .kpi .value,
+      .kpi .note{
+        width:52% !important;
+        max-width:52% !important;
+      }
+      .kpi .value{
+        font-size:23px !important;
+      }
+      .kpi-spark{
+        left:45% !important;
+        right:12px !important;
+        height:32px !important;
+      }
+    }
+
+    @media(max-width:720px){
+      .kpi{
+        height:86px !important;
+        min-height:86px !important;
+        padding:9px 10px !important;
+      }
+      .kpi .label{
+        font-size:8px !important;
+      }
+      .kpi .value{
+        font-size:19px !important;
+        margin-top:4px !important;
+      }
+      .kpi .note{
+        font-size:7.6px !important;
+        margin-top:3px !important;
+      }
+      .kpi .label,
+      .kpi .value,
+      .kpi .note{
+        width:55% !important;
+        max-width:55% !important;
+      }
+      .kpi-spark{
+        left:52% !important;
+        right:8px !important;
+        height:24px !important;
+        top:55% !important;
+      }
+    }
+
+  
+    /* Ajuste apenas dos cards de FIIs/Ações: menos espaço vazio, sem mexer nos KPIs */
+    #fiis .grid,
+    #acoes .grid{
+      gap:12px !important;
+      align-items:stretch !important;
+    }
+
+    #fiis .asset-card,
+    #acoes .asset-card{
+      padding:13px !important;
+      border-radius:18px !important;
+      min-height:auto !important;
+      display:flex !important;
+      flex-direction:column !important;
+    }
+
+    #fiis .asset-top,
+    #acoes .asset-top{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) auto !important;
+      gap:8px !important;
+      align-items:start !important;
+    }
+
+    #fiis .ticker,
+    #acoes .ticker{
+      font-size:19px !important;
+      line-height:.98 !important;
+      letter-spacing:-.035em !important;
+    }
+
+    #fiis .name,
+    #acoes .name{
+      min-height:0 !important;
+      height:16px !important;
+      margin-top:3px !important;
+      font-size:10.5px !important;
+      line-height:1.15 !important;
+      white-space:nowrap !important;
+      overflow:hidden !important;
+      text-overflow:ellipsis !important;
+    }
+
+    #fiis .rank,
+    #acoes .rank{
+      padding:4px 7px !important;
+      font-size:10.5px !important;
+      line-height:1 !important;
+    }
+
+    #fiis .score-wrap,
+    #acoes .score-wrap{
+      margin:9px 0 8px !important;
+    }
+
+    #fiis .score-line,
+    #acoes .score-line{
+      font-size:10.8px !important;
+      line-height:1.1 !important;
+    }
+
+    #fiis .bar,
+    #acoes .bar{
+      height:7px !important;
+      margin-top:5px !important;
+    }
+
+    #fiis .metrics,
+    #acoes .metrics{
+      display:grid !important;
+      grid-template-columns:1fr 1fr !important;
+      gap:6px !important;
+      margin-top:auto !important;
+    }
+
+    #fiis .metric,
+    #acoes .metric{
+      min-height:34px !important;
+      padding:7px 8px !important;
+      border-radius:11px !important;
+      display:grid !important;
+      grid-template-columns:auto minmax(0,1fr) !important;
+      column-gap:8px !important;
+      align-items:center !important;
+    }
+
+    #fiis .metric span,
+    #acoes .metric span{
+      font-size:9.8px !important;
+      line-height:1 !important;
+      margin:0 !important;
+      white-space:nowrap !important;
+    }
+
+    #fiis .metric b,
+    #acoes .metric b{
+      font-size:11.5px !important;
+      line-height:1 !important;
+      margin:0 !important;
+      text-align:right !important;
+      white-space:nowrap !important;
+      overflow:hidden !important;
+      text-overflow:ellipsis !important;
+    }
+
+    #fiis .trend,
+    #acoes .trend{
+      font-size:9.5px !important;
+      margin-left:2px !important;
+    }
+
+    @media(min-width:1500px){
+      #fiis .grid,
+      #acoes .grid{
+        grid-template-columns:repeat(6,minmax(0,1fr)) !important;
+      }
+    }
+
+    @media(max-width:1180px){
+      #fiis .grid,
+      #acoes .grid{
+        grid-template-columns:repeat(auto-fit,minmax(230px,1fr)) !important;
+      }
+    }
+
+    @media(max-width:720px){
+      #fiis .asset-card,
+      #acoes .asset-card{
+        padding:12px !important;
+      }
+
+      #fiis .metrics,
+      #acoes .metrics{
+        gap:5px !important;
+      }
+
+      #fiis .metric,
+      #acoes .metric{
+        min-height:32px !important;
+        padding:6px 7px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -125,8 +872,7 @@
         <button class="tab" data-tab="recorrentes">Recorrentes</button>
         <button class="tab" data-tab="modelos">Modelos ML</button>
         <button class="tab" data-tab="indicadores">Indicadores</button>
-        <button class="tab" data-tab="score">Score</button>
-        <button class="tab" data-tab="info">Info</button>
+        <button class="tab" data-tab="score">Score e Info</button>
       </div>
     </div>
   </div>
@@ -231,20 +977,68 @@
       </div>
     </section>
 
-    <section id="score" class="section">
-      <div class="section-head"><div><h2>Como o score funciona</h2><p class="desc">Pontuação relativa ao universo do dia. Não é recomendação de investimento.</p></div></div>
-      <div class="info-card"><h3>Leitura rápida</h3><p>Um score 82 significa que o ativo está melhor posicionado que boa parte do universo analisado nos indicadores ponderados. A metodologia usa percentis: maior é melhor para DY, ROA, liquidez e patrimônio; menor é melhor para P/VP, P/L, EV/EBITDA e volatilidade.</p></div>
-      <div class="charts">
-        <div class="info-card"><h3>FIIs</h3><table class="table"><thead><tr><th>Indicador</th><th>Direção</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior é melhor</td><td>30%</td></tr><tr><td>P/VP</td><td>Menor é melhor</td><td>25%</td></tr><tr><td>Liquidez diária</td><td>Maior é melhor</td><td>20%</td></tr><tr><td>Patrimônio líquido</td><td>Maior é melhor</td><td>15%</td></tr><tr><td>Volatilidade</td><td>Menor é melhor</td><td>10%</td></tr></tbody></table></div>
-        <div class="info-card"><h3>Ações</h3><table class="table"><thead><tr><th>Indicador</th><th>Direção</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior é melhor</td><td>20%</td></tr><tr><td>Preço/VPA</td><td>Menor é melhor</td><td>20%</td></tr><tr><td>Preço/Lucro</td><td>Menor é melhor</td><td>15%</td></tr><tr><td>ROA</td><td>Maior é melhor</td><td>15%</td></tr><tr><td>Margem Líquida</td><td>Maior é melhor</td><td>15%</td></tr><tr><td>EV/EBITDA</td><td>Menor é melhor</td><td>15%</td></tr></tbody></table></div>
+    <section id="score" class="section score-info-section">
+      <div class="section-head">
+        <div>
+          <h2>Score e Info</h2>
+          <p class="desc">Entenda a pontuação, os critérios de leitura, as fontes e os limites do dashboard.</p>
+        </div>
       </div>
-    </section>
 
-    <section id="info" class="section">
-      <div class="section-head"><div><h2>Sobre o projeto</h2><p class="desc">Pipeline gratuito, automatizado e versionado.</p></div></div>
-      <div class="info-card"><h3>Arquitetura</h3><p>Screener automático de FIIs e Ações brasileiras, com coleta via Selenium, filtros fixos + quartis, score multifatorial, snapshot Excel, JSON para dashboard, histórico ML em Parquet, camada de backtest e modelos ML em modo sombra.</p></div>
-      <div class="info-card"><h3>Fontes</h3><table class="table"><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Investsite</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio e cripto</td><td>AwesomeAPI</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table></div>
-      <div class="info-card"><h3>Disclaimer</h3><p>Este dashboard é uma ferramenta educacional e quantitativa de triagem. Não constitui recomendação de investimento.</p></div>
+      <div class="score-guide-grid">
+        <div class="info-card score-primer">
+          <span class="info-kicker">Para leigos</span>
+          <h3>O que é o score?</h3>
+          <p>O score é uma nota de triagem quantitativa. Ele compara cada ativo com os demais ativos do mesmo universo no dia da coleta. Quanto maior o score, melhor o ativo ficou posicionado dentro dos critérios usados pelo robô.</p>
+          <p>Ele não diz que o ativo é “barato para sempre” nem garante retorno. Ele ajuda a separar rapidamente quais ativos merecem uma análise mais profunda.</p>
+        </div>
+        <div class="info-card score-primer">
+          <span class="info-kicker">Como ler</span>
+          <h3>Regra prática</h3>
+          <div class="score-band-grid">
+            <div><b>80+</b><span>muito forte no ranking do dia</span></div>
+            <div><b>70–80</b><span>bom destaque quantitativo</span></div>
+            <div><b>60–70</b><span>acima da média</span></div>
+            <div><b>50–60</b><span>zona intermediária</span></div>
+            <div><b>&lt;50</b><span>exige mais cautela</span></div>
+          </div>
+        </div>
+        <div class="info-card score-primer">
+          <span class="info-kicker">Importante</span>
+          <h3>O que o score não mede</h3>
+          <p>O modelo não substitui análise qualitativa. Ele não avalia governança em profundidade, risco jurídico, mudança estrutural de negócio, qualidade da gestão, eventos extraordinários ou notícias recentes.</p>
+          <p>Use o score como filtro inicial, não como recomendação final.</p>
+        </div>
+      </div>
+
+      <div class="charts score-detail-grid">
+        <div class="info-card">
+          <h3>Pesos usados para FIIs</h3>
+          <p>FIIs priorizam renda, valuation, liquidez, tamanho patrimonial e estabilidade.</p>
+          <table class="table"><thead><tr><th>Indicador</th><th>Leitura</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior tende a ser melhor</td><td>30%</td></tr><tr><td>P/VP</td><td>Menor tende a ser melhor</td><td>25%</td></tr><tr><td>Liquidez diária</td><td>Maior tende a ser melhor</td><td>20%</td></tr><tr><td>Patrimônio líquido</td><td>Maior tende a ser melhor</td><td>15%</td></tr><tr><td>Volatilidade</td><td>Menor tende a ser melhor</td><td>10%</td></tr></tbody></table>
+        </div>
+        <div class="info-card">
+          <h3>Pesos usados para Ações</h3>
+          <p>Ações combinam retorno ao acionista, valuation e qualidade operacional.</p>
+          <table class="table"><thead><tr><th>Indicador</th><th>Leitura</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior tende a ser melhor</td><td>20%</td></tr><tr><td>Preço/VPA</td><td>Menor tende a ser melhor</td><td>20%</td></tr><tr><td>Preço/Lucro</td><td>Menor tende a ser melhor</td><td>15%</td></tr><tr><td>ROA</td><td>Maior tende a ser melhor</td><td>15%</td></tr><tr><td>Margem Líquida</td><td>Maior tende a ser melhor</td><td>15%</td></tr><tr><td>EV/EBITDA</td><td>Menor tende a ser melhor</td><td>15%</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <div class="score-guide-grid lower-info-grid">
+        <div class="info-card">
+          <h3>Como o ranking é calculado</h3>
+          <p>O robô coleta os dados, aplica filtros mínimos, normaliza os indicadores por comparação relativa e calcula uma pontuação ponderada. O Top 20 mostra os ativos mais bem colocados dentro desse recorte.</p>
+        </div>
+        <div class="info-card">
+          <h3>Fontes de dados</h3>
+          <table class="table compact-source-table"><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Investsite</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio e cripto</td><td>AwesomeAPI</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table>
+        </div>
+        <div class="info-card">
+          <h3>Sobre o projeto</h3>
+          <p>Pipeline gratuito, automatizado e versionado, com coleta via Selenium, snapshots em Excel/JSON, histórico em Parquet, backtest e modelos ML em modo sombra.</p>
+          <p><b>Disclaimer:</b> ferramenta educacional e quantitativa. Não constitui recomendação de investimento.</p>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -666,14 +1460,37 @@ function renderKpis(){
       if(l.includes('fii')) return css('--fii');
       return chartPalette[index % chartPalette.length];
     }
+    function colorWithAlpha(color, alpha){
+      const c=String(color||'').trim();
+      if(c.startsWith('#')){
+        let hex=c.slice(1);
+        if(hex.length===3) hex=hex.split('').map(x=>x+x).join('');
+        if(hex.length===6){
+          const r=parseInt(hex.slice(0,2),16), g=parseInt(hex.slice(2,4),16), b=parseInt(hex.slice(4,6),16);
+          return `rgba(${r},${g},${b},${alpha})`;
+        }
+      }
+      if(c.startsWith('rgb(')) return c.replace('rgb(', 'rgba(').replace(')', `,${alpha})`);
+      return c;
+    }
+    function isBenchmarkLabel(label){
+      return /(^|\s)(ibov|ifix|imob|cdi|ipca|igp|igp-m|selic)(\s|$)/i.test(String(label||''));
+    }
     function applyDatasetColors(cfg){
       (cfg?.data?.datasets||[]).forEach((ds,index)=>{
         const c=datasetColor(ds.label,index);
-        if(!ds.borderColor) ds.borderColor=c;
-        if(!ds.backgroundColor) ds.backgroundColor=cfg.type==='bar' ? c : c;
-        if(!ds.pointBackgroundColor) ds.pointBackgroundColor=c;
-        if(!ds.pointBorderColor) ds.pointBorderColor=c;
-        if(!ds.hoverBackgroundColor) ds.hoverBackgroundColor=c;
+        const benchmark=isBenchmarkLabel(ds.label);
+        const lineColor=benchmark ? colorWithAlpha(c,.38) : c;
+        const pointColor=benchmark ? colorWithAlpha(c,.56) : c;
+        ds.borderColor=lineColor;
+        ds.backgroundColor=cfg.type==='bar' ? lineColor : lineColor;
+        ds.pointBackgroundColor=pointColor;
+        ds.pointBorderColor=pointColor;
+        ds.hoverBackgroundColor=pointColor;
+        if(benchmark){
+          ds.borderWidth = Math.min(Number(ds.borderWidth || 1.8), 1.8);
+          ds.pointRadius = Math.min(Number(ds.pointRadius || 1.5), 1.5);
+        }
         if(ds.label && String(ds.label).toLowerCase().includes('carteira')) ds.borderWidth = ds.borderWidth || 3;
       });
       return cfg;
