@@ -859,6 +859,76 @@
       }
     }
 
+  
+    /* Patch: status de dados compacto, filtros de período e KPIs só na visão geral */
+    .asof{
+      padding:14px 16px !important;
+      border-radius:18px !important;
+      box-shadow:0 12px 34px rgba(0,0,0,.18) !important;
+      align-self:center;
+    }
+    .asof strong{
+      font-size:18px !important;
+      line-height:1.15 !important;
+      margin-top:8px !important;
+    }
+    .update-note{
+      margin-top:7px !important;
+      font-size:12px !important;
+      line-height:1.3 !important;
+    }
+    .asof.stale{
+      border-color:rgba(251,191,36,.5) !important;
+      background:linear-gradient(180deg,rgba(251,191,36,.12),rgba(255,255,255,.025)) !important;
+    }
+    .asof.stale .pill{
+      border-color:rgba(251,191,36,.38) !important;
+      color:#fbbf24 !important;
+    }
+    .asof.stale .dot{background:#fbbf24 !important;}
+    .asof:not(.stale) .pill{color:var(--muted)}
+    .chart-periodbar{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:7px;
+      flex-wrap:wrap;
+      margin:6px 0 12px;
+    }
+    .chart-periodbar span{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.09em;
+      margin-right:2px;
+    }
+    .chart-period{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      padding:6px 9px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:850;
+      cursor:pointer;
+    }
+    .chart-period.active{
+      background:var(--accent);
+      color:#111827;
+      border-color:transparent;
+    }
+    .chart-period:hover{border-color:var(--accent);color:var(--text)}
+    .chart-period.active:hover{color:#111827}
+    #overview > .kpi-windowbar{margin-top:0}
+    @media(max-width:860px){
+      .asof{padding:13px 14px !important}
+      .asof strong{font-size:16px !important}
+      .update-note{font-size:11.5px !important}
+      .chart-periodbar{justify-content:flex-start;margin-top:2px}
+      .chart-period{padding:6px 8px;font-size:10.5px}
+    }
+
   </style>
 </head>
 <body>
@@ -887,17 +957,16 @@
           <div class="author-row">Criado por: <a href="https://www.linkedin.com/in/italo-petricioni-statonato/" target="_blank" rel="noopener">Ítalo Petricioni Statonato</a> <button id="aboutItaloBtn" class="about-toggle" type="button">Sobre Ítalo</button></div>
           <div id="aboutItaloPanel" class="about-panel" aria-hidden="true"><img class="about-photo" src="assets/italo-profile.png" alt="Foto de Ítalo Petricioni Statonato" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'about-fallback',textContent:'IP'}));"><div><h3>Ítalo Petricioni Statonato</h3><p>Profissional de dados, analytics e estratégia, com experiência em automação, produtos de dados, CX, performance operacional e indicadores executivos. Este dashboard nasceu como projeto pessoal para unir tecnologia, mercado financeiro e investimento em renda variável, com foco em critérios quantitativos, disciplina analítica e evolução contínua dos modelos.</p></div></div>
         </div>
-        <aside class="asof">
-          <span class="pill"><span class="dot"></span> Atualizado automaticamente</span>
+        <aside class="asof" id="dataStatusCard">
+          <span class="pill" id="dataStatusPill"><span class="dot"></span> Carregando</span>
           <strong id="asOf">Carregando...</strong>
-          <span class="update-note">Este painel mostra sempre o <b>snapshot mais recente</b> disponível. Atualização diária prevista: <b>08h BRT</b>, em dias úteis.</span>
+          <span class="update-note" id="asOfRange">Histórico: —</span>
         </aside>
       </div>
     </section>
 
-    <section class="kpis" id="kpis"></section>
-
     <section id="overview" class="section active">
+      <section class="kpis" id="kpis"></section>
       <div class="section-head"><div><h2>Visão geral</h2><p class="desc">Resumo executivo do dia: carteira, score, comparativos e concentração.</p></div></div>
       <div class="charts">
         <div class="panel"><h3>Score dos Top 20</h3><p>Distribuição por faixas menores, com rótulo acima das barras.</p><div class="chart-box"><canvas id="scoreChart"></canvas></div><div class="chart-explain"><b>Como ler:</b> quanto mais ativos nas faixas altas, mais forte está o ranking do dia. As quebras menores ajudam a enxergar concentração, dispersão e diferença entre Ações e FIIs sem depender só da média.</div></div>
@@ -1045,7 +1114,7 @@
   <footer><div class="wrap">Atualizado automaticamente em dias úteis · GitHub Pages · dados públicos e APIs gratuitas</div></footer>
 
   <script>
-    const state = { data:null, charts:{}, allDates:[], selectedDate:null, kpiWindow:'WoW', snapshotCache:{}, kpiHistoryLoading:false };
+    const state = { data:null, charts:{}, allDates:[], selectedDate:null, kpiWindow:'WoW', snapshotCache:{}, kpiHistoryLoading:false, chartWindows:{} };
     const BR = 'pt-BR';
     if(window.Chart){ Chart.defaults.font.family = '"Proxima Nova", "ProximaNova", Inter, system-ui, -apple-system, Segoe UI, sans-serif'; }
     const fmtNum = (v,d=2)=> v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{maximumFractionDigits:d,minimumFractionDigits:d});
@@ -1111,12 +1180,37 @@
       }
     }
 
+    function fmtDateShort(dateStr){
+      if(!dateStr) return '—';
+      return new Date(`${dateStr}T12:00:00`).toLocaleDateString(BR,{day:'2-digit',month:'2-digit',year:'numeric'});
+    }
+    function todayIsoLocal(){
+      const d=new Date();
+      const y=d.getFullYear();
+      const m=String(d.getMonth()+1).padStart(2,'0');
+      const day=String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+    function renderDataStatus(dataBase){
+      const dates=(state.allDates||[]).filter(Boolean).sort();
+      const first=dates[0] || dataBase;
+      const last=dates[dates.length-1] || dataBase;
+      const current = String(last) === todayIsoLocal();
+      const card=document.getElementById('dataStatusCard');
+      const pill=document.getElementById('dataStatusPill');
+      const asOf=document.getElementById('asOf');
+      const range=document.getElementById('asOfRange');
+      if(card) card.classList.toggle('stale', !current);
+      if(pill) pill.innerHTML=`<span class="dot"></span> ${current?'Atualizado hoje':'Aguardando atualização de hoje'}`;
+      if(asOf) asOf.textContent=`Último snapshot: ${fmtDateShort(last)}`;
+      if(range) range.innerHTML=`Histórico: <b>${fmtDateShort(first)}</b> até <b>${fmtDateShort(last)}</b>`;
+    }
     async function loadDate(date){
       state.selectedDate = date;
       state.data = await fetch(`data/${date}.json`, {cache:'no-store'}).then(r=>r.json());
       state.snapshotCache[date] = state.data;
       const dataBase = state.data.data || date;
-      document.getElementById('asOf').textContent = `Dados de ${new Date(`${dataBase}T12:00:00`).toLocaleDateString(BR,{day:'2-digit',month:'long',year:'numeric'})}`;
+      renderDataStatus(dataBase);
       renderAll();
       preloadSnapshotsForKpis();
     }
@@ -1728,28 +1822,13 @@ function renderKpis(){
         options:baseOptions({plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{title:axisTitle('Status'),grid:{display:false}},y:{min:99,max:101,title:axisTitle('Retorno (%)')}}})
       });
     }
-    function addAiInsight(chartId, labels, datasets){
+    function addAiInsight(chartId, text){
       const canvas=document.getElementById(chartId);
       const box=canvas?.closest('.chart-box') || canvas?.parentElement;
       if(!box) return;
 
       const panel=box.closest('.panel') || box.parentElement;
       panel?.querySelectorAll(`.chart-ai[data-chart="${chartId}"]`).forEach(x=>x.remove());
-
-      const main=datasets[0];
-      const bench=datasets[1];
-      const vals=(main?.data||[]).filter(v=>v!=null && Number.isFinite(Number(v))).map(Number);
-      let text='Histórico ainda curto; acompanhe a evolução conforme novas execuções entrarem.';
-      if(vals.length>=2){
-        const last=vals[vals.length-1];
-        if(bench){
-          const bvals=(bench.data||[]).filter(v=>v!=null && Number.isFinite(Number(v))).map(Number);
-          if(bvals.length){
-            const diff=last-bvals[bvals.length-1];
-            text=`No período exibido, a linha Top 20 está ${diff>=0?'acima':'abaixo'} de ${bench.label} em ${fmtNum(Math.abs(diff),2)} p.p.`;
-          }else text=`No período exibido, a linha Top 20 acumula ${last>=0?'+':''}${fmtNum(last,2)}%.`;
-        }else text=`No período exibido, a linha Top 20 acumula ${last>=0?'+':''}${fmtNum(last,2)}%.`;
-      }
 
       const el=document.createElement('div');
       el.className='chart-ai';
@@ -1768,6 +1847,100 @@ function renderKpis(){
 
       const chart=state.charts?.[chartId];
       if(chart) setTimeout(()=>chart.resize(),30);
+    }
+    function lastNumeric(arr){
+      for(let i=(arr||[]).length-1;i>=0;i--){
+        const v=arr[i];
+        if(v!=null && Number.isFinite(Number(v))) return Number(v);
+      }
+      return null;
+    }
+    function diffPhrase(diff){
+      if(diff==null || !Number.isFinite(Number(diff))) return 'sem comparação disponível';
+      const n=Number(diff);
+      if(Math.abs(n)<0.005) return 'em linha com';
+      return `${fmtNum(Math.abs(n),2)} p.p. ${n>=0?'acima':'abaixo'} de`;
+    }
+    function portfolioSummaryText(comparisonKey,datasets){
+      const main=datasets?.[0];
+      const mainLast=lastNumeric(main?.data);
+      if(mainLast==null) return 'Histórico ainda curto; acompanhe a evolução conforme novas execuções entrarem.';
+      const assetType=comparisonKey==='comparativo_fiis'?'FIIs':'ações';
+      const principal=comparisonKey==='comparativo_fiis'?'IFIX':'IBOV';
+      const cdi=lastNumeric((datasets||[]).find(ds=>String(ds.label).toUpperCase()==='CDI')?.data);
+      const bench=lastNumeric((datasets||[]).find(ds=>String(ds.label).toUpperCase()===principal)?.data);
+      const cdiPart=cdi==null?'sem comparação disponível contra o CDI':`${diffPhrase(mainLast-cdi)} CDI`;
+      const benchPart=bench==null?`sem comparação disponível contra o ${principal}`:`${diffPhrase(mainLast-bench)} ${principal}`;
+      return `A carteira recomendada de ${assetType} ficou ${cdiPart} e ${benchPart}, com rentabilidade total de ${mainLast>=0?'+':''}${fmtNum(mainLast,2)}% no período selecionado.`;
+    }
+const CHART_PERIODS = {
+      '30D': {days:30, label:'30D'},
+      '90D': {days:90, label:'90D'},
+      '6M': {days:182, label:'6M'},
+      '1A': {days:365, label:'1A'},
+      'ALL': {days:null, label:'Tudo'}
+    };
+    function dateDiffDays(start,end){
+      if(!start || !end) return 0;
+      return Math.round((new Date(`${end}T12:00:00`) - new Date(`${start}T12:00:00`))/(1000*60*60*24));
+    }
+    function defaultChartPeriod(labels){
+      if(!labels || labels.length<2) return 'ALL';
+      return dateDiffDays(labels[0], labels[labels.length-1]) >= 365 ? '1A' : 'ALL';
+    }
+    function dateMinusIso(dateStr,days){
+      const d=new Date(`${dateStr}T12:00:00`);
+      d.setDate(d.getDate()-days);
+      return d.toISOString().slice(0,10);
+    }
+    function filteredLabelsForPeriod(allLabels,chartId){
+      const labels=[...(allLabels||[])].filter(Boolean).sort();
+      if(!labels.length) return labels;
+      if(!state.chartWindows[chartId]) state.chartWindows[chartId]=defaultChartPeriod(labels);
+      const key=state.chartWindows[chartId];
+      const conf=CHART_PERIODS[key] || CHART_PERIODS.ALL;
+      if(!conf.days) return labels;
+      const end=labels[labels.length-1];
+      const start=dateMinusIso(end, conf.days);
+      const filtered=labels.filter(d=>d>=start && d<=end);
+      return filtered.length ? filtered : labels;
+    }
+    function chartMaxTicks(chartId){
+      const key=state.chartWindows[chartId] || 'ALL';
+      if(key==='30D') return 7;
+      if(key==='90D') return 8;
+      if(key==='6M') return 7;
+      if(key==='1A') return 8;
+      return 10;
+    }
+    function ensureChartPeriodControls(chartId,allLabels){
+      const canvas=document.getElementById(chartId);
+      const box=canvas?.closest('.chart-box');
+      const panel=box?.closest('.panel');
+      if(!box || !panel) return;
+      if(!state.chartWindows[chartId]) state.chartWindows[chartId]=defaultChartPeriod(allLabels);
+      let bar=panel.querySelector(`.chart-periodbar[data-chart="${chartId}"]`);
+      const anchor=box.closest('.compare-layout') || box;
+      if(!bar){
+        bar=document.createElement('div');
+        bar.className='chart-periodbar';
+        bar.dataset.chart=chartId;
+        panel.insertBefore(bar, anchor);
+      }
+      const active=state.chartWindows[chartId];
+      bar.innerHTML=`<span>Período</span>${Object.entries(CHART_PERIODS).map(([key,conf])=>`<button type="button" class="chart-period ${active===key?'active':''}" data-period="${key}">${conf.label}</button>`).join('')}`;
+      bar.onclick=(ev)=>{
+        const btn=ev.target.closest('.chart-period');
+        if(!btn) return;
+        state.chartWindows[chartId]=btn.dataset.period;
+        renderOverviewBacktestCharts();
+      };
+    }
+    function alignedReturnForWindow(arr,labels,{fillForward=false}={}){
+      const aligned=alignSeriesToLabels(arr,labels,{fillForward});
+      const base=aligned.find(v=>v!=null && Number.isFinite(Number(v)));
+      if(base==null || !Number.isFinite(Number(base)) || Number(base)===0) return aligned.map(v=>v==null?null:Number(v));
+      return aligned.map(v=>v==null ? null : (Number(v)/Number(base)-1)*100);
     }
     function renderPortfolioComparison(chartId,noteId,comparisonKey,portfolioLabel,benchmarkNames){
       const note=document.getElementById(noteId);
@@ -1788,15 +1961,17 @@ function renderKpis(){
       }).filter(x=>x.data.length);
 
       const allSeries=[carteira,...benchmarkSeries.map(x=>x.data)];
-      const labels=[...new Set(allSeries.flatMap(arr=>arr.map(x=>String(x.data))))].sort();
+      const allLabels=[...new Set(allSeries.flatMap(arr=>arr.map(x=>String(x.data))))].sort();
+      ensureChartPeriodControls(chartId, allLabels);
+      const labels=filteredLabelsForPeriod(allLabels, chartId);
       const cleanPortfolioLabel = portfolioLabel.replace(/^Carteira\s+/,'').replace(/\s*base\s*100/ig,'').trim();
       const datasets=[{
         label: cleanPortfolioLabel,
-        data: alignSeriesToLabels(base100ToReturn(carteira),labels,{fillForward:true}),
+        data: alignedReturnForWindow(carteira,labels,{fillForward:true}),
         spanGaps:true, stepped:'before', borderWidth:4, pointRadius: labels.length <= 2 ? 4 : 2, tension:0,
         valueLabelPlugin:{enabled:true}
       }];
-      benchmarkSeries.forEach(({name,data})=>datasets.push({label:name,data:alignSeriesToLabels(base100ToReturn(data),labels),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:.18}));
+      benchmarkSeries.forEach(({name,data})=>datasets.push({label:name,data:alignedReturnForWindow(data,labels),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:.18}));
 
       const values=datasets.flatMap(ds=>ds.data).filter(v=>v!=null && Number.isFinite(Number(v))).map(Number);
       const minVal=values.length?Math.min(...values):0;
@@ -1804,14 +1979,15 @@ function renderKpis(){
       const padding=Math.max(.5,(maxVal-minVal)*.22);
       const yMin=Math.min(0,minVal-padding);
       const yMax=Math.max(0,maxVal+padding);
-      const first=carteira[0]?.data || labels[0];
-      const last=labels[labels.length-1];
+      const first=labels[0] || carteira[0]?.data;
+      const last=labels[labels.length-1] || first;
       const missing=benchmarkNames.filter(name=>{ const raw=(availableBenchmarks[name]&&availableBenchmarks[name].length)?availableBenchmarks[name]:benchSeries(name); return !raw||!raw.length; });
       const extra=missing.length?` Sem dados disponíveis para: ${missing.join(', ')}.`:'';
-      const status=comp.fallbackInicial?'Ainda há apenas o ponto inicial da carteira; a linha começa a evoluir quando houver pelo menos dois snapshots reais.':'Séries exibidas como retorno percentual desde a mesma data inicial.';
+      const status=comp.fallbackInicial?'Ainda há apenas o ponto inicial da carteira; a linha começa a evoluir quando houver pelo menos dois snapshots reais.':'Séries recalculadas como retorno percentual dentro do período selecionado.';
       if(note) note.textContent=`Retorno de ${first} até ${last}. ${status}${extra}`;
-      makeChart(chartId,{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')}},scales:{x:{title:axisTitle('Data')},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
-      setTimeout(()=>addAiInsight(chartId, labels, datasets),50);
+      const summary=portfolioSummaryText(comparisonKey,datasets);
+      makeChart(chartId,{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')}},scales:{x:{title:axisTitle('Data'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks(chartId),maxRotation:0,minRotation:0}},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
+      setTimeout(()=>addAiInsight(chartId, summary),50);
     }
     function scalarValue(v){
       if(v==null) return null;
