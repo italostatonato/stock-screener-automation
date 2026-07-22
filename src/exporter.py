@@ -613,7 +613,8 @@ def _latest_records_from_predictions(path: str, top_n: int = 50) -> list:
     cols = [
         "Data_Execucao", "Tipo", "Ticker", "Nome", "preco_atual", "dy_atual", "multiplo_atual",
         "score_top", "score_ridge", "score_random_forest", "score_extra_trees", "score_xgboost",
-        "score_lightgbm", "score_catboost", "score_ensemble", "retorno_esperado_30d",
+        "score_lightgbm", "score_catboost", "score_ensemble", "retorno_esperado_7d",
+        "retorno_esperado_30d",
         "modelo_lider", "status_modelos", "motivo_status",
     ]
     existing = [c for c in cols if c in latest.columns]
@@ -650,7 +651,72 @@ def _performance_records(path: str) -> list:
     return [{col: _safe(row[col]) for col in existing} for _, row in df[existing].iterrows()]
 
 
-def _calc_modelos_ml() -> dict:
+
+
+def _baseline_ml_records_from_current(
+    df: pd.DataFrame,
+    tipo: str,
+    data_hoje: str,
+    ticker_col: str,
+    name_col: str | None,
+    price_col: str | None,
+    dy_col: str | None,
+    multiple_col: str | None,
+    top_n: int = 50,
+) -> list:
+    """Fallback honesto para a aba ML quando o parquet de previsões ainda não existe.
+
+    O dashboard não deve ficar vazio: enquanto os modelos supervisionados não
+    treinam, mostra o Score Top atual como baseline em modo sombra. Assim a aba
+    ML sempre exibe o universo que será comparado, e passa para modelos ativos
+    automaticamente quando model_predictions_*.parquet tiver scores treinados.
+    """
+    if df is None or df.empty or ticker_col not in df.columns:
+        return []
+
+    base = df.copy()
+    base[ticker_col] = base[ticker_col].astype(str).str.strip().str.upper()
+    base = base[base[ticker_col].ne("")]
+    if base.empty:
+        return []
+
+    score_col = "Score" if "Score" in base.columns else "score" if "score" in base.columns else None
+    if score_col:
+        base["_rank_score"] = pd.to_numeric(base[score_col], errors="coerce")
+        base = base.sort_values(["_rank_score", ticker_col], ascending=[False, True])
+    else:
+        base = base.sort_values(ticker_col)
+
+    base = base.head(top_n)
+    records = []
+    for pos, (_, row) in enumerate(base.iterrows(), start=1):
+        score_top = _safe(row.get(score_col)) if score_col else None
+        payload = {
+            "Data_Execucao": data_hoje,
+            "Tipo": tipo,
+            "Ticker": _safe(row.get(ticker_col)),
+            "Nome": _safe(row.get(name_col)) if name_col and name_col in base.columns else None,
+            "preco_atual": _safe(row.get(price_col)) if price_col and price_col in base.columns else None,
+            "dy_atual": _safe(row.get(dy_col)) if dy_col and dy_col in base.columns else None,
+            "multiplo_atual": _safe(row.get(multiple_col)) if multiple_col and multiple_col in base.columns else None,
+            "score_top": score_top,
+            "score_ridge": None,
+            "score_random_forest": None,
+            "score_extra_trees": None,
+            "score_xgboost": None,
+            "score_lightgbm": None,
+            "score_catboost": None,
+            "score_ensemble": None,
+            "retorno_esperado_30d": None,
+            "modelo_lider": "Score Top",
+            "status_modelos": "Baseline",
+            "motivo_status": "Parquet de previsões ainda não disponível; exibindo Score Top como baseline da aba ML.",
+            "rank_modelo": pos,
+        }
+        records.append(payload)
+    return records
+
+def _calc_modelos_ml(top_fiis: pd.DataFrame = None, top_acoes: pd.DataFrame = None, data_hoje: str = None) -> dict:
     """Carrega previsões e métricas dos modelos ML em modo sombra.
 
     O ranking oficial do screener continua sendo o Score Top. Esta seção é
@@ -659,17 +725,45 @@ def _calc_modelos_ml() -> dict:
     ml_dir = os.path.join("data", "ml")
     acoes = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_acoes.parquet"), top_n=50)
     fiis = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_fiis.parquet"), top_n=50)
+
+    if not acoes:
+        acoes = _baseline_ml_records_from_current(
+            top_acoes,
+            tipo="ACAO",
+            data_hoje=data_hoje,
+            ticker_col="Ação",
+            name_col="Empresa",
+            price_col="Preço",
+            dy_col="Dividend Yield",
+            multiple_col="Preço/VPA",
+            top_n=50,
+        )
+    if not fiis:
+        fiis = _baseline_ml_records_from_current(
+            top_fiis,
+            tipo="FII",
+            data_hoje=data_hoje,
+            ticker_col="FUNDOS",
+            name_col="SETOR",
+            price_col="PREÇO ATUAL (R$)",
+            dy_col="DIVIDEND YIELD",
+            multiple_col="P/VP",
+            top_n=50,
+        )
+
     performance = _performance_records(os.path.join(ml_dir, "model_performance.parquet"))
     confidence = build_ml_confidence_summary(
         performance_records=performance,
         docs_data_dir=os.path.join("docs", "data"),
-        horizon_days=30,
+        horizon_days=7,
     )
     performance = add_confidence_to_performance_records(performance, confidence)
 
     statuses = [r.get("status_modelos") for r in acoes + fiis if r.get("status_modelos")]
     if any(str(s).lower() == "ativo" for s in statuses):
         status = "Ativo"
+    elif any(str(s).lower() == "baseline" for s in statuses):
+        status = "Baseline"
     elif acoes or fiis or performance:
         status = "Aquecendo"
     else:
@@ -677,7 +771,8 @@ def _calc_modelos_ml() -> dict:
 
     return {
         "status": status,
-        "horizonte_principal": "30d",
+        "horizonte_principal": "7d",
+        "horizonte_estrategico": "30d",
         "confiabilidade": confidence,
         "ranking": {
             "acoes": acoes,
@@ -777,7 +872,7 @@ def export_dashboard_json(
             fii_universe=fii_universe,
             acoes_universe=acoes_universe,
         ),
-        "modelos_ml": _calc_modelos_ml(),
+        "modelos_ml": _calc_modelos_ml(top_fiis=top_fiis, top_acoes=top_acoes, data_hoje=data_hoje),
         "resumo": {
             "total_fiis": len(top_fiis) if top_fiis is not None else 0,
             "total_acoes": len(top_acoes) if top_acoes is not None else 0,

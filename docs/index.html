@@ -1016,11 +1016,11 @@
         <div class="mini-note" id="mlStatusNote"></div>
         <div class="rec-table-wrap">
           <table class="table rec-table">
-            <thead><tr><th>Rank</th><th>Tipo</th><th>Ativo</th><th>Score Top</th><th>Ridge</th><th>Random Forest</th><th>Extra Trees</th><th>XGBoost</th><th>LightGBM</th><th>CatBoost</th><th>Ensemble</th><th>Modelo líder</th><th>Ret. esp. 30d</th><th>Status</th></tr></thead>
+            <thead><tr><th>Rank</th><th>Tipo</th><th>Ativo</th><th>Score Top</th><th>Ridge</th><th>Random Forest</th><th>Extra Trees</th><th>XGBoost</th><th>LightGBM</th><th>CatBoost</th><th>Ensemble</th><th>Modelo líder</th><th>Ret. esp.</th><th>Status</th></tr></thead>
             <tbody id="mlRankingBody"></tbody>
           </table>
         </div>
-        <div class="chart-explain"><b>Como ler:</b> o Score Top é o modelo atual de regras e percentis. Os demais modelos ficam em modo sombra até existir histórico suficiente com retorno futuro. O Ensemble é a média dos modelos supervisionados disponíveis; ele só deve virar candidato oficial quando bater o Score Top com consistência.</div>
+        <div class="chart-explain"><b>Como ler:</b> o Score Top é o modelo atual de regras e percentis. Os demais modelos usam 7d como horizonte inicial porque já existe amostra validável; o horizonte 30d segue maturando até acumular mais exemplos. O Ensemble é a média dos modelos supervisionados disponíveis; ele só deve virar candidato oficial quando bater o Score Top com consistência.</div>
       </div>
       <div class="panel wide">
         <h3>Performance dos modelos</h3>
@@ -1478,7 +1478,11 @@ function renderKpis(){
       const ranking=ml.ranking||{};
       const rows=[...(ranking.acoes||[]), ...(ranking.fiis||[])];
       if(note){
-        note.textContent = `Status: ${ml.status || 'Sem dados'} · horizonte principal: ${ml.horizonte_principal || '30d'}.`;
+        const hasSupervisedScore = rows.some(r => [r.score_ridge, r.score_random_forest, r.score_extra_trees, r.score_xgboost, r.score_lightgbm, r.score_catboost, r.score_ensemble].some(v => v != null && Number.isFinite(Number(v))));
+        const statusTxt = ml.status || 'Aquecendo';
+        note.textContent = hasSupervisedScore
+          ? `Status: ${statusTxt} · horizonte principal: ${ml.horizonte_principal || '7d'}.`
+          : `Status: Aquecendo · horizonte 30d · ainda sem Retorno_Futuro_30d realizado. O ranking abaixo mostra o Score Top como baseline até a primeira janela válida.`;
       }
       if(!rows.length){
         body.innerHTML='<tr><td colspan="14" class="muted-cell">Ainda não há previsões dos modelos. Rode o pipeline para gerar os parquets de ML.</td></tr>';
@@ -1496,14 +1500,14 @@ function renderKpis(){
           <td class="num">${mlScore(r.score_catboost)}</td>
           <td class="num"><b>${mlScore(r.score_ensemble)}</b></td>
           <td>${r.modelo_lider || '—'}</td>
-          <td class="num">${mlReturn(r.retorno_esperado_30d)}</td>
+          <td class="num">${mlReturn((r.retorno_esperado_7d ?? r.retorno_esperado_30d))}</td>
           <td><span class="${mlStatusClass(r.status_modelos)}">${r.status_modelos || '—'}</span></td>
         </tr>`).join('');
       }
 
       const perf=ml.performance||[];
       if(!perf.length){
-        perfBody.innerHTML='<tr><td colspan="9" class="muted-cell">Performance ainda não disponível. Ela aparece quando houver retornos futuros realizados para comparar com as previsões.</td></tr>';
+        perfBody.innerHTML='<tr><td colspan="9" class="muted-cell">Performance supervisionada ainda não disponível: a base atual não possui Retorno_Futuro_30d realizado. Ela aparece automaticamente quando existir pelo menos uma janela completa de 30 dias com preço válido.</td></tr>';
       }else{
         perfBody.innerHTML=perf.map(r=>`<tr>
           <td>${r.Tipo === 'ACAO' ? 'Ação' : 'FII'}</td>
@@ -2051,6 +2055,13 @@ const CHART_PERIODS = {
       </div>`;
   }
 
+  function estimateMissingDays(conf) {
+    const horizon = Number(conf.horizonte_dias || 30);
+    const days = Number(conf.dias_historico || 0);
+    if (!Number.isFinite(horizon) || !Number.isFinite(days)) return null;
+    return Math.max(0, Math.ceil(horizon - days));
+  }
+
   function render(conf) {
     const grid = document.getElementById("ml-confidence-grid");
     const msg = document.getElementById("ml-confidence-message");
@@ -2058,22 +2069,40 @@ const CHART_PERIODS = {
 
     conf = conf || {};
     const leader = conf.modelo_mais_confiavel;
+    const horizon = Number(conf.horizonte_dias || 30);
+    const valid = Number(conf.janelas_validas_max || 0);
+    const hasValidWindow = Number.isFinite(valid) && valid > 0;
+    const missing = estimateMissingDays(conf);
+
+    const targetCardValue = hasValidWindow ? `${valid}/1` : "0/1";
+    const targetSub = hasValidWindow
+      ? "janela mínima atingida"
+      : (missing != null && missing > 0
+          ? `faltam cerca de ${missing} dias de histórico`
+          : "aguardando preço válido após 30 dias");
+
     grid.innerHTML = [
-      card("Maturidade dos dados", fmtPct(conf.maturidade_dados_pct), `${conf.dias_historico || 0} dias de histórico · alvo ${conf.horizonte_dias || 30}d`),
-      card("Confiabilidade preditiva", fmtPct(conf.confiabilidade_preditiva_pct), conf.nivel_confiabilidade || "Não mensurável"),
-      card("Janelas válidas", `${conf.janelas_validas_max || 0}/${conf.min_janelas_validas || 5}`, "mínimo para liberar confiança real"),
-      card("Modelo mais confiável", leader ? `${leader.Modelo} · ${leader.Tipo}` : "—", leader ? fmtPct(leader.Confiabilidade_Pct) : "aguardando validação")
+      card("Maturidade dos dados", fmtPct(conf.maturidade_dados_pct), `${conf.dias_historico || 0}/${horizon} dias de histórico`),
+      card("Confiabilidade preditiva", hasValidWindow ? fmtPct(conf.confiabilidade_preditiva_pct) : "0,0%", hasValidWindow ? (conf.nivel_confiabilidade || "Inicial") : "ainda não mensurável"),
+      card("Janela 30d realizada", targetCardValue, targetSub),
+      card("Modelo mais confiável", leader && hasValidWindow ? `${leader.Modelo} · ${leader.Tipo}` : "—", leader && hasValidWindow ? fmtPct(leader.Confiabilidade_Pct) : "aguardando validação")
     ].join("");
-    msg.textContent = conf.mensagem || "Aguardando dados de retorno futuro para calcular confiabilidade real.";
+
+    if (!hasValidWindow) {
+      msg.textContent = "A base já está sendo acumulada, mas ainda não existe Retorno_Futuro_30d realizado. Sem esse alvo, os modelos supervisionados ficam em modo sombra e o Score Top aparece como baseline.";
+    } else {
+      msg.textContent = conf.mensagem || "Primeira janela de 30 dias disponível. A confiança ainda deve ser tratada como inicial até acumular mais validações.";
+    }
   }
 
   async function loadLatestConfidence() {
     try {
       const index = await fetch("data/index.json", { cache: "no-store" }).then(r => r.json());
-      const latest = Array.isArray(index) ? index[0] : null;
+      const latest = Array.isArray(index) ? [...index].sort().at(-1) : null;
       if (!latest) return render({});
       const payload = await fetch(`data/${latest}.json`, { cache: "no-store" }).then(r => r.json());
-      render(payload && payload.modelos_ml && payload.modelos_ml.confiabilidade);
+      const conf = payload && payload.modelos_ml && payload.modelos_ml.confiabilidade;
+      render(conf);
     } catch (err) {
       render({ mensagem: "Não foi possível carregar a confiabilidade dos modelos neste momento." });
     }

@@ -20,8 +20,8 @@ from pathlib import Path
 from typing import Any, Iterable
 
 HORIZON_DAYS_DEFAULT = 30
-MIN_VALID_WINDOWS_DEFAULT = 5
-TARGET_VALID_WINDOWS_DEFAULT = 12
+MIN_VALID_WINDOWS_DEFAULT = 1
+TARGET_VALID_WINDOWS_DEFAULT = 5
 
 
 def _safe_float(value: Any, default: float | None = None) -> float | None:
@@ -261,7 +261,7 @@ def build_ml_confidence_summary(
         status = "Aquecendo"
         message = (
             f"Aguardando pelo menos {min_valid_windows} janelas válidas de {horizon_days} dias. "
-            "Até lá, a confiabilidade preditiva real fica em 0% para evitar falso positivo."
+            "Até lá, a confiança permanece inicial para evitar falso positivo."
         )
         leader_payload = None
 

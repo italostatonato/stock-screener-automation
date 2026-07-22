@@ -36,9 +36,9 @@ import pandas as pd
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_HORIZON = 30
-MIN_TRAIN_ROWS = 80
-MIN_TRAIN_DATES = 5
+DEFAULT_HORIZON = 7
+MIN_TRAIN_ROWS = 20
+MIN_TRAIN_DATES = 1
 TOP_N_PERFORMANCE = 20
 
 MODEL_SCORE_COLUMNS = {
@@ -319,7 +319,7 @@ def _build_latest_base(df: pd.DataFrame, spec: AssetSpec, horizon: int) -> pd.Da
     out[f"retorno_esperado_{horizon}d"] = np.nan
     out["modelo_lider"] = "Score Top"
     out["status_modelos"] = "Aquecendo"
-    out["motivo_status"] = "Aguardando histórico com retornos futuros suficientes para treinamento."
+    out["motivo_status"] = "Aguardando histórico suficiente para o horizonte selecionado."
     out["_source_index"] = latest.index.values
     return out
 
@@ -513,7 +513,7 @@ def _performance_for_predictions(pred: pd.DataFrame, dataset: pd.DataFrame, spec
                 "Hit_Rate_Top20": hit_rate,
                 "Spearman_IC": spearman_ic,
                 "Alpha_vs_Score_Top": alpha,
-                "Status": "Ativo" if valid_windows >= 3 else "Aquecendo",
+                "Status": "Ativo" if valid_windows >= 1 else "Aquecendo",
             }
         )
 
