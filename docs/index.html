@@ -1020,6 +1020,20 @@
             <tbody id="mlRankingBody"></tbody>
           </table>
         </div>
+<div id="staticMlModelByModelSection" class="panel force-ml-extra" style="margin-top:22px;">
+  <h3>Top 20 por modelo</h3>
+  <p class="desc">Ranking separado de Ações e FIIs para cada modelo. Use esta tabela para comparar se os modelos convergem para ativos parecidos ou se algum deles está gerando sinais muito diferentes.</p>
+  <div id="staticMlModelTables">
+    <div class="muted-cell">Carregando rankings por modelo...</div>
+  </div>
+</div>
+
+<div id="staticMlModelExplainSection" class="panel force-ml-extra" style="margin-top:22px;">
+  <h3>Como cada modelo funciona</h3>
+  <p class="desc">Resumo prático para interpretar os sinais. Nesta fase, os modelos supervisionados devem ser lidos como apoio e validação, não como recomendação automática.</p>
+  <div id="staticMlModelExplainGrid" class="static-ml-explain-grid"></div>
+</div>
+
         <div class="chart-explain"><b>Como ler:</b> o Score Top é o modelo atual de regras e percentis. Os demais modelos usam 7d como horizonte inicial porque já existe amostra validável; o horizonte 30d segue maturando até acumular mais exemplos. O Ensemble é a média dos modelos supervisionados disponíveis; ele só deve virar candidato oficial quando bater o Score Top com consistência.</div>
       </div>
       <div class="panel wide">
@@ -1215,7 +1229,7 @@
       preloadSnapshotsForKpis();
     }
 
-    function renderAll(){ renderKpiControls(); renderKpis(); renderCards('fiis'); renderCards('acoes'); renderRankTable(); renderRecorrentesTable(); renderMlModelsTables(); renderCharts(); renderFx(); bindAboutItalo(); }
+    function renderAll(){ renderKpiControls(); renderKpis(); renderCards('fiis'); renderCards('acoes'); renderRankTable(); renderRecorrentesTable(); renderMlModelsTables(); renderMlModelRankingsByModel(); renderMlModelExplanations(); renderCharts(); renderFx(); bindAboutItalo(); }
 
     function kpi(label,value,note,kind='',metricKey='') { return `<article class="kpi ${kind||'neutral'}" data-kpi="${metricKey}"><div class="label">${label}</div><div class="value">${value}</div><div class="note">${note||''}</div><div class="kpi-spark" aria-hidden="true"></div></article>`; }
     function getKpi(primaryKey, fallbackKey){
@@ -2037,7 +2051,179 @@ const CHART_PERIODS = {
     syncStickyTabBar();
     init();
     setTimeout(syncStickyTabBar,300);
-  </script>
+  
+/* BEGIN ML MODEL TABLES PATCH */
+const ML_MODEL_TABLE_DEFS=[
+  {name:'Score Top',key:'score_top'},
+  {name:'Ridge',key:'score_ridge'},
+  {name:'Random Forest',key:'score_random_forest'},
+  {name:'Extra Trees',key:'score_extra_trees'},
+  {name:'XGBoost',key:'score_xgboost'},
+  {name:'LightGBM',key:'score_lightgbm'},
+  {name:'CatBoost',key:'score_catboost'},
+  {name:'Ensemble',key:'score_ensemble'}
+];
+
+const ML_MODEL_FALLBACK_EXPLAIN=[
+  {modelo:'Score Top',tipo:'Baseline quantitativo',como_funciona:'Modelo atual de regras e percentis do projeto. Combina critérios fundamentalistas e de mercado em um score comparável entre ativos.',como_ler:'Serve como régua oficial enquanto os modelos supervisionados acumulam histórico suficiente.'},
+  {modelo:'Ridge',tipo:'Regressão linear regularizada',como_funciona:'Procura uma relação linear entre indicadores e retorno futuro, penalizando pesos exagerados para reduzir ruído e overfitting.',como_ler:'Bom para capturar sinais simples e estáveis; tende a ser mais conservador.'},
+  {modelo:'Random Forest',tipo:'Árvores em conjunto',como_funciona:'Treina várias árvores de decisão em amostras diferentes e combina os resultados por média.',como_ler:'Captura relações não lineares e costuma ser mais robusto que uma árvore isolada.'},
+  {modelo:'Extra Trees',tipo:'Árvores extremamente aleatórias',como_funciona:'Parecido com Random Forest, mas usa cortes mais aleatórios nas árvores para reduzir variância.',como_ler:'Útil para testar se os sinais continuam bons mesmo com maior aleatoriedade.'},
+  {modelo:'XGBoost',tipo:'Gradient boosting',como_funciona:'Cria árvores em sequência; cada nova árvore tenta corrigir os erros das anteriores.',como_ler:'Pode capturar padrões complexos, mas precisa de cuidado com pouco histórico.'},
+  {modelo:'LightGBM',tipo:'Gradient boosting otimizado',como_funciona:'Também usa boosting, mas com estratégia eficiente para treinar rápido em dados tabulares.',como_ler:'Bom candidato quando a base crescer; no começo deve ser lido como modo sombra.'},
+  {modelo:'CatBoost',tipo:'Gradient boosting robusto',como_funciona:'Modelo de boosting desenhado para dados tabulares, com bom tratamento de variáveis categóricas.',como_ler:'Pode ganhar relevância quando houver mais snapshots e variáveis categóricas confiáveis.'},
+  {modelo:'Ensemble',tipo:'Combinação de modelos',como_funciona:'Combina as previsões dos modelos supervisionados disponíveis, normalmente por média.',como_ler:'Busca um sinal mais estável do que depender de um único modelo.'}
+];
+
+function ensureMlModelTablesPatch(){
+  if(document.getElementById('mlModelTablesPatchStyle')) return;
+  const style=document.createElement('style');
+  style.id='mlModelTablesPatchStyle';
+  style.textContent=`
+    .ml-model-extra{margin:22px 0 0}
+    .ml-model-extra h3{margin:0 0 6px}
+    .ml-model-extra .desc{margin:0 0 14px}
+    .ml-model-group{margin:14px 0 16px;border:1px solid rgba(148,163,184,.18);border-radius:16px;background:rgba(15,23,42,.35);overflow:hidden}
+    .ml-model-group summary{cursor:pointer;list-style:none;padding:14px 16px;font-weight:800;display:flex;justify-content:space-between;gap:12px}
+    .ml-model-group summary::-webkit-details-marker{display:none}
+    .ml-model-group summary span{color:var(--muted);font-weight:600;font-size:.86rem}
+    .ml-model-group[open] summary{border-bottom:1px solid rgba(148,163,184,.14)}
+    .ml-explain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}
+    .ml-explain-card{border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:14px;background:rgba(15,23,42,.38)}
+    .ml-explain-card h4{margin:0 0 4px;font-size:1rem}
+    .ml-explain-card .model-type{font-size:.78rem;color:var(--muted);margin-bottom:8px}
+    .ml-explain-card p{margin:8px 0 0;color:var(--muted);font-size:.88rem;line-height:1.45}
+    .ml-model-pair-table td,.ml-model-pair-table th{white-space:nowrap}
+    .ml-model-pair-table td:nth-child(3),.ml-model-pair-table td:nth-child(6){font-weight:750}
+  `;
+  document.head.appendChild(style);
+}
+
+function ensureMlModelExtraSections(){
+  ensureMlModelTablesPatch();
+
+  let top=document.getElementById('mlModelByModelSection');
+  if(!top){
+    const rankingBody=document.getElementById('mlRankingBody');
+    const tableWrap=rankingBody && rankingBody.closest('.table-wrap');
+    const ref=(tableWrap && tableWrap.nextElementSibling && tableWrap.nextElementSibling.classList && tableWrap.nextElementSibling.classList.contains('chart-explain')) ? tableWrap.nextElementSibling : tableWrap;
+
+    top=document.createElement('div');
+    top.id='mlModelByModelSection';
+    top.className='ml-model-extra';
+    top.innerHTML=`
+      <h3>Top 20 por modelo</h3>
+      <p class="desc">Ranking separado de Ações e FIIs para cada modelo. Use esta tabela para comparar se os modelos estão convergindo para ativos parecidos ou se algum deles está gerando sinais muito diferentes.</p>
+      <div id="mlModelByModelGrid"></div>
+    `;
+    if(ref) ref.insertAdjacentElement('afterend', top);
+  }
+
+  let explain=document.getElementById('mlModelExplainSection');
+  if(!explain){
+    explain=document.createElement('div');
+    explain.id='mlModelExplainSection';
+    explain.className='ml-model-extra';
+    explain.innerHTML=`
+      <h3>Como cada modelo funciona</h3>
+      <p class="desc">Resumo prático para interpretar os sinais. Nesta fase, os modelos supervisionados devem ser lidos como apoio e validação, não como recomendação automática.</p>
+      <div id="mlModelExplainGrid" class="ml-explain-grid"></div>
+    `;
+    top.insertAdjacentElement('afterend', explain);
+  }
+}
+
+function mlModelPickRows(kind, model){
+  const ml=state.data && state.data.modelos_ml ? state.data.modelos_ml : {};
+  const byModel=ml.ranking_por_modelo && ml.ranking_por_modelo[kind] && ml.ranking_por_modelo[kind][model.name];
+  if(Array.isArray(byModel) && byModel.length) return byModel.slice(0,20);
+
+  const ranking=ml.ranking && Array.isArray(ml.ranking[kind]) ? ml.ranking[kind] : [];
+  if(!ranking.length) return [];
+  return ranking
+    .filter(r=>r && r[model.key]!=null && !Number.isNaN(Number(r[model.key])))
+    .slice()
+    .sort((a,b)=>Number(b[model.key])-Number(a[model.key]))
+    .slice(0,20)
+    .map((r,i)=>({...r,rank:i+1,score_modelo:r[model.key]}));
+}
+
+function mlModelScoreValue(r,model){
+  if(!r) return null;
+  return r.score_modelo ?? r[model.key] ?? r.score_ensemble ?? r.score_top ?? null;
+}
+
+function mlModelRetValue(r){
+  if(!r) return null;
+  return r.retorno_esperado_7d ?? r.retorno_esperado_30d ?? null;
+}
+
+function renderMlModelRankingsByModel(){
+  ensureMlModelExtraSections();
+  const grid=document.getElementById('mlModelByModelGrid');
+  if(!grid) return;
+  const ml=state.data && state.data.modelos_ml ? state.data.modelos_ml : {};
+  const horizon=ml.horizonte_principal || '7d';
+
+  const groups=ML_MODEL_TABLE_DEFS.map(model=>{
+    const acoes=mlModelPickRows('acoes',model);
+    const fiis=mlModelPickRows('fiis',model);
+    const maxRows=Math.max(acoes.length,fiis.length,20);
+    if(!acoes.length && !fiis.length) return '';
+
+    const rows=Array.from({length:Math.min(maxRows,20)},(_,i)=>{
+      const a=acoes[i]||{};
+      const f=fiis[i]||{};
+      return `<tr>
+        <td>#${i+1}</td>
+        <td>${a.ticker || a.ativo || a['Ação'] || a.Acao || '—'}</td>
+        <td class="num">${mlScore(mlModelScoreValue(a,model))}</td>
+        <td class="num">${mlReturn(mlModelRetValue(a))}</td>
+        <td>${f.ticker || f.ativo || f.FUNDOS || f.Fundo || '—'}</td>
+        <td class="num">${mlScore(mlModelScoreValue(f,model))}</td>
+        <td class="num">${mlReturn(mlModelRetValue(f))}</td>
+      </tr>`;
+    }).join('');
+
+    return `<details class="ml-model-group" >
+      <summary>${model.name}<span>${acoes.length} ações · ${fiis.length} FIIs · horizonte ${horizon}</span></summary>
+      <div class="table-wrap">
+        <table class="ml-model-pair-table">
+          <thead><tr>
+            <th>#</th>
+            <th>Ação</th>
+            <th>Score modelo</th>
+            <th>Ret. esp.</th>
+            <th>FII</th>
+            <th>Score modelo</th>
+            <th>Ret. esp.</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </details>`;
+  }).filter(Boolean);
+
+  grid.innerHTML=groups.length
+    ? groups.join('')
+    : '<div class="muted-cell">Ainda não há ranking por modelo. Rode o pipeline ML para gerar os scores por modelo.</div>';
+}
+
+function renderMlModelExplanations(){
+  ensureMlModelExtraSections();
+  const grid=document.getElementById('mlModelExplainGrid');
+  if(!grid) return;
+  const ml=state.data && state.data.modelos_ml ? state.data.modelos_ml : {};
+  const items=(Array.isArray(ml.explicacao_modelos) && ml.explicacao_modelos.length) ? ml.explicacao_modelos : ML_MODEL_FALLBACK_EXPLAIN;
+  grid.innerHTML=items.map(item=>`<div class="ml-explain-card">
+    <h4>${item.modelo || 'Modelo'}</h4>
+    <div class="model-type">${item.tipo || ''}</div>
+    <p>${item.como_funciona || ''}</p>
+    <p><b>Como ler:</b> ${item.como_ler || ''}</p>
+  </div>`).join('');
+}
+/* END ML MODEL TABLES PATCH */
+</script>
 <script id="ml-confidence-renderer">
 (function () {
   function fmtPct(v) {
@@ -2113,6 +2299,585 @@ const CHART_PERIODS = {
   } else {
     loadLatestConfidence();
   }
+})();
+</script>
+
+
+<script id="static-ml-model-tables-renderer">
+(function(){
+  const MODELS=[
+    ['Score Top','score_top'],
+    ['Ridge','score_ridge'],
+    ['Random Forest','score_random_forest'],
+    ['Extra Trees','score_extra_trees'],
+    ['XGBoost','score_xgboost'],
+    ['LightGBM','score_lightgbm'],
+    ['CatBoost','score_catboost'],
+    ['Ensemble','score_ensemble']
+  ];
+
+  const EXPLAIN=[
+    ['Score Top','Baseline quantitativo','Modelo atual de regras e percentis do projeto. Combina critérios fundamentalistas e de mercado em um score comparável entre ativos.','Serve como régua oficial enquanto os modelos supervisionados acumulam histórico suficiente.'],
+    ['Ridge','Regressão linear regularizada','Procura uma relação linear entre indicadores e retorno futuro, penalizando pesos exagerados para reduzir ruído e overfitting.','Bom para capturar sinais simples e estáveis; tende a ser mais conservador.'],
+    ['Random Forest','Árvores em conjunto','Treina várias árvores de decisão em amostras diferentes e combina os resultados por média.','Captura relações não lineares e costuma ser mais robusto que uma árvore isolada.'],
+    ['Extra Trees','Árvores extremamente aleatórias','Parecido com Random Forest, mas usa cortes mais aleatórios nas árvores para reduzir variância.','Útil para testar se os sinais continuam bons mesmo com maior aleatoriedade.'],
+    ['XGBoost','Gradient boosting','Cria árvores em sequência; cada nova árvore tenta corrigir os erros das anteriores.','Pode capturar padrões complexos, mas precisa de cuidado com pouco histórico.'],
+    ['LightGBM','Gradient boosting otimizado','Também usa boosting, mas com estratégia eficiente para treinar rápido em dados tabulares.','Bom candidato quando a base crescer; no começo deve ser lido como modo sombra.'],
+    ['CatBoost','Gradient boosting robusto','Modelo de boosting desenhado para dados tabulares, com bom tratamento de variáveis categóricas.','Pode ganhar relevância quando houver mais snapshots e variáveis categóricas confiáveis.'],
+    ['Ensemble','Combinação de modelos','Combina as previsões dos modelos supervisionados disponíveis, normalmente por média.','Busca um sinal mais estável do que depender de um único modelo.']
+  ];
+
+  function addStyle(){
+    if(document.getElementById('staticMlModelTablesStyle')) return;
+    const style=document.createElement('style');
+    style.id='staticMlModelTablesStyle';
+    style.textContent=`
+      #staticMlModelTables{display:block}
+      .static-ml-group{margin:14px 0 16px;border:1px solid rgba(148,163,184,.18);border-radius:16px;background:rgba(15,23,42,.35);overflow:hidden}
+      .static-ml-group summary{cursor:pointer;list-style:none;padding:14px 16px;font-weight:800;display:flex;justify-content:space-between;gap:12px}
+      .static-ml-group summary::-webkit-details-marker{display:none}
+      .static-ml-group summary span{color:var(--muted);font-weight:600;font-size:.86rem}
+      .static-ml-group[open] summary{border-bottom:1px solid rgba(148,163,184,.14)}
+      .static-ml-table td,.static-ml-table th{white-space:nowrap}
+      .static-ml-table td:nth-child(3),.static-ml-table td:nth-child(6){font-weight:750}
+      .static-ml-explain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}
+      .static-ml-explain-card{border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:14px;background:rgba(15,23,42,.38)}
+      .static-ml-explain-card h4{margin:0 0 4px;font-size:1rem}
+      .static-ml-explain-card .model-type{font-size:.78rem;color:var(--muted);margin-bottom:8px}
+      .static-ml-explain-card p{margin:8px 0 0;color:var(--muted);font-size:.88rem;line-height:1.45}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function brNumber(v,d=2){
+    const n=Number(v);
+    if(!Number.isFinite(n)) return '—';
+    return n.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+  }
+
+  function brScore(v){
+    const n=Number(v);
+    return Number.isFinite(n) ? brNumber(n,2) : '—';
+  }
+
+  function brReturn(v){
+    const n=Number(v);
+    if(!Number.isFinite(n)) return '—';
+    const pct=Math.abs(n)<=1.5 ? n*100 : n;
+    return (pct>0?'+':'')+brNumber(pct,2)+'%';
+  }
+
+  function getTicker(row,kind){
+    if(!row) return '—';
+    if(kind==='acoes') return row.ticker || row.ativo || row['Ação'] || row.Acao || row.Papel || row.Codigo || row['Código'] || '—';
+    return row.ticker || row.ativo || row.FUNDOS || row.Fundo || row.Codigo || row['Código'] || '—';
+  }
+
+  function getScore(row,key){
+    if(!row) return null;
+    return row.score_modelo ?? row[key] ?? row.score_ensemble ?? row.score_top ?? row.Score ?? row.score ?? null;
+  }
+
+  function getRet(row){
+    if(!row) return null;
+    return row.retorno_esperado_7d ?? row.Retorno_Esperado_7d ?? row.retorno_esperado_30d ?? row.Retorno_Esperado_30d ?? null;
+  }
+
+  function payloadFromState(){
+    try{
+      if(typeof state !== 'undefined' && state && state.data && state.data.modelos_ml) return state.data;
+    }catch(e){}
+    return null;
+  }
+
+  async function loadPayload(){
+    const s=payloadFromState();
+    if(s) return s;
+    try{
+      const idx=await fetch('data/index.json',{cache:'no-store'}).then(r=>r.json());
+      const latest=[...idx].sort().at(-1);
+      return await fetch(`data/${latest}.json`,{cache:'no-store'}).then(r=>r.json());
+    }catch(e){
+      return null;
+    }
+  }
+
+  function rowsByModel(ml,kind,modelName,key){
+    const fromByModel=ml?.ranking_por_modelo?.[kind]?.[modelName];
+    if(Array.isArray(fromByModel) && fromByModel.length) return fromByModel.slice(0,20);
+
+    const base=ml?.ranking?.[kind];
+    if(!Array.isArray(base)) return [];
+    return base
+      .filter(r=>r && r[key]!=null && !Number.isNaN(Number(r[key])))
+      .slice()
+      .sort((a,b)=>Number(b[key])-Number(a[key]))
+      .slice(0,20)
+      .map((r,i)=>Object.assign({},r,{rank:i+1,score_modelo:r[key]}));
+  }
+
+  function renderExplain(ml){
+    const grid=document.getElementById('staticMlModelExplainGrid');
+    if(!grid) return;
+    const data=Array.isArray(ml?.explicacao_modelos) && ml.explicacao_modelos.length
+      ? ml.explicacao_modelos.map(x=>[x.modelo,x.tipo,x.como_funciona,x.como_ler])
+      : EXPLAIN;
+
+    grid.innerHTML=data.map(x=>`
+      <div class="static-ml-explain-card">
+        <h4>${x[0] || 'Modelo'}</h4>
+        <div class="model-type">${x[1] || ''}</div>
+        <p>${x[2] || ''}</p>
+        <p><b>Como ler:</b> ${x[3] || ''}</p>
+      </div>
+    `).join('');
+  }
+
+  async function render(){
+    addStyle();
+    const container=document.getElementById('staticMlModelTables');
+    if(!container) return;
+
+    const payload=await loadPayload();
+    const ml=payload?.modelos_ml;
+    if(!ml){
+      container.innerHTML='<div class="muted-cell">Não consegui carregar os dados de modelos_ml do JSON atual.</div>';
+      renderExplain({});
+      return;
+    }
+
+    const horizon=ml.horizonte_principal || '7d';
+    const html=MODELS.map(([name,key])=>{
+      const acoes=rowsByModel(ml,'acoes',name,key);
+      const fiis=rowsByModel(ml,'fiis',name,key);
+      if(!acoes.length && !fiis.length) return '';
+
+      const rows=Array.from({length:20},(_,i)=>{
+        const a=acoes[i] || {};
+        const f=fiis[i] || {};
+        return `<tr>
+          <td>#${i+1}</td>
+          <td>${getTicker(a,'acoes')}</td>
+          <td class="num">${brScore(getScore(a,key))}</td>
+          <td class="num">${brReturn(getRet(a))}</td>
+          <td>${getTicker(f,'fiis')}</td>
+          <td class="num">${brScore(getScore(f,key))}</td>
+          <td class="num">${brReturn(getRet(f))}</td>
+        </tr>`;
+      }).join('');
+
+      return `<details class="static-ml-group" >
+        <summary>${name}<span>${acoes.length} ações · ${fiis.length} FIIs · horizonte ${horizon}</span></summary>
+        <div class="table-wrap">
+          <table class="table rec-table static-ml-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Ação</th>
+                <th>Score modelo</th>
+                <th>Ret. esp.</th>
+                <th>FII</th>
+                <th>Score modelo</th>
+                <th>Ret. esp.</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </details>`;
+    }).filter(Boolean).join('');
+
+    container.innerHTML=html || '<div class="muted-cell">Ainda não há scores por modelo suficientes para montar o Top 20 por modelo.</div>';
+    renderExplain(ml);
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{render(); setTimeout(render,500); setTimeout(render,1500);});
+  document.addEventListener('click',e=>{
+    if(e.target && (e.target.closest('.tab') || e.target.closest('[data-tab]'))){
+      setTimeout(render,300);
+    }
+  });
+  render();
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script id="ml-rank-accordion-single-controller">
+(function(){
+  const MODEL_ORDER=['Ensemble','Score Top','Ridge','Random Forest','Extra Trees','XGBoost','LightGBM','CatBoost'];
+
+  function addStyle(){
+    if(document.getElementById('mlRankAccordionSingleStyle')) return;
+    const style=document.createElement('style');
+    style.id='mlRankAccordionSingleStyle';
+    style.textContent=`
+      .ml-rank-badge{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:26px;padding:0 8px;border-radius:999px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:#86efac;font-weight:900;margin-right:10px;font-size:.82rem;flex:0 0 auto}
+      .ml-acc-card{margin:14px 0 16px;border:1px solid rgba(148,163,184,.18);border-radius:16px;background:rgba(15,23,42,.35);overflow:hidden}
+      .ml-acc-head{width:100%;border:0;background:transparent;color:inherit;cursor:pointer;padding:14px 16px;font:inherit;font-weight:800;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left}
+      .ml-acc-head:hover{background:rgba(148,163,184,.06)}
+      .ml-acc-title{display:inline-flex;align-items:center;gap:0}
+      .ml-acc-meta{color:var(--muted);font-weight:600;font-size:.86rem;margin-left:auto}
+      .ml-acc-head::after{content:'+';font-weight:900;color:var(--muted);margin-left:12px}
+      .ml-acc-card.is-open .ml-acc-head{border-bottom:1px solid rgba(148,163,184,.14)}
+      .ml-acc-card.is-open .ml-acc-head::after{content:'−'}
+      .ml-acc-body{display:none}
+      .ml-acc-card.is-open .ml-acc-body{display:block}
+      .ml-acc-card .table-wrap{margin:0}
+      .ml-perf-sub{display:block;color:var(--muted);font-size:.78rem;margin-top:2px;font-weight:600}
+      .ml-perf-status{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-weight:800;font-size:.78rem;border:1px solid rgba(148,163,184,.22)}
+      .ml-perf-status.ok{color:#86efac;background:rgba(34,197,94,.10);border-color:rgba(34,197,94,.28)}
+      .ml-perf-status.warm{color:#fbbf24;background:rgba(251,191,36,.10);border-color:rgba(251,191,36,.28)}
+      .ml-perf-status.na{color:#94a3b8;background:rgba(148,163,184,.08)}
+      .ml-perf-help{margin:10px 0 14px;color:var(--muted);font-size:.9rem;line-height:1.45}
+      .ml-perf-help b{color:var(--text)}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function asNumber(v){
+    if(v===null || v===undefined || v==='') return null;
+    if(typeof v==='number') return Number.isFinite(v) ? v : null;
+    let s=String(v).trim();
+    if(!s || ['nan','none','null','-','—','<na>'].includes(s.toLowerCase())) return null;
+    s=s.replace('R$','').replace('%','').replace(/\s/g,'');
+    s=s.replace(/[^0-9,.\-+]/g,'');
+    if(!s || [',','.','-','+'].includes(s)) return null;
+    if(s.includes(',') && s.includes('.')){
+      if(s.lastIndexOf(',') > s.lastIndexOf('.')) s=s.replace(/\./g,'').replace(',','.');
+      else s=s.replace(/,/g,'');
+    }else if(s.includes(',')){
+      s=s.replace(/\./g,'').replace(',','.');
+    }else{
+      const parts=s.split('.');
+      if(parts.length>2) s=parts.slice(0,-1).join('')+'.'+parts.at(-1);
+    }
+    const n=Number(s);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function avg(values){
+    const nums=values.map(asNumber).filter(v=>v!==null);
+    if(!nums.length) return null;
+    return nums.reduce((a,b)=>a+b,0)/nums.length;
+  }
+
+  function maxNum(values){
+    const nums=values.map(asNumber).filter(v=>v!==null);
+    if(!nums.length) return null;
+    return Math.max(...nums);
+  }
+
+  function fmtNum(v,d=2){
+    const n=asNumber(v);
+    if(n===null) return '—';
+    return n.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+  }
+
+  function fmtPct(v){
+    const n=asNumber(v);
+    if(n===null) return '—';
+    const pct=Math.abs(n)<=1.5 ? n*100 : n;
+    return (pct>0?'+':'')+pct.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';
+  }
+
+  function fmtHit(v){
+    const n=asNumber(v);
+    if(n===null) return '—';
+    const pct=Math.abs(n)<=1.5 ? n*100 : n;
+    return pct.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%';
+  }
+
+  function modelFromText(text){
+    const clean=String(text||'').replace(/#\d+/g,'').trim().toLowerCase();
+    return MODEL_ORDER.find(m=>clean.includes(m.toLowerCase())) || null;
+  }
+
+  function statusClass(status){
+    const s=String(status||'').toLowerCase();
+    if(s.includes('ativo') || s.includes('ok')) return 'ok';
+    if(s.includes('aquec') || s.includes('matur')) return 'warm';
+    return 'na';
+  }
+
+  function payloadFromState(){
+    try{
+      if(typeof state!=='undefined' && state && state.data && state.data.modelos_ml) return state.data;
+    }catch(e){}
+    return null;
+  }
+
+  async function loadPayload(){
+    const s=payloadFromState();
+    if(s) return s;
+    try{
+      const idx=await fetch('data/index.json',{cache:'no-store'}).then(r=>r.json());
+      const latest=[...idx].sort().at(-1);
+      return await fetch(`data/${latest}.json`,{cache:'no-store'}).then(r=>r.json());
+    }catch(e){
+      return null;
+    }
+  }
+
+  function getPerfRows(ml){
+    const rows=Array.isArray(ml?.performance) ? ml.performance : [];
+    return rows.map(r=>{
+      const raw=r.Modelo ?? r.modelo ?? r.model;
+      const model=raw ? (MODEL_ORDER.find(m=>String(raw).toLowerCase().includes(m.toLowerCase())) || String(raw).trim()) : null;
+      if(!model) return null;
+      return {
+        model,
+        type:String(r.Tipo ?? r.tipo ?? r.Classe ?? r.classe ?? '—').replace('ACAO','Ações').replace('FII','FIIs'),
+        horizon:String(r.Horizonte ?? r.horizonte ?? ml?.horizonte_principal ?? '7d'),
+        retorno:asNumber(r.Retorno_Medio_Top20 ?? r.retorno_medio_top20 ?? r.retorno_medio ?? r.Return_Top20),
+        hit:asNumber(r.Hit_Rate_Top20 ?? r.hit_rate_top20 ?? r.hit_rate ?? r.Hit_Rate),
+        spearman:asNumber(r.Spearman_IC ?? r.spearman_ic ?? r.IC),
+        alpha:asNumber(r.Alpha_vs_Score_Top ?? r.alpha_vs_score_top ?? r.Alpha),
+        confianca:asNumber(r.Confiabilidade_Pct ?? r.confiabilidade_pct ?? r.Confiabilidade),
+        janelas:asNumber(r.Janelas_Validas ?? r.janelas_validas ?? r.Valid_Windows ?? r.valid_windows),
+        status:String(r.Status ?? r.status ?? r.status_modelos ?? '—')
+      };
+    }).filter(Boolean);
+  }
+
+  function modelStats(ml){
+    const perf=getPerfRows(ml);
+    const byModel=new Map();
+
+    for(const row of perf){
+      if(!byModel.has(row.model)){
+        byModel.set(row.model,{model:row.model,types:new Set(),horizons:new Set(),rows:[],order:MODEL_ORDER.indexOf(row.model)});
+      }
+      const g=byModel.get(row.model);
+      g.rows.push(row);
+      if(row.type && row.type!=='—') g.types.add(row.type);
+      if(row.horizon) g.horizons.add(row.horizon);
+    }
+
+    for(const model of MODEL_ORDER){
+      if(!byModel.has(model)){
+        byModel.set(model,{model,types:new Set(),horizons:new Set(),rows:[],order:MODEL_ORDER.indexOf(model)});
+      }
+    }
+
+    const stats=[...byModel.values()].map(g=>{
+      const rows=g.rows;
+      const out={
+        model:g.model,
+        types:[...g.types],
+        horizons:[...g.horizons],
+        retorno:avg(rows.map(r=>r.retorno)),
+        hit:avg(rows.map(r=>r.hit)),
+        spearman:avg(rows.map(r=>r.spearman)),
+        alpha:avg(rows.map(r=>r.alpha)),
+        confianca:avg(rows.map(r=>r.confianca)),
+        janelas:maxNum(rows.map(r=>r.janelas)),
+        status:rows.some(r=>String(r.status).toLowerCase().includes('ativo')) ? 'Ativo' : (rows.length ? rows[0].status : 'Sem medição'),
+        measured:rows.some(r=>[r.retorno,r.hit,r.spearman,r.alpha,r.confianca].some(v=>v!==null)),
+        order:g.order<0 ? 999 : g.order
+      };
+
+      out.sortScore =
+        (out.alpha ?? -999) * 1000 +
+        (out.hit ?? -999) * 100 +
+        (out.spearman ?? -999) * 50 +
+        (out.retorno ?? -999) * 10 +
+        (out.confianca ?? 0);
+
+      return out;
+    });
+
+    stats.sort((a,b)=>{
+      if(a.measured!==b.measured) return a.measured ? -1 : 1;
+      if(b.sortScore!==a.sortScore) return b.sortScore-a.sortScore;
+      return a.order-b.order;
+    });
+
+    stats.forEach((s,i)=>s.rank=i+1);
+    return stats;
+  }
+
+  function renderPerformance(ml,stats){
+    const body=document.getElementById('mlPerformanceBody');
+    if(!body) return;
+
+    const table=body.closest('table');
+    if(table){
+      const thead=table.querySelector('thead');
+      if(thead){
+        thead.innerHTML=`
+          <tr>
+            <th>Rank</th>
+            <th>Modelo</th>
+            <th>Tipos</th>
+            <th>Horizonte</th>
+            <th>Retorno médio Top20</th>
+            <th>Hit rate</th>
+            <th>Spearman IC</th>
+            <th>Alpha vs Score Top</th>
+            <th>Janelas</th>
+            <th>Status</th>
+          </tr>`;
+      }
+    }
+
+    let note=document.getElementById('mlPerformanceRankNote');
+    if(!note && table){
+      note=document.createElement('div');
+      note.id='mlPerformanceRankNote';
+      note.className='ml-perf-help';
+      note.innerHTML='<b>Ranking:</b> ordenado do melhor para o pior modelo, priorizando Alpha vs Score Top, Hit Rate, Spearman IC e retorno médio do Top 20. Modelos sem estatística suficiente ficam no fim.';
+      table.insertAdjacentElement('beforebegin',note);
+    }
+
+    body.innerHTML=stats.map(s=>`
+      <tr>
+        <td><span class="ml-rank-badge">#${s.rank}</span></td>
+        <td><b>${s.model}</b><span class="ml-perf-sub">${s.measured ? 'com estatística calculada' : 'aguardando medição'}</span></td>
+        <td>${s.types.length ? s.types.join(' / ') : '—'}</td>
+        <td>${s.horizons.length ? s.horizons.join(' / ') : (ml.horizonte_principal || '7d')}</td>
+        <td class="num">${fmtPct(s.retorno)}</td>
+        <td class="num">${fmtHit(s.hit)}</td>
+        <td class="num">${fmtNum(s.spearman,3)}</td>
+        <td class="num">${fmtPct(s.alpha)}</td>
+        <td class="num">${fmtNum(s.janelas,0)}</td>
+        <td><span class="ml-perf-status ${statusClass(s.status)}">${s.status || '—'}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  function metaFromNode(node){
+    const spans=[...node.querySelectorAll('span')].filter(s=>!s.classList.contains('ml-rank-badge') && !s.classList.contains('ml-acc-title'));
+    if(!spans.length) return '';
+    return spans[spans.length-1].textContent.trim();
+  }
+
+  function convertDetailsToCards(rankMap){
+    document.querySelectorAll('details.static-ml-group, details.force-ml-group, details.ml-model-group').forEach(detail=>{
+      const summary=detail.querySelector(':scope > summary');
+      if(!summary) return;
+
+      const model=modelFromText(summary.textContent);
+      if(!model) return;
+
+      const rank=rankMap.get(model) || '—';
+      const meta=metaFromNode(summary);
+
+      const card=document.createElement('div');
+      card.className='ml-acc-card';
+      card.dataset.modelName=model;
+      card.dataset.modelRank=String(rank==='—' ? 999 : rank);
+
+      const btn=document.createElement('button');
+      btn.type='button';
+      btn.className='ml-acc-head';
+      btn.dataset.modelName=model;
+      btn.innerHTML=`<span class="ml-acc-title"><span class="ml-rank-badge">#${rank}</span>${model}</span>${meta ? `<span class="ml-acc-meta">${meta}</span>` : ''}`;
+
+      const body=document.createElement('div');
+      body.className='ml-acc-body';
+      [...detail.childNodes].forEach(node=>{
+        if(node===summary) return;
+        body.appendChild(node.cloneNode(true));
+      });
+
+      card.appendChild(btn);
+      card.appendChild(body);
+      detail.replaceWith(card);
+    });
+  }
+
+  function decorateCards(rankMap){
+    document.querySelectorAll('.ml-acc-card').forEach(card=>{
+      const btn=card.querySelector(':scope > .ml-acc-head');
+      if(!btn) return;
+
+      const model=card.dataset.modelName || btn.dataset.modelName || modelFromText(btn.textContent);
+      if(!model) return;
+
+      const rank=rankMap.get(model) || '—';
+      const metaEl=btn.querySelector('.ml-acc-meta');
+      const meta=metaEl ? metaEl.textContent.trim() : '';
+
+      card.dataset.modelName=model;
+      card.dataset.modelRank=String(rank==='—' ? 999 : rank);
+      btn.dataset.modelName=model;
+      btn.innerHTML=`<span class="ml-acc-title"><span class="ml-rank-badge">#${rank}</span>${model}</span>${meta ? `<span class="ml-acc-meta">${meta}</span>` : ''}`;
+    });
+  }
+
+  function reorderCards(){
+    ['staticMlModelTables','forceMlModelByModelGrid','mlModelByModelGrid'].forEach(id=>{
+      const container=document.getElementById(id);
+      if(!container) return;
+      const cards=[...container.querySelectorAll(':scope > .ml-acc-card')];
+      if(cards.length<2) return;
+      cards.sort((a,b)=>Number(a.dataset.modelRank||999)-Number(b.dataset.modelRank||999));
+      cards.forEach(card=>container.appendChild(card));
+    });
+  }
+
+  function bindClickOnce(){
+    if(window.__mlRankAccordionSingleClickBound) return;
+    window.__mlRankAccordionSingleClickBound=true;
+
+    document.addEventListener('click',function(event){
+      const btn=event.target.closest('.ml-acc-head');
+      if(!btn) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      if(event.stopImmediatePropagation) event.stopImmediatePropagation();
+
+      const card=btn.closest('.ml-acc-card');
+      if(!card) return;
+
+      card.classList.toggle('is-open');
+    },true);
+  }
+
+  async function run(){
+    addStyle();
+    bindClickOnce();
+
+    const payload=await loadPayload();
+    const ml=payload?.modelos_ml;
+    if(!ml) return;
+
+    const stats=modelStats(ml);
+    const rankMap=new Map(stats.map(s=>[s.model,s.rank]));
+
+    renderPerformance(ml,stats);
+    convertDetailsToCards(rankMap);
+    decorateCards(rankMap);
+    reorderCards();
+  }
+
+  function schedule(){
+    run();
+    setTimeout(run,300);
+    setTimeout(run,900);
+    setTimeout(run,1800);
+    setTimeout(run,3500);
+  }
+
+  document.addEventListener('DOMContentLoaded',schedule);
+  document.addEventListener('click',function(e){
+    if(e.target && (e.target.closest('.tab') || e.target.closest('[data-tab]'))){
+      setTimeout(run,300);
+      setTimeout(run,1000);
+    }
+  });
+
+  schedule();
 })();
 </script>
 </body>
