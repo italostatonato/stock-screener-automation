@@ -1,21 +1,16 @@
 {
-  "generated_at": "2026-07-28T12:55:12",
+  "generated_at": "2026-07-29T13:01:35",
   "status": "ok",
   "checks": [
     {
       "name": "lake_snapshots",
       "status": "ok",
-      "detail": "19 snapshots encontrados"
+      "detail": "20 snapshots encontrados"
     },
     {
       "name": "lake_manifest",
       "status": "ok",
-      "detail": "latest=2026-07-28"
-    },
-    {
-      "name": "snapshot_2026-07-23_files",
-      "status": "ok",
-      "detail": "ok"
+      "detail": "latest=2026-07-29"
     },
     {
       "name": "snapshot_2026-07-24_files",
@@ -38,6 +33,11 @@
       "detail": "ok"
     },
     {
+      "name": "snapshot_2026-07-29_files",
+      "status": "ok",
+      "detail": "ok"
+    },
+    {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_fiis.parquet",
       "status": "ok",
       "detail": "520 linhas"
@@ -50,7 +50,7 @@
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
       "status": "ok",
-      "detail": "762 linhas"
+      "detail": "802 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_fiis.parquet",
@@ -100,12 +100,12 @@
     {
       "name": "dashboard_index",
       "status": "ok",
-      "detail": "31 datas no index.json"
+      "detail": "32 datas no index.json"
     },
     {
       "name": "dashboard_latest_vs_lake",
       "status": "ok",
-      "detail": "dashboard_latest=2026-07-28, lake_latest=2026-07-28"
+      "detail": "dashboard_latest=2026-07-29, lake_latest=2026-07-29"
     }
   ]
 }
