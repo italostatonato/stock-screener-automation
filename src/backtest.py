@@ -22,7 +22,6 @@ BENCHMARK_YAHOO = {
     "IBOV": "^BVSP",
 }
 
-
 def save_portfolio_snapshot(
     top_fiis: pd.DataFrame,
     top_acoes: pd.DataFrame,
@@ -30,15 +29,19 @@ def save_portfolio_snapshot(
     output_file: str,
 ):
     """
-    Salva a composição da carteira histórica.
+    Salva a composição histórica da carteira.
 
-    Cada execução substitui integralmente a carteira da mesma data,
-    evitando que ativos de uma execução anterior permaneçam no snapshot.
+    Para uma determinada data, a carteira anterior daquele mesmo dia
+    é completamente substituída. Isso evita acumular ativos de
+    execuções anteriores do workflow.
     """
 
     rows = []
 
+    # ============================================================
     # FIIs
+    # ============================================================
+
     if top_fiis is not None and not top_fiis.empty:
         for _, row in top_fiis.iterrows():
             ticker = row.get("FUNDOS")
@@ -46,13 +49,16 @@ def save_portfolio_snapshot(
             if pd.notna(ticker):
                 rows.append(
                     {
-                        "Data_Carteira": data_execucao,
+                        "Data_Carteira": str(data_execucao),
                         "Tipo": "FII",
                         "Ticker": str(ticker).strip().upper(),
                     }
                 )
 
-    # Ações
+    # ============================================================
+    # AÇÕES
+    # ============================================================
+
     if top_acoes is not None and not top_acoes.empty:
         for _, row in top_acoes.iterrows():
             ticker = row.get("Acao")
@@ -60,7 +66,7 @@ def save_portfolio_snapshot(
             if pd.notna(ticker):
                 rows.append(
                     {
-                        "Data_Carteira": data_execucao,
+                        "Data_Carteira": str(data_execucao),
                         "Tipo": "ACAO",
                         "Ticker": str(ticker).strip().upper(),
                     }
@@ -75,11 +81,18 @@ def save_portfolio_snapshot(
         ],
     )
 
+    # ============================================================
+    # CARREGA HISTÓRICO EXISTENTE
+    # ============================================================
+
     if os.path.exists(output_file):
         historico = pd.read_parquet(output_file)
 
-        # Remove completamente a carteira da data que está
-        # sendo recalculada.
+        # Remove TODA a carteira da data atual.
+        #
+        # Isso é intencional:
+        # se o workflow rodar duas vezes no mesmo dia e a seleção
+        # mudar, a segunda execução substitui completamente a primeira.
         historico = historico[
             historico["Data_Carteira"].astype(str)
             != str(data_execucao)
@@ -96,6 +109,10 @@ def save_portfolio_snapshot(
     else:
         historico = novo_df
 
+    # ============================================================
+    # REMOVE DUPLICIDADES
+    # ============================================================
+
     historico = historico.drop_duplicates(
         subset=[
             "Data_Carteira",
@@ -105,10 +122,17 @@ def save_portfolio_snapshot(
         keep="last",
     )
 
-    os.makedirs(
-        os.path.dirname(output_file),
-        exist_ok=True,
-    )
+    # ============================================================
+    # SALVA
+    # ============================================================
+
+    output_dir = os.path.dirname(output_file)
+
+    if output_dir:
+        os.makedirs(
+            output_dir,
+            exist_ok=True,
+        )
 
     historico.to_parquet(
         output_file,
@@ -120,26 +144,6 @@ def save_portfolio_snapshot(
         output_file,
         len(historico),
     )
-
-historico = historico.drop_duplicates(
-    subset=[
-        "Data_Carteira",
-        "Tipo",
-        "Ticker",
-    ],
-    keep="last",
-)
-
-historico.to_parquet(
-    output_file,
-    index=False,
-)
-
-logger.info(
-    "Carteira histórica salva: %s (%s linhas)",
-    output_file,
-    len(historico),
-)
 
 def _yahoo_ticker(fii: str) -> str:
     return f"{str(fii).strip().upper()}.SA"
