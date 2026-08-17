@@ -115,9 +115,9 @@ def main():
             top_actions["Data Preco"] = data_hoje
 
             acoes_scores_top = (
-                acoes_scores_universe.reindex(top_actions.index)
-                if not top_actions.empty
-                else pd.Series(dtype=float)
+            top_actions["Score"].reset_index(drop=True)
+            if not top_actions.empty and "Score" in top_actions.columns
+            else pd.Series(dtype=float)
             )
 
             update_history(
