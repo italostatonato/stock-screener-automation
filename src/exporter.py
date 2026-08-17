@@ -317,84 +317,392 @@ def _build_portfolio_base100_from_history(
     ticker_col: str,
     price_col: str,
 ) -> list:
-    """Monta série real da carteira Top 20 em base 100 usando histórico salvo.
-
-    A linha da carteira começa somente na primeira data real registrada em
-    data/backtest/carteiras_historicas.parquet. Para cada intervalo entre
-    snapshots, mede o retorno equal-weight dos tickers escolhidos no início
-    do período usando os preços do universo histórico no dia seguinte.
     """
+    Monta a série real da carteira em base 100 usando o histórico salvo.
+
+    A carteira é equal-weighted e é rebalanceada a cada snapshot.
+
+    Para cada período:
+
+        carteira em D0
+              ↓
+        preços dos mesmos ativos em D0
+              ↓
+        preços dos mesmos ativos em D1
+              ↓
+        retorno médio dos ativos
+              ↓
+        valor acumulado da carteira
+
+    Quando não existe cotação exatamente no dia do snapshot,
+    utiliza-se o último preço disponível anterior ou igual à data.
+
+    Isso evita que uma ausência pontual de cotação faça a série
+    permanecer artificialmente congelada.
+    """
+
     carteiras = _load_parquet_safe(carteira_path)
     historico = _load_parquet_safe(historico_path)
 
-    required_carteira = {"Data_Carteira", "Tipo", "Ticker"}
-    required_hist = {"Data_Execucao", ticker_col, price_col}
+    required_carteira = {
+        "Data_Carteira",
+        "Tipo",
+        "Ticker",
+    }
+
+    required_hist = {
+        "Data_Execucao",
+        ticker_col,
+        price_col,
+    }
 
     if carteiras.empty or historico.empty:
+        logger.warning(
+            "Historico insuficiente para calcular carteira %s.",
+            tipo,
+        )
         return []
-    if not required_carteira.issubset(carteiras.columns):
-        logger.warning(f"Carteiras sem colunas esperadas para {tipo}: {required_carteira}")
+
+    if not required_carteira.issubset(
+        carteiras.columns
+    ):
+        logger.warning(
+            "Carteiras sem colunas esperadas para %s: %s",
+            tipo,
+            required_carteira,
+        )
         return []
-    if not required_hist.issubset(historico.columns):
-        logger.warning(f"Historico sem colunas esperadas para {tipo}: {required_hist}")
+
+    if not required_hist.issubset(
+        historico.columns
+    ):
+        logger.warning(
+            "Historico sem colunas esperadas para %s: %s",
+            tipo,
+            required_hist,
+        )
         return []
 
     c = carteiras.copy()
     h = historico.copy()
 
-    c = c[c["Tipo"].astype(str).str.upper().eq(tipo.upper())].copy()
+    # ── Normalização da carteira ─────────────────────────────────────────
+
+    c = c[
+        c["Tipo"]
+        .astype(str)
+        .str.upper()
+        .eq(tipo.upper())
+    ].copy()
+
     if c.empty:
         return []
 
-    c["Data_Carteira"] = pd.to_datetime(c["Data_Carteira"], errors="coerce").dt.normalize()
-    c["Ticker_norm"] = _normalize_ticker_series(c["Ticker"])
-    c = c.dropna(subset=["Data_Carteira"])
+    c["Data_Carteira"] = (
+        pd.to_datetime(
+            c["Data_Carteira"],
+            errors="coerce",
+        )
+        .dt.normalize()
+    )
 
-    h["Data_Execucao"] = pd.to_datetime(h["Data_Execucao"], errors="coerce").dt.normalize()
-    h["Ticker_norm"] = _normalize_ticker_series(h[ticker_col])
-    h["Preco_norm"] = pd.to_numeric(h[price_col], errors="coerce")
-    h = h.dropna(subset=["Data_Execucao", "Preco_norm"])
+    c["Ticker_norm"] = _normalize_ticker_series(
+        c["Ticker"]
+    )
 
-    dates = sorted(c["Data_Carteira"].dropna().unique())
-    dates = [pd.Timestamp(d).normalize() for d in dates]
+    c = c.dropna(
+        subset=[
+            "Data_Carteira",
+        ]
+    )
+
+    c = c[
+        c["Ticker_norm"].ne("")
+    ]
+
+    # Remove duplicidades dentro da mesma carteira.
+    c = c.drop_duplicates(
+        subset=[
+            "Data_Carteira",
+            "Tipo",
+            "Ticker_norm",
+        ],
+        keep="last",
+    )
+
+    # ── Normalização do histórico de preços ──────────────────────────────
+
+    h["Data_Execucao"] = (
+        pd.to_datetime(
+            h["Data_Execucao"],
+            errors="coerce",
+        )
+        .dt.normalize()
+    )
+
+    h["Ticker_norm"] = _normalize_ticker_series(
+        h[ticker_col]
+    )
+
+    h["Preco_norm"] = pd.to_numeric(
+        h[price_col],
+        errors="coerce",
+    )
+
+    h = h.dropna(
+        subset=[
+            "Data_Execucao",
+            "Preco_norm",
+        ]
+    )
+
+    h = h[
+        h["Ticker_norm"].ne("")
+    ]
+
+    h = h[
+        h["Preco_norm"] > 0
+    ]
+
+    if h.empty:
+        logger.warning(
+            "Nenhum preço válido encontrado "
+            "no histórico para %s.",
+            tipo,
+        )
+        return []
+
+    # Para cada ticker/data, mantém somente um preço.
+    h = (
+        h.sort_values(
+            [
+                "Data_Execucao",
+                "Ticker_norm",
+            ]
+        )
+        .drop_duplicates(
+            subset=[
+                "Data_Execucao",
+                "Ticker_norm",
+            ],
+            keep="last",
+        )
+    )
+
+    # ── Datas das carteiras ──────────────────────────────────────────────
+
+    dates = sorted(
+        c["Data_Carteira"]
+        .dropna()
+        .unique()
+    )
+
+    dates = [
+        pd.Timestamp(d).normalize()
+        for d in dates
+    ]
+
     if not dates:
         return []
 
-    valor = 100.0
-    out = [{"data": dates[0].strftime("%Y-%m-%d"), "valor": round(valor, 4)}]
+    # ── Matriz de preços ─────────────────────────────────────────────────
 
-    price_matrix = h.drop_duplicates(["Data_Execucao", "Ticker_norm"]).pivot(
-        index="Data_Execucao",
-        columns="Ticker_norm",
-        values="Preco_norm",
+    price_matrix = (
+        h.pivot(
+            index="Data_Execucao",
+            columns="Ticker_norm",
+            values="Preco_norm",
+        )
+        .sort_index()
     )
 
-    for i in range(len(dates) - 1):
+    if price_matrix.empty:
+        return []
+
+    # Forward-fill por ticker.
+
+    # Isso cobre finais de semana/feriados e pequenas lacunas
+    # de coleta sem inventar preço.
+    price_matrix = price_matrix.ffill()
+
+    # ── Carteira base 100 ────────────────────────────────────────────────
+
+    valor = 100.0
+
+    out = [
+        {
+            "data": dates[0].strftime(
+                "%Y-%m-%d"
+            ),
+            "valor": round(
+                valor,
+                4,
+            ),
+        }
+    ]
+
+    for i in range(
+        len(dates) - 1
+    ):
         inicio = dates[i]
         fim = dates[i + 1]
 
         tickers = (
-            c.loc[c["Data_Carteira"].eq(inicio), "Ticker_norm"]
+            c.loc[
+                c["Data_Carteira"].eq(
+                    inicio
+                ),
+                "Ticker_norm",
+            ]
             .dropna()
             .unique()
             .tolist()
         )
-        if not tickers or inicio not in price_matrix.index or fim not in price_matrix.index:
-            out.append({"data": fim.strftime("%Y-%m-%d"), "valor": round(valor, 4)})
+
+        if not tickers:
+            logger.warning(
+                "Carteira %s sem tickers em %s.",
+                tipo,
+                inicio.strftime(
+                    "%Y-%m-%d"
+                ),
+            )
+
+            out.append(
+                {
+                    "data": fim.strftime(
+                        "%Y-%m-%d"
+                    ),
+                    "valor": round(
+                        valor,
+                        4,
+                    ),
+                }
+            )
+
             continue
 
-        p0 = price_matrix.loc[inicio].reindex(tickers)
-        p1 = price_matrix.loc[fim].reindex(tickers)
-        valid = p0.notna() & p1.notna() & (p0 != 0)
+        # ── Localiza preço inicial ───────────────────────────────────────
 
-        if valid.sum() == 0:
-            out.append({"data": fim.strftime("%Y-%m-%d"), "valor": round(valor, 4)})
+        # Última cotação disponível <= início.
+        historico_antes_inicio = (
+            price_matrix.loc[
+                price_matrix.index <= inicio
+            ]
+        )
+
+        # Última cotação disponível <= fim.
+        historico_antes_fim = (
+            price_matrix.loc[
+                price_matrix.index <= fim
+            ]
+        )
+
+        if (
+            historico_antes_inicio.empty
+            or historico_antes_fim.empty
+        ):
+            logger.warning(
+                "Sem preços suficientes para "
+                "%s entre %s e %s.",
+                tipo,
+                inicio.strftime(
+                    "%Y-%m-%d"
+                ),
+                fim.strftime(
+                    "%Y-%m-%d"
+                ),
+            )
+
+            out.append(
+                {
+                    "data": fim.strftime(
+                        "%Y-%m-%d"
+                    ),
+                    "valor": round(
+                        valor,
+                        4,
+                    ),
+                }
+            )
+
             continue
 
-        retornos = (p1[valid] / p0[valid]) - 1.0
-        retorno_periodo = float(retornos.mean())
-        valor *= (1.0 + retorno_periodo)
-        out.append({"data": fim.strftime("%Y-%m-%d"), "valor": round(valor, 4)})
+        p0 = (
+            historico_antes_inicio
+            .iloc[-1]
+            .reindex(tickers)
+        )
+
+        p1 = (
+            historico_antes_fim
+            .iloc[-1]
+            .reindex(tickers)
+        )
+
+        valid = (
+            p0.notna()
+            & p1.notna()
+            & (p0 > 0)
+            & (p1 > 0)
+        )
+
+        quantidade_validos = int(
+            valid.sum()
+        )
+
+        if quantidade_validos == 0:
+            logger.warning(
+                "Nenhum ticker com preço válido "
+                "para %s entre %s e %s.",
+                tipo,
+                inicio.strftime(
+                    "%Y-%m-%d"
+                ),
+                fim.strftime(
+                    "%Y-%m-%d"
+                ),
+            )
+
+            out.append(
+                {
+                    "data": fim.strftime(
+                        "%Y-%m-%d"
+                    ),
+                    "valor": round(
+                        valor,
+                        4,
+                    ),
+                }
+            )
+
+            continue
+
+        retornos = (
+            p1[valid]
+            / p0[valid]
+        ) - 1.0
+
+        retorno_periodo = float(
+            retornos.mean()
+        )
+
+        valor *= (
+            1.0
+            + retorno_periodo
+        )
+
+        out.append(
+            {
+                "data": fim.strftime(
+                    "%Y-%m-%d"
+                ),
+                "valor": round(
+                    valor,
+                    4,
+                ),
+            }
+        )
 
     return out
 
