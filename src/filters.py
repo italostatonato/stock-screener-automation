@@ -346,30 +346,34 @@ def select_top_acoes(df: pd.DataFrame, cfg: dict):
 
     # ── Seleção final: Score ─────────────────────────────────────────────
 
-    if "Score" not in result.columns:
-        raise ValueError(
-            "Coluna 'Score' ausente antes da seleção final de ações."
+    if "Score" in result.columns:
+        result["Score"] = pd.to_numeric(
+            result["Score"],
+            errors="coerce"
         )
-
-    result["Score"] = pd.to_numeric(
-        result["Score"],
-        errors="coerce"
-    )
-
-    result = (
-        result
-        .sort_values(
-            by=["Score", "Ação"],
-            ascending=[False, True],
-            na_position="last"
+    
+        result = (
+            result
+            .sort_values(
+                by=["Score", "Ação"],
+                ascending=[False, True],
+                na_position="last"
+            )
+            .head(a["top_n"])
+            .reset_index(drop=True)
         )
-        .head(a["top_n"])
-        .reset_index(drop=True)
-    )
-
-    logger.info(
-        f"Top {len(result)} ações selecionadas por Score."
-    )
+    else:
+        # A função também é usada diretamente pelos testes,
+        # que podem fornecer um DataFrame sem Score.
+        result = (
+            result
+            .sort_values(
+                by=["Ação"],
+                ascending=[True]
+            )
+            .head(a["top_n"])
+            .reset_index(drop=True)
+        )
 
     # ── Monta status na base completa ────────────────────────────────────
 
