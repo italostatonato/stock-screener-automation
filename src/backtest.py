@@ -75,17 +75,48 @@ def save_portfolio_snapshot(
     novo_df = pd.DataFrame(registros)
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
-    if os.path.exists(output_file):
-        historico = pd.read_parquet(output_file)
-        historico = pd.concat([historico, novo_df], ignore_index=True)
-        historico = historico.drop_duplicates(
-            subset=["Data_Carteira", "Tipo", "Ticker"],
-            keep="last",
-        )
-    else:
-        historico = novo_df
+if os.path.exists(output_file):
+    historico = pd.read_parquet(output_file)
 
-    historico.to_parquet(output_file, index=False)
+    # Remove completamente a carteira da data que está
+    # sendo recalculada.
+    #
+    # Isso é importante porque uma execução anterior do mesmo
+    # dia pode ter produzido uma composição diferente.
+    historico = historico[
+        historico["Data_Carteira"].astype(str) != str(data_execucao)
+    ].copy()
+
+    historico = pd.concat(
+        [
+            historico,
+            novo_df,
+        ],
+        ignore_index=True,
+    )
+
+else:
+    historico = novo_df
+
+historico = historico.drop_duplicates(
+    subset=[
+        "Data_Carteira",
+        "Tipo",
+        "Ticker",
+    ],
+    keep="last",
+)
+
+historico.to_parquet(
+    output_file,
+    index=False,
+)
+
+logger.info(
+    "Carteira histórica salva: %s (%s linhas)",
+    output_file,
+    len(historico),
+)
     logger.info("Carteira histórica salva: %s (%s linhas)", output_file, len(historico))
 
 
