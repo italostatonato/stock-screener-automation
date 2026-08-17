@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-17T20:53:05",
-  "status": "ok",
+  "generated_at": "2026-08-17T21:25:31",
+  "status": "warn",
   "checks": [
     {
       "name": "lake_snapshots",
@@ -50,7 +50,7 @@
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
       "status": "ok",
-      "detail": "1322 linhas"
+      "detail": "1338 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_fiis.parquet",
@@ -94,8 +94,8 @@
     },
     {
       "name": "carteira_tamanho_top",
-      "status": "ok",
-      "detail": "tamanhos dentro do esperado"
+      "status": "warn",
+      "detail": "Data_Carteira  Tipo\n2026-08-17     ACAO    36"
     },
     {
       "name": "dashboard_index",
