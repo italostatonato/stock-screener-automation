@@ -140,8 +140,6 @@ logger.info(
     output_file,
     len(historico),
 )
-    logger.info("Carteira histórica salva: %s (%s linhas)", output_file, len(historico))
-
 
 def _yahoo_ticker(fii: str) -> str:
     return f"{str(fii).strip().upper()}.SA"
