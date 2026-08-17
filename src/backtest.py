@@ -28,75 +28,98 @@ def save_portfolio_snapshot(
     top_acoes: pd.DataFrame,
     data_execucao: str,
     output_file: str,
-) -> None:
+):
     """
-    Salva a carteira Top 20 do dia para backtests futuros.
+    Salva a composição da carteira histórica.
 
-    Estrutura gerada:
-        Data_Carteira | Tipo | Ticker | Preco_Entrada | Score | Posicao
-
-    Observação:
-        Este arquivo não calcula retorno ainda. Ele apenas registra qual era a
-        carteira recomendada em cada data. O cálculo de performance será feito
-        depois, quando houver histórico suficiente.
+    Cada execução substitui integralmente a carteira da mesma data,
+    evitando que ativos de uma execução anterior permaneçam no snapshot.
     """
-    registros = []
 
+    rows = []
+
+    # FIIs
     if top_fiis is not None and not top_fiis.empty:
-        for posicao, (_, row) in enumerate(top_fiis.iterrows(), start=1):
-            registros.append(
-                {
-                    "Data_Carteira": data_execucao,
-                    "Tipo": "FII",
-                    "Ticker": row.get("FUNDOS"),
-                    "Preco_Entrada": row.get("PREÇO ATUAL (R$)"),
-                    "Score": row.get("Score"),
-                    "Posicao": posicao,
-                }
-            )
+        for _, row in top_fiis.iterrows():
+            ticker = row.get("FUNDOS")
 
+            if pd.notna(ticker):
+                rows.append(
+                    {
+                        "Data_Carteira": data_execucao,
+                        "Tipo": "FII",
+                        "Ticker": str(ticker).strip().upper(),
+                    }
+                )
+
+    # Ações
     if top_acoes is not None and not top_acoes.empty:
-        for posicao, (_, row) in enumerate(top_acoes.iterrows(), start=1):
-            registros.append(
-                {
-                    "Data_Carteira": data_execucao,
-                    "Tipo": "ACAO",
-                    "Ticker": row.get("Acao", row.get("Ação")),
-                    "Preco_Entrada": row.get("Preço"),
-                    "Score": row.get("Score"),
-                    "Posicao": posicao,
-                }
-            )
+        for _, row in top_acoes.iterrows():
+            ticker = row.get("Acao")
 
-    if not registros:
-        logger.info("Backtest: nenhuma carteira para salvar.")
-        return
+            if pd.notna(ticker):
+                rows.append(
+                    {
+                        "Data_Carteira": data_execucao,
+                        "Tipo": "ACAO",
+                        "Ticker": str(ticker).strip().upper(),
+                    }
+                )
 
-    novo_df = pd.DataFrame(registros)
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-
-if os.path.exists(output_file):
-    historico = pd.read_parquet(output_file)
-
-    # Remove completamente a carteira da data que está
-    # sendo recalculada.
-    #
-    # Isso é importante porque uma execução anterior do mesmo
-    # dia pode ter produzido uma composição diferente.
-    historico = historico[
-        historico["Data_Carteira"].astype(str) != str(data_execucao)
-    ].copy()
-
-    historico = pd.concat(
-        [
-            historico,
-            novo_df,
+    novo_df = pd.DataFrame(
+        rows,
+        columns=[
+            "Data_Carteira",
+            "Tipo",
+            "Ticker",
         ],
-        ignore_index=True,
     )
 
-else:
-    historico = novo_df
+    if os.path.exists(output_file):
+        historico = pd.read_parquet(output_file)
+
+        # Remove completamente a carteira da data que está
+        # sendo recalculada.
+        historico = historico[
+            historico["Data_Carteira"].astype(str)
+            != str(data_execucao)
+        ].copy()
+
+        historico = pd.concat(
+            [
+                historico,
+                novo_df,
+            ],
+            ignore_index=True,
+        )
+
+    else:
+        historico = novo_df
+
+    historico = historico.drop_duplicates(
+        subset=[
+            "Data_Carteira",
+            "Tipo",
+            "Ticker",
+        ],
+        keep="last",
+    )
+
+    os.makedirs(
+        os.path.dirname(output_file),
+        exist_ok=True,
+    )
+
+    historico.to_parquet(
+        output_file,
+        index=False,
+    )
+
+    logger.info(
+        "Carteira histórica salva: %s (%s linhas)",
+        output_file,
+        len(historico),
+    )
 
 historico = historico.drop_duplicates(
     subset=[
