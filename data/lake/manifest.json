@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-17T21:49:30",
+  "updated_at": "2026-08-17T22:28:57",
   "latest": "2026-08-17",
   "total_snapshots": 33,
   "snapshots": [
@@ -1349,12 +1349,12 @@
         {
           "name": "carteira.parquet",
           "path": "data/lake/snapshots/2026-08-17/carteira.parquet",
-          "rows": 56,
-          "columns": 6,
-          "sha256": "1965e4d3e6ec27122aee1c091ee8ed80a6783c388381082e58bf233c0d210360"
+          "rows": 20,
+          "columns": 7,
+          "sha256": "06a4ee01a115783d460fb25a838ce6b442a348b44aa708c97cca4443e37626a8"
         }
       ],
-      "total_rows": 945
+      "total_rows": 909
     }
   ]
 }
