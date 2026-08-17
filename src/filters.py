@@ -137,93 +137,259 @@ def select_top_fiis(df: pd.DataFrame, cfg: dict):
 
 def select_top_acoes(df: pd.DataFrame, cfg: dict):
     """
-    Retorna (top_acoes, base_completa_com_status)
+    Retorna (top_acoes, base_completa_com_status).
+
+    Fluxo:
+    1. Remove registros inválidos/duplicados.
+    2. Aplica filtros fixos.
+    3. Aplica filtros adaptativos por quartis.
+    4. Ordena os aprovados pelo Score decrescente.
+    5. Retorna somente o Top N.
     """
+
     required_cols = [
         "Preço/VPA", "Preço/Lucro", "EV/EBIT", "EV/EBITDA",
         "Margem Líquida", "ROA", "RPL", "ROInvC",
         "Passivo/Patrimônio Líquido", "Alavancagem Financeira",
-        "Dividend Yield", "Volume Diário Médio (3 meses)", "Market Cap Empresa"
+        "Dividend Yield", "Volume Diário Médio (3 meses)",
+        "Market Cap Empresa"
     ]
+
     missing = [c for c in required_cols if c not in df.columns]
+
     if missing:
-        logger.warning(f"Colunas ausentes em ações: {missing}")
+        raise ValueError(f"Colunas ausentes em ações: {missing}")
 
     base_full = df.copy()
+
     base_full = base_full.dropna(subset=["Ação", "Preço"])
-    base_full = base_full.drop_duplicates(subset=["Empresa"], keep="first").reset_index(drop=True)
+
+    base_full = (
+        base_full
+        .drop_duplicates(subset=["Empresa"], keep="first")
+        .reset_index(drop=True)
+    )
 
     a = cfg["filters"]["acoes"]
 
-    # ── Camada 1: filtros fixos ───────────────────────────────────────────────
+    # ── Camada 1: filtros fixos ──────────────────────────────────────────
+
     fixed_checks = [
-        ("Preço/VPA nulo",            lambda r: pd.notna(r["Preço/VPA"])),
-        ("Margem Líquida nula",       lambda r: pd.notna(r["Margem Líquida"])),
-        ("Dividend Yield nulo",       lambda r: pd.notna(r["Dividend Yield"])),
-        (f"Volume <= {a['volume_min']:,.0f}", lambda r: pd.notna(r["Volume Diário Médio (3 meses)"]) and r["Volume Diário Médio (3 meses)"] > a["volume_min"]),
-        (f"Market Cap <= {a['market_cap_min']:,.0f}", lambda r: pd.notna(r["Market Cap Empresa"]) and r["Market Cap Empresa"] > a["market_cap_min"]),
-        ("Margem Líquida <= 0",       lambda r: r["Margem Líquida"] > 0),
-        ("ROA <= 0",                  lambda r: pd.notna(r["ROA"]) and r["ROA"] > 0),
-        (f"DY <= {a['dy_min']*100:.2f}%", lambda r: r["Dividend Yield"] > a["dy_min"]),
+        ("Preço/VPA nulo", lambda r: pd.notna(r["Preço/VPA"])),
+        ("Margem Líquida nula", lambda r: pd.notna(r["Margem Líquida"])),
+        ("Dividend Yield nulo", lambda r: pd.notna(r["Dividend Yield"])),
+
+        (
+            f"Volume <= {a['volume_min']:,.0f}",
+            lambda r:
+                pd.notna(r["Volume Diário Médio (3 meses)"])
+                and r["Volume Diário Médio (3 meses)"] > a["volume_min"]
+        ),
+
+        (
+            f"Market Cap <= {a['market_cap_min']:,.0f}",
+            lambda r:
+                pd.notna(r["Market Cap Empresa"])
+                and r["Market Cap Empresa"] > a["market_cap_min"]
+        ),
+
+        ("Margem Líquida <= 0", lambda r: r["Margem Líquida"] > 0),
+
+        (
+            "ROA <= 0",
+            lambda r:
+                pd.notna(r["ROA"])
+                and r["ROA"] > 0
+        ),
+
+        (
+            f"DY <= {a['dy_min']*100:.2f}%",
+            lambda r: r["Dividend Yield"] > a["dy_min"]
+        ),
     ]
 
     base = base_full[
-        base_full.apply(lambda r: all(cond(r) for _, cond in fixed_checks), axis=1)
+        base_full.apply(
+            lambda r: all(cond(r) for _, cond in fixed_checks),
+            axis=1
+        )
     ].copy()
 
-    logger.info(f"Ações após filtros fixos: {len(base_full)} → {len(base)}")
+    logger.info(
+        f"Ações após filtros fixos: "
+        f"{len(base_full)} → {len(base)}"
+    )
 
     if base.empty:
         logger.warning("Nenhuma ação passou nos filtros fixos.")
-        base_full["Status"] = "Eliminado no filtro fixo: dados insuficientes"
+
+        base_full["Status"] = (
+            "Eliminado no filtro fixo: dados insuficientes"
+        )
+
         return base, base_full
 
-    # ── Camada 2: filtros por quartil ────────────────────────────────────────
+    # ── Camada 2: filtros por quartil ────────────────────────────────────
+
     logger.info("Calculando quartis Ações:")
-    q_pvpa      = _log_quartis(base, "Preço/VPA",     0.25, "≤ Q25 melhor")
-    q_pl        = _log_quartis(base, "Preço/Lucro",   0.25, "≤ Q25 melhor")
-    q_ev_ebit   = _log_quartis(base, "EV/EBIT",       0.25, "≤ Q25 melhor")
-    q_ev_ebitda = _log_quartis(base, "EV/EBITDA",     0.25, "≤ Q25 melhor")
-    q_margem    = _log_quartis(base, "Margem Líquida", 0.75, "≥ Q75 melhor")
-    q_roa       = _log_quartis(base, "ROA",            0.75, "≥ Q75 melhor")
-    q_rpl       = _log_quartis(base, "RPL",            0.75, "≥ Q75 melhor")
-    q_dy        = _log_quartis(base, "Dividend Yield", 0.75, "≥ Q75 melhor")
+
+    q_pvpa = _log_quartis(
+        base, "Preço/VPA", 0.25, "≤ Q25 melhor"
+    )
+
+    q_pl = _log_quartis(
+        base, "Preço/Lucro", 0.25, "≤ Q25 melhor"
+    )
+
+    q_ev_ebit = _log_quartis(
+        base, "EV/EBIT", 0.25, "≤ Q25 melhor"
+    )
+
+    q_ev_ebitda = _log_quartis(
+        base, "EV/EBITDA", 0.25, "≤ Q25 melhor"
+    )
+
+    q_margem = _log_quartis(
+        base, "Margem Líquida", 0.75, "≥ Q75 melhor"
+    )
+
+    q_roa = _log_quartis(
+        base, "ROA", 0.75, "≥ Q75 melhor"
+    )
+
+    q_rpl = _log_quartis(
+        base, "RPL", 0.75, "≥ Q75 melhor"
+    )
+
+    q_dy = _log_quartis(
+        base, "Dividend Yield", 0.75, "≥ Q75 melhor"
+    )
 
     quartil_checks = [
-        (f"Preço/VPA > Q25 ({q_pvpa:.2f})",     lambda r: pd.notna(r["Preço/VPA"]) and r["Preço/VPA"] <= q_pvpa),
-        (f"Preço/Lucro > Q25 ({q_pl:.2f})",     lambda r: pd.notna(r["Preço/Lucro"]) and r["Preço/Lucro"] <= q_pl),
-        (f"EV/EBIT > Q25 ({q_ev_ebit:.2f})",    lambda r: pd.notna(r["EV/EBIT"]) and r["EV/EBIT"] <= q_ev_ebit),
-        (f"EV/EBITDA > Q25 ({q_ev_ebitda:.2f})", lambda r: pd.notna(r["EV/EBITDA"]) and r["EV/EBITDA"] <= q_ev_ebitda),
-        (f"Margem < Q75 ({q_margem*100:.2f}%)", lambda r: r["Margem Líquida"] >= q_margem),
-        (f"ROA < Q75 ({q_roa*100:.2f}%)",       lambda r: pd.notna(r["ROA"]) and r["ROA"] >= q_roa),
-        (f"RPL < Q75 ({q_rpl*100:.2f}%)",       lambda r: pd.notna(r["RPL"]) and r["RPL"] >= q_rpl),
-        (f"DY < Q75 ({q_dy*100:.2f}%)",         lambda r: r["Dividend Yield"] >= q_dy),
+        (
+            f"Preço/VPA > Q25 ({q_pvpa:.2f})",
+            lambda r:
+                pd.notna(r["Preço/VPA"])
+                and r["Preço/VPA"] <= q_pvpa
+        ),
+
+        (
+            f"Preço/Lucro > Q25 ({q_pl:.2f})",
+            lambda r:
+                pd.notna(r["Preço/Lucro"])
+                and r["Preço/Lucro"] <= q_pl
+        ),
+
+        (
+            f"EV/EBIT > Q25 ({q_ev_ebit:.2f})",
+            lambda r:
+                pd.notna(r["EV/EBIT"])
+                and r["EV/EBIT"] <= q_ev_ebit
+        ),
+
+        (
+            f"EV/EBITDA > Q25 ({q_ev_ebitda:.2f})",
+            lambda r:
+                pd.notna(r["EV/EBITDA"])
+                and r["EV/EBITDA"] <= q_ev_ebitda
+        ),
+
+        (
+            f"Margem < Q75 ({q_margem*100:.2f}%)",
+            lambda r: r["Margem Líquida"] >= q_margem
+        ),
+
+        (
+            f"ROA < Q75 ({q_roa*100:.2f}%)",
+            lambda r:
+                pd.notna(r["ROA"])
+                and r["ROA"] >= q_roa
+        ),
+
+        (
+            f"RPL < Q75 ({q_rpl*100:.2f}%)",
+            lambda r:
+                pd.notna(r["RPL"])
+                and r["RPL"] >= q_rpl
+        ),
+
+        (
+            f"DY < Q75 ({q_dy*100:.2f}%)",
+            lambda r: r["Dividend Yield"] >= q_dy
+        ),
     ]
 
     result = base[
-        base.apply(lambda r: all(cond(r) for _, cond in quartil_checks), axis=1)
+        base.apply(
+            lambda r: all(cond(r) for _, cond in quartil_checks),
+            axis=1
+        )
     ].copy()
 
-    logger.info(f"Ações após filtros por quartil: {len(base)} → {len(result)}")
+    logger.info(
+        f"Ações após filtros por quartil: "
+        f"{len(base)} → {len(result)}"
+    )
 
     used_quartil_fallback = False
+
+    # ── Fallback ─────────────────────────────────────────────────────────
+
     if result.empty:
-        logger.warning("Nenhuma ação passou nos filtros por quartil — retornando Top N do universo base.")
+        logger.warning(
+            "Nenhuma ação passou nos filtros por quartil "
+            "— retornando Top N do universo base."
+        )
+
         result = base.copy()
         used_quartil_fallback = True
 
-    result = result.sort_values(
-        by=["Preço/VPA", "Dividend Yield"],
-        ascending=[True, False]
-    ).head(a["top_n"]).reset_index(drop=True)
+    # ── Seleção final: Score ─────────────────────────────────────────────
 
-    logger.info(f"Top {len(result)} ações selecionadas.")
+    if "Score" not in result.columns:
+        raise ValueError(
+            "Coluna 'Score' ausente antes da seleção final de ações."
+        )
 
-    # ── Monta status na base completa ───────────────────────────────────────
+    result["Score"] = pd.to_numeric(
+        result["Score"],
+        errors="coerce"
+    )
+
+    result = (
+        result
+        .sort_values(
+            by=["Score", "Ação"],
+            ascending=[False, True],
+            na_position="last"
+        )
+        .head(a["top_n"])
+        .reset_index(drop=True)
+    )
+
+    logger.info(
+        f"Top {len(result)} ações selecionadas por Score."
+    )
+
+    # ── Monta status na base completa ────────────────────────────────────
+
     if not used_quartil_fallback:
-        status = _build_status_column(base_full, fixed_checks, quartil_checks, result, id_col="Ação")
+        status = _build_status_column(
+            base_full,
+            fixed_checks,
+            quartil_checks,
+            result,
+            id_col="Ação"
+        )
     else:
-        status = _build_status_column(base_full, fixed_checks, [], result, id_col="Ação")
+        status = _build_status_column(
+            base_full,
+            fixed_checks,
+            [],
+            result,
+            id_col="Ação"
+        )
+
     base_full["Status"] = status
 
     return result, base_full
