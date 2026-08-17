@@ -96,13 +96,23 @@ def _write_frame(snapshot_dir: Path, filename: str, df: pd.DataFrame | None) -> 
     )
 
 
-def _ensure_exec_date(df: pd.DataFrame, date_str: str, date_col: str = "Data_Execucao") -> pd.DataFrame:
+def _ensure_exec_date(
+    df: pd.DataFrame,
+    date_str: str,
+    date_col: str = "Data_Execucao",
+) -> pd.DataFrame:
+    """
+    Garante que todas as linhas do snapshot pertençam
+    à data real da execução.
+
+    A data do diretório do Lake é a fonte de verdade.
+    Não devemos preservar uma Data_Execucao antiga
+    eventualmente presente no DataFrame de origem.
+    """
     out = df.copy()
-    if date_col not in out.columns:
-        out[date_col] = date_str
-    else:
-        out[date_col] = pd.to_datetime(out[date_col], errors="coerce").dt.strftime("%Y-%m-%d")
-        out[date_col] = out[date_col].fillna(date_str)
+
+    out[date_col] = date_str
+
     return out
 
 
