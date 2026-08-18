@@ -349,14 +349,14 @@ def main():
         )
 
         logger.info(
-            "Históricos derivados reconstruídos a partir "
-            f"do Lake: {rebuild_result}"
+            "Históricos reconstruídos a partir do Data Lake: %s",
+            rebuild_result,
         )
 
     except Exception as e:
         logger.error(
-            "Falha ao reconstruir históricos derivados "
-            f"a partir do Lake: {e}"
+            "Falha ao reconstruir históricos a partir do Data Lake: %s",
+            e,
         )
 
     # ── Datasets e modelos ML ─────────────────────────────────────────────
