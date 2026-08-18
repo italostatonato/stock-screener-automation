@@ -318,27 +318,11 @@ def _build_portfolio_base100_from_history(
     price_col: str,
 ) -> list:
     """
-    Monta a série real da carteira em base 100 usando o histórico salvo.
+    Calcula a evolução da carteira Top 20 em base 100.
 
-    A carteira é equal-weighted e é rebalanceada a cada snapshot.
-
-    Para cada período:
-
-        carteira em D0
-              ↓
-        preços dos mesmos ativos em D0
-              ↓
-        preços dos mesmos ativos em D1
-              ↓
-        retorno médio dos ativos
-              ↓
-        valor acumulado da carteira
-
-    Quando não existe cotação exatamente no dia do snapshot,
-    utiliza-se o último preço disponível anterior ou igual à data.
-
-    Isso evita que uma ausência pontual de cotação faça a série
-    permanecer artificialmente congelada.
+    Para cada intervalo entre snapshots, usa a composição da
+    carteira no início do período e a última cotação disponível
+    até cada uma das datas.
     """
 
     carteiras = _load_parquet_safe(carteira_path)
@@ -357,42 +341,34 @@ def _build_portfolio_base100_from_history(
     }
 
     if carteiras.empty or historico.empty:
+        return []
+
+    if not required_carteira.issubset(carteiras.columns):
         logger.warning(
-            "Historico insuficiente para calcular carteira %s.",
+            "Carteiras sem colunas esperadas para %s",
             tipo,
         )
         return []
 
-    if not required_carteira.issubset(
-        carteiras.columns
-    ):
+    if not required_hist.issubset(historico.columns):
         logger.warning(
-            "Carteiras sem colunas esperadas para %s: %s",
+            "Histórico sem colunas esperadas para %s",
             tipo,
-            required_carteira,
-        )
-        return []
-
-    if not required_hist.issubset(
-        historico.columns
-    ):
-        logger.warning(
-            "Historico sem colunas esperadas para %s: %s",
-            tipo,
-            required_hist,
         )
         return []
 
     c = carteiras.copy()
     h = historico.copy()
 
-    # ── Normalização da carteira ─────────────────────────────────────────
-
-    c = c[
+    c["Tipo"] = (
         c["Tipo"]
         .astype(str)
         .str.upper()
-        .eq(tipo.upper())
+        .str.strip()
+    )
+
+    c = c[
+        c["Tipo"].eq(tipo.upper())
     ].copy()
 
     if c.empty:
@@ -411,26 +387,20 @@ def _build_portfolio_base100_from_history(
     )
 
     c = c.dropna(
-        subset=[
-            "Data_Carteira",
-        ]
+        subset=["Data_Carteira"]
     )
 
     c = c[
         c["Ticker_norm"].ne("")
     ]
 
-    # Remove duplicidades dentro da mesma carteira.
     c = c.drop_duplicates(
         subset=[
             "Data_Carteira",
-            "Tipo",
             "Ticker_norm",
         ],
         keep="last",
     )
-
-    # ── Normalização do histórico de preços ──────────────────────────────
 
     h["Data_Execucao"] = (
         pd.to_datetime(
@@ -452,27 +422,15 @@ def _build_portfolio_base100_from_history(
     h = h.dropna(
         subset=[
             "Data_Execucao",
+            "Ticker_norm",
             "Preco_norm",
         ]
     )
 
     h = h[
-        h["Ticker_norm"].ne("")
-    ]
-
-    h = h[
         h["Preco_norm"] > 0
     ]
 
-    if h.empty:
-        logger.warning(
-            "Nenhum preço válido encontrado "
-            "no histórico para %s.",
-            tipo,
-        )
-        return []
-
-    # Para cada ticker/data, mantém somente um preço.
     h = (
         h.sort_values(
             [
@@ -489,7 +447,18 @@ def _build_portfolio_base100_from_history(
         )
     )
 
-    # ── Datas das carteiras ──────────────────────────────────────────────
+    if h.empty:
+        return []
+
+    price_matrix = (
+        h.pivot(
+            index="Data_Execucao",
+            columns="Ticker_norm",
+            values="Preco_norm",
+        )
+        .sort_index()
+        .ffill()
+    )
 
     dates = sorted(
         c["Data_Carteira"]
@@ -505,53 +474,22 @@ def _build_portfolio_base100_from_history(
     if not dates:
         return []
 
-    # ── Matriz de preços ─────────────────────────────────────────────────
-
-    price_matrix = (
-        h.pivot(
-            index="Data_Execucao",
-            columns="Ticker_norm",
-            values="Preco_norm",
-        )
-        .sort_index()
-    )
-
-    if price_matrix.empty:
-        return []
-
-    # Forward-fill por ticker.
-
-    # Isso cobre finais de semana/feriados e pequenas lacunas
-    # de coleta sem inventar preço.
-    price_matrix = price_matrix.ffill()
-
-    # ── Carteira base 100 ────────────────────────────────────────────────
-
     valor = 100.0
 
     out = [
         {
-            "data": dates[0].strftime(
-                "%Y-%m-%d"
-            ),
-            "valor": round(
-                valor,
-                4,
-            ),
+            "data": dates[0].strftime("%Y-%m-%d"),
+            "valor": 100.0,
         }
     ]
 
-    for i in range(
-        len(dates) - 1
-    ):
+    for i in range(len(dates) - 1):
         inicio = dates[i]
         fim = dates[i + 1]
 
         tickers = (
             c.loc[
-                c["Data_Carteira"].eq(
-                    inicio
-                ),
+                c["Data_Carteira"].eq(inicio),
                 "Ticker_norm",
             ]
             .dropna()
@@ -560,82 +498,39 @@ def _build_portfolio_base100_from_history(
         )
 
         if not tickers:
-            logger.warning(
-                "Carteira %s sem tickers em %s.",
-                tipo,
-                inicio.strftime(
-                    "%Y-%m-%d"
-                ),
-            )
-
             out.append(
                 {
-                    "data": fim.strftime(
-                        "%Y-%m-%d"
-                    ),
-                    "valor": round(
-                        valor,
-                        4,
-                    ),
+                    "data": fim.strftime("%Y-%m-%d"),
+                    "valor": round(valor, 4),
                 }
             )
-
             continue
 
-        # ── Localiza preço inicial ───────────────────────────────────────
+        hist_inicio = price_matrix.loc[
+            price_matrix.index <= inicio
+        ]
 
-        # Última cotação disponível <= início.
-        historico_antes_inicio = (
-            price_matrix.loc[
-                price_matrix.index <= inicio
-            ]
-        )
+        hist_fim = price_matrix.loc[
+            price_matrix.index <= fim
+        ]
 
-        # Última cotação disponível <= fim.
-        historico_antes_fim = (
-            price_matrix.loc[
-                price_matrix.index <= fim
-            ]
-        )
-
-        if (
-            historico_antes_inicio.empty
-            or historico_antes_fim.empty
-        ):
-            logger.warning(
-                "Sem preços suficientes para "
-                "%s entre %s e %s.",
-                tipo,
-                inicio.strftime(
-                    "%Y-%m-%d"
-                ),
-                fim.strftime(
-                    "%Y-%m-%d"
-                ),
-            )
-
+        if hist_inicio.empty or hist_fim.empty:
             out.append(
                 {
-                    "data": fim.strftime(
-                        "%Y-%m-%d"
-                    ),
-                    "valor": round(
-                        valor,
-                        4,
-                    ),
+                    "data": fim.strftime("%Y-%m-%d"),
+                    "valor": round(valor, 4),
                 }
             )
-
             continue
 
         p0 = (
-            historico_antes_inicio
+            hist_inicio
             .iloc[-1]
             .reindex(tickers)
         )
 
         p1 = (
-            historico_antes_fim
+            hist_fim
             .iloc[-1]
             .reindex(tickers)
         )
@@ -647,65 +542,31 @@ def _build_portfolio_base100_from_history(
             & (p1 > 0)
         )
 
-        quantidade_validos = int(
-            valid.sum()
-        )
-
-        if quantidade_validos == 0:
-            logger.warning(
-                "Nenhum ticker com preço válido "
-                "para %s entre %s e %s.",
-                tipo,
-                inicio.strftime(
-                    "%Y-%m-%d"
-                ),
-                fim.strftime(
-                    "%Y-%m-%d"
-                ),
-            )
-
+        if not valid.any():
             out.append(
                 {
-                    "data": fim.strftime(
-                        "%Y-%m-%d"
-                    ),
-                    "valor": round(
-                        valor,
-                        4,
-                    ),
+                    "data": fim.strftime("%Y-%m-%d"),
+                    "valor": round(valor, 4),
                 }
             )
-
             continue
 
-        retornos = (
-            p1[valid]
-            / p0[valid]
-        ) - 1.0
-
         retorno_periodo = float(
-            retornos.mean()
+            ((p1[valid] / p0[valid]) - 1.0).mean()
         )
 
         valor *= (
-            1.0
-            + retorno_periodo
+            1.0 + retorno_periodo
         )
 
         out.append(
             {
-                "data": fim.strftime(
-                    "%Y-%m-%d"
-                ),
-                "valor": round(
-                    valor,
-                    4,
-                ),
+                "data": fim.strftime("%Y-%m-%d"),
+                "valor": round(valor, 4),
             }
         )
 
     return out
-
 
 def _series_start_date(series: list) -> pd.Timestamp | None:
     if not series:
