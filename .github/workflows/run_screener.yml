@@ -115,30 +115,31 @@ jobs:
   deploy:
     needs: screener
     runs-on: ubuntu-latest
-
+  
     permissions:
       contents: read
       pages: write
       id-token: write
-
+  
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
+  
     steps:
-      - name: Checkout
+      - name: Checkout versão atual da main
         uses: actions/checkout@v4.2.2
         with:
+          ref: refs/heads/main
           fetch-depth: 0
-
+  
       - name: Setup Pages
         uses: actions/configure-pages@v5
-
+  
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./docs
-
+  
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
