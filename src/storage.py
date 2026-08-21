@@ -36,7 +36,7 @@ def update_history(df_new: pd.DataFrame, hist_path: str, key_col: str):
 
     # Detecta o nome da coluna de data (compatibilidade entre versoes)
     date_col = None
-    for candidate in ["Data Preco", "Data Preco", "data_preco"]:
+    for candidate in ["Data Preco", "Data Preço", "data_preco"]:
         if candidate in combined.columns:
             date_col = candidate
             break

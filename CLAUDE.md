@@ -165,7 +165,21 @@ Chaves esperadas:
 - Ações histórico: `Data_Execucao` + `Ação`
 - Carteiras: `Data_Carteira` + `Tipo` + `Ticker`
 
-Essas chaves não devem ter duplicatas.
+Essas chaves não devem ter duplicatas **nem valores nulos**. Linha com chave
+nula não deduplica e não aparece na checagem de duplicatas — o healthcheck
+valida os dois casos.
+
+Esquema obrigatório de `carteiras_historicas.parquet`:
+
+```text
+Data_Carteira  Tipo  Ticker  Preco_Entrada  Score  Posicao
+```
+
+`Preco_Entrada` não é opcional: sem ele a carteira não serve para backtest.
+Toda data precisa ter os dois tipos (`FII` e `ACAO`).
+
+Atenção ao nome da coluna de ticker de ações: o Investsite entrega `Ação`
+acentuado. Já houve regressão por ler `Acao` — sempre aceitar as duas grafias.
 
 ---
 

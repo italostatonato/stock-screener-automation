@@ -22,6 +22,14 @@ import pandas as pd
 
 logger = logging.getLogger(__name__)
 
+# Quantas datas recentes da carteira as checagens de qualidade inspecionam.
+# Datas antigas podem ter sido geradas por versões anteriores do pipeline;
+# o que importa é que as execuções recentes estejam íntegras.
+CARTEIRA_CHECK_DAYS = 5
+
+# Tipos que uma carteira completa precisa ter em toda data.
+CARTEIRA_TIPOS = {"FII", "ACAO"}
+
 
 @dataclass(frozen=True)
 class LakeFileInfo:
@@ -250,13 +258,28 @@ def _portfolio_from_top(df: pd.DataFrame, tipo: str, date_str: str) -> pd.DataFr
     price_col = next((c for c in price_candidates if c in df.columns), None)
     score_col = "Score" if "Score" in df.columns else None
 
-    out = pd.DataFrame()
-    out["Data_Carteira"] = date_str
-    out["Tipo"] = tipo
-    out["Ticker"] = df[ticker_col].astype(str).str.strip().str.upper()
-    out["Preco_Entrada"] = pd.to_numeric(df[price_col], errors="coerce") if price_col else pd.NA
-    out["Score"] = pd.to_numeric(df[score_col], errors="coerce") if score_col else pd.NA
+    # A ordem importa: o Ticker define o número de linhas.
+    # Atribuir escalares a um DataFrame ainda vazio criaria colunas de
+    # tamanho zero, e elas virariam NaN quando o Ticker entrasse depois.
+    out = pd.DataFrame(
+        {"Ticker": df[ticker_col].astype(str).str.strip().str.upper()}
+    ).reset_index(drop=True)
+
+    out.insert(0, "Data_Carteira", date_str)
+    out.insert(1, "Tipo", tipo)
+
+    out["Preco_Entrada"] = (
+        pd.to_numeric(df[price_col], errors="coerce").reset_index(drop=True)
+        if price_col
+        else pd.NA
+    )
+    out["Score"] = (
+        pd.to_numeric(df[score_col], errors="coerce").reset_index(drop=True)
+        if score_col
+        else pd.NA
+    )
     out["Posicao"] = range(1, len(out) + 1)
+
     return out
 
 
@@ -283,21 +306,41 @@ def rebuild_legacy_tables_from_lake(data_dir: str | Path = "data") -> dict:
         acoes = _dedupe_history(acoes, ["Data_Execucao", "Ação"])
         _atomic_write_parquet(acoes, ml_dir / "historico_acoes.parquet")
 
+    # Os snapshots top_fiis/top_acoes são a fonte autoritativa da carteira de
+    # cada data: eles registram o Top N realmente selecionado naquele dia.
+    # carteira.parquet é uma cópia do consolidado e pode carregar resíduo de
+    # execuções repetidas, então só entra nas datas sem top_* reconstruível.
     carteira_frames = []
-    carteira_direct = read_lake_dataset(data_dir, "carteira.parquet")
-    if not carteira_direct.empty and {"Data_Carteira", "Tipo", "Ticker"}.issubset(carteira_direct.columns):
-        carteira_frames.append(carteira_direct)
+    datas_reconstruidas: set[str] = set()
 
     for date_str in list_lake_dates(data_dir):
         top_fiis_path = _snapshot_dir(data_dir, date_str) / "top_fiis.parquet"
         top_acoes_path = _snapshot_dir(data_dir, date_str) / "top_acoes.parquet"
         try:
+            frames_data = []
             if top_fiis_path.exists():
-                carteira_frames.append(_portfolio_from_top(pd.read_parquet(top_fiis_path), "FII", date_str))
+                frames_data.append(_portfolio_from_top(pd.read_parquet(top_fiis_path), "FII", date_str))
             if top_acoes_path.exists():
-                carteira_frames.append(_portfolio_from_top(pd.read_parquet(top_acoes_path), "ACAO", date_str))
+                frames_data.append(_portfolio_from_top(pd.read_parquet(top_acoes_path), "ACAO", date_str))
+
+            frames_data = [f for f in frames_data if not f.empty]
+            if frames_data:
+                carteira_frames.extend(frames_data)
+                datas_reconstruidas.add(date_str)
         except Exception as exc:
             logger.warning("Falha ao reconstruir carteira do snapshot %s: %s", date_str, exc)
+
+    carteira_direct = read_lake_dataset(data_dir, "carteira.parquet")
+    if not carteira_direct.empty and {"Data_Carteira", "Tipo", "Ticker"}.issubset(carteira_direct.columns):
+        fallback = carteira_direct[
+            ~carteira_direct["Data_Carteira"].astype(str).isin(datas_reconstruidas)
+        ]
+        if not fallback.empty:
+            logger.info(
+                "Carteira: %s linhas vindas de carteira.parquet em datas sem top_* no lake",
+                len(fallback),
+            )
+            carteira_frames.append(fallback)
 
     if carteira_frames:
         carteira = pd.concat(carteira_frames, ignore_index=True, sort=False)
@@ -393,6 +436,19 @@ def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | No
             if set(subset).issubset(df.columns):
                 dups = int(df.duplicated(subset=subset).sum())
                 add_check(f"duplicatas_{path.name}", "ok" if dups == 0 else "error", f"{dups} duplicatas em {subset}")
+
+                # Linha com chave nula é órfã: não deduplica, não junta com
+                # nada e passa despercebida na checagem de duplicatas.
+                nulls = {
+                    col: int(df[col].isna().sum())
+                    for col in subset
+                    if int(df[col].isna().sum()) > 0
+                }
+                add_check(
+                    f"chaves_nulas_{path.name}",
+                    "ok" if not nulls else "error",
+                    "nenhuma chave nula" if not nulls else f"chaves nulas: {nulls}",
+                )
             else:
                 add_check(f"colunas_{path.name}", "error", f"faltam colunas: {sorted(set(subset) - set(df.columns))}")
         except Exception as exc:
@@ -411,6 +467,53 @@ def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | No
                     "ok" if unusual.empty else "warn",
                     "tamanhos dentro do esperado" if unusual.empty else unusual.to_string(),
                 )
+
+                # Cobertura por tipo: uma data só com FIIs (ou só com ações)
+                # significa que um dos lados falhou silenciosamente.
+                recentes = sorted(cart["Data_Carteira"].dropna().unique())[-CARTEIRA_CHECK_DAYS:]
+                incompletas = {
+                    str(data): sorted(
+                        cart.loc[cart["Data_Carteira"] == data, "Tipo"].dropna().unique().tolist()
+                    )
+                    for data in recentes
+                    if not CARTEIRA_TIPOS.issubset(
+                        set(cart.loc[cart["Data_Carteira"] == data, "Tipo"].dropna())
+                    )
+                }
+                add_check(
+                    "carteira_cobertura_tipos",
+                    "ok" if not incompletas else "error",
+                    (
+                        f"últimas {len(recentes)} datas com FII e ACAO"
+                        if not incompletas
+                        else f"datas sem os dois tipos: {incompletas}"
+                    ),
+                )
+
+                # Sem preço de entrada a carteira não serve para backtest.
+                if "Preco_Entrada" in cart.columns:
+                    sem_preco = {
+                        str(data): int(
+                            cart.loc[cart["Data_Carteira"] == data, "Preco_Entrada"].isna().sum()
+                        )
+                        for data in recentes
+                        if cart.loc[cart["Data_Carteira"] == data, "Preco_Entrada"].isna().any()
+                    }
+                    add_check(
+                        "carteira_preco_entrada",
+                        "ok" if not sem_preco else "error",
+                        (
+                            "preço de entrada presente nas datas recentes"
+                            if not sem_preco
+                            else f"linhas sem Preco_Entrada: {sem_preco}"
+                        ),
+                    )
+                else:
+                    add_check(
+                        "carteira_preco_entrada",
+                        "error",
+                        "coluna Preco_Entrada ausente na carteira histórica",
+                    )
         except Exception as exc:
             add_check("carteira_checks", "error", str(exc))
 

@@ -11,6 +11,7 @@ from src.backtest import (
     _resolve_date_col,
     load_top20_snapshots,
     run_backtest,
+    save_portfolio_snapshot,
 )
 
 
@@ -71,3 +72,98 @@ def test_run_backtest_com_mock(monkeypatch, tmp_path):
     assert result["bateu_ifix"] is True
     assert result["bateu_ibov"] is True
     assert result["carteira_top20_fiis"]["base100"] == pytest.approx(110.0)
+
+
+def _top_fiis_fake():
+    return pd.DataFrame({
+        "FUNDOS": ["AAA11", "BBB11"],
+        "PREÇO ATUAL (R$)": [10.0, 20.0],
+        "Score": [80.0, 70.0],
+    })
+
+
+def _top_acoes_fake():
+    # O Investsite entrega a coluna acentuada. Já houve regressão por ler "Acao".
+    return pd.DataFrame({
+        "Ação": ["ABCD3", "EFGH4"],
+        "Preço": [5.0, 6.0],
+        "Score": [60.0, 50.0],
+    })
+
+
+def test_save_portfolio_snapshot_registra_fiis_e_acoes(tmp_path):
+    out = tmp_path / "carteiras.parquet"
+
+    save_portfolio_snapshot(
+        top_fiis=_top_fiis_fake(),
+        top_acoes=_top_acoes_fake(),
+        data_execucao="2026-08-20",
+        output_file=str(out),
+    )
+
+    df = pd.read_parquet(out)
+
+    assert sorted(df["Tipo"].unique()) == ["ACAO", "FII"]
+    assert df["Tipo"].value_counts().to_dict() == {"FII": 2, "ACAO": 2}
+    assert set(df["Ticker"]) == {"AAA11", "BBB11", "ABCD3", "EFGH4"}
+
+
+def test_save_portfolio_snapshot_preserva_preco_score_posicao(tmp_path):
+    """Sem Preco_Entrada a carteira não serve para backtest."""
+    out = tmp_path / "carteiras.parquet"
+
+    save_portfolio_snapshot(
+        top_fiis=_top_fiis_fake(),
+        top_acoes=_top_acoes_fake(),
+        data_execucao="2026-08-20",
+        output_file=str(out),
+    )
+
+    df = pd.read_parquet(out)
+
+    assert df[["Data_Carteira", "Tipo", "Preco_Entrada", "Score", "Posicao"]].notna().all().all()
+
+    acao = df[df["Ticker"] == "ABCD3"].iloc[0]
+    assert acao["Preco_Entrada"] == pytest.approx(5.0)
+    assert acao["Score"] == pytest.approx(60.0)
+    assert acao["Posicao"] == 1
+
+    # Posição é reiniciada por tipo.
+    assert sorted(df[df["Tipo"] == "FII"]["Posicao"]) == [1, 2]
+    assert sorted(df[df["Tipo"] == "ACAO"]["Posicao"]) == [1, 2]
+
+
+def test_save_portfolio_snapshot_aceita_acao_sem_acento(tmp_path):
+    out = tmp_path / "carteiras.parquet"
+
+    save_portfolio_snapshot(
+        top_fiis=pd.DataFrame(),
+        top_acoes=pd.DataFrame({"Acao": ["ABCD3"], "Preço": [5.0], "Score": [60.0]}),
+        data_execucao="2026-08-20",
+        output_file=str(out),
+    )
+
+    df = pd.read_parquet(out)
+    assert df["Ticker"].tolist() == ["ABCD3"]
+
+
+def test_save_portfolio_snapshot_substitui_carteira_do_mesmo_dia(tmp_path):
+    out = tmp_path / "carteiras.parquet"
+
+    save_portfolio_snapshot(
+        top_fiis=_top_fiis_fake(),
+        top_acoes=_top_acoes_fake(),
+        data_execucao="2026-08-20",
+        output_file=str(out),
+    )
+
+    # Segunda execução do mesmo dia com seleção diferente.
+    save_portfolio_snapshot(
+        top_fiis=pd.DataFrame({"FUNDOS": ["CCC11"], "PREÇO ATUAL (R$)": [30.0], "Score": [90.0]}),
+        top_acoes=pd.DataFrame(),
+        data_execucao="2026-08-20",
+        output_file=str(out),
+    )
+
+    df = pd.read_parquet(out)
+    assert df["Ticker"].tolist() == ["CCC11"]

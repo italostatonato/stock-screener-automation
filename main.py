@@ -175,13 +175,25 @@ def main():
                 else pd.Series(dtype=float)
             )
 
+            # A coluna de ticker vem acentuada do Investsite ("Ação").
+            # Passar um nome inexistente faz o update_history perder a
+            # deduplicação e acumular linhas a cada execução.
+            acao_key = next(
+                (
+                    c
+                    for c in ("Ação", "Acao", "Ticker")
+                    if c in top_actions.columns
+                ),
+                "Ação",
+            )
+
             update_history(
                 top_actions,
                 os.path.join(
                     paths["old_dir"],
                     "Top_20_Acoes_BRL.xlsx",
                 ),
-                key_col="Acao",
+                key_col=acao_key,
             )
 
         except Exception as e:

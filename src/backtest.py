@@ -22,6 +22,76 @@ BENCHMARK_YAHOO = {
     "IBOV": "^BVSP",
 }
 
+# Nomes de coluna aceitos por tipo de ativo.
+# As fontes variam a acentuação entre execuções e entre Excel/Parquet,
+# então cada candidato é testado em ordem.
+_TICKER_COLS = {
+    "FII": ("FUNDOS",),
+    "ACAO": ("Ação", "Acao", "AÇÃO", "Ticker"),
+}
+
+_PRICE_COLS = {
+    "FII": ("PREÇO ATUAL (R$)", "Preço", "Preco", "Preço Atual"),
+    "ACAO": ("Preço", "Preco", "PREÇO ATUAL (R$)"),
+}
+
+
+def _first_present(row: pd.Series, candidates) -> str | None:
+    """Retorna o primeiro nome de coluna presente e não nulo na linha."""
+    for col in candidates:
+        if col in row.index and pd.notna(row[col]):
+            return col
+    return None
+
+
+def _portfolio_rows(df: pd.DataFrame, tipo: str, data_execucao: str) -> list[dict]:
+    """Converte um Top N em linhas da carteira histórica.
+
+    Além do ticker, preserva Preco_Entrada, Score e Posicao — sem o preço de
+    entrada a carteira não serve para backtest.
+    """
+    if df is None or df.empty:
+        return []
+
+    rows = []
+    posicao = 0
+
+    for _, row in df.iterrows():
+        ticker_col = _first_present(row, _TICKER_COLS[tipo])
+
+        if ticker_col is None:
+            continue
+
+        posicao += 1
+        price_col = _first_present(row, _PRICE_COLS[tipo])
+
+        rows.append(
+            {
+                "Data_Carteira": str(data_execucao),
+                "Tipo": tipo,
+                "Ticker": str(row[ticker_col]).strip().upper(),
+                "Preco_Entrada": (
+                    pd.to_numeric(row[price_col], errors="coerce")
+                    if price_col
+                    else pd.NA
+                ),
+                "Score": pd.to_numeric(row.get("Score"), errors="coerce"),
+                "Posicao": posicao,
+            }
+        )
+
+    if not rows:
+        logger.warning(
+            "Nenhum ticker %s reconhecido na carteira de %s — "
+            "colunas disponíveis: %s",
+            tipo,
+            data_execucao,
+            list(df.columns)[:10],
+        )
+
+    return rows
+
+
 def save_portfolio_snapshot(
     top_fiis: pd.DataFrame,
     top_acoes: pd.DataFrame,
@@ -36,41 +106,10 @@ def save_portfolio_snapshot(
     execuções anteriores do workflow.
     """
 
-    rows = []
-
-    # ============================================================
-    # FIIs
-    # ============================================================
-
-    if top_fiis is not None and not top_fiis.empty:
-        for _, row in top_fiis.iterrows():
-            ticker = row.get("FUNDOS")
-
-            if pd.notna(ticker):
-                rows.append(
-                    {
-                        "Data_Carteira": str(data_execucao),
-                        "Tipo": "FII",
-                        "Ticker": str(ticker).strip().upper(),
-                    }
-                )
-
-    # ============================================================
-    # AÇÕES
-    # ============================================================
-
-    if top_acoes is not None and not top_acoes.empty:
-        for _, row in top_acoes.iterrows():
-            ticker = row.get("Acao")
-
-            if pd.notna(ticker):
-                rows.append(
-                    {
-                        "Data_Carteira": str(data_execucao),
-                        "Tipo": "ACAO",
-                        "Ticker": str(ticker).strip().upper(),
-                    }
-                )
+    rows = (
+        _portfolio_rows(top_fiis, "FII", data_execucao)
+        + _portfolio_rows(top_acoes, "ACAO", data_execucao)
+    )
 
     novo_df = pd.DataFrame(
         rows,
@@ -78,6 +117,9 @@ def save_portfolio_snapshot(
             "Data_Carteira",
             "Tipo",
             "Ticker",
+            "Preco_Entrada",
+            "Score",
+            "Posicao",
         ],
     )
 
@@ -140,10 +182,13 @@ def save_portfolio_snapshot(
     )
 
     logger.info(
-        "Carteira histórica salva: %s (%s linhas)",
+        "Carteira histórica salva: %s (%s linhas — %s FII, %s ACAO)",
         output_file,
         len(historico),
+        sum(1 for r in rows if r["Tipo"] == "FII"),
+        sum(1 for r in rows if r["Tipo"] == "ACAO"),
     )
+
 
 def _yahoo_ticker(fii: str) -> str:
     return f"{str(fii).strip().upper()}.SA"

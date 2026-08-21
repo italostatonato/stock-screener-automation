@@ -3,7 +3,7 @@
 ## Rotina local recomendada
 
 ```powershell
-cd "C:\Users\Ítalo\OneDrive\stock-screener-automation"
+cd <raiz-do-projeto>
 python main.py
 python scripts/healthcheck_data.py
 pytest tests/ -v
@@ -22,7 +22,7 @@ pytest tests/ -v
 ## Backup local
 
 ```powershell
-$BackupRoot = "C:\Users\Ítalo\OneDrive\stock-screener-automation\backups"
+$BackupRoot = Join-Path (Get-Location) "backups"
 $Timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $Backup = Join-Path $BackupRoot "data_backup_$Timestamp"
 New-Item -ItemType Directory -Path $BackupRoot -Force | Out-Null
@@ -43,6 +43,18 @@ ok
 ```
 
 `warn` pode ser aceitável em fases iniciais de histórico ou ML. `error` deve bloquear push até ser investigado.
+
+### Checagens da carteira histórica
+
+Além de duplicatas, o healthcheck valida:
+
+| Checagem | O que pega |
+| --- | --- |
+| `chaves_nulas_<arquivo>` | linha com `Data_Carteira`/`Tipo`/`Data_Execucao` nulo — ela não deduplica e passa despercebida na checagem de duplicatas |
+| `carteira_cobertura_tipos` | data com só FII ou só ACAO nas últimas 5 execuções, sinal de que um dos lados falhou em silêncio |
+| `carteira_preco_entrada` | `Preco_Entrada` ausente — sem preço de entrada a carteira não serve para backtest |
+
+As três retornam `error`, porque cada uma já correspondeu a uma regressão real que ficou dias sem ser notada.
 
 ## Rebuild a partir do lake
 
@@ -165,12 +177,19 @@ A entrega do Excel final é feita pela camada `src/delivery.py`. Ela é separada
 
 ### Fase 1: cópia local para OneDrive sincronizado
 
-Quando o pipeline roda no notebook Windows, o Excel final é copiado para a pasta configurada em `paths.onedrive_output_dir`:
+Quando o pipeline roda no notebook Windows, o Excel final é copiado para a pasta apontada por `paths.onedrive_output_dir`, que lê a variável de ambiente `SCREENER_EXCEL_OUTPUT_DIR`:
 
 ```yaml
 paths:
-  onedrive_output_dir: "C:/Users/Ítalo/OneDrive/Tabelas Acoes/Recomendacoes"
+  onedrive_output_dir: "${SCREENER_EXCEL_OUTPUT_DIR}"
 ```
+
+```powershell
+$env:SCREENER_EXCEL_OUTPUT_DIR = "C:/Users/<voce>/OneDrive/Tabelas Acoes/Recomendacoes"
+python main.py
+```
+
+Sem a variável definida o valor resolve para vazio e a cópia local é pulada — que é o comportamento desejado no GitHub Actions e em qualquer clone novo.
 
 A entrega gera duas saídas:
 
