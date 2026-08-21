@@ -1,12 +1,17 @@
 paths:
-  base_dir: "C:/Users/Ítalo/OneDrive/stock-screener-automation"
+  # Caminhos relativos à raiz do projeto — o repositório é compartilhado,
+  # então nada aqui pode depender da máquina de quem roda.
   data_dir: "data"
   input_dir: "data/input"
   output_dir: "data/output"
   old_dir: "data/old"
   logs_dir: "logs"
   local_input_file: "data/input/Ranking_Acoes_FII.xlsx"
-  onedrive_output_dir: "C:/Users/Ítalo/OneDrive/Tabelas Acoes/Recomendacoes"
+
+  # Destino local opcional do Excel final (OneDrive, Dropbox, pasta de rede).
+  # Defina SCREENER_EXCEL_OUTPUT_DIR para ativar; vazio pula a cópia.
+  # No GitHub Actions fica naturalmente vazio.
+  onedrive_output_dir: "${SCREENER_EXCEL_OUTPUT_DIR}"
 
 scraper:
   url: "https://www.fundsexplorer.com.br/ranking"
@@ -50,19 +55,3 @@ columns:
     - "NUM. COTISTAS"
   float_simple:
     - "VOLATILIDADE"
-
-acoes:
-  pvpa_max: 5.0
-  pl_max: 15.0
-  ev_ebit_max: 10.0
-  ev_ebitda_max: 8.0
-  margem_min: 0.05
-  roa_min: 0.03
-  rpl_min: 0.10
-  roinvc_min: 0.05
-  passivo_pl_max: 1.5
-  alavancagem_max: 3.0
-  dy_min: 0.04
-  volume_min: 1000000
-  market_cap_min: 500000000
-  top_n: 20

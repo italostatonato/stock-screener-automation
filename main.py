@@ -4,8 +4,8 @@ import sys
 from datetime import datetime
 
 import pandas as pd
-import yaml
 
+from src.config import load_config
 from src.scraper import scrape_fundsexplorer, scrape_acoes_investsite
 from src.cleaner import clean_and_normalize
 from src.filters import select_top_fiis, select_top_acoes
@@ -46,8 +46,7 @@ def setup_logging(logs_dir: str):
 
 
 def main():
-    with open("config.yaml", encoding="utf-8") as f:
-        cfg = yaml.safe_load(f)
+    cfg = load_config("config.yaml")
 
     setup_logging(cfg["paths"]["logs_dir"])
 

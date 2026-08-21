@@ -42,6 +42,7 @@ config.yaml                     Caminhos, fontes, filtros e colunas
 requirements.txt                Dependências Python
 
 src/
+  config.py                     Carrega config.yaml com caminhos portáveis
   scraper.py                    Coleta FIIs e ações via Selenium
   cleaner.py                    Limpeza e normalização de dados financeiros
   filters.py                    Filtros fixos e adaptativos por quartis
@@ -268,6 +269,22 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python main.py
 ```
+
+### Destino local opcional do Excel
+
+O `config.yaml` é versionado e não contém caminho de máquina de ninguém. Para
+copiar o Excel final para uma pasta sincronizada (OneDrive, Dropbox, rede),
+defina a variável de ambiente antes de rodar:
+
+```powershell
+$env:SCREENER_EXCEL_OUTPUT_DIR = "C:/Users/<voce>/OneDrive/Tabelas Acoes/Recomendacoes"
+```
+
+```bash
+export SCREENER_EXCEL_OUTPUT_DIR="$HOME/OneDrive/Tabelas Acoes/Recomendacoes"
+```
+
+Sem a variável, a cópia local é pulada e o Excel continua em `data/output/`.
 
 ---
 

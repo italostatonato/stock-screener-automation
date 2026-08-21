@@ -53,6 +53,7 @@ config.yaml                     Caminhos, fontes, filtros e colunas
 requirements.txt                Dependências Python
 
 src/
+  config.py                     Carrega config.yaml e resolve ${VAR} nos paths
   scraper.py                    Selenium: Fundsexplorer + Investsite
   cleaner.py                    Normalização de percentuais, moedas e números
   filters.py                    Filtros fixos + quartis adaptativos
@@ -276,6 +277,7 @@ http://localhost:8000/docs/
 - Alterações que tocam `data/` exigem backup antes.
 - Não commitar `backups/`.
 - Não trocar nomes de colunas sem atualizar filtros, scorer, exporter e testes.
+- Não colocar caminho de máquina em `config.yaml`; use `${VAR}` e documente a variável.
 - Ao alterar pipeline, atualizar README, CLAUDE e docs técnicos.
 - Ao alterar dashboard, verificar se `docs/data/index.json` aponta para o snapshot mais recente.
 - Em conflitos de `docs/data/index.json`, reconstruir o índice varrendo `docs/data/*.json`.
