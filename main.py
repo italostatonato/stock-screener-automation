@@ -122,89 +122,106 @@ def main():
         logger.error(
             f"Falha ao salvar historico ML FIIs: {e}"
         )
-
     # ── Ações ─────────────────────────────────────────────────────────────
-
     logger.info("Coletando acoes...")
 
+    df_acoes_raw = pd.DataFrame()
     top_actions = pd.DataFrame()
     acoes_base = pd.DataFrame()
     acoes_scores_top = pd.Series(dtype=float)
-    df_acoes_raw = pd.DataFrame()
 
-    try:
-        df_acoes_raw = scrape_acoes_investsite(
-            cfg["scraper"]
+    # O pipeline de ações é obrigatório.
+    # Se o scraping ou o processamento falhar, o workflow deve falhar
+    # em vez de publicar uma carteira/dashboard sem ações.
+
+    df_acoes_raw = scrape_acoes_investsite(
+        cfg["scraper"]
+    )
+
+    if df_acoes_raw is None or df_acoes_raw.empty:
+        raise RuntimeError(
+            "Scraping de ações retornou DataFrame vazio."
         )
 
-    except Exception as e:
-        logger.error(
-            f"Falha no scraping de acoes: {e} — "
-            "continuando sem acoes."
+    logger.info(
+        "Ações coletadas: %d linhas, %d colunas",
+        len(df_acoes_raw),
+        len(df_acoes_raw.columns),
+    )
+
+    logger.info("Calculando scores Ações...")
+
+    acoes_scores_universe = score_acoes(
+        df_acoes_raw
+    )
+
+    df_acoes_raw["Score"] = acoes_scores_universe
+
+    if df_acoes_raw["Score"].notna().sum() == 0:
+        raise RuntimeError(
+            "Score das ações ficou completamente vazio."
         )
 
-    else:
-        try:
-            logger.info("Calculando scores Acoes...")
+    top_actions, acoes_base = select_top_acoes(
+        df_acoes_raw,
+        cfg,
+    )
 
-            acoes_scores_universe = score_acoes(
-                df_acoes_raw
-            )
+    if top_actions is None or top_actions.empty:
+        raise RuntimeError(
+            "select_top_acoes() retornou zero ações."
+        )
 
-            df_acoes_raw["Score"] = (
-                acoes_scores_universe
-            )
+    if "Score" not in top_actions.columns:
+        raise RuntimeError(
+            "Top ações não possui a coluna 'Score'."
+        )
 
-            top_actions, acoes_base = select_top_acoes(
-                df_acoes_raw,
-                cfg,
-            )
+    top_actions["Data Preco"] = data_hoje
 
-            top_actions["Data Preco"] = data_hoje
+    acoes_scores_top = (
+        pd.to_numeric(
+            top_actions["Score"],
+            errors="coerce",
+        )
+        .reset_index(drop=True)
+    )
 
-            # O score já pertence ao DataFrame selecionado.
-            # Não usamos mais reindex pelo índice original,
-            # porque select_top_acoes pode resetar o índice.
-            acoes_scores_top = (
-                top_actions["Score"].reset_index(drop=True)
-                if (
-                    not top_actions.empty
-                    and "Score" in top_actions.columns
-                )
-                else pd.Series(dtype=float)
-            )
+    if acoes_scores_top.notna().sum() == 0:
+        raise RuntimeError(
+            "Top ações possui Score, mas todos os Scores são nulos."
+        )
 
-            # A coluna de ticker vem acentuada do Investsite ("Ação").
-            # Passar um nome inexistente faz o update_history perder a
-            # deduplicação e acumular linhas a cada execução.
-            acao_key = next(
-                (
-                    c
-                    for c in ("Ação", "Acao", "Ticker")
-                    if c in top_actions.columns
-                ),
-                "Ação",
-            )
+    logger.info(
+        "Top %d ações selecionadas.",
+        len(top_actions),
+    )
 
-            update_history(
-                top_actions,
-                os.path.join(
-                    paths["old_dir"],
-                    "Top_20_Acoes_BRL.xlsx",
-                ),
-                key_col=acao_key,
-            )
+    update_history(
+        top_actions,
+        os.path.join(
+            paths["old_dir"],
+            "Top_20_Acoes_BRL.xlsx",
+        ),
+        key_col="Acao",
+    )
 
-        except Exception as e:
-            logger.error(
-                "Falha no processamento de acoes: "
-                f"{e} — continuando sem acoes processadas."
-            )
+    # Histórico ML — base processada
+    acoes_hist_source = (
+        acoes_base
+        if acoes_base is not None and not acoes_base.empty
+        else df_acoes_raw
+    )
 
-            top_actions = pd.DataFrame()
-            acoes_base = pd.DataFrame()
-            acoes_scores_top = pd.Series(dtype=float)
-
+    append_historical_data(
+        df=acoes_hist_source,
+        data_execucao=data_hoje,
+        output_file=os.path.join(
+            ml_dir,
+            "historico_acoes.parquet",
+        ),
+        subset_cols=["Data_Execucao", "Ação"],
+    )
     # Histórico ML — base processada
     try:
         acoes_hist_source = (
