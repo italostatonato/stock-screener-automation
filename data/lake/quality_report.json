@@ -1,21 +1,16 @@
 {
-  "generated_at": "2026-08-25T11:25:53",
+  "generated_at": "2026-08-26T11:27:50",
   "status": "ok",
   "checks": [
     {
       "name": "lake_snapshots",
       "status": "ok",
-      "detail": "39 snapshots encontrados"
+      "detail": "40 snapshots encontrados"
     },
     {
       "name": "lake_manifest",
       "status": "ok",
-      "detail": "latest=2026-08-25"
-    },
-    {
-      "name": "snapshot_2026-08-19_files",
-      "status": "ok",
-      "detail": "ok"
+      "detail": "latest=2026-08-26"
     },
     {
       "name": "snapshot_2026-08-20_files",
@@ -38,9 +33,14 @@
       "detail": "ok"
     },
     {
+      "name": "snapshot_2026-08-26_files",
+      "status": "ok",
+      "detail": "ok"
+    },
+    {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_fiis.parquet",
       "status": "ok",
-      "detail": "21142 linhas"
+      "detail": "21692 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_acoes.parquet",
@@ -50,12 +50,12 @@
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
       "status": "ok",
-      "detail": "1504 linhas"
+      "detail": "1524 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_fiis.parquet",
       "status": "ok",
-      "detail": "19692 linhas"
+      "detail": "20205 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_acoes.parquet",
@@ -65,7 +65,7 @@
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
       "status": "ok",
-      "detail": "9592 linhas"
+      "detail": "10105 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
@@ -100,12 +100,12 @@
     {
       "name": "dashboard_index",
       "status": "ok",
-      "detail": "51 datas no index.json"
+      "detail": "52 datas no index.json"
     },
     {
       "name": "dashboard_latest_vs_lake",
       "status": "ok",
-      "detail": "dashboard_latest=2026-08-25, lake_latest=2026-08-25"
+      "detail": "dashboard_latest=2026-08-26, lake_latest=2026-08-26"
     }
   ]
 }
