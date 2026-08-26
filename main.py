@@ -296,7 +296,16 @@ def main():
         backtest_dir,
         "carteiras_historicas.parquet",
     )
+    
+    if top_fiis.empty:
+        raise RuntimeError(
+            "Top FIIs está vazio. Execução abortada."
+        )
 
+    if top_actions.empty:
+        raise RuntimeError(
+            "Top ações está vazio. Execução abortada."
+        )
     try:
         save_portfolio_snapshot(
             top_fiis=top_fiis,
