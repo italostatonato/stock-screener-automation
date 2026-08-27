@@ -37,7 +37,13 @@ Horizontes previstos:
 - 60 dias;
 - 90 dias.
 
-Horizonte principal recomendado para decisão:
+Horizonte operacional principal atual:
+
+```text
+7 dias
+```
+
+Horizonte estratégico de avaliação:
 
 ```text
 30 dias
@@ -83,10 +89,10 @@ Um modelo só deve virar candidato a líder quando:
 
 ## Cadência futura recomendada
 
-Hoje o pipeline pode treinar diariamente porque o histórico ainda é pequeno. No futuro, o ideal é separar:
+O pipeline é executado semanalmente. No futuro, o ideal é separar:
 
 ```text
-previsão: diária
+previsão: semanal
 treinamento: semanal ou quando novos targets futuros forem preenchidos
 ```
 

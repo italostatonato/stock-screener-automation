@@ -44,6 +44,23 @@ ok
 
 `warn` pode ser aceitável em fases iniciais de histórico ou ML. `error` deve bloquear push até ser investigado.
 
+## Fonte pública indisponível
+
+As ações vêm da tabela pública do Fundamentus. Um timeout ou indisponibilidade
+temporária dessa página faz o job `screener` falhar, para evitar gravar um
+snapshot parcial como se fosse completo.
+
+Nessa situação:
+
+1. confira o log da execução no GitHub Actions;
+2. aguarde alguns minutos e execute o workflow novamente;
+3. não altere manualmente o histórico para compensar a falha;
+4. o job de deploy continua publicando a versão atual do dashboard quando os
+   testes passam, mesmo sem snapshot novo.
+
+O workflow é semanal, às segundas-feiras, 08h BRT (`0 11 * * 1`), e também
+pode ser acionado manualmente em **Actions → Weekly FII Screener → Run workflow**.
+
 ### Checagens da carteira histórica
 
 Além de duplicatas, o healthcheck valida:

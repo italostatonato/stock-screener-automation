@@ -1,4 +1,4 @@
-# Stock Screener Automation — Contexto para assistentes de IA
+# Radar Semanal — Contexto para assistentes de IA
 
 ## O que é este projeto
 
@@ -15,10 +15,10 @@ O projeto é educacional e analítico. Não tratar como recomendação de invest
 
 O projeto já possui:
 
-- coleta diária de FIIs e ações;
+- coleta semanal de FIIs e ações;
 - score multifatorial 0-100;
 - filtros fixos e filtros móveis por quartis;
-- Excel diário formatado;
+- Excel semanal formatado;
 - dashboard web estático;
 - histórico consolidado em Parquet;
 - camada incremental `data/lake/snapshots/YYYY-MM-DD/`;
@@ -31,6 +31,8 @@ O projeto já possui:
 - healthcheck de dados;
 - rebuild a partir do lake;
 - GitHub Actions com testes, cache, healthcheck e commit automático dos dados.
+- FIIs via Fundsexplorer e ações via tabela pública do Fundamentus.
+- dashboard público chamado **Radar Semanal**, com Roboto na interface.
 
 ---
 
@@ -54,7 +56,7 @@ requirements.txt                Dependências Python
 
 src/
   config.py                     Carrega config.yaml e resolve ${VAR} nos paths
-  scraper.py                    Selenium: Fundsexplorer + Investsite
+  scraper.py                    Fundsexplorer (Selenium) + Fundamentus (HTTP)
   cleaner.py                    Normalização de percentuais, moedas e números
   filters.py                    Filtros fixos + quartis adaptativos
   scorer.py                     Score multifatorial 0-100
@@ -72,14 +74,14 @@ src/
 docs/
   index.html                    Dashboard web estático
   data/index.json               Índice de snapshots
-  data/YYYY-MM-DD.json          Payload diário
+  data/YYYY-MM-DD.json          Payload por execução
   ARCHITECTURE.md               Arquitetura técnica
   ML_PIPELINE.md                Pipeline ML
   OPERATIONS.md                 Operação e troubleshooting
 
 data/
   old/                          Excel histórico Top 20
-  output/                       Excel diário final
+  output/                       Excel final por execução
   ml/                           Históricos, datasets e previsões ML
   backtest/                     Carteiras históricas
   lake/                         Snapshots incrementais oficiais
@@ -114,7 +116,7 @@ tests/                          Testes automatizados
 16. Salva snapshot incremental em `data/lake/snapshots/YYYY-MM-DD/`.
 17. Gera datasets ML.
 18. Roda pipeline ML sombra.
-19. Gera Excel diário.
+19. Gera Excel final.
 20. Exporta JSON do dashboard.
 21. Reconstrói índice do dashboard.
 22. Executa quality checks.
@@ -142,7 +144,7 @@ Objetivo:
 
 - reduzir risco de perda de histórico;
 - permitir rebuild dos derivados;
-- evitar dependência exclusiva de parquets consolidados que mudam diariamente;
+- evitar dependência exclusiva de parquets consolidados que mudam a cada execução;
 - preparar evolução para particionamento futuro.
 
 ---
@@ -179,8 +181,9 @@ Data_Carteira  Tipo  Ticker  Preco_Entrada  Score  Posicao
 `Preco_Entrada` não é opcional: sem ele a carteira não serve para backtest.
 Toda data precisa ter os dois tipos (`FII` e `ACAO`).
 
-Atenção ao nome da coluna de ticker de ações: o Investsite entrega `Ação`
-acentuado. Já houve regressão por ler `Acao` — sempre aceitar as duas grafias.
+Atenção ao nome da coluna de ticker de ações: o pipeline exporta `Ação`
+acentuado. Sempre preservar a grafia e aceitar a variante sem acento apenas
+como compatibilidade de leitura.
 
 ---
 
@@ -197,7 +200,8 @@ Modelos atuais:
 - CatBoost;
 - Ensemble.
 
-Métrica principal sugerida: retorno médio do Top 20 em horizonte de 30 dias.
+Horizonte operacional atual: 7 dias. O horizonte estratégico de validação é
+30 dias; os dois não devem ser apresentados como se fossem a mesma métrica.
 
 Métricas auxiliares:
 
@@ -213,7 +217,7 @@ Enquanto houver pouco histórico, manter status **Aquecendo**.
 
 ## Workflow GitHub Actions
 
-O workflow diário:
+O workflow semanal **Weekly FII Screener**:
 
 - roda testes;
 - instala dependências com cache de pip;
@@ -225,9 +229,11 @@ O workflow diário:
   - `data/lake/`
   - `data/ml/`
   - `data/backtest/`
-- usa cron `0 11 * * 1-5`, equivalente a 08h BRT;
+- usa cron `0 11 * * 1`, equivalente a segunda-feira, 08h BRT;
 - usa `concurrency` para evitar sobreposição;
 - pode notificar falha via Telegram.
+- publica o dashboard quando os testes passam, mesmo se uma fonte pública
+  estiver temporariamente indisponível; nesse caso não grava snapshot parcial.
 
 ---
 
@@ -289,6 +295,6 @@ http://localhost:8000/docs/
 - `data/lake` como fonte oficial.
 - Parquets consolidados reconstruíveis.
 - ML treinando em cadência controlada.
-- Previsão diária separada de treinamento.
+- Previsão semanal separada de treinamento.
 - Dashboard carregando somente dados agregados.
 - Histórico particionado por período se o repo crescer demais.

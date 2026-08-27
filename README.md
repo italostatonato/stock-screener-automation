@@ -126,12 +126,12 @@ Principais telas:
 - **Recorrentes**: ativos que mais apareceram no Top 20 histórico, com indicadores atuais.
 - **Modelos ML**: comparação entre score atual e modelos preditivos em modo sombra.
 - **Indicadores**: mercado, macro, câmbio, cripto e benchmarks.
-- **Info**: metodologia, premissas e limitações.
+- **Score e Info**: metodologia, premissas, fontes e limitações.
 
 Cores principais:
 
-- Ações: `#1F4E79`
-- FIIs: `#7A869A`
+- Ações: `#54C7FF`
+- FIIs: `#B6C0D2`
 - Positivo: verde
 - Negativo: vermelho
 - Fundo: escuro neutro
@@ -242,6 +242,9 @@ O workflow `.github/workflows/run_screener.yml`:
   - `data/ml/`
   - `data/backtest/`
 - usa `concurrency` para evitar execuções simultâneas;
+- publica o GitHub Pages após os testes, inclusive quando uma fonte pública
+  falhar temporariamente; quando a coleta conclui, o deploy usa o snapshot
+  novo gerado pela própria execução;
 - notifica falha via Telegram quando os secrets estão configurados.
 
 ---
@@ -374,7 +377,7 @@ http://localhost:8000/docs/
 
 ### Longo prazo
 
-- Reduzir dependência de binários versionados diariamente.
+- Reduzir dependência de binários versionados a cada execução.
 - Avaliar armazenamento externo gratuito/barato para histórico pesado.
 - Criar relatório automático de performance dos modelos.
 - Criar documentação pública mais visual para portfólio.

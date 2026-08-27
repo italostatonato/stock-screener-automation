@@ -2,13 +2,15 @@
 
 ## Objetivo
 
-Manter uma pipeline quantitativa diária para FIIs e ações brasileiras, com histórico, dashboard, backtest e modelos ML em modo sombra.
+Manter uma pipeline quantitativa semanal para FIIs e ações brasileiras, com histórico, dashboard, backtest e modelos ML em modo sombra.
 
 ## Camadas
 
 ### 1. Ingestão
 
-Fontes públicas coletadas via Selenium e bibliotecas gratuitas.
+Fontes públicas: FIIs via Fundsexplorer com Selenium; ações via tabela pública
+do Fundamentus em uma requisição HTTP; indicadores e benchmarks por APIs e
+bibliotecas gratuitas.
 
 Componentes:
 
@@ -98,7 +100,7 @@ A arquitetura atual escala melhor porque:
 Limitações futuras esperadas:
 
 - binários versionados no Git podem crescer;
-- modelos podem ficar pesados se treinarem diariamente;
+- modelos podem ficar pesados se treinarem a cada execução;
 - tabelas do dashboard podem precisar de paginação/busca.
 
 Mitigações planejadas:

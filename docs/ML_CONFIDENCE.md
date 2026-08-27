@@ -1,9 +1,10 @@
 # Confiabilidade dos modelos ML
 
-O dashboard passa a separar dois conceitos:
+O dashboard separa três conceitos:
 
-1. **Maturidade dos dados**: percentual do caminho até o horizonte principal de 30 dias, calculado a partir dos snapshots disponíveis.
-2. **Confiabilidade preditiva real**: percentual conservador baseado em performance validada. Fica em 0% até existirem janelas válidas suficientes.
+1. **Horizonte operacional**: 7 dias, usado hoje para previsões e para o cálculo de confiabilidade exportado.
+2. **Horizonte estratégico**: 30 dias, usado para acompanhar a maturidade de uma validação mais robusta.
+3. **Confiabilidade preditiva real**: percentual conservador baseado em performance validada. Fica em 0% até existirem janelas válidas suficientes.
 
 ## Fórmula da confiabilidade real
 
@@ -35,4 +36,4 @@ A chave `modelos_ml.confiabilidade` contém:
 - `mensagem`
 - `por_modelo`
 
-Essa camada não altera o ranking oficial. Ela apenas prepara o projeto para avaliar, no futuro, quando um modelo supervisionado estiver maduro o bastante para competir com o Score Top.
+Essa camada não altera o ranking oficial. Ela apenas prepara o projeto para avaliar, no futuro, quando um modelo supervisionado estiver maduro o bastante para competir com o Score Top. A interface deve deixar claro se um indicador se refere a 7d ou à validação estratégica de 30d.
