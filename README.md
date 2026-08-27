@@ -1,10 +1,10 @@
-# Stock Screener Automation
+# Radar Semanal
 
-[![Dashboard](https://img.shields.io/badge/dashboard-online-1F4E79)](https://italostatonato.github.io/stock-screener-automation/)
+[![Radar Semanal](https://img.shields.io/badge/Radar%20Semanal-online-E3BE72)](https://italostatonato.github.io/stock-screener-automation/)
 [![Python](https://img.shields.io/badge/python-3.11+-3776AB)](https://www.python.org/)
 [![GitHub Actions](https://img.shields.io/badge/automation-GitHub%20Actions-24292F)](https://github.com/italostatonato/stock-screener-automation/actions)
 
-Screener automático de **FIIs** e **ações brasileiras** com coleta de dados públicos, limpeza e normalização, score multifatorial, filtros adaptativos por quartis, geração de Excel, histórico em Parquet, camada incremental de dados, modelos de Machine Learning em modo sombra, backtest e dashboard web no GitHub Pages.
+Boletim quantitativo semanal de **FIIs** e **ações brasileiras**, com coleta de dados públicos, score multifatorial, histórico, backtest e dashboard web no GitHub Pages.
 
 **Dashboard ao vivo:** https://italostatonato.github.io/stock-screener-automation/
 

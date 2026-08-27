@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Stock Screener · Dashboard</title>
-  <meta name="description" content="Dashboard semanal de FIIs e Ações BR com score quantitativo, indicadores e backtest." />
+  <title>Radar Semanal · Ações e FIIs BR</title>
+  <meta name="description" content="Radar semanal quantitativo de ações e FIIs brasileiros, com score, indicadores e backtest." />
   <meta name="theme-color" content="#0b1020" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -929,12 +929,61 @@
       .chart-period{padding:6px 8px;font-size:10.5px}
     }
 
+    /* Identidade Radar Semanal */
+    :root{
+      --bg:#070a12; --surface:#0b1020; --surface2:#10182b; --card:#111a2d;
+      --border:rgba(177,195,222,.15); --border-strong:rgba(177,195,222,.32);
+      --text:#f5f7fb; --muted:#9ca9bf; --muted2:#6e7d96;
+      --accent:#e3be72; --accent2:#8fd7ff; --acao:#54c7ff; --fii:#b6c0d2;
+      --shadow:0 24px 70px rgba(0,0,0,.32); --radius:24px;
+    }
+    body{
+      background:
+        radial-gradient(900px 520px at -8% -10%,rgba(227,190,114,.20),transparent 62%),
+        radial-gradient(760px 420px at 98% 0%,rgba(84,199,255,.13),transparent 65%),
+        linear-gradient(180deg,#090d18 0%,#070a12 38%,#080c15 100%) !important;
+      letter-spacing:-.01em;
+    }
+    .topbar{background:rgba(7,10,18,.84) !important;border-bottom-color:rgba(177,195,222,.12) !important;box-shadow:0 14px 36px rgba(0,0,0,.24) !important}
+    .nav{min-height:74px !important}
+    .logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#f1d291,#bb873d) !important;font-family:Fraunces,Georgia,serif;font-size:12px;font-weight:800;letter-spacing:-.08em;box-shadow:0 10px 26px rgba(227,190,114,.22)}
+    .brand-name{font-family:Fraunces,Georgia,serif;font-size:20px;font-weight:800;letter-spacing:-.04em;line-height:1}
+    .brand small{font-size:11px;letter-spacing:.04em;margin-top:4px}
+    .github-top{background:rgba(255,255,255,.025);border-color:rgba(177,195,222,.24);padding:9px 14px}
+    .tab{font-size:13px;font-weight:700;border-color:transparent;background:transparent;padding:9px 11px;transition:all .18s ease}
+    .tab:hover{background:rgba(255,255,255,.05);color:var(--text);border-color:rgba(177,195,222,.16)}
+    .tab.active{box-shadow:0 8px 20px rgba(227,190,114,.16)}
+    .hero{padding:52px 0 24px !important}
+    .hero-grid{grid-template-columns:minmax(0,1.22fr) minmax(310px,.52fr) !important;gap:32px !important}
+    .hero-copy{position:relative;padding:10px 0 4px}
+    .eyebrow{display:flex;align-items:center;gap:9px;color:#eacb8c;font-size:11px;letter-spacing:.17em}
+    .eyebrow:before{content:"";width:28px;height:1px;background:currentColor;opacity:.75}
+    .hero h1{font-family:Fraunces,Georgia,serif !important;font-size:clamp(48px,6.1vw,78px) !important;letter-spacing:-.065em !important;line-height:.9 !important;margin:16px 0 16px !important}
+    .hero h1 em{font-style:normal;color:var(--accent)}
+    .hero p{font-size:16px !important;line-height:1.65 !important;max-width:680px !important;color:#aab6c9 !important}
+    .hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+    .hero-tags span{font-size:11px;font-weight:800;letter-spacing:.045em;color:#c9d5e6;border:1px solid rgba(177,195,222,.18);background:rgba(255,255,255,.025);padding:7px 10px;border-radius:999px}
+    .hero-tags span:first-child{border-color:rgba(227,190,114,.35);color:#f0d399;background:rgba(227,190,114,.08)}
+    .author-row{font-size:12px;margin-top:20px !important}
+    .asof{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(20,31,54,.88),rgba(11,16,31,.86)) !important;border-color:rgba(177,195,222,.20) !important;box-shadow:0 24px 60px rgba(0,0,0,.28) !important;padding:22px !important}
+    .asof:before{content:"";position:absolute;width:220px;height:220px;right:-110px;top:-125px;border:1px solid rgba(227,190,114,.22);border-radius:50%;box-shadow:0 0 0 24px rgba(227,190,114,.035),0 0 0 48px rgba(227,190,114,.02)}
+    .asof>*{position:relative}.pill{background:rgba(255,255,255,.04);border-color:rgba(177,195,222,.22);padding:6px 10px;font-weight:800;letter-spacing:.025em}.asof strong{font-family:Fraunces,Georgia,serif !important;font-size:25px !important;letter-spacing:-.035em}.update-note{line-height:1.6 !important}
+    .signal-strip{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:0;margin:8px 0 26px;border:1px solid rgba(177,195,222,.15);border-radius:18px;background:rgba(12,18,33,.66);overflow:hidden}
+    .signal-cell{padding:14px 18px;border-left:1px solid rgba(177,195,222,.12)}.signal-cell:first-child{border-left:0;background:linear-gradient(90deg,rgba(227,190,114,.11),rgba(227,190,114,.025))}.signal-cell span{display:block;color:var(--muted2);font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;margin-bottom:3px}.signal-cell b{font-size:13px;color:#dce5f3}.signal-cell:first-child b{color:#f0d399}
+    .kpi-windowbar{padding:0 2px;margin:10px 0 14px !important}.kpi-windowbar .window-label{color:#71819a}.kpi-window{background:rgba(255,255,255,.025);border-color:rgba(177,195,222,.15);transition:all .18s ease}.kpi-window.active{box-shadow:0 8px 18px rgba(227,190,114,.14)}
+    .kpi{background:linear-gradient(160deg,rgba(22,33,57,.82),rgba(13,20,36,.78)) !important;border-color:rgba(177,195,222,.14) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 10px 28px rgba(0,0,0,.12) !important}.kpi:after{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(180deg,var(--accent),transparent 72%);opacity:.8}.kpi.good:after{background:linear-gradient(180deg,var(--good),transparent 72%)}.kpi.bad:after{background:linear-gradient(180deg,var(--bad),transparent 72%)}.kpi:hover{border-color:rgba(227,190,114,.40) !important;transform:translateY(-3px) !important}.kpi .label{color:#9eacc1 !important}.kpi .value{font-family:Fraunces,Georgia,serif !important;font-size:27px !important;letter-spacing:-.045em}.kpi.neutral .value{color:#f0d399}.kpi .note{color:#71819a !important}
+    .section-head{margin:30px 0 18px !important}.section h2{font-family:Fraunces,Georgia,serif;font-size:31px;letter-spacing:-.045em}.section .desc{font-size:14px}.search{background:rgba(6,10,18,.64);border-color:rgba(177,195,222,.20)}
+    .panel,.info-card{background:linear-gradient(150deg,rgba(18,28,49,.82),rgba(11,17,31,.78)) !important;border-color:rgba(177,195,222,.14) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 14px 34px rgba(0,0,0,.14) !important}.panel{padding:22px !important}.panel h3,.info-card h3{font-family:Fraunces,Georgia,serif;font-size:20px;letter-spacing:-.025em}.panel p{font-size:13px !important}.chart-explain{border-top-color:rgba(177,195,222,.12);font-size:12px}.rank-table-wrap,.rec-table-wrap{border-color:rgba(177,195,222,.14);background:rgba(4,8,17,.16)}.table th{color:#7f90a9}.table td{border-bottom-color:rgba(177,195,222,.09)}.rank-table td:first-child,.rank-table th:first-child,.rec-table td:first-child,.rec-table th:first-child{color:#eacb8c}.rank{background:#eacb8c;color:#16120a}
+    .asset-card{background:linear-gradient(155deg,rgba(20,31,54,.84),rgba(10,16,29,.82)) !important;border-color:rgba(177,195,222,.14) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 10px 24px rgba(0,0,0,.14) !important}.asset-card:hover{border-color:rgba(227,190,114,.38) !important;transform:translateY(-3px);transition:transform .18s ease,border-color .18s ease}.metric{background:rgba(3,7,15,.20);border-color:rgba(177,195,222,.10)}
+    footer{border-top-color:rgba(177,195,222,.12)}
+    @media(max-width:860px){.hero{padding-top:32px !important}.hero-grid{grid-template-columns:1fr !important;gap:20px !important}.hero h1{font-size:clamp(44px,12vw,62px) !important}.asof{max-width:none !important}.signal-strip{grid-template-columns:1fr 1fr}.signal-cell{border-top:1px solid rgba(177,195,222,.12)}.signal-cell:nth-child(2){border-left:0}.signal-cell:first-child{grid-column:1/-1;border-top:0}.hero-tags{margin-top:18px}}
+    @media(max-width:620px){.nav{min-height:0 !important}.brand-name{font-size:18px}.hero h1{font-size:45px !important}.hero p{font-size:14px !important}.hero-tags span{font-size:10px;padding:6px 8px}.signal-cell{padding:12px}.signal-cell b{font-size:12px}.panel{padding:16px !important}.section h2{font-size:27px}.kpi .value{font-size:22px !important}}
   </style>
 </head>
 <body>
   <div class="topbar">
     <div class="wrap nav">
-      <div class="brand-area"><div class="brand"><div class="logo">▰</div><div><div>Stock Screener</div><small class="muted">Renda variável BR · Quant dashboard</small></div></div><a class="github-top" href="https://github.com/italostatonato/stock-screener-automation" target="_blank" rel="noopener">● GitHub</a></div>
+      <div class="brand-area"><div class="brand"><div class="logo">RS</div><div><div class="brand-name">Radar Semanal</div><small class="muted">Ações e FIIs BR · leitura quantitativa</small></div></div><a class="github-top" href="https://github.com/italostatonato/stock-screener-automation" target="_blank" rel="noopener">● GitHub</a></div>
       <div class="tabs" role="tablist">
         <button class="tab active" data-tab="overview">Visão geral</button>
         <button class="tab" data-tab="fiis">FIIs</button>
@@ -950,10 +999,11 @@
   <main class="wrap">
     <section class="hero">
       <div class="hero-grid">
-        <div>
-          <div class="eyebrow">Boletim semanal · filtro quantitativo</div>
-          <h1>Rank de ativos BR</h1>
-          <p>Top 20 FIIs e Ações BR, score multifatorial, comparação contra benchmarks e leitura visual das principais métricas do dia.</p>
+        <div class="hero-copy">
+          <div class="eyebrow">Boletim quantitativo · Brasil</div>
+          <h1>Radar <em>Semanal</em></h1>
+          <p>Uma leitura objetiva do mercado: ações e FIIs selecionados por score multifatorial, acompanhados de benchmarks, histórico e sinais para análise.</p>
+          <div class="hero-tags"><span>Seleção quantitativa</span><span>Top 20 ações e FIIs</span><span>Dados públicos</span></div>
           <div class="author-row">Criado por: <a href="https://www.linkedin.com/in/italo-petricioni-statonato/" target="_blank" rel="noopener">Ítalo Petricioni Statonato</a> <button id="aboutItaloBtn" class="about-toggle" type="button">Sobre Ítalo</button></div>
           <div id="aboutItaloPanel" class="about-panel" aria-hidden="true"><img class="about-photo" src="assets/italo-profile.png" alt="Foto de Ítalo Petricioni Statonato" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'about-fallback',textContent:'IP'}));"><div><h3>Ítalo Petricioni Statonato</h3><p>Profissional de dados, analytics e estratégia, com experiência em automação, produtos de dados, CX, performance operacional e indicadores executivos. Este dashboard nasceu como projeto pessoal para unir tecnologia, mercado financeiro e investimento em renda variável, com foco em critérios quantitativos, disciplina analítica e evolução contínua dos modelos.</p></div></div>
         </div>
@@ -963,6 +1013,13 @@
           <span class="update-note" id="asOfRange">Histórico: —</span>
         </aside>
       </div>
+    </section>
+
+    <section class="signal-strip" aria-label="Resumo do Radar Semanal">
+      <div class="signal-cell"><span>Leitura da semana</span><b>Dados para orientar análise, não recomendações.</b></div>
+      <div class="signal-cell"><span>Universo</span><b>Ações + FIIs brasileiros</b></div>
+      <div class="signal-cell"><span>Metodologia</span><b>Score multifatorial</b></div>
+      <div class="signal-cell"><span>Ritmo</span><b>Atualização semanal</b></div>
     </section>
 
     <section id="overview" class="section active">
