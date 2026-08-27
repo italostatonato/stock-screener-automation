@@ -113,7 +113,8 @@ jobs:
           fi
 
   deploy:
-    needs: screener
+    needs: [test, screener]
+    if: ${{ always() && needs.test.result == 'success' }}
     runs-on: ubuntu-latest
   
     permissions:
