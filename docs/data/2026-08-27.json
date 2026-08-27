@@ -4826,60 +4826,7 @@
         "valor": 104.7146
       }
     ],
-    "IGPM": [
-      {
-        "data": "2025-07-01",
-        "valor": 99.23
-      },
-      {
-        "data": "2025-08-01",
-        "valor": 99.5872
-      },
-      {
-        "data": "2025-09-01",
-        "valor": 100.0055
-      },
-      {
-        "data": "2025-10-01",
-        "valor": 99.6455
-      },
-      {
-        "data": "2025-11-01",
-        "valor": 99.9145
-      },
-      {
-        "data": "2025-12-01",
-        "valor": 99.9045
-      },
-      {
-        "data": "2026-01-01",
-        "valor": 100.3141
-      },
-      {
-        "data": "2026-02-01",
-        "valor": 99.5818
-      },
-      {
-        "data": "2026-03-01",
-        "valor": 100.0997
-      },
-      {
-        "data": "2026-04-01",
-        "valor": 102.8324
-      },
-      {
-        "data": "2026-05-01",
-        "valor": 103.6962
-      },
-      {
-        "data": "2026-06-01",
-        "valor": 103.1777
-      },
-      {
-        "data": "2026-07-01",
-        "valor": 101.9808
-      }
-    ],
+    "IGPM": [],
     "CDI": [
       {
         "data": "2025-07-21",
@@ -12156,7 +12103,7 @@
           "score_catboost": 91.10878661087865,
           "score_ensemble": 96.65271966527196,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.5767991913461935,
+          "retorno_esperado_30d": 0.5767991913461934,
           "modelo_lider": "Extra Trees",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 5645 linhas e 19 datas.",
@@ -12501,7 +12448,7 @@
           "score_catboost": 85.4602510460251,
           "score_ensemble": 87.33437935843794,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.22609949540984953,
+          "retorno_esperado_30d": 0.2260994954098495,
           "modelo_lider": "Extra Trees",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 5645 linhas e 19 datas.",
@@ -12524,7 +12471,7 @@
           "score_catboost": 63.85983263598326,
           "score_ensemble": 87.31694560669456,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.21102690838095994,
+          "retorno_esperado_30d": 0.21102690838095992,
           "modelo_lider": "Extra Trees",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 5645 linhas e 19 datas.",
@@ -12639,7 +12586,7 @@
           "score_catboost": 76.15062761506276,
           "score_ensemble": 85.57357043235703,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.220477693935504,
+          "retorno_esperado_30d": 0.22047769393550398,
           "modelo_lider": "Extra Trees",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 5645 linhas e 19 datas.",
@@ -12938,7 +12885,7 @@
           "score_catboost": 30.543933054393307,
           "score_ensemble": 80.33472803347281,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.2126645708384531,
+          "retorno_esperado_30d": 0.21266457083845305,
           "modelo_lider": "Extra Trees",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 5645 linhas e 19 datas.",
@@ -13216,7 +13163,7 @@
           "score_catboost": 100.0,
           "score_ensemble": 98.83040935672516,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.1109930401502352,
+          "retorno_esperado_30d": 0.11099304015023519,
           "modelo_lider": "Random Forest",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -13239,7 +13186,7 @@
           "score_catboost": 99.41520467836257,
           "score_ensemble": 96.75113710201428,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.025705061784117477,
+          "retorno_esperado_30d": 0.02570506178411747,
           "modelo_lider": "CatBoost",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -13584,7 +13531,7 @@
           "score_catboost": 93.17738791423001,
           "score_ensemble": 89.92852501624431,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.0008417169983648837,
+          "retorno_esperado_30d": 0.000841716998364884,
           "modelo_lider": "CatBoost",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -13676,7 +13623,7 @@
           "score_catboost": 95.12670565302143,
           "score_ensemble": 89.2787524366472,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.0016108718899486608,
+          "retorno_esperado_30d": 0.0016108718899486613,
           "modelo_lider": "Ridge",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -13722,7 +13669,7 @@
           "score_catboost": 81.87134502923976,
           "score_ensemble": 88.92137751786873,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 7.78927907764018e-05,
+          "retorno_esperado_30d": 7.789279077640209e-05,
           "modelo_lider": "Ridge",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -13791,7 +13738,7 @@
           "score_catboost": 95.51656920077973,
           "score_ensemble": 88.23911630929173,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.0002393415380702521,
+          "retorno_esperado_30d": 0.00023934153807025267,
           "modelo_lider": "CatBoost",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -13814,7 +13761,7 @@
           "score_catboost": 93.76218323586744,
           "score_ensemble": 88.14165042235219,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": -0.0006064509748694597,
+          "retorno_esperado_30d": -0.0006064509748694592,
           "modelo_lider": "Extra Trees",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -13837,7 +13784,7 @@
           "score_catboost": 94.73684210526315,
           "score_ensemble": 88.02794022092267,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": 0.0002118824100214182,
+          "retorno_esperado_30d": 0.00021188241002141877,
           "modelo_lider": "CatBoost",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -14113,7 +14060,7 @@
           "score_catboost": 83.4307992202729,
           "score_ensemble": 85.99740090968162,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": -0.0018347318394181338,
+          "retorno_esperado_30d": -0.0018347318394181349,
           "modelo_lider": "Extra Trees",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -14274,7 +14221,7 @@
           "score_catboost": 91.81286549707602,
           "score_ensemble": 85.25016244314489,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": -0.0014182825027913458,
+          "retorno_esperado_30d": -0.0014182825027913451,
           "modelo_lider": "CatBoost",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
@@ -14320,7 +14267,7 @@
           "score_catboost": 89.27875243664717,
           "score_ensemble": 84.7953216374269,
           "retorno_esperado_7d": null,
-          "retorno_esperado_30d": -0.0014798651298071409,
+          "retorno_esperado_30d": -0.0014798651298071396,
           "modelo_lider": "XGBoost",
           "status_modelos": "Ativo",
           "motivo_status": "Modelos treinados com 9516 linhas e 19 datas.",
