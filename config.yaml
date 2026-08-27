@@ -15,9 +15,26 @@ paths:
 
 scraper:
   url: "https://www.fundsexplorer.com.br/ranking"
-  acoes_url: "https://www.investsite.com.br/seleciona_acoes.php"
-  download_dir: "data/input/acoes_download"
+  # Ações: consulta semanal a uma tabela pública, sem conta ou chave.
+  acoes_source: "fundamentus"
+  fundamentus_url: "https://www.fundamentus.com.br/resultado.php"
+  fundamentus_timeout: 30
+
+  # Alternativa opcional para quem possuir plano Pro da brapi. Não é usada
+  # enquanto acoes_source estiver como "fundamentus".
+  brapi_base_url: "https://brapi.dev/api"
+  brapi_token: "${BRAPI_TOKEN}"
+  brapi_timeout: 30
+  # O plano Pro permite os fundamentos; eles são cacheados
+  # por 30 dias e a cotação é atualizada diariamente pela listagem pública.
+  brapi_batch_size: 10
+  brapi_page_size: 100
+  brapi_workers: 6
+  brapi_fundamentals_ttl_days: 30
+  brapi_cache_file: "data/lake/brapi_acoes_fundamentals.parquet"
   wait_timeout: 20
+  page_load_timeout: 45
+  download_timeout: 45
   sleep_after_load: 4
   cookie_button_id: "didomi-notice-agree-button"
 

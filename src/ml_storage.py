@@ -12,15 +12,25 @@ def _prepare_for_parquet(df: pd.DataFrame) -> pd.DataFrame:
     Prepara o DataFrame para salvamento em Parquet.
 
     Algumas fontes podem trazer colunas object com tipos mistos, por exemplo
-    número + texto de rodapé/legenda. O PyArrow não aceita esse tipo misto.
-    Para não perder o histórico, convertemos apenas colunas object para string.
-    Colunas numéricas já normalizadas permanecem numéricas.
+    números gravados como texto em snapshots antigos. O PyArrow não aceita
+    misturar texto e número na mesma coluna. Quando todos os valores presentes
+    de uma coluna object podem ser convertidos, preservamos o tipo numérico;
+    caso contrário, armazenamos como string.
     """
     prepared = df.copy()
 
     for col in prepared.columns:
-        if prepared[col].dtype == "object":
-            prepared[col] = prepared[col].astype("string")
+        if prepared[col].dtype != "object":
+            continue
+
+        values = prepared[col]
+        numeric = pd.to_numeric(values, errors="coerce")
+        has_value = values.notna() & values.astype(str).str.strip().ne("")
+
+        if numeric[has_value].notna().all():
+            prepared[col] = numeric
+        else:
+            prepared[col] = values.astype("string")
 
     return prepared
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Stock Screener · Dashboard</title>
-  <meta name="description" content="Dashboard diário de FIIs e Ações BR com score quantitativo, indicadores e backtest." />
+  <meta name="description" content="Dashboard semanal de FIIs e Ações BR com score quantitativo, indicadores e backtest." />
   <meta name="theme-color" content="#0b1020" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -951,7 +951,7 @@
     <section class="hero">
       <div class="hero-grid">
         <div>
-          <div class="eyebrow">Boletim diário · filtro quantitativo</div>
+          <div class="eyebrow">Boletim semanal · filtro quantitativo</div>
           <h1>Rank de ativos BR</h1>
           <p>Top 20 FIIs e Ações BR, score multifatorial, comparação contra benchmarks e leitura visual das principais métricas do dia.</p>
           <div class="author-row">Criado por: <a href="https://www.linkedin.com/in/italo-petricioni-statonato/" target="_blank" rel="noopener">Ítalo Petricioni Statonato</a> <button id="aboutItaloBtn" class="about-toggle" type="button">Sobre Ítalo</button></div>
@@ -1012,11 +1012,11 @@
   <p id="ml-confidence-message" style="margin:12px 0 0; color:#94a3b8; font-size:.92rem;"></p>
 </div>
 <h3>Ranking dos modelos</h3>
-        <p>Resultado diário por ativo, com Score Top, modelos de árvore, regressão, boosting e ensemble. O ranking oficial ainda não muda automaticamente.</p>
+        <p>Resultado semanal por ativo, com Score Top, modelos de árvore, regressão, boosting e ensemble. O ranking oficial ainda não muda automaticamente. Retornos projetados são experimentais e podem ter outliers em ativos de baixa cotação.</p>
         <div class="mini-note" id="mlStatusNote"></div>
         <div class="rec-table-wrap">
           <table class="table rec-table">
-            <thead><tr><th>Rank</th><th>Tipo</th><th>Ativo</th><th>Score Top</th><th>Ridge</th><th>Random Forest</th><th>Extra Trees</th><th>XGBoost</th><th>LightGBM</th><th>CatBoost</th><th>Ensemble</th><th>Modelo líder</th><th>Ret. esp.</th><th>Status</th></tr></thead>
+            <thead><tr><th>Rank</th><th>Tipo</th><th>Ativo</th><th>Score Top</th><th>Ridge</th><th>Random Forest</th><th>Extra Trees</th><th>XGBoost</th><th>LightGBM</th><th>CatBoost</th><th>Ensemble</th><th>Modelo líder</th><th>Ret. exp.</th><th>Status</th></tr></thead>
             <tbody id="mlRankingBody"></tbody>
           </table>
         </div>
@@ -1039,7 +1039,7 @@
       <div class="section-head"><div><h2>Indicadores</h2><p class="desc">Mercado, juros, inflação e câmbio em blocos separados para leitura mais limpa.</p></div></div>
       <div class="charts">
         <div class="panel"><h3>Mercado · IBOV e IFIX</h3><p>Índices em para comparação visual.</p><div class="chart-box"><canvas id="marketChart"></canvas></div><div class="chart-explain"><b>Como ler:</b> significa que os dois índices partem do mesmo valor inicial. Assim, o gráfico compara crescimento relativo, e não pontos absolutos do índice.</div></div>
-        <div class="panel"><h3>Macro · IPCA, IGP-M e Selic</h3><p>Séries disponíveis no payload diário.</p><div class="chart-box"><canvas id="macroChart"></canvas></div><div class="chart-explain"><b>Como ler:</b> essas linhas ajudam a entender o pano de fundo econômico. Juros e inflação afetam o custo de oportunidade, dividendos, FIIs e valuation das ações.</div></div>
+        <div class="panel"><h3>Macro · IPCA, IGP-M e Selic</h3><p>Séries disponíveis no payload de cada execução.</p><div class="chart-box"><canvas id="macroChart"></canvas></div><div class="chart-explain"><b>Como ler:</b> essas linhas ajudam a entender o pano de fundo econômico. Juros e inflação afetam o custo de oportunidade, dividendos, FIIs e valuation das ações.</div></div>
         <div class="panel wide"><h3>Carteira FIIs Top 20 ·</h3><p>Retorno acumulado da carteira real registrada no histórico contra IFIX, IMOB e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyFiisChart"></canvas></div><div class="mini-note" id="proxyFiisNote"></div><div class="chart-explain"><b>Como ler:</b> IFIX representa fundos imobiliários, IMOB representa o setor imobiliário listado e CDI representa a referência de renda fixa. A carteira precisa superar essas linhas para mostrar valor incremental.</div></div>
         <div class="panel wide"><h3>Carteira Ações Top 20 ·</h3><p>Retorno acumulado da carteira real registrada no histórico contra IBOV, IPCA e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyAcoesChart"></canvas></div><div class="mini-note" id="proxyAcoesNote"></div><div class="chart-explain"><b>Como ler:</b> IBOV mede a bolsa brasileira, IPCA mede inflação e CDI mede a alternativa conservadora. O objetivo é ver se o ranking de ações compensa o risco assumido.</div></div>
         <div class="panel wide"><h3>Câmbio e cripto</h3><p>Valores de referência coletados via API gratuita.</p><div id="fxGrid" class="kpis" style="margin:0;grid-template-columns:repeat(4,1fr)"></div></div>
@@ -1100,7 +1100,7 @@
         </div>
         <div class="info-card">
           <h3>Fontes de dados</h3>
-          <table class="table compact-source-table"><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Investsite</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio e cripto</td><td>AwesomeAPI</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table>
+          <table class="table compact-source-table"><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Fundamentus (tabela pública)</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio e cripto</td><td>AwesomeAPI</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table>
         </div>
         <div class="info-card">
           <h3>Sobre o projeto</h3>
@@ -1111,7 +1111,7 @@
     </section>
   </main>
 
-  <footer><div class="wrap">Atualizado automaticamente em dias úteis · GitHub Pages · dados públicos e APIs gratuitas</div></footer>
+  <footer><div class="wrap">Atualizado automaticamente uma vez por semana · GitHub Pages · dados públicos e APIs gratuitas</div></footer>
 
   <script>
     const state = { data:null, charts:{}, allDates:[], selectedDate:null, kpiWindow:'WoW', snapshotCache:{}, kpiHistoryLoading:false, chartWindows:{} };
@@ -1120,7 +1120,7 @@
     const fmtNum = (v,d=2)=> v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{maximumFractionDigits:d,minimumFractionDigits:d});
     const fmtMoney = v => v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{style:'currency',currency:'BRL',maximumFractionDigits:2});
     const fmtPct = v => v==null || Number.isNaN(Number(v)) ? '—' : (Number(v)*100).toLocaleString(BR,{maximumFractionDigits:2,minimumFractionDigits:2})+'%';
-    const fmtBig = v => { if(v==null || Number.isNaN(Number(v))) return '—'; const n=Number(v); if(Math.abs(n)>=1e9) return (n/1e9).toLocaleString(BR,{maximumFractionDigits:1})+' bi'; if(Math.abs(n)>=1e6) return (n/1e6).toLocaleString(BR,{maximumFractionDigits:1})+' mi'; if(Math.abs(n)>=1e3) return (n/1e3).toLocaleString(BR,{maximumFractionDigits:1})+' mil'; return fmtNum(n,0); };
+    const fmtBig = v => { if(v==null || Number.isNaN(Number(v))) return '—'; const n=Number(v); if(Math.abs(n)>=1e9) return (n/1e9).toLocaleString(BR,{maximumFractionDigits:1})+' bi'; if(Math.abs(n)>=1e6) return (n/1e6).toLocaleString(BR,{maximumFractionDigits:1})+' mi'; if(Math.abs(n)>=1e3) return (n/1e3).toLocaleString(BR,{maximumFractionDigits:0})+'k'; return fmtNum(n,0); };
     const scoreOf = r => Number(r.score ?? r.Score ?? 0);
     const avg = arr => arr.length ? arr.reduce((a,b)=>a+Number(b||0),0)/arr.length : null;
     const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -1526,7 +1526,7 @@ function renderKpis(){
     function trendIcon(rec,col){ const t=rec.tendencias?.[col]; if(!t) return ''; const icon=t==='subindo'?'▲':t==='caindo'?'▼':'●'; return `<span class="trend ${t}" title="${t}">${icon}</span>`; }
     function scoreBar(s){ const w=Math.max(0,Math.min(100,Number(s||0))); return `<div class="score-wrap"><div class="score-line"><span>Score</span><b class="mono">${fmtNum(s,1)}</b></div><div class="bar"><span style="width:${w}%"></span></div></div>`; }
     function metric(label,value,trend=''){ return `<div class="metric"><span>${label}</span><b>${value}${trend}</b></div>`; }
-    function cardFii(r,i){ return `<article class="asset-card fii"><div class="asset-top"><div><div class="ticker">${r.FUNDOS||'—'}</div><div class="name">${r.SETOR||'Setor não informado'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['PREÇO ATUAL (R$)']))}${metric('DY',fmtPct(r['DIVIDEND YIELD']),trendIcon(r,'DIVIDEND YIELD'))}${metric('P/VP',fmtNum(r['P/VP'],2),trendIcon(r,'P/VP'))}${metric('Liquidez',fmtBig(r['LIQUIDEZ DIÁRIA (R$)']),trendIcon(r,'LIQUIDEZ DIÁRIA (R$)'))}</div></article>`; }
+    function cardFii(r,i){ return `<article class="asset-card fii"><div class="asset-top"><div><div class="ticker">${r.FUNDOS||'—'}</div><div class="name">${r.SETOR||'Setor não informado'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['PREÇO ATUAL (R$)']))}${metric('DY',fmtPct(r['DIVIDEND YIELD']),trendIcon(r,'DIVIDEND YIELD'))}${metric('P/VP',fmtNum(r['P/VP'],2),trendIcon(r,'P/VP'))}${metric('Liq.',fmtBig(r['LIQUIDEZ DIÁRIA (R$)']),trendIcon(r,'LIQUIDEZ DIÁRIA (R$)'))}</div></article>`; }
     function cardAcao(r,i){ return `<article class="asset-card acao"><div class="asset-top"><div><div class="ticker">${r['Ação']||'—'}</div><div class="name">${r.Empresa||'Empresa não informada'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['Preço']))}${metric('DY',fmtPct(r['Dividend Yield']),trendIcon(r,'Dividend Yield'))}${metric('P/VPA',fmtNum(r['Preço/VPA'],2),trendIcon(r,'Preço/VPA'))}${metric('ROA',fmtPct(r.ROA),trendIcon(r,'ROA'))}</div></article>`; }
     function renderCards(type){
       const input=document.getElementById(type==='fiis'?'searchFiis':'searchAcoes');
@@ -2073,18 +2073,22 @@ const CHART_PERIODS = {
     const valid = Number(conf.janelas_validas_max || 0);
     const hasValidWindow = Number.isFinite(valid) && valid > 0;
     const missing = estimateMissingDays(conf);
+    const historyReady = Number(conf.maturidade_dados_pct) >= 100;
 
-    const targetCardValue = hasValidWindow ? `${valid}/1` : "0/1";
     const targetSub = hasValidWindow
       ? "janela mínima atingida"
       : (missing != null && missing > 0
           ? `faltam cerca de ${missing} dias de histórico`
           : "aguardando preço válido após 30 dias");
 
+    const historyCard = historyReady
+      ? card("Base histórica", "Pronta", "Histórico suficiente para validação")
+      : card("Maturidade dos dados", fmtPct(conf.maturidade_dados_pct), `${conf.dias_historico || 0}/${horizon} dias de histórico`);
+
     grid.innerHTML = [
-      card("Maturidade dos dados", fmtPct(conf.maturidade_dados_pct), `${conf.dias_historico || 0}/${horizon} dias de histórico`),
+      historyCard,
       card("Confiabilidade preditiva", hasValidWindow ? fmtPct(conf.confiabilidade_preditiva_pct) : "0,0%", hasValidWindow ? (conf.nivel_confiabilidade || "Inicial") : "ainda não mensurável"),
-      card("Janela 30d realizada", targetCardValue, targetSub),
+      card("Validação 30d", hasValidWindow ? "Ativa" : "Aguardando", targetSub),
       card("Modelo mais confiável", leader && hasValidWindow ? `${leader.Modelo} · ${leader.Tipo}` : "—", leader && hasValidWindow ? fmtPct(leader.Confiabilidade_Pct) : "aguardando validação")
     ].join("");
 

@@ -43,9 +43,7 @@ def expand_env(value: Any) -> Any:
 def load_config(path: str = "config.yaml") -> dict:
     """Carrega o config.yaml já com as variáveis de ambiente resolvidas."""
     with open(path, encoding="utf-8") as f:
-        cfg = yaml.safe_load(f) or {}
-
-    cfg["paths"] = expand_env(cfg.get("paths", {}))
+        cfg = expand_env(yaml.safe_load(f) or {})
 
     destino = cfg["paths"].get("onedrive_output_dir")
     if not destino:

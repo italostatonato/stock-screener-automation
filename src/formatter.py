@@ -126,7 +126,7 @@ def _add_premissas(wb, cfg: dict, data_hoje: str, n_fiis: int, n_acoes: int):
         (None, None),
         ("── FONTES DE DADOS ──", None),
         ("FIIs",      "fundsexplorer.com.br/ranking"),
-        ("Ações BR",  "investsite.com.br/seleciona_acoes.php"),
+        ("Ações BR",  "fundamentus.com.br/resultado.php (tabela pública)"),
         ("Indicadores de mercado", "Banco Central do Brasil (SGS) + AwesomeAPI"),
         (None, None),
         ("── METODOLOGIA: FILTRO EM TRÊS CAMADAS ──", None),

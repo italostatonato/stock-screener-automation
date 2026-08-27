@@ -14,17 +14,17 @@ Screener automático de **FIIs** e **ações brasileiras** com coleta de dados p
 
 ## Visão geral
 
-O projeto roda automaticamente em dias úteis e gera um ranking quantitativo dos ativos mais bem posicionados dentro do universo coletado.
+O projeto roda automaticamente uma vez por semana e gera um ranking quantitativo dos ativos mais bem posicionados dentro do universo coletado.
 
 O fluxo atual combina:
 
-- coleta diária de FIIs no Fundsexplorer;
-- coleta diária de ações no Investsite;
+- coleta semanal de FIIs no Fundsexplorer;
+- coleta semanal de ações na tabela pública do Fundamentus;
 - limpeza de números, percentuais e moedas no formato brasileiro;
 - score de 0 a 100 calculado no universo completo;
 - filtro em duas camadas: critérios mínimos + quartis móveis;
 - Top 20 FIIs e Top 20 ações;
-- Excel diário formatado;
+- Excel semanal formatado;
 - dashboard web com rankings, recorrência, indicadores, backtests e modelos ML;
 - histórico consolidado em Parquet;
 - camada incremental em `data/lake/snapshots/YYYY-MM-DD/`;
@@ -43,7 +43,7 @@ requirements.txt                Dependências Python
 
 src/
   config.py                     Carrega config.yaml com caminhos portáveis
-  scraper.py                    Coleta FIIs e ações via Selenium
+  scraper.py                    Coleta FIIs via Selenium e ações por tabela pública
   cleaner.py                    Limpeza e normalização de dados financeiros
   filters.py                    Filtros fixos e adaptativos por quartis
   scorer.py                     Score multifatorial 0-100
@@ -82,12 +82,12 @@ scripts/
 
 tests/                          Testes automatizados
 .github/workflows/
-  run_screener.yml              Automação diária via GitHub Actions
+  run_screener.yml              Automação semanal via GitHub Actions
 ```
 
 ---
 
-## Pipeline diário
+## Pipeline semanal
 
 1. Carrega `config.yaml` e configura logs.
 2. Coleta FIIs ou usa arquivo local quando configurado.
@@ -96,7 +96,7 @@ tests/                          Testes automatizados
 5. Aplica filtros fixos e filtros por quartil.
 6. Atualiza histórico Excel do Top 20 FIIs.
 7. Salva universo FIIs em `data/ml/historico_fiis.parquet`.
-8. Coleta ações no Investsite.
+8. Coleta ações na tabela pública do Fundamentus.
 9. Calcula score ações no universo completo.
 10. Aplica filtros fixos e filtros por quartil.
 11. Atualiza histórico Excel do Top 20 ações.
@@ -107,7 +107,7 @@ tests/                          Testes automatizados
 16. Gera datasets derivados com targets futuros.
 17. Executa modelos ML em modo sombra.
 18. Gera snapshot Excel em `data/output/`.
-19. Exporta JSON diário em `docs/data/YYYY-MM-DD.json`.
+19. Exporta JSON da execução em `docs/data/YYYY-MM-DD.json`.
 20. Reconstrói `docs/data/index.json` com snapshots existentes.
 21. Executa checagens de qualidade.
 22. Copia o Excel para OneDrive local quando configurado.
@@ -228,8 +228,8 @@ No começo, os modelos podem aparecer como **Aquecendo**, porque ainda faltam ja
 
 O workflow `.github/workflows/run_screener.yml`:
 
-- roda em dias úteis;
-- usa cron `0 11 * * 1-5`, equivalente a **08h BRT**;
+- roda uma vez por semana, às segundas-feiras;
+- usa cron `0 11 * * 1`, equivalente a **08h BRT**;
 - permite execução manual por `workflow_dispatch`;
 - usa cache de `pip`;
 - roda testes antes do screener;
@@ -285,6 +285,25 @@ export SCREENER_EXCEL_OUTPUT_DIR="$HOME/OneDrive/Tabelas Acoes/Recomendacoes"
 ```
 
 Sem a variável, a cópia local é pulada e o Excel continua em `data/output/`.
+
+### Fonte de ações sem custo
+
+Por padrão, as ações são coletadas da tabela pública do
+[Fundamentus](https://www.fundamentus.com.br/resultado.php), em **uma única
+requisição semanal**, sem conta, token ou custo. Ela fornece cotação,
+múltiplos, margens, ROIC/ROE, liquidez de dois meses, patrimônio, dívida
+líquida e crescimento de receita.
+
+O projeto calcula o ROA por `P/Ativo ÷ P/L` e o valor de mercado por
+`P/VP × Patrimônio Líquido`. A coluna legada
+`Passivo/Patrimônio Líquido` passa a receber `Dívida Líquida/Patrimônio`, que
+é o indicador efetivamente disponibilizado pela fonte; ela não participa do
+score atual. Não é necessário configurar `BRAPI_TOKEN` nem mantê-lo nos
+Secrets do GitHub para a execução padrão.
+
+A brapi continua disponível apenas como alternativa opcional: defina
+`acoes_source: "brapi"` no `config.yaml` e forneça um token de plano Pro, caso
+um dia queira voltar a essa fonte.
 
 ---
 

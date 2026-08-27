@@ -29,11 +29,14 @@ def test_expand_env_recursivo(monkeypatch):
 
 def test_load_config_expande_paths(tmp_path, monkeypatch):
     monkeypatch.setenv("SCREENER_EXCEL_OUTPUT_DIR", "D:/Saida")
+    monkeypatch.setenv("BRAPI_TOKEN", "token-de-teste")
     cfg_file = tmp_path / "config.yaml"
     cfg_file.write_text(
         'paths:\n'
         '  data_dir: "data"\n'
         '  onedrive_output_dir: "${SCREENER_EXCEL_OUTPUT_DIR}"\n'
+        'scraper:\n'
+        '  brapi_token: "${BRAPI_TOKEN}"\n'
         'filters:\n'
         '  top_n: 20\n',
         encoding="utf-8",
@@ -43,7 +46,7 @@ def test_load_config_expande_paths(tmp_path, monkeypatch):
 
     assert cfg["paths"]["onedrive_output_dir"] == "D:/Saida"
     assert cfg["paths"]["data_dir"] == "data"
-    # Seções fora de paths seguem intocadas.
+    assert cfg["scraper"]["brapi_token"] == "token-de-teste"
     assert cfg["filters"]["top_n"] == 20
 
 

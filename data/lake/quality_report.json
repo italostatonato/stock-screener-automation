@@ -1,81 +1,86 @@
 {
-  "generated_at": "2026-08-20T21:09:56",
-  "status": "ok",
+  "generated_at": "2026-08-27T08:36:07",
+  "status": "warn",
   "checks": [
     {
       "name": "lake_snapshots",
       "status": "ok",
-      "detail": "36 snapshots encontrados"
+      "detail": "41 snapshots encontrados"
+    },
+    {
+      "name": "known_incomplete_snapshots",
+      "status": "warn",
+      "detail": "snapshots históricos preservados sem universo completo: {'2026-08-21': 'A coleta de ações retornou vazia e a versão anterior publicou somente FIIs.', '2026-08-24': 'A coleta de ações retornou vazia e a versão anterior publicou somente FIIs.', '2026-08-25': 'A coleta de ações retornou vazia e a versão anterior publicou somente FIIs.'}"
     },
     {
       "name": "lake_manifest",
       "status": "ok",
-      "detail": "latest=2026-08-20"
+      "detail": "latest=2026-08-27"
     },
     {
-      "name": "snapshot_2026-08-14_files",
+      "name": "snapshot_2026-08-21_files",
       "status": "ok",
       "detail": "ok"
     },
     {
-      "name": "snapshot_2026-08-17_files",
+      "name": "snapshot_2026-08-24_files",
       "status": "ok",
       "detail": "ok"
     },
     {
-      "name": "snapshot_2026-08-18_files",
+      "name": "snapshot_2026-08-25_files",
       "status": "ok",
       "detail": "ok"
     },
     {
-      "name": "snapshot_2026-08-19_files",
+      "name": "snapshot_2026-08-26_files",
       "status": "ok",
       "detail": "ok"
     },
     {
-      "name": "snapshot_2026-08-20_files",
+      "name": "snapshot_2026-08-27_files",
       "status": "ok",
       "detail": "ok"
     },
     {
-      "name": "C:/Users/guilh/Desktop/stock-screener-automation/data/ml/historico_fiis.parquet",
+      "name": "data/ml/historico_fiis.parquet",
       "status": "ok",
-      "detail": "19492 linhas"
+      "detail": "22242 linhas"
     },
     {
-      "name": "C:/Users/guilh/Desktop/stock-screener-automation/data/ml/historico_acoes.parquet",
+      "name": "data/ml/historico_acoes.parquet",
       "status": "ok",
-      "detail": "10867 linhas"
+      "detail": "12779 linhas"
     },
     {
-      "name": "C:/Users/guilh/Desktop/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
+      "name": "data/backtest/carteiras_historicas.parquet",
       "status": "ok",
-      "detail": "1440 linhas"
+      "detail": "1580 linhas"
     },
     {
-      "name": "C:/Users/guilh/Desktop/stock-screener-automation/data/ml/dataset_fiis.parquet",
+      "name": "data/ml/dataset_fiis.parquet",
       "status": "ok",
-      "detail": "18153 linhas"
+      "detail": "20718 linhas"
     },
     {
-      "name": "C:/Users/guilh/Desktop/stock-screener-automation/data/ml/dataset_acoes.parquet",
+      "name": "data/ml/dataset_acoes.parquet",
       "status": "ok",
-      "detail": "10867 linhas"
+      "detail": "12779 linhas"
     },
     {
-      "name": "C:/Users/guilh/Desktop/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
+      "name": "data/ml/model_predictions_fiis.parquet",
       "status": "ok",
-      "detail": "8053 linhas"
+      "detail": "10618 linhas"
     },
     {
-      "name": "C:/Users/guilh/Desktop/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
+      "name": "data/ml/model_predictions_acoes.parquet",
       "status": "ok",
-      "detail": "4839 linhas"
+      "detail": "6751 linhas"
     },
     {
-      "name": "C:/Users/guilh/Desktop/stock-screener-automation/data/ml/model_performance.parquet",
+      "name": "data/ml/model_performance.parquet",
       "status": "ok",
-      "detail": "2 linhas"
+      "detail": "16 linhas"
     },
     {
       "name": "duplicatas_historico_fiis.parquet",
@@ -114,8 +119,8 @@
     },
     {
       "name": "carteira_cobertura_tipos",
-      "status": "ok",
-      "detail": "últimas 5 datas com FII e ACAO"
+      "status": "warn",
+      "detail": "datas sem os dois tipos: {'2026-08-21': ['FII'], '2026-08-24': ['FII'], '2026-08-25': ['FII']}"
     },
     {
       "name": "carteira_preco_entrada",
@@ -125,12 +130,12 @@
     {
       "name": "dashboard_index",
       "status": "ok",
-      "detail": "48 datas no index.json"
+      "detail": "53 datas no index.json"
     },
     {
       "name": "dashboard_latest_vs_lake",
       "status": "ok",
-      "detail": "dashboard_latest=2026-08-20, lake_latest=2026-08-20"
+      "detail": "dashboard_latest=2026-08-27, lake_latest=2026-08-27"
     }
   ]
 }

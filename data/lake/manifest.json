@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-08-20T11:24:58",
-  "latest": "2026-08-20",
-  "total_snapshots": 36,
+  "updated_at": "2026-08-27T08:36:07",
+  "latest": "2026-08-27",
+  "total_snapshots": 41,
   "snapshots": [
     {
       "data_execucao": "2026-07-04",
@@ -1478,6 +1478,211 @@
         }
       ],
       "total_rows": 912
+    },
+    {
+      "data_execucao": "2026-08-21",
+      "files": [
+        {
+          "name": "fii_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-21/fii_universe.parquet",
+          "rows": 550,
+          "columns": 33,
+          "sha256": "0ba5881fed76ca1b8415199460b2b198ca72d72edbb1f628664a832a88878714"
+        },
+        {
+          "name": "acoes_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-21/acoes_universe.parquet",
+          "rows": 0,
+          "columns": 1,
+          "sha256": "9c589dd07a77648011c3f8ac1521ca7f10a454b41e1cf748750443ee20043e2f"
+        },
+        {
+          "name": "top_fiis.parquet",
+          "path": "data/lake/snapshots/2026-08-21/top_fiis.parquet",
+          "rows": 20,
+          "columns": 32,
+          "sha256": "efaa4349c815b59f794ed93c6e1f3eaf381d7365a58e90bb462f47a3697aac5c"
+        },
+        {
+          "name": "top_acoes.parquet",
+          "path": "data/lake/snapshots/2026-08-21/top_acoes.parquet",
+          "rows": 0,
+          "columns": 0,
+          "sha256": "2e836d6adff325aede8989ffcbc87094563445f1d0a4ba61dd92764ecca42844"
+        },
+        {
+          "name": "carteira.parquet",
+          "path": "data/lake/snapshots/2026-08-21/carteira.parquet",
+          "rows": 20,
+          "columns": 7,
+          "sha256": "388276cbdc2a0314c9c02ac1f5f04287bde797ce95a932f1fd4f6da529618013"
+        }
+      ],
+      "total_rows": 590
+    },
+    {
+      "data_execucao": "2026-08-24",
+      "files": [
+        {
+          "name": "fii_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-24/fii_universe.parquet",
+          "rows": 550,
+          "columns": 33,
+          "sha256": "19c54a6b20fd48544f0b1a801b7017eef57975ee7a9d35f1365ae13b9a10ab01"
+        },
+        {
+          "name": "acoes_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-24/acoes_universe.parquet",
+          "rows": 0,
+          "columns": 1,
+          "sha256": "9c589dd07a77648011c3f8ac1521ca7f10a454b41e1cf748750443ee20043e2f"
+        },
+        {
+          "name": "top_fiis.parquet",
+          "path": "data/lake/snapshots/2026-08-24/top_fiis.parquet",
+          "rows": 20,
+          "columns": 32,
+          "sha256": "1eda03fbe876018829da010d82fa1fdc1b3d4e61f5dc1851c2d1e97e6a01a2b8"
+        },
+        {
+          "name": "top_acoes.parquet",
+          "path": "data/lake/snapshots/2026-08-24/top_acoes.parquet",
+          "rows": 0,
+          "columns": 0,
+          "sha256": "2e836d6adff325aede8989ffcbc87094563445f1d0a4ba61dd92764ecca42844"
+        },
+        {
+          "name": "carteira.parquet",
+          "path": "data/lake/snapshots/2026-08-24/carteira.parquet",
+          "rows": 20,
+          "columns": 7,
+          "sha256": "535f83cb55e8af2046c2e5187f44cfd26223fa0d76c06046e28e08a0448275ce"
+        }
+      ],
+      "total_rows": 590
+    },
+    {
+      "data_execucao": "2026-08-25",
+      "files": [
+        {
+          "name": "fii_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-25/fii_universe.parquet",
+          "rows": 550,
+          "columns": 33,
+          "sha256": "3ad786b7979c181b2be80176a0192b5f3d4e41f591303c70e88bfa2d0ae89f05"
+        },
+        {
+          "name": "acoes_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-25/acoes_universe.parquet",
+          "rows": 0,
+          "columns": 1,
+          "sha256": "9c589dd07a77648011c3f8ac1521ca7f10a454b41e1cf748750443ee20043e2f"
+        },
+        {
+          "name": "top_fiis.parquet",
+          "path": "data/lake/snapshots/2026-08-25/top_fiis.parquet",
+          "rows": 20,
+          "columns": 32,
+          "sha256": "0421dbbf39fa8fc14110c8570c7038ec9ae97e90d514717c8c5243ce432ad514"
+        },
+        {
+          "name": "top_acoes.parquet",
+          "path": "data/lake/snapshots/2026-08-25/top_acoes.parquet",
+          "rows": 0,
+          "columns": 0,
+          "sha256": "2e836d6adff325aede8989ffcbc87094563445f1d0a4ba61dd92764ecca42844"
+        },
+        {
+          "name": "carteira.parquet",
+          "path": "data/lake/snapshots/2026-08-25/carteira.parquet",
+          "rows": 20,
+          "columns": 7,
+          "sha256": "644b7f0a6bc3a6722e98eb8c55625956fc8b2fd8a7e1df1c4037b6de48c362d5"
+        }
+      ],
+      "total_rows": 590
+    },
+    {
+      "data_execucao": "2026-08-26",
+      "files": [
+        {
+          "name": "fii_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-26/fii_universe.parquet",
+          "rows": 550,
+          "columns": 33,
+          "sha256": "9d1f1fd1ac0cffcb378fca800a3011f62edccaf3bb0a9f4cd93cb7b2fe78c879"
+        },
+        {
+          "name": "acoes_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-26/acoes_universe.parquet",
+          "rows": 956,
+          "columns": 20,
+          "sha256": "e0581948ae058c56483f1b769b1bd39cd06b83e2d30975df5640dcc6bcb527da"
+        },
+        {
+          "name": "top_fiis.parquet",
+          "path": "data/lake/snapshots/2026-08-26/top_fiis.parquet",
+          "rows": 20,
+          "columns": 32,
+          "sha256": "c493f1302020072f3171b799c546433d80d4ca8e0ee8ddf79873316bf13ef613"
+        },
+        {
+          "name": "top_acoes.parquet",
+          "path": "data/lake/snapshots/2026-08-26/top_acoes.parquet",
+          "rows": 20,
+          "columns": 19,
+          "sha256": "d88193355281c439ea81bbd45c0d8322593d544ec85205f6744706be1a1b71f4"
+        },
+        {
+          "name": "carteira.parquet",
+          "path": "data/lake/snapshots/2026-08-26/carteira.parquet",
+          "rows": 40,
+          "columns": 6,
+          "sha256": "c2251d07b5dbbaefde34b947c7ffce9db8848de881caaaf1f6487c4752ae8c5d"
+        }
+      ],
+      "total_rows": 1586
+    },
+    {
+      "data_execucao": "2026-08-27",
+      "files": [
+        {
+          "name": "fii_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-27/fii_universe.parquet",
+          "rows": 550,
+          "columns": 33,
+          "sha256": "ebc53be506c644c450f7d1fb5210a626c758a66333e4d96dad3400a2f2c98c81"
+        },
+        {
+          "name": "acoes_universe.parquet",
+          "path": "data/lake/snapshots/2026-08-27/acoes_universe.parquet",
+          "rows": 956,
+          "columns": 20,
+          "sha256": "caad50989b042bb0f4815a0c9eae2e31d1135443f14811191652b7703c5eca19"
+        },
+        {
+          "name": "top_fiis.parquet",
+          "path": "data/lake/snapshots/2026-08-27/top_fiis.parquet",
+          "rows": 20,
+          "columns": 32,
+          "sha256": "d5e1336f34f3bcac7c20aa89e6d8897e5d294c0fb25f9ee81f879d50e9efcc50"
+        },
+        {
+          "name": "top_acoes.parquet",
+          "path": "data/lake/snapshots/2026-08-27/top_acoes.parquet",
+          "rows": 20,
+          "columns": 19,
+          "sha256": "4342c5eff99cbee830aa7cb9ea0bac1b56d19ebc6c5ee563768e445758341c59"
+        },
+        {
+          "name": "carteira.parquet",
+          "path": "data/lake/snapshots/2026-08-27/carteira.parquet",
+          "rows": 40,
+          "columns": 6,
+          "sha256": "a7b10542ae18ce6f103e45a57ea1c47dbe596887e5de9d88919a30e048c1c3fe"
+        }
+      ],
+      "total_rows": 1586
     }
   ]
 }

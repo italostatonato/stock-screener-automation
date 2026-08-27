@@ -6,7 +6,10 @@ from datetime import datetime
 import pandas as pd
 
 from src.config import load_config
-from src.scraper import scrape_fundsexplorer, scrape_acoes_investsite
+from src.scraper import (
+    scrape_fundsexplorer,
+    scrape_acoes,
+)
 from src.cleaner import clean_and_normalize
 from src.filters import select_top_fiis, select_top_acoes
 from src.storage import save_snapshot, update_history
@@ -29,6 +32,12 @@ from src.delivery import deliver_excel
 
 def setup_logging(logs_dir: str):
     os.makedirs(logs_dir, exist_ok=True)
+
+    # No Windows o console pode iniciar em cp1252; os logs do projeto usam
+    # acentos e símbolos matemáticos. Reconfigurar evita que um simples log
+    # gere uma exceção e esconda o diagnóstico real da execução.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="backslashreplace")
 
     log_file = os.path.join(
         logs_dir,
@@ -86,13 +95,28 @@ def main():
 
     top_fiis, fii_base = select_top_fiis(df_clean, cfg)
 
+    # Um Top FII vazio não é uma carteira válida. A checagem precisa acontecer
+    # antes de qualquer escrita de histórico/snapshot para não deixar o lake
+    # com uma execução parcial que o healthcheck só detectaria depois.
+    if top_fiis is None or top_fiis.empty:
+        raise RuntimeError(
+            "select_top_fiis() retornou zero FIIs "
+            f"(bruto={len(df_raw)}, normalizado={len(df_clean)}). "
+            "Verifique a coleta e a normalização dos indicadores do FundsExplorer."
+        )
+
     top_fiis["Data Preco"] = data_hoje
 
+    # select_top_fiis() redefine o índice. Reindexar o score do universo pelo
+    # índice do Top N associa scores de ativos diferentes; o score selecionado
+    # já está presente no próprio DataFrame.
     fii_scores_top = (
-        fii_scores_universe.reindex(top_fiis.index)
-        if not top_fiis.empty
-        else pd.Series(dtype=float)
+        pd.to_numeric(top_fiis["Score"], errors="coerce")
+        .reset_index(drop=True)
     )
+
+    if fii_scores_top.notna().sum() == 0:
+        raise RuntimeError("Top FIIs possui Score, mas todos os Scores são nulos.")
 
     update_history(
         top_fiis,
@@ -134,9 +158,7 @@ def main():
     # Se o scraping ou o processamento falhar, o workflow deve falhar
     # em vez de publicar uma carteira/dashboard sem ações.
 
-    df_acoes_raw = scrape_acoes_investsite(
-        cfg["scraper"]
-    )
+    df_acoes_raw = scrape_acoes(cfg["scraper"])
 
     if df_acoes_raw is None or df_acoes_raw.empty:
         raise RuntimeError(
@@ -197,31 +219,27 @@ def main():
         len(top_actions),
     )
 
+    # O Investsite entrega a coluna acentuada ("Ação"). Mantemos as grafias
+    # compatíveis para que a deduplicação do histórico funcione em ambos os
+    # formatos de entrada.
+    acao_key = next(
+        (
+            column
+            for column in ("Ação", "Acao", "Ticker")
+            if column in top_actions.columns
+        ),
+        "Ação",
+    )
+
     update_history(
         top_actions,
         os.path.join(
             paths["old_dir"],
             "Top_20_Acoes_BRL.xlsx",
         ),
-        key_col="Acao",
+        key_col=acao_key,
     )
 
-    # Histórico ML — base processada
-    acoes_hist_source = (
-        acoes_base
-        if acoes_base is not None and not acoes_base.empty
-        else df_acoes_raw
-    )
-
-    append_historical_data(
-        df=acoes_hist_source,
-        data_execucao=data_hoje,
-        output_file=os.path.join(
-            ml_dir,
-            "historico_acoes.parquet",
-        ),
-        subset_cols=["Data_Execucao", "Ação"],
-    )
     # Histórico ML — base processada
     try:
         acoes_hist_source = (
@@ -296,16 +314,6 @@ def main():
         backtest_dir,
         "carteiras_historicas.parquet",
     )
-    
-    if top_fiis.empty:
-        raise RuntimeError(
-            "Top FIIs está vazio. Execução abortada."
-        )
-
-    if top_actions.empty:
-        raise RuntimeError(
-            "Top ações está vazio. Execução abortada."
-        )
     try:
         save_portfolio_snapshot(
             top_fiis=top_fiis,

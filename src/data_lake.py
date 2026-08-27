@@ -74,6 +74,43 @@ def _load_json(path: Path, default):
         return default
 
 
+def _known_incomplete_snapshots(data_dir: str | Path) -> dict[str, str]:
+    """Retorna datas históricas preservadas, mas sem um dos universos.
+
+    A marcação é excepcional e auditável: ela permite manter snapshots antigos
+    que não podem ser reconstituídos sem inventar cotações. Uma execução nova
+    completa remove automaticamente a marcação da própria data.
+    """
+    path = Path(data_dir) / "lake" / "known_incomplete_snapshots.json"
+    payload = _load_json(path, {})
+    dates = payload.get("dates", {}) if isinstance(payload, dict) else {}
+    return {
+        _normal_date(str(date_str)): str(reason)
+        for date_str, reason in dates.items()
+    }
+
+
+def _clear_incomplete_snapshot_marker(
+    data_dir: str | Path,
+    data_execucao: str,
+    top_fiis: pd.DataFrame | None,
+    top_acoes: pd.DataFrame | None,
+) -> None:
+    """Remove a ressalva quando uma nova execução recompõe os dois universos."""
+    if _safe_df(top_fiis).empty or _safe_df(top_acoes).empty:
+        return
+
+    path = Path(data_dir) / "lake" / "known_incomplete_snapshots.json"
+    payload = _load_json(path, {})
+    dates = payload.get("dates", {}) if isinstance(payload, dict) else {}
+    if not isinstance(dates, dict) or data_execucao not in dates:
+        return
+
+    dates.pop(data_execucao)
+    payload["dates"] = dates
+    _write_json(path, payload)
+
+
 def _write_json(path: Path, payload) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp")
@@ -160,6 +197,12 @@ def save_lake_snapshot(
         "files": [info.__dict__ for info in files],
     }
     _write_json(snap_dir / "manifest.json", manifest)
+    _clear_incomplete_snapshot_marker(
+        data_dir=data_dir,
+        data_execucao=date_str,
+        top_fiis=top_fiis,
+        top_acoes=top_acoes,
+    )
     update_lake_manifest(data_dir)
     logger.info("Snapshot incremental do data lake salvo em %s", snap_dir)
     return manifest
@@ -388,11 +431,18 @@ def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | No
         checks.append({"name": name, "status": status, "detail": detail})
 
     dates = list_lake_dates(data_dir)
+    known_incomplete = _known_incomplete_snapshots(data_dir)
     add_check(
         "lake_snapshots",
         "ok" if dates else "warn",
         f"{len(dates)} snapshots encontrados" if dates else "nenhum snapshot incremental encontrado",
     )
+    if known_incomplete:
+        add_check(
+            "known_incomplete_snapshots",
+            "warn",
+            f"snapshots históricos preservados sem universo completo: {known_incomplete}",
+        )
 
     latest_lake = dates[-1] if dates else None
     manifest = update_lake_manifest(data_dir)
@@ -480,9 +530,20 @@ def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | No
                         set(cart.loc[cart["Data_Carteira"] == data, "Tipo"].dropna())
                     )
                 }
+                incompletas_inesperadas = {
+                    date: tipos
+                    for date, tipos in incompletas.items()
+                    if date not in known_incomplete
+                }
                 add_check(
                     "carteira_cobertura_tipos",
-                    "ok" if not incompletas else "error",
+                    (
+                        "error"
+                        if incompletas_inesperadas
+                        else "warn"
+                        if incompletas
+                        else "ok"
+                    ),
                     (
                         f"últimas {len(recentes)} datas com FII e ACAO"
                         if not incompletas
@@ -499,9 +560,20 @@ def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | No
                         for data in recentes
                         if cart.loc[cart["Data_Carteira"] == data, "Preco_Entrada"].isna().any()
                     }
+                    sem_preco_inesperado = {
+                        date: total
+                        for date, total in sem_preco.items()
+                        if date not in known_incomplete
+                    }
                     add_check(
                         "carteira_preco_entrada",
-                        "ok" if not sem_preco else "error",
+                        (
+                            "error"
+                            if sem_preco_inesperado
+                            else "warn"
+                            if sem_preco
+                            else "ok"
+                        ),
                         (
                             "preço de entrada presente nas datas recentes"
                             if not sem_preco

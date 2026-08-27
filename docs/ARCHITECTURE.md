@@ -32,7 +32,7 @@ Define Top 20 FIIs e Top 20 ações usando critérios fixos e quartis móveis.
 
 Resultado:
 
-- ranking diário;
+- ranking semanal;
 - universo completo com status;
 - score por ativo.
 
@@ -89,7 +89,7 @@ Evitar dependência reversa. O dashboard nunca deve ser fonte de dados para proc
 
 A arquitetura atual escala melhor porque:
 
-- salva snapshots diários separados;
+- salva snapshots separados por execução semanal;
 - mantém manifesto global;
 - roda healthcheck;
 - permite rebuild dos derivados;

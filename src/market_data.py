@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 # Códigos das séries do Banco Central (SGS)
 BCB_SERIES = {
-    "IPCA (12 meses)": 433,       # IPCA mensal — acumulamos 12 meses
+    "IPCA (12 meses)": 13522,
     "Selic Meta": 432,
     "Dólar (PTAX venda)": 1,
     "IGP-M": 189,
@@ -26,8 +26,21 @@ def _fetch_bcb_series(codigo: int, meses: int = 13) -> pd.DataFrame:
         data = resp.json()
         df = pd.DataFrame(data)
         df["data"] = pd.to_datetime(df["data"], format="%d/%m/%Y")
-        df["valor"] = pd.to_numeric(df["valor"], errors="coerce")
-        return df
+        df["valor"] = pd.to_numeric(
+            df["valor"].astype(str).str.replace(",", ".", regex=False),
+            errors="coerce",
+        )
+        # Algumas séries podem conter observações programadas pelo provedor.
+        # Indicadores futuros distorcem o eixo do gráfico e não devem compor
+        # um snapshot histórico já publicado.
+        hoje = pd.Timestamp(datetime.today().date())
+        return (
+            df[df["data"] <= hoje]
+            .dropna(subset=["data", "valor"])
+            .sort_values("data")
+            .drop_duplicates(subset=["data"], keep="last")
+            .reset_index(drop=True)
+        )
     except Exception as e:
         logger.warning(f"Falha ao buscar série BCB {codigo}: {e}")
         return pd.DataFrame(columns=["data", "valor"])

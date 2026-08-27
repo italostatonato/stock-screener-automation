@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 
 import pandas as pd
 
@@ -158,3 +159,27 @@ def test_quality_checks_detectam_preco_entrada_ausente(tmp_path: Path):
     checks = {c["name"]: c["status"] for c in report["checks"]}
 
     assert checks["carteira_preco_entrada"] == "error"
+
+
+def test_quality_checks_sinalizam_snapshot_historico_marcado_como_incompleto(tmp_path: Path):
+    data_dir = tmp_path / "data"
+    _snapshot_com_top(data_dir, "2026-06-29")
+    rebuild_legacy_tables_from_lake(data_dir)
+
+    carteira_path = data_dir / "backtest" / "carteiras_historicas.parquet"
+    cart = pd.read_parquet(carteira_path)
+    cart = cart[cart["Tipo"] == "FII"].copy()
+    cart.to_parquet(carteira_path, index=False)
+
+    marker = data_dir / "lake" / "known_incomplete_snapshots.json"
+    marker.write_text(
+        json.dumps({"dates": {"2026-06-29": "Ações não foram coletadas."}}),
+        encoding="utf-8",
+    )
+
+    report = run_data_quality_checks(data_dir=data_dir)
+    checks = {check["name"]: check["status"] for check in report["checks"]}
+
+    assert checks["known_incomplete_snapshots"] == "warn"
+    assert checks["carteira_cobertura_tipos"] == "warn"
+    assert report["status"] == "warn"
