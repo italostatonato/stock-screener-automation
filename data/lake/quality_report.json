@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27T13:37:23",
+  "generated_at": "2026-08-27T23:32:05",
   "status": "warn",
   "checks": [
     {
@@ -45,7 +45,7 @@
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_fiis.parquet",
       "status": "ok",
-      "detail": "22242 linhas"
+      "detail": "22241 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_acoes.parquet",
@@ -60,7 +60,7 @@
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_fiis.parquet",
       "status": "ok",
-      "detail": "20718 linhas"
+      "detail": "20717 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_acoes.parquet",
