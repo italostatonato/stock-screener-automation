@@ -11,6 +11,14 @@ from src.ml_confidence import add_confidence_to_performance_records, build_ml_co
 logger = logging.getLogger(__name__)
 
 
+HYBRID_PORTFOLIO_WEIGHTS = {
+    "acoes_top20": 0.40,
+    "fiis_top20": 0.25,
+    "cdi": 0.20,
+    "ivvb11": 0.15,
+}
+
+
 def _safe(val):
     if val is None:
         return None
@@ -585,6 +593,190 @@ def _benchmark_dict_from_start(benchmarks: dict, names: list[str], start_date: p
     return out
 
 
+def _records_as_series(records: list) -> pd.Series:
+    """Normaliza uma lista ``data/valor`` como série temporal numérica."""
+    if not records:
+        return pd.Series(dtype=float)
+
+    frame = pd.DataFrame(records)
+    if not {"data", "valor"}.issubset(frame.columns):
+        return pd.Series(dtype=float)
+
+    frame["data"] = pd.to_datetime(frame["data"], errors="coerce").dt.normalize()
+    frame["valor"] = pd.to_numeric(frame["valor"], errors="coerce")
+    frame = frame.dropna(subset=["data", "valor"])
+    frame = frame[frame["valor"] > 0]
+    if frame.empty:
+        return pd.Series(dtype=float)
+
+    return (
+        frame.sort_values("data")
+        .drop_duplicates("data", keep="last")
+        .set_index("data")["valor"]
+        .astype(float)
+    )
+
+
+def _align_and_rebase_series(series: pd.Series, dates: pd.DatetimeIndex) -> list:
+    """Alinha por último valor conhecido e rebasa a série para 100."""
+    if series.empty or dates.empty:
+        return []
+
+    full_index = series.index.union(dates).sort_values()
+    aligned = series.reindex(full_index).ffill().reindex(dates)
+    if aligned.empty or aligned.isna().any() or float(aligned.iloc[0]) == 0:
+        return []
+
+    rebased = aligned / float(aligned.iloc[0]) * 100.0
+    return [
+        {"data": date.strftime("%Y-%m-%d"), "valor": round(float(value), 4)}
+        for date, value in rebased.items()
+    ]
+
+
+def _build_hybrid_portfolio(
+    acoes_series: list,
+    fiis_series: list,
+    benchmarks: dict,
+    top_acoes: pd.DataFrame,
+    top_fiis: pd.DataFrame,
+) -> dict:
+    """Monta a Carteira Híbrida Equilibrada e suas contribuições.
+
+    Os quatro componentes são rebaseados na primeira data em que todos têm
+    observação. A carteira representa uma alocação inicial nos pesos-alvo;
+    por isso o resultado total é exatamente a soma das contribuições
+    ponderadas exibidas no dashboard.
+    """
+    component_records = {
+        "acoes_top20": acoes_series,
+        "fiis_top20": fiis_series,
+        "cdi": _base100_records_from_date(benchmarks.get("CDI")),
+        "ivvb11": _base100_records_from_date(benchmarks.get("IVVB11")),
+    }
+    raw_series = {key: _records_as_series(value) for key, value in component_records.items()}
+    missing = [key for key, series in raw_series.items() if series.empty]
+    labels = {
+        "acoes_top20": "Top 20 Ações BR",
+        "fiis_top20": "Top 20 FIIs",
+        "cdi": "CDI",
+        "ivvb11": "IVVB11",
+    }
+
+    base_payload = {
+        "nome": "Carteira Híbrida Equilibrada",
+        "pesos": HYBRID_PORTFOLIO_WEIGHTS,
+        "metodologia": (
+            "Alocação inicial nos pesos-alvo, sem custos e sem rebalanceamento "
+            "intraperíodo; séries Top 20 baseadas em preços, sem reinvestir proventos."
+        ),
+    }
+    if missing:
+        return {
+            **base_payload,
+            "disponivel": False,
+            "motivo": "Sem histórico suficiente para: " + ", ".join(labels[key] for key in missing),
+            "serie": [],
+            "componentes": [],
+            "comparativos": {},
+            "ativos": {},
+        }
+
+    first_common = max(series.index.min() for series in raw_series.values())
+    last_common = min(series.index.max() for series in raw_series.values())
+    portfolio_dates = raw_series["acoes_top20"].index.union(raw_series["fiis_top20"].index)
+    portfolio_dates = portfolio_dates[(portfolio_dates >= first_common) & (portfolio_dates <= last_common)]
+    if portfolio_dates.empty:
+        return {
+            **base_payload,
+            "disponivel": False,
+            "motivo": "As séries dos quatro componentes não possuem um período em comum.",
+            "serie": [],
+            "componentes": [],
+            "comparativos": {},
+            "ativos": {},
+        }
+
+    aligned = {
+        key: _align_and_rebase_series(series, portfolio_dates)
+        for key, series in raw_series.items()
+    }
+    if any(not records for records in aligned.values()):
+        return {
+            **base_payload,
+            "disponivel": False,
+            "motivo": "Não foi possível alinhar todas as séries no período comum.",
+            "serie": [],
+            "componentes": [],
+            "comparativos": {},
+            "ativos": {},
+        }
+
+    hybrid_series = []
+    for idx, date in enumerate(portfolio_dates):
+        value = sum(
+            HYBRID_PORTFOLIO_WEIGHTS[key] * float(aligned[key][idx]["valor"])
+            for key in HYBRID_PORTFOLIO_WEIGHTS
+        )
+        hybrid_series.append({"data": date.strftime("%Y-%m-%d"), "valor": round(value, 4)})
+
+    componentes = []
+    for key, weight in HYBRID_PORTFOLIO_WEIGHTS.items():
+        records = aligned[key]
+        component_return = (float(records[-1]["valor"]) / float(records[0]["valor"]) - 1.0) * 100.0
+        componentes.append({
+            "chave": key,
+            "nome": labels[key],
+            "peso_pct": round(weight * 100.0, 2),
+            "retorno_pct": round(component_return, 4),
+            "contribuicao_pct": round(weight * component_return, 4),
+            "serie": records,
+        })
+
+    comparisons = {
+        "CDI": aligned["cdi"],
+        "Top 20 FIIs": aligned["fiis_top20"],
+        "Top 20 Ações BR": aligned["acoes_top20"],
+    }
+    for name in ["IFIX", "IPCA"]:
+        benchmark_records = _base100_records_from_date(benchmarks.get(name))
+        benchmark_series = _records_as_series(benchmark_records)
+        aligned_benchmark = _align_and_rebase_series(benchmark_series, portfolio_dates)
+        if aligned_benchmark:
+            comparisons[name] = aligned_benchmark
+
+    action_tickers = []
+    if top_acoes is not None and not top_acoes.empty and "Ação" in top_acoes.columns:
+        action_tickers = [str(value).strip().upper() for value in top_acoes["Ação"].dropna().tolist()]
+    fii_tickers = []
+    if top_fiis is not None and not top_fiis.empty and "FUNDOS" in top_fiis.columns:
+        fii_tickers = [str(value).strip().upper() for value in top_fiis["FUNDOS"].dropna().tolist()]
+
+    return {
+        **base_payload,
+        "disponivel": True,
+        "inicio": portfolio_dates[0].strftime("%Y-%m-%d"),
+        "fim": portfolio_dates[-1].strftime("%Y-%m-%d"),
+        "serie": hybrid_series,
+        "componentes": componentes,
+        "comparativos": comparisons,
+        "ativos": {
+            "acoes_top20": {
+                "peso_total_pct": 40.0,
+                "peso_por_ativo_pct": round(40.0 / len(action_tickers), 4) if action_tickers else None,
+                "tickers": action_tickers,
+            },
+            "fiis_top20": {
+                "peso_total_pct": 25.0,
+                "peso_por_ativo_pct": round(25.0 / len(fii_tickers), 4) if fii_tickers else None,
+                "tickers": fii_tickers,
+            },
+            "cdi": {"peso_total_pct": 20.0, "tickers": ["CDI"]},
+            "ivvb11": {"peso_total_pct": 15.0, "tickers": ["IVVB11"]},
+        },
+    }
+
+
 def _calc_carteira_vs_benchmarks(
     top_fiis: pd.DataFrame,
     top_acoes: pd.DataFrame,
@@ -603,7 +795,7 @@ def _calc_carteira_vs_benchmarks(
     resultado = {}
 
     # Séries longas para gráficos de mercado, independentes das carteiras.
-    for name in ["IBOV", "IFIX", "IMOB", "CDI", "IPCA"]:
+    for name in ["IBOV", "IFIX", "IMOB", "CDI", "IPCA", "IVVB11"]:
         if name in benchmarks:
             resultado[f"{name.lower()}_base100"] = _base100_records_from_date(benchmarks.get(name))
 
@@ -650,6 +842,14 @@ def _calc_carteira_vs_benchmarks(
         "carteira": acoes_series,
         "benchmarks": _benchmark_dict_from_start(benchmarks, ["IBOV", "IPCA", "CDI"], acoes_start),
     }
+
+    resultado["carteira_hibrida"] = _build_hybrid_portfolio(
+        acoes_series=acoes_series,
+        fiis_series=fiis_series,
+        benchmarks=benchmarks,
+        top_acoes=top_acoes,
+        top_fiis=top_fiis,
+    )
 
     return resultado
 

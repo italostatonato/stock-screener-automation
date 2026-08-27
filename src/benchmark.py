@@ -2,6 +2,7 @@
 
 Fontes gratuitas:
 - Yahoo Finance/yfinance: IBOV (^BVSP), IFIX proxy (XFIX11.SA), IMOB (IMOB.SA)
+  e IVVB11 (IVVB11.SA)
 - BCB SGS: IPCA (433), IGP-M (189), CDI diário (12)
 
 Observação: séries do BCB que vêm como variação percentual são acumuladas em
@@ -22,6 +23,7 @@ YAHOO_TICKERS = {
     "IBOV": "^BVSP",
     "IFIX": "XFIX11.SA",
     "IMOB": "IMOB.SA",
+    "IVVB11": "IVVB11.SA",
 }
 
 BCB_SERIES = {

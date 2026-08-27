@@ -25,7 +25,7 @@ O fluxo atual combina:
 - filtro em duas camadas: critérios mínimos + quartis móveis;
 - Top 20 FIIs e Top 20 ações;
 - Excel semanal formatado;
-- dashboard web com rankings, recorrência, indicadores, backtests e modelos ML;
+- dashboard web com rankings, recorrência, indicadores, backtests, carteira híbrida e modelos ML;
 - histórico consolidado em Parquet;
 - camada incremental em `data/lake/snapshots/YYYY-MM-DD/`;
 - datasets derivados para Machine Learning;
@@ -121,6 +121,7 @@ O dashboard web é publicado via GitHub Pages e carrega sempre o snapshot mais r
 Principais telas:
 
 - **Visão geral**: KPIs comparativos, score, resumo Top 20 e comparativos em base 100.
+- **Carteira Híbrida**: 40% Top 20 Ações BR, 25% Top 20 FIIs, 20% CDI e 15% IVVB11, com contribuição ponderada e benchmarks.
 - **Ações**: ranking de ações com preço, score e principais indicadores.
 - **FIIs**: ranking de FIIs com preço, score, DY, P/VP, liquidez e setor.
 - **Recorrentes**: ativos que mais apareceram no Top 20 histórico, com indicadores atuais.
