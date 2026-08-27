@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-27T13:02:10",
+  "updated_at": "2026-08-27T13:37:22",
   "latest": "2026-08-27",
   "total_snapshots": 41,
   "snapshots": [
@@ -1658,7 +1658,7 @@
           "path": "data/lake/snapshots/2026-08-27/acoes_universe.parquet",
           "rows": 956,
           "columns": 20,
-          "sha256": "80500b1a8e280d3c05bb55cf4106b2a08fbc176f6cd2df1ab6ff74519e36a669"
+          "sha256": "35bc5f85e8a1bdb6f1af1f1cb23962f782da4756dbc726bd21ef41ad4681661e"
         },
         {
           "name": "top_fiis.parquet",
