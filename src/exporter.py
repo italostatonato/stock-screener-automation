@@ -1020,6 +1020,120 @@ def _performance_records(path: str) -> list:
     return [{col: _safe(row[col]) for col in existing} for _, row in df[existing].iterrows()]
 
 
+_ML_HISTORY_SCORE_COLUMNS = {
+    "score_top": "Score Top",
+    "score_ridge": "Ridge",
+    "score_random_forest": "Random Forest",
+    "score_extra_trees": "Extra Trees",
+    "score_xgboost": "XGBoost",
+    "score_lightgbm": "LightGBM",
+    "score_catboost": "CatBoost",
+    "score_ensemble": "Ensemble",
+}
+
+
+def _model_performance_history_records(
+    predictions_path: str,
+    dataset_path: str,
+    tipo: str,
+    ticker_col: str,
+    horizon: int = 7,
+    top_n: int = 20,
+) -> list:
+    """Calcula a performance realizada de cada modelo por data de previsão.
+
+    Diferentemente de ``model_performance.parquet``, que guarda um resumo
+    agregado, esta série preserva cada janela temporal. Assim o dashboard pode
+    mostrar a evolução real dos modelos sem inferir retornos ainda não
+    observados nem compor janelas sobrepostas como se fossem uma carteira.
+    """
+    predictions = _load_parquet_safe(predictions_path)
+    dataset = _load_parquet_safe(dataset_path)
+    target_col = f"Retorno_Futuro_{horizon}d"
+    result_date_col = f"Data_Futura_{horizon}d"
+
+    required_predictions = {"Data_Execucao", "Ticker", "score_top"}
+    required_dataset = {"Data_Execucao", ticker_col, target_col}
+    if (
+        predictions.empty
+        or dataset.empty
+        or not required_predictions.issubset(predictions.columns)
+        or not required_dataset.issubset(dataset.columns)
+    ):
+        return []
+
+    pred = predictions.copy()
+    pred["Data_Referencia"] = pd.to_datetime(pred["Data_Execucao"], errors="coerce").dt.strftime("%Y-%m-%d")
+    pred["Ticker"] = pred["Ticker"].astype("string").str.strip().str.upper()
+
+    target_cols = ["Data_Execucao", ticker_col, target_col]
+    if result_date_col in dataset.columns:
+        target_cols.append(result_date_col)
+    target = dataset[target_cols].copy()
+    target["Data_Referencia"] = pd.to_datetime(target["Data_Execucao"], errors="coerce").dt.strftime("%Y-%m-%d")
+    target["Ticker"] = target[ticker_col].astype("string").str.strip().str.upper()
+    target[target_col] = pd.to_numeric(target[target_col], errors="coerce")
+    target = target.dropna(subset=["Data_Referencia", "Ticker", target_col])
+    target = target.drop_duplicates(["Data_Referencia", "Ticker"], keep="last")
+
+    merge_cols = ["Data_Referencia", "Ticker", target_col]
+    if result_date_col in target.columns:
+        merge_cols.append(result_date_col)
+    merged = pred.merge(target[merge_cols], on=["Data_Referencia", "Ticker"], how="inner")
+    if merged.empty:
+        return []
+
+    records = []
+    for reference_date, group in merged.groupby("Data_Referencia", sort=True):
+        date_rows = []
+        baseline_return = None
+
+        for score_col, model_name in _ML_HISTORY_SCORE_COLUMNS.items():
+            if score_col not in group.columns:
+                continue
+            model_data = group.copy()
+            model_data["_score"] = pd.to_numeric(model_data[score_col], errors="coerce")
+            model_data["_target"] = pd.to_numeric(model_data[target_col], errors="coerce")
+            model_data = model_data.dropna(subset=["_score", "_target"])
+            if len(model_data) < 5:
+                continue
+
+            top = model_data.sort_values("_score", ascending=False).head(top_n)
+            realized_return = float(top["_target"].mean())
+            if model_name == "Score Top":
+                baseline_return = realized_return
+
+            result_date = None
+            if result_date_col in top.columns:
+                dates = pd.to_datetime(top[result_date_col], errors="coerce").dropna()
+                if not dates.empty:
+                    result_date = dates.max().strftime("%Y-%m-%d")
+
+            ic = model_data[["_score", "_target"]].corr(method="spearman").iloc[0, 1]
+            date_rows.append({
+                "Data_Referencia": reference_date,
+                "Data_Resultado": result_date,
+                "Tipo": tipo,
+                "Modelo": model_name,
+                "Horizonte": f"{horizon}d",
+                "Ativos_Avaliados": int(len(model_data)),
+                "Ativos_Top20": int(len(top)),
+                "Retorno_Top20": realized_return,
+                "Hit_Rate_Top20": float((top["_target"] > 0).mean()),
+                "Spearman_IC": float(ic) if pd.notna(ic) else None,
+                "Alpha_vs_Score_Top": 0.0 if model_name == "Score Top" else None,
+            })
+
+        if baseline_return is not None:
+            for row in date_rows:
+                if row["Modelo"] != "Score Top":
+                    row["Alpha_vs_Score_Top"] = row["Retorno_Top20"] - baseline_return
+        records.extend(date_rows)
+
+    records.sort(key=lambda row: (row["Data_Referencia"], row["Modelo"]))
+    return [{key: _safe(value) for key, value in row.items()} for row in records]
+
+
 
 
 def _baseline_ml_records_from_current(
@@ -1127,6 +1241,19 @@ def _calc_modelos_ml(top_fiis: pd.DataFrame = None, top_acoes: pd.DataFrame = No
         horizon_days=7,
     )
     performance = add_confidence_to_performance_records(performance, confidence)
+    performance_history = _model_performance_history_records(
+        os.path.join(ml_dir, "model_predictions_acoes.parquet"),
+        os.path.join(ml_dir, "dataset_acoes.parquet"),
+        tipo="ACAO",
+        ticker_col="Ação",
+        horizon=7,
+    ) + _model_performance_history_records(
+        os.path.join(ml_dir, "model_predictions_fiis.parquet"),
+        os.path.join(ml_dir, "dataset_fiis.parquet"),
+        tipo="FII",
+        ticker_col="FUNDOS",
+        horizon=7,
+    )
 
     statuses = [r.get("status_modelos") for r in acoes + fiis if r.get("status_modelos")]
     if any(str(s).lower() == "ativo" for s in statuses):
@@ -1148,6 +1275,7 @@ def _calc_modelos_ml(top_fiis: pd.DataFrame = None, top_acoes: pd.DataFrame = No
             "fiis": fiis,
         },
         "performance": performance,
+        "performance_historica": performance_history,
         "modelos": [
             "Score Top",
             "Ridge",
@@ -1182,7 +1310,8 @@ def export_dashboard_json(
     prev_data = _load_previous_json(output_dir, data_hoje)
 
     fii_cols = [
-        "FUNDOS", "SETOR", "PREÇO ATUAL (R$)", "DIVIDEND YIELD", "P/VP",
+        "FUNDOS", "NOME", "Nome", "NOME DO FUNDO", "RAZÃO SOCIAL", "SETOR",
+        "PREÇO ATUAL (R$)", "DIVIDEND YIELD", "P/VP",
         "LIQUIDEZ DIÁRIA (R$)", "PATRIMÔNIO LÍQUIDO", "VOLATILIDADE",
         "VPA", "ÚLTIMO DIVIDENDO", "NUM. COTISTAS",
     ]
@@ -1226,6 +1355,7 @@ def export_dashboard_json(
         "acoes": acoes_records,
         "indicadores": {
             "cambio": market_data.get("cambio", {}),
+            "cripto": market_data.get("cripto", []),
             "ipca_12m": _serie_to_records(market_data.get("ipca_12m")),
             "selic": _serie_to_records(market_data.get("selic")),
             "igpm": _serie_to_records(market_data.get("igpm")),
