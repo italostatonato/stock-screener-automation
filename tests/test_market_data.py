@@ -1,6 +1,11 @@
 from datetime import datetime, timedelta
 
-from src.market_data import _fetch_bcb_series, _fetch_coingecko_top_cryptos
+from src.market_data import (
+    _fetch_asset_names,
+    _fetch_bcb_series,
+    _fetch_coingecko_top_cryptos,
+    _fetch_frankfurter_cambio,
+)
 
 
 def test_fetch_bcb_series_descarta_observacoes_futuras(monkeypatch):
@@ -67,3 +72,44 @@ def test_fetch_coingecko_top_cryptos_normaliza_e_limita(monkeypatch):
     assert result[0]["ranking_market_cap"] == 1
     assert result[0]["preco_brl"] == 1000.0
     assert result[-1]["nome"] == "Coin 5"
+
+
+def test_fetch_frankfurter_cambio_inverte_taxa_brl(monkeypatch):
+    class Response:
+        @staticmethod
+        def raise_for_status():
+            return None
+
+        @staticmethod
+        def json():
+            return {
+                "date": "2026-08-28",
+                "rates": {"USD": 0.2, "EUR": 0.16, "GBP": 0.14},
+            }
+
+    monkeypatch.setattr("src.market_data.requests.get", lambda *args, **kwargs: Response())
+
+    result = _fetch_frankfurter_cambio()
+
+    assert result["USD/BRL"]["valor"] == 5.0
+    assert result["EUR/BRL"]["valor"] == 6.25
+    assert result["GBP/BRL"]["atualizado_em"] == "2026-08-28"
+    assert result["USD/BRL"]["fonte"] == "Frankfurter"
+
+
+def test_fetch_asset_names_combina_brapi_e_yahoo(monkeypatch):
+    monkeypatch.setattr(
+        "src.market_data._asset_name_from_brapi",
+        lambda ticker: "Petróleo Brasileiro S.A. Petrobras" if ticker == "PETR4" else None,
+    )
+    monkeypatch.setattr(
+        "src.market_data._asset_name_from_yahoo",
+        lambda ticker: "Kinea Oportunidades Agro I Fiagro" if ticker == "KOPA11" else None,
+    )
+
+    result = _fetch_asset_names(["petr4", "KOPA11", "PETR4"], workers=2)
+
+    assert result == {
+        "KOPA11": "Kinea Oportunidades Agro I Fiagro",
+        "PETR4": "Petróleo Brasileiro S.A. Petrobras",
+    }

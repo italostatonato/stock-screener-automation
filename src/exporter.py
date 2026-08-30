@@ -33,6 +33,75 @@ def _safe(val):
     return val
 
 
+def _usable_asset_name(value, ticker: str) -> str | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    normalized = text.upper().replace(".SA", "")
+    return text if normalized != str(ticker or "").strip().upper() else None
+
+
+def _enrich_asset_names(
+    fiis_records: list[dict],
+    acoes_records: list[dict],
+    market_data: dict,
+    prev_data: dict,
+) -> tuple[list[dict], list[dict]]:
+    """Preenche nomes completos sem apagar um nome válido já coletado.
+
+    A consulta de nomes é best-effort. Se a fonte externa falhar em uma semana,
+    o último snapshot preserva a denominação conhecida do ativo.
+    """
+    names = {
+        str(ticker).strip().upper(): str(name).strip()
+        for ticker, name in (market_data.get("asset_names", {}) or {}).items()
+        if _usable_asset_name(name, ticker)
+    }
+    prev_fiis = {
+        str(row.get("FUNDOS") or "").strip().upper(): row
+        for row in prev_data.get("fiis", [])
+    }
+    prev_acoes = {
+        str(row.get("Ação") or "").strip().upper(): row
+        for row in prev_data.get("acoes", [])
+    }
+
+    enriched_fiis = []
+    for original in fiis_records:
+        row = dict(original)
+        ticker = str(row.get("FUNDOS") or "").strip().upper()
+        previous = prev_fiis.get(ticker, {})
+        candidates = [
+            row.get("NOME"), row.get("Nome"), row.get("NOME DO FUNDO"),
+            row.get("RAZÃO SOCIAL"), names.get(ticker),
+            previous.get("NOME"), previous.get("Nome"),
+            previous.get("NOME DO FUNDO"), previous.get("RAZÃO SOCIAL"),
+        ]
+        full_name = next(
+            (candidate for candidate in candidates if _usable_asset_name(candidate, ticker)),
+            None,
+        )
+        if full_name:
+            row["NOME"] = full_name
+        enriched_fiis.append(row)
+
+    enriched_acoes = []
+    for original in acoes_records:
+        row = dict(original)
+        ticker = str(row.get("Ação") or "").strip().upper()
+        previous = prev_acoes.get(ticker, {})
+        candidates = [row.get("Empresa"), names.get(ticker), previous.get("Empresa")]
+        full_name = next(
+            (candidate for candidate in candidates if _usable_asset_name(candidate, ticker)),
+            None,
+        )
+        if full_name:
+            row["Empresa"] = full_name
+        enriched_acoes.append(row)
+
+    return enriched_fiis, enriched_acoes
+
+
 def _df_to_records(df: pd.DataFrame, cols: list) -> list:
     if df is None or df.empty:
         return []
@@ -1324,6 +1393,12 @@ def export_dashboard_json(
 
     fiis_records = _df_to_records(top_fiis, fii_cols)
     acoes_records = _df_to_records(top_acoes, acoes_cols)
+    fiis_records, acoes_records = _enrich_asset_names(
+        fiis_records,
+        acoes_records,
+        market_data or {},
+        prev_data,
+    )
 
     if fii_scores is not None and top_fiis is not None and not top_fiis.empty:
         for i, rec in enumerate(fiis_records):

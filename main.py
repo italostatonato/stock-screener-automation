@@ -266,7 +266,11 @@ def main():
     # ── Indicadores de mercado ────────────────────────────────────────────
 
     try:
-        market_data = get_market_indicators()
+        asset_tickers = [
+            *top_fiis.get("FUNDOS", pd.Series(dtype=str)).dropna().astype(str).tolist(),
+            *top_actions.get("Ação", pd.Series(dtype=str)).dropna().astype(str).tolist(),
+        ]
+        market_data = get_market_indicators(asset_tickers=asset_tickers)
 
     except Exception as e:
         logger.error(

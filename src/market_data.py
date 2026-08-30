@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import logging
 import time
 
@@ -17,6 +18,9 @@ BCB_SERIES = {
 
 BCB_URL = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.{codigo}/dados"
 COINGECKO_MARKETS_URL = "https://api.coingecko.com/api/v3/coins/markets"
+FRANKFURTER_LATEST_URL = "https://api.frankfurter.dev/v1/latest"
+BRAPI_QUOTE_LIST_URL = "https://brapi.dev/api/quote/list"
+YAHOO_SEARCH_URL = "https://query2.finance.yahoo.com/v1/finance/search"
 
 
 def _fetch_bcb_series(codigo: int, meses: int = 13) -> pd.DataFrame:
@@ -78,6 +82,126 @@ def _fetch_awesome_api(pares: list) -> dict:
             except Exception as item_error:
                 logger.warning("Falha ao buscar %s na AwesomeAPI: %s", par, item_error)
         return fallback
+
+
+def _fetch_frankfurter_cambio() -> dict:
+    """Fallback diário de câmbio quando a AwesomeAPI não responde.
+
+    A Frankfurter devolve quantas unidades de moeda estrangeira equivalem a
+    BRL 1. O dashboard precisa do inverso: quantos reais valem uma unidade de
+    USD, EUR ou GBP.
+    """
+    try:
+        resp = requests.get(
+            FRANKFURTER_LATEST_URL,
+            params={"base": "BRL", "symbols": "USD,EUR,GBP"},
+            timeout=15,
+            headers={"User-Agent": "Radar-Semanal/1.0"},
+        )
+        resp.raise_for_status()
+        payload = resp.json()
+        rates = payload.get("rates", {}) if isinstance(payload, dict) else {}
+        updated_at = str(payload.get("date") or "") if isinstance(payload, dict) else ""
+        cambio = {}
+        for currency in ("USD", "EUR", "GBP"):
+            rate = float(rates.get(currency) or 0)
+            if rate <= 0:
+                continue
+            cambio[f"{currency}/BRL"] = {
+                "valor": 1 / rate,
+                "variacao_pct": None,
+                "atualizado_em": updated_at,
+                "fonte": "Frankfurter",
+            }
+        return cambio
+    except Exception as exc:
+        logger.warning("Falha ao buscar câmbio na Frankfurter: %s", exc)
+        return {}
+
+
+def _asset_name_from_brapi(ticker: str) -> str | None:
+    """Tenta obter o nome cadastral do ativo na listagem pública da brapi."""
+    try:
+        resp = requests.get(
+            BRAPI_QUOTE_LIST_URL,
+            params={"search": ticker, "limit": 5},
+            timeout=12,
+            headers={"User-Agent": "Radar-Semanal/1.0"},
+        )
+        resp.raise_for_status()
+        payload = resp.json()
+        rows = payload.get("stocks", []) if isinstance(payload, dict) else []
+        exact = next(
+            (
+                row for row in rows
+                if str(row.get("stock") or "").strip().upper() == ticker
+            ),
+            None,
+        )
+        name = str((exact or {}).get("name") or "").strip()
+        return name if name and name.upper() != ticker else None
+    except Exception:
+        return None
+
+
+def _asset_name_from_yahoo(ticker: str) -> str | None:
+    """Complementa nomes ausentes, sobretudo a denominação dos FIIs."""
+    try:
+        symbol = f"{ticker}.SA"
+        resp = requests.get(
+            YAHOO_SEARCH_URL,
+            params={"q": symbol, "quotesCount": 5, "newsCount": 0},
+            timeout=12,
+            headers={"User-Agent": "Mozilla/5.0 (Radar-Semanal/1.0)"},
+        )
+        resp.raise_for_status()
+        payload = resp.json()
+        quotes = payload.get("quotes", []) if isinstance(payload, dict) else []
+        exact = next(
+            (
+                row for row in quotes
+                if str(row.get("symbol") or "").strip().upper() == symbol
+            ),
+            None,
+        )
+        name = str(
+            (exact or {}).get("longname")
+            or (exact or {}).get("shortname")
+            or ""
+        ).strip()
+        return name if name and name.upper() not in {ticker, symbol} else None
+    except Exception:
+        return None
+
+
+def _fetch_asset_names(tickers: list[str], workers: int = 8) -> dict[str, str]:
+    """Resolve nomes completos dos ativos sem tornar a coleta obrigatória.
+
+    O nome da brapi é preferido para ações. Quando a listagem retorna apenas o
+    ticker (comum em FIIs), a busca pública do Yahoo Finance complementa o
+    cadastro. Falhas individuais não interrompem o processamento semanal.
+    """
+    normalized = sorted(
+        {
+            str(ticker or "").strip().upper()
+            for ticker in tickers or []
+            if str(ticker or "").strip()
+        }
+    )
+    if not normalized:
+        return {}
+
+    def resolve(ticker: str) -> tuple[str, str | None]:
+        return ticker, _asset_name_from_brapi(ticker) or _asset_name_from_yahoo(ticker)
+
+    names: dict[str, str] = {}
+    with ThreadPoolExecutor(max_workers=max(1, min(workers, len(normalized)))) as pool:
+        futures = [pool.submit(resolve, ticker) for ticker in normalized]
+        for future in as_completed(futures):
+            ticker, name = future.result()
+            if name:
+                names[ticker] = name
+    return names
 
 
 def _fetch_coingecko_top_cryptos(limit: int = 5) -> list[dict]:
@@ -150,7 +274,7 @@ def _fetch_coingecko_top_cryptos(limit: int = 5) -> list[dict]:
     return []
 
 
-def get_market_indicators() -> dict:
+def get_market_indicators(asset_tickers: list[str] | None = None) -> dict:
     """
     Coleta os principais indicadores de mercado.
 
@@ -185,10 +309,16 @@ def get_market_indicators() -> dict:
         except (KeyError, ValueError):
             continue
 
+    if len(cambio) < len(pares):
+        for pair, data in _fetch_frankfurter_cambio().items():
+            cambio.setdefault(pair, data)
+
     result["cambio"] = cambio
     result["cripto"] = _fetch_coingecko_top_cryptos(limit=5)
+    result["asset_names"] = _fetch_asset_names(asset_tickers or [])
 
     logger.info(f"Indicadores coletados: IPCA={len(result['ipca_12m'])} pts, "
                 f"Selic={len(result['selic'])} pts, Câmbio={len(cambio)} pares, "
-                f"Cripto={len(result['cripto'])} ativos")
+                f"Cripto={len(result['cripto'])} ativos, "
+                f"Nomes={len(result['asset_names'])} ativos")
     return result
