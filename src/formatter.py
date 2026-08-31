@@ -249,7 +249,12 @@ def _add_indicadores(wb, market_data: dict):
             ws.cell(row=row_cursor, column=1, value=par)
             c_val = ws.cell(row=row_cursor, column=2, value=dados["valor"])
             c_val.number_format = FMT_MONEY
-            c_var = ws.cell(row=row_cursor, column=3, value=dados["variacao_pct"] / 100)
+            variacao_pct = dados.get("variacao_pct")
+            c_var = ws.cell(
+                row=row_cursor,
+                column=3,
+                value=variacao_pct / 100 if variacao_pct is not None else None,
+            )
             c_var.number_format = FMT_PCT
             row_cursor += 1
         row_cursor += 2
