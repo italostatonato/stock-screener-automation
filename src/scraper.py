@@ -133,30 +133,42 @@ def build_fundamentus_acoes_frame(raw: pd.DataFrame) -> pd.DataFrame:
 
 
 def scrape_acoes_fundamentus(cfg: dict) -> pd.DataFrame:
-    """Lê a tabela pública de ações do Fundamentus em uma única requisição."""
+    """Lê a tabela pública do Fundamentus com retentativas transitórias."""
     url = str(cfg.get("fundamentus_url", "https://www.fundamentus.com.br/resultado.php"))
     timeout = float(cfg.get("fundamentus_timeout", 30))
+    retries = max(0, int(cfg.get("fundamentus_retries", 2)))
     headers = {
         "User-Agent": "stock-screener-automation/1.0 (coleta semanal; dados públicos)",
         "Accept-Language": "pt-BR,pt;q=0.9",
     }
 
-    try:
-        response = requests.get(url, headers=headers, timeout=timeout)
-        response.raise_for_status()
-        # A tabela usa ponto para milhar e vírgula para decimal. Sem esses
-        # parâmetros, o parser padrão trata a vírgula como milhar e transforma
-        # P/VP 0,75 em 75, distorcendo todo o ranking.
-        tables = pd.read_html(
-            StringIO(response.text),
-            decimal=",",
-            thousands=".",
-        )
-    except (requests.RequestException, ValueError) as exc:
-        raise RuntimeError(
-            "Falha ao ler a tabela pública de ações do Fundamentus. "
-            "A fonte pode estar indisponível ou ter alterado o formato."
-        ) from exc
+    for attempt in range(retries + 1):
+        try:
+            response = requests.get(url, headers=headers, timeout=timeout)
+            response.raise_for_status()
+            # A tabela usa ponto para milhar e vírgula para decimal. Sem esses
+            # parâmetros, o parser padrão transforma P/VP 0,75 em 75.
+            tables = pd.read_html(
+                StringIO(response.text),
+                decimal=",",
+                thousands=".",
+            )
+            break
+        except (requests.RequestException, ValueError) as exc:
+            if attempt < retries:
+                wait_seconds = 2 ** attempt
+                logger.warning(
+                    "Fundamentus indisponível (tentativa %d/%d); nova tentativa em %ds.",
+                    attempt + 1,
+                    retries + 1,
+                    wait_seconds,
+                )
+                time.sleep(wait_seconds)
+                continue
+            raise RuntimeError(
+                "Falha ao ler a tabela pública de ações do Fundamentus. "
+                "A fonte pode estar indisponível ou ter alterado o formato."
+            ) from exc
 
     for table in tables:
         normalized = {_normalized_column_name(col) for col in table.columns}

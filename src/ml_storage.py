@@ -69,6 +69,9 @@ def append_historical_data(
             [historico, df_hist],
             ignore_index=True,
         )
+        # A união pode reintroduzir object misto quando o histórico antigo
+        # guardava texto e a execução atual passou a produzir número.
+        historico = _prepare_for_parquet(historico)
 
         if subset_cols:
             existing_subset = [col for col in subset_cols if col in historico.columns]

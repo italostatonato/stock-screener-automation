@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 import pandas as pd
 import pytest
+import requests
 from selenium.common.exceptions import TimeoutException
 
 from src.scraper import (
@@ -277,3 +278,45 @@ def test_fundamentus_html_preserva_virgula_decimal(monkeypatch):
     assert row["Preço/Lucro"] == 8.0
     assert row["ROA"] == 0.10
     assert row["Volume Diário Médio (3 meses)"] == 1_200_000.0
+
+
+def test_fundamentus_repete_requisicao_apos_timeout(monkeypatch):
+    raw = pd.DataFrame({
+        "Papel": ["TEST3"],
+        "Cotação": ["20,00"],
+        "P/L": ["8,00"],
+        "P/VP": ["0,75"],
+        "Div.Yield": ["8,00%"],
+        "P/Ativo": ["0,80"],
+        "EV/EBIT": ["6,00"],
+        "EV/EBITDA": ["6,00"],
+        "Mrg. Líq.": ["15,00%"],
+        "ROIC": ["12,00%"],
+        "ROE": ["20,00%"],
+        "Liq.2meses": ["1.200.000,00"],
+        "Patrim. Líq": ["800.000.000,00"],
+        "Dív.Líq/ Patrim.": ["0,50"],
+    })
+    attempts = []
+
+    class Response:
+        text = "<table></table>"
+
+        @staticmethod
+        def raise_for_status():
+            return None
+
+    def fake_get(*args, **kwargs):
+        attempts.append(1)
+        if len(attempts) == 1:
+            raise requests.Timeout("fonte lenta")
+        return Response()
+
+    monkeypatch.setattr("src.scraper.requests.get", fake_get)
+    monkeypatch.setattr("src.scraper.pd.read_html", lambda *args, **kwargs: [raw])
+    monkeypatch.setattr("src.scraper.time.sleep", lambda *_: None)
+
+    result = scrape_acoes_fundamentus({"fundamentus_retries": 1})
+
+    assert len(attempts) == 2
+    assert result.iloc[0]["Ação"] == "TEST3"

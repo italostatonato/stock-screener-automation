@@ -5,7 +5,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from src.ml_storage import _prepare_for_parquet
+from src.ml_storage import _prepare_for_parquet, append_historical_data
 
 
 def test_prepare_for_parquet_recupera_coluna_numerica_gravada_como_texto():
@@ -19,3 +19,24 @@ def test_prepare_for_parquet_recupera_coluna_numerica_gravada_como_texto():
     assert pd.api.types.is_numeric_dtype(result["ROA"])
     assert result["ROA"].tolist()[:2] == [0.10, -0.01]
     assert str(result["Ação"].dtype) == "string"
+
+
+def test_append_harmoniza_texto_historico_com_numero_novo(tmp_path):
+    output = tmp_path / "historico.parquet"
+    pd.DataFrame({
+        "FUNDOS": ["OLD11"],
+        "RENTAB. PERÍODO": ["1,50 %"],
+        "Data_Execucao": ["2026-08-30"],
+    }).to_parquet(output, index=False)
+
+    append_historical_data(
+        pd.DataFrame({"FUNDOS": ["NEW11"], "RENTAB. PERÍODO": [0.02]}),
+        data_execucao="2026-08-31",
+        output_file=str(output),
+        subset_cols=["Data_Execucao", "FUNDOS"],
+    )
+
+    result = pd.read_parquet(output)
+    assert len(result) == 2
+    assert str(result["RENTAB. PERÍODO"].dtype) == "string"
+    assert set(result["FUNDOS"]) == {"OLD11", "NEW11"}

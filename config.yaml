@@ -19,6 +19,7 @@ scraper:
   acoes_source: "fundamentus"
   fundamentus_url: "https://www.fundamentus.com.br/resultado.php"
   fundamentus_timeout: 30
+  fundamentus_retries: 2
 
   # Alternativa opcional para quem possuir plano Pro da brapi. Não é usada
   # enquanto acoes_source estiver como "fundamentus".
