@@ -1,4 +1,6 @@
 import logging
+import re
+import unicodedata
 
 import pandas as pd
 
@@ -6,11 +8,42 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 
+def _normalized_company_name(value) -> str:
+    """Normaliza razão/nome e remove apenas sufixos de classe do papel."""
+    if pd.isna(value):
+        return ""
+    text = unicodedata.normalize("NFKD", str(value))
+    text = text.encode("ascii", "ignore").decode("ascii").upper()
+    tokens = re.sub(r"[^A-Z0-9]+", " ", text).split()
+    share_class_tokens = {
+        "ON", "PN", "PNA", "PNB", "PNC", "PND",
+        "ORD", "PREF", "PREFERENCIAL", "UNIT", "UNT",
+    }
+    while tokens and tokens[-1] in share_class_tokens:
+        tokens.pop()
+    return " ".join(tokens)
+
+
+def _company_key(row: pd.Series) -> str:
+    """Identifica a companhia mesmo quando Empresa contém apenas o ticker."""
+    ticker = str(row.get("Ação", "")).strip().upper()
+    company = _normalized_company_name(row.get("Empresa"))
+    ticker_normalized = _normalized_company_name(ticker)
+
+    if company and company != ticker_normalized:
+        return f"NOME:{company}"
+
+    # Na B3, o número final representa a classe; o radical identifica o emissor.
+    issuer = re.sub(r"(?:11|3|4|5|6|7|8)$", "", ticker)
+    return f"TICKER:{issuer or ticker}"
+
+
 def _build_status_column(
     df: pd.DataFrame,
     fixed_checks: list,
     rank_df: pd.DataFrame,
     id_col: str,
+    duplicate_ids: set | None = None,
 ) -> pd.Series:
     """Explica a elegibilidade e a posição final de cada ativo."""
     status = pd.Series(index=df.index, dtype=object)
@@ -23,6 +56,9 @@ def _build_status_column(
             if not cond_func(row):
                 motivo = f"Eliminado no filtro fixo: {label}"
                 break
+
+        if motivo is None and duplicate_ids and row[id_col] in duplicate_ids:
+            motivo = "Eliminado por duplicidade da empresa"
 
         if motivo is None:
             match = rank_df[rank_df[id_col] == row[id_col]]
@@ -140,7 +176,7 @@ def select_top_acoes(df: pd.DataFrame, cfg: dict):
     base_full = df.copy()
     base_full = base_full.dropna(subset=["Ação", "Preço"])
     base_full = (
-        base_full.drop_duplicates(subset=["Empresa"], keep="first")
+        base_full.drop_duplicates(subset=["Ação"], keep="first")
         .reset_index(drop=True)
     )
 
@@ -195,22 +231,31 @@ def select_top_acoes(df: pd.DataFrame, cfg: dict):
                 ascending=[False, True],
                 na_position="last",
             )
-            .head(a["top_n"])
-            .reset_index(drop=True)
         )
     else:
         # A função também é usada diretamente por testes e integrações
         # legadas que fornecem a base antes do cálculo do score.
-        result = (
-            result.sort_values(by=["Ação"], ascending=[True])
-            .head(a["top_n"])
-            .reset_index(drop=True)
+        result = result.sort_values(by=["Ação"], ascending=[True])
+
+    result["_Empresa_Chave"] = result.apply(_company_key, axis=1)
+    deduplicated = result.drop_duplicates(subset=["_Empresa_Chave"], keep="first")
+    duplicate_ids = set(result["Ação"]) - set(deduplicated["Ação"])
+    if duplicate_ids:
+        logger.info(
+            "Ações removidas por duplicidade de empresa: %s",
+            ", ".join(sorted(duplicate_ids)),
         )
+    result = (
+        deduplicated.head(a["top_n"])
+        .drop(columns=["_Empresa_Chave"])
+        .reset_index(drop=True)
+    )
 
     base_full["Status"] = _build_status_column(
         base_full,
         fixed_checks,
         result,
         id_col="Ação",
+        duplicate_ids=duplicate_ids,
     )
     return result, base_full

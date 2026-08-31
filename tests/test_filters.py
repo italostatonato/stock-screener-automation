@@ -163,6 +163,33 @@ def test_select_top_acoes_remove_duplicatas_empresa():
     assert base["Empresa"].duplicated().sum() == 0
 
 
+def test_select_top_acoes_remove_classes_da_mesma_companhia_e_mantem_maior_score():
+    df = _make_acoes_df(n=8)
+    df.loc[0, ["Ação", "Empresa"]] = ["PETR3", "PETR3"]
+    df.loc[1, ["Ação", "Empresa"]] = ["PETR4", "PETR4"]
+    df["Score"] = [80.0, 90.0, 70.0, 60.0, 50.0, 40.0, 30.0, 20.0]
+
+    top, base = select_top_acoes(df, _base_cfg())
+
+    assert "PETR4" in set(top["Ação"])
+    assert "PETR3" not in set(top["Ação"])
+    status_petr3 = base.loc[base["Ação"] == "PETR3", "Status"].iloc[0]
+    assert status_petr3 == "Eliminado por duplicidade da empresa"
+
+
+def test_select_top_acoes_tambem_deduplica_nome_real_normalizado():
+    df = _make_acoes_df(n=8)
+    df.loc[0, ["Ação", "Empresa"]] = ["ABCD3", "Companhia Exemplo ON"]
+    df.loc[1, ["Ação", "Empresa"]] = ["WXYZ4", "Companhia Exemplo PN"]
+    df["Score"] = [80.0, 90.0, 70.0, 60.0, 50.0, 40.0, 30.0, 20.0]
+
+    top, _ = select_top_acoes(df, _base_cfg())
+
+    selected = set(top["Ação"])
+    assert "WXYZ4" in selected
+    assert "ABCD3" not in selected
+
+
 def test_select_top_acoes_dropna_preco():
     df = _make_acoes_df(n=5)
     df.loc[0, "Preço"] = None
