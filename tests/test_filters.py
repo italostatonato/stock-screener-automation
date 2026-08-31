@@ -16,6 +16,7 @@ def _make_fii_df(n=20):
         "FUNDOS": [f"FII{i:02d}11" for i in range(n)],
         "P/VP": np.round(np.random.uniform(0.5, 1.5, n), 2),
         "DIVIDEND YIELD": np.round(np.random.uniform(0.01, 0.15, n), 4),
+        "DY (12M) MÉDIA": np.round(np.random.uniform(0.01, 0.15, n), 4),
         "LIQUIDEZ DIÁRIA (R$)": np.round(np.random.uniform(50_000, 2_000_000, n), 2),
         "PATRIMÔNIO LÍQUIDO": np.round(np.random.uniform(50_000_000, 1_000_000_000, n), 2),
         "VOLATILIDADE": np.round(np.random.uniform(5, 100, n), 2),
@@ -81,7 +82,7 @@ def test_select_top_fiis_coluna_ausente_lanca_erro():
 
 def test_select_top_fiis_filtro_fixo_elimina_dy_baixo():
     df = _make_fii_df()
-    df.loc[0, "DIVIDEND YIELD"] = 0.001  # abaixo do mínimo fixo
+    df.loc[0, "DY (12M) MÉDIA"] = 0.001  # abaixo do mínimo fixo
     cfg = _base_cfg()
     top, base = select_top_fiis(df, cfg)
     status_linha_0 = base.loc[base["FUNDOS"] == "FII0011", "Status"].iloc[0]
@@ -95,6 +96,15 @@ def test_select_top_fiis_ordenacao_por_score_desc():
     if len(top) > 1:
         scores = top["Score"].tolist()
         assert scores == sorted(scores, reverse=True)
+
+
+def test_select_top_fiis_nao_usa_volatilidade_ou_dy_mensal_como_filtro():
+    df = _make_fii_df()
+    df.loc[0, "DIVIDEND YIELD"] = None
+    df.loc[0, "VOLATILIDADE"] = None
+    _, base = select_top_fiis(df, _base_cfg())
+    status = base.loc[base["FUNDOS"] == "FII0011", "Status"].iloc[0]
+    assert not status.startswith("Eliminado")
 
 
 # ── select_top_acoes ──────────────────────────────────────────────────────────
@@ -159,3 +169,23 @@ def test_select_top_acoes_dropna_preco():
     cfg = _base_cfg()
     top, base = select_top_acoes(df, cfg)
     assert len(base) == 4  # a linha com Preço nulo é descartada antes do status
+
+
+def test_select_top_acoes_nao_exige_indicadores_fora_do_score():
+    df = _make_acoes_df().drop(columns=[
+        "Preço/Lucro",
+        "EV/EBIT",
+        "ROA",
+        "Passivo/Patrimônio Líquido",
+        "Alavancagem Financeira",
+    ])
+    top, base = select_top_acoes(df, _base_cfg())
+    assert not top.empty
+    assert base["Status"].notna().all()
+
+
+def test_select_top_acoes_ordenacao_por_score_desc():
+    df = _make_acoes_df(n=30)
+    df["Score"] = list(range(30))
+    top, _ = select_top_acoes(df, _base_cfg())
+    assert top["Score"].tolist() == sorted(top["Score"], reverse=True)

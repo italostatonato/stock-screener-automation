@@ -9,6 +9,9 @@ _INVALID = {"N/A", "nan", "None", ""}
 def _parse_percent(series):
     s = series.astype(str)
     s = s.str.replace("​", "", regex=False)
+    s = s.str.upper()
+    s = s.str.replace("A.A.", "", regex=False)
+    s = s.str.replace("A.A", "", regex=False)
     s = s.str.replace("%", "", regex=False)
     s = s.str.replace(".", "", regex=False)
     s = s.str.replace(",", ".", regex=False)
@@ -64,6 +67,11 @@ def clean_and_normalize(df_raw, col_cfg):
     for col in col_cfg.get("float_simple", []):
         if col in df.columns:
             df[col] = _parse_money(df_raw[col])
+
+    # Taxas negativas na fonte representam inconsistências, não custos menores.
+    for col in ("TAX. ADMINISTRAÇÃO", "TAX. PERFORMANCE"):
+        if col in df.columns:
+            df[col] = df[col].where(df[col].ge(0))
 
     if "P/VP" in df.columns:
         df["P/VP"] = _parse_float(df_raw["P/VP"])

@@ -45,7 +45,7 @@ src/
   config.py                     Carrega config.yaml com caminhos portáveis
   scraper.py                    Coleta FIIs via Selenium e ações por tabela pública
   cleaner.py                    Limpeza e normalização de dados financeiros
-  filters.py                    Filtros fixos e adaptativos por quartis
+  filters.py                    Pisos de elegibilidade antes do score
   scorer.py                     Score multifatorial 0-100
   storage.py                    Histórico Excel e snapshots
   formatter.py                  Formatação do Excel final
@@ -101,12 +101,12 @@ tests/                          Testes automatizados
 2. Coleta FIIs ou usa arquivo local quando configurado.
 3. Limpa e normaliza FIIs.
 4. Calcula score FIIs no universo completo.
-5. Aplica filtros fixos e filtros por quartil.
+5. Aplica pisos de elegibilidade e ordena pelo score de sete fatores iguais.
 6. Atualiza histórico Excel do Top 20 FIIs.
 7. Salva universo FIIs em `data/ml/historico_fiis.parquet`.
 8. Coleta ações na tabela pública do Fundamentus.
 9. Calcula score ações no universo completo.
-10. Aplica filtros fixos e filtros por quartil.
+10. Aplica pisos de elegibilidade e ordena pelo score de sete fatores iguais.
 11. Atualiza histórico Excel do Top 20 ações.
 12. Salva universo ações em `data/ml/historico_acoes.parquet`.
 13. Coleta indicadores de mercado e benchmarks.

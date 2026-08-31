@@ -129,53 +129,42 @@ def _add_premissas(wb, cfg: dict, data_hoje: str, n_fiis: int, n_acoes: int):
         ("Ações BR",  "fundamentus.com.br/resultado.php (tabela pública)"),
         ("Indicadores de mercado", "Banco Central do Brasil (SGS) + AwesomeAPI"),
         (None, None),
-        ("── METODOLOGIA: FILTRO EM TRÊS CAMADAS ──", None),
+        ("── METODOLOGIA: ELEGIBILIDADE + SCORE ──", None),
         (None, "1) Filtros fixos eliminam ativos com problemas absolutos (dados ausentes, "
                "indicadores fora de qualquer faixa razoável, liquidez/patrimônio mínimos)."),
-        (None, "2) Filtros por quartil selecionam os melhores 25% do universo restante "
-               "em cada indicador-chave — o corte se adapta automaticamente às condições "
-               "do mercado no dia, garantindo que sempre haja candidatos qualificados."),
-        (None, "3) Backtest (Camada 3) compara o retorno acumulado da carteira Top 20 FIIs "
+        (None, "2) Entre os elegíveis, o score ordena os ativos por sete indicadores "
+               "com peso rigorosamente igual de 1/7 (14,29% arredondado)."),
+        (None, "3) O backtest compara o retorno acumulado da carteira Top 20 FIIs "
                "(equal-weight, rebalanceada a cada snapshot) contra IFIX e IBOV."),
         (None, "Ativos que passam em todos os filtros são ordenados e os Top N entram "
                "na aba de Recomendações. Os demais aparecem nas abas de Base Completa "
                "com o motivo exato da eliminação, para auditoria e transparência total."),
         (None, None),
         ("── FILTROS FIXOS: FIIs ──", None),
-        ("Dividend Yield mínimo",  f"{f['dy_min']*100:.2f}%"),
+        ("DY médio (12 meses) mínimo",  f"{f['dy_min']*100:.2f}%"),
         ("Liquidez diária mínima", f"R$ {f['liquidez_min']:,.0f}".replace(",", ".")),
         ("Patrimônio mínimo",      f"R$ {f['patrimonio_min']:,.0f}".replace(",", ".")),
         (None, None),
-        ("── FILTROS POR QUARTIL: FIIs (calculados a cada execução) ──", None),
-        ("P/VP",                "≤ Q25 do universo elegível (mais barato)"),
-        ("Dividend Yield",      "≥ Q75 do universo elegível (maior renda)"),
-        ("Liquidez diária",     "≥ Q75 do universo elegível (mais líquido)"),
-        ("Patrimônio líquido",  "≥ Q75 do universo elegível (maior porte)"),
-        ("Volatilidade",        "≤ Q75 do universo elegível (menos volátil)"),
-        ("Ordenação final",     "Dividend Yield (desc) → P/VP (asc) → Liquidez (desc)"),
+        ("── SCORE: FIIs — 1/7 CADA ──", None),
+        ("Maior é melhor", "DY médio 12M; liquidez; patrimônio; rentabilidade do período"),
+        ("Menor é melhor", "P/VP; taxa de administração; taxa de performance"),
+        ("Ordenação final", "Score decrescente"),
         (None, None),
         ("── FILTROS FIXOS: AÇÕES ──", None),
         ("Volume diário mínimo", f"R$ {a['volume_min']:,.0f}".replace(",", ".")),
         ("Market Cap mínimo",    f"R$ {a['market_cap_min']:,.0f}".replace(",", ".")),
         ("Dividend Yield mínimo", f"{a['dy_min']*100:.2f}%"),
-        ("Margem Líquida",        "> 0%"),
-        ("ROA",                   "> 0%"),
+        ("Preço/VPA e EV/EBITDA", "> 0 (múltiplos válidos)"),
         (None, None),
-        ("── FILTROS POR QUARTIL: AÇÕES (calculados a cada execução) ──", None),
-        ("Preço/VPA",  "≤ Q25 do universo elegível (mais barato)"),
-        ("Preço/Lucro", "≤ Q25 do universo elegível (mais barato)"),
-        ("EV/EBIT",     "≤ Q25 do universo elegível (mais barato)"),
-        ("EV/EBITDA",   "≤ Q25 do universo elegível (mais barato)"),
-        ("Margem Líquida", "≥ Q75 do universo elegível (mais lucrativa)"),
-        ("ROA",          "≥ Q75 do universo elegível (mais eficiente)"),
-        ("RPL",          "≥ Q75 do universo elegível (maior retorno s/ PL)"),
-        ("Dividend Yield", "≥ Q75 do universo elegível (maior renda)"),
-        ("Ordenação final", "Preço/VPA (asc) → Dividend Yield (desc)"),
+        ("── SCORE: AÇÕES — 1/7 CADA ──", None),
+        ("Maior é melhor", "Dividend Yield; Margem Líquida; ROIC; ROE; Volume 3M"),
+        ("Menor é melhor", "Preço/VPA; EV/EBITDA"),
+        ("Ordenação final", "Score decrescente"),
         (None, None),
         ("── COMO LER AS ABAS DE BASE COMPLETA ──", None),
         (None, "Coluna 'Status': mostra 'Rank #N' se o ativo está no Top N final; "
                "'Aprovado (fora do Top N)' se passou em todos os filtros mas não coube "
-               "no corte; ou 'Eliminado no filtro fixo/quartil: <motivo>' explicando "
+               "no corte; ou 'Eliminado no filtro fixo: <motivo>' explicando "
                "exatamente qual critério reprovou o ativo."),
     ]
 

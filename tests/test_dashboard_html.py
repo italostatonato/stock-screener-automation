@@ -40,3 +40,15 @@ def test_dashboard_hibrida_exibe_novos_pesos_e_serie_rebalanceada():
     assert "const HYBRID_TARGET_WEIGHTS={acoes_top20:.30,fiis_top20:.30,cdi:.20,ivvb11:.20}" in HTML
     assert "portfolioValue=previousPortfolio*(1+intervalReturn)" in HTML
     assert "Pesos-alvo reaplicados a cada nova composição semanal" in HTML
+
+
+def test_dashboard_exibe_sete_indicadores_com_pesos_iguais_por_classe():
+    assert HTML.count("Sete indicadores igualmente ponderados") == 2
+    assert HTML.count("<td>14,29%</td>") == 14
+    assert "DY médio (12 meses)" in HTML
+    assert "Rentabilidade do período" in HTML
+    assert "Taxa de administração" in HTML
+    assert "Taxa de performance" in HTML
+    assert "ROIC (ROInvC)" in HTML
+    assert "ROE (RPL)" in HTML
+    assert "Volume diário médio (3 meses)" in HTML

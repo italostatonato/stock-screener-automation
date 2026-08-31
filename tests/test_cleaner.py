@@ -42,6 +42,13 @@ def test_parse_percent_zero():
     assert result.iloc[0] == 0.0
 
 
+def test_parse_percent_com_sufixo_anual_e_nao_disponivel():
+    result = _parse_percent(pd.Series(["1,20 % A.A", "0,75% a.a.", "N/A"]))
+    assert result.iloc[0] == pytest.approx(0.012)
+    assert result.iloc[1] == pytest.approx(0.0075)
+    assert pd.isna(result.iloc[2])
+
+
 # ── _parse_money ─────────────────────────────────────────────────────────────
 
 def test_parse_money_basico():
@@ -136,3 +143,20 @@ def test_clean_and_normalize_strip_espacos():
     })
     result = clean_and_normalize(df_raw, {})
     assert result["FUNDOS"].iloc[0] == "AAGR11"
+
+
+def test_clean_and_normalize_descarta_taxas_negativas():
+    df_raw = pd.DataFrame({
+        "TAX. ADMINISTRAÇÃO": ["0,90% A.A", "-0,75% A.A"],
+        "TAX. PERFORMANCE": ["20,00%", "-1,00%"],
+    })
+    col_cfg = {
+        "percent": ["TAX. ADMINISTRAÇÃO", "TAX. PERFORMANCE"],
+    }
+
+    result = clean_and_normalize(df_raw, col_cfg)
+
+    assert result["TAX. ADMINISTRAÇÃO"].iloc[0] == pytest.approx(0.009)
+    assert result["TAX. PERFORMANCE"].iloc[0] == pytest.approx(0.20)
+    assert pd.isna(result["TAX. ADMINISTRAÇÃO"].iloc[1])
+    assert pd.isna(result["TAX. PERFORMANCE"].iloc[1])

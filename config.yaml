@@ -39,11 +39,9 @@ scraper:
   cookie_button_id: "didomi-notice-agree-button"
 
 filters:
-  pvp_max: 1.15        # mantido só como referência, não usado no quartil
   dy_min: 0.003        # mínimo absoluto: 0,3% — elimina FIIs sem dividendo
   liquidez_min: 100000 # mínimo absoluto: R$ 100k
   patrimonio_min: 50000000  # mínimo absoluto: R$ 50M
-  volatilidade_max: 50.0
   top_n: 20
   acoes:
     dy_min: 0.02       # mínimo absoluto: 2%
@@ -62,6 +60,9 @@ columns:
     - "DY (12M) MÉDIA"
     - "DY ANO"
     - "DY PATRIMONIAL"
+    - "RENTAB. PERÍODO"
+    - "TAX. ADMINISTRAÇÃO"
+    - "TAX. PERFORMANCE"
   money:
     - "PREÇO ATUAL (R$)"
     - "LIQUIDEZ DIÁRIA (R$)"
