@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "natureza": "OBSERVADO",
+  "historico": {
+    "primeira_data": "2026-06-17",
+    "ultima_data": "2026-08-27",
+    "total_datas": 55
+  },
+  "backtests": {
+    "FII": {
+      "tipo": "FII",
+      "metodologia": "equal_weight; sinal no fechamento D; entrada no próximo pregão; preços ajustados",
+      "primeiro_sinal": "2026-06-18",
+      "primeira_entrada": "2026-06-19",
+      "ultima_saida": "2026-08-27",
+      "periodos": 49,
+      "retorno_liquido_pct": -2.5328,
+      "cagr_pct": -12.6982,
+      "max_drawdown_pct": -6.4935,
+      "cobertura_media_pct": 95.102,
+      "turnover_medio_pct": 7.2449,
+      "custo_configurado_bps": 10.0,
+      "missing_asset_policy": "cash",
+      "precos_defasados_periodos": 0,
+      "retorno_ifix_proxy_pct": -2.0911,
+      "alpha_vs_ifix_proxy_pct": -0.4417
+    },
+    "ACAO": {
+      "tipo": "ACAO",
+      "metodologia": "equal_weight; sinal no fechamento D; entrada no próximo pregão; preços ajustados",
+      "primeiro_sinal": "2026-06-18",
+      "primeira_entrada": "2026-06-19",
+      "ultima_saida": "2026-08-27",
+      "periodos": 46,
+      "retorno_liquido_pct": 0.9811,
+      "cagr_pct": 5.3042,
+      "max_drawdown_pct": -12.6771,
+      "cobertura_media_pct": 100.0,
+      "turnover_medio_pct": 6.1957,
+      "custo_configurado_bps": 10.0,
+      "missing_asset_policy": "cash",
+      "precos_defasados_periodos": 0,
+      "retorno_ibov_pct": 3.8911,
+      "alpha_vs_ibov_pct": -2.9099
+    }
+  }
+}

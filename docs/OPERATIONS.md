@@ -81,6 +81,20 @@ python scripts/rebuild_from_lake.py
 
 Use quando precisar reconstruir derivados de `data/ml` ou `data/backtest` a partir dos snapshots incrementais.
 
+## Reprocessamento histórico point-in-time
+
+```powershell
+python scripts/build_observed_history.py
+python scripts/run_observed_backtest.py
+python scripts/build_point_in_time_history.py --start 2021-01-01
+python scripts/run_point_in_time_backtest.py
+```
+
+Use `--offline` nos dois scripts que acessam mercado para reutilizar os caches.
+Não copie snapshots de `data/point_in_time` para `data/lake`: eles são simulações
+retroativas, não execuções observadas. Consulte `docs/BACKTEST_RETROATIVO.md` antes
+de publicar resultados.
+
 ## Corrigir index.json do dashboard
 
 Se o snapshot existir mas o site carregar data antiga:

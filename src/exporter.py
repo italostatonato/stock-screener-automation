@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 
 
 HYBRID_PORTFOLIO_WEIGHTS = {
-    "acoes_top20": 0.40,
-    "fiis_top20": 0.25,
+    "acoes_top20": 0.30,
+    "fiis_top20": 0.30,
     "cdi": 0.20,
-    "ivvb11": 0.15,
+    "ivvb11": 0.20,
 }
 
 ML_MIN_VALID_WINDOWS = 3
@@ -398,6 +398,7 @@ def _build_portfolio_base100_from_history(
     historico_path: str,
     ticker_col: str,
     price_col: str,
+    rebalance_dates: list[pd.Timestamp] | None = None,
 ) -> list:
     """
     Calcula a evolução da carteira Top 20 em base 100.
@@ -483,6 +484,12 @@ def _build_portfolio_base100_from_history(
         ],
         keep="last",
     )
+
+    if rebalance_dates is not None:
+        allowed_dates = pd.DatetimeIndex(pd.to_datetime(rebalance_dates)).normalize()
+        c = c[c["Data_Carteira"].isin(allowed_dates)].copy()
+        if c.empty:
+            return []
 
     h["Data_Execucao"] = (
         pd.to_datetime(
@@ -718,9 +725,9 @@ def _build_hybrid_portfolio(
     """Monta a Carteira Híbrida Equilibrada e suas contribuições.
 
     Os quatro componentes são rebaseados na primeira data em que todos têm
-    observação. A carteira representa uma alocação inicial nos pesos-alvo;
-    por isso o resultado total é exatamente a soma das contribuições
-    ponderadas exibidas no dashboard.
+    observação. Em cada novo snapshot das carteiras Top 20, os pesos-alvo são
+    reaplicados antes de medir o intervalo seguinte. Assim, mudanças semanais
+    na seleção de ações e FIIs entram dinamicamente no desempenho.
     """
     component_records = {
         "acoes_top20": acoes_series,
@@ -741,9 +748,10 @@ def _build_hybrid_portfolio(
         "nome": "Carteira Híbrida Equilibrada",
         "pesos": HYBRID_PORTFOLIO_WEIGHTS,
         "metodologia": (
-            "Alocação inicial nos pesos-alvo, sem custos e sem rebalanceamento "
-            "intraperíodo; séries Top 20 baseadas em preços, sem reinvestir proventos."
+            "Pesos-alvo reaplicados a cada nova composição registrada; sem custos "
+            "e impostos; séries Top 20 baseadas em preços, sem reinvestir proventos."
         ),
+        "rebalanceamento": "A cada nova composição das carteiras Top 20",
     }
     if missing:
         return {
@@ -786,13 +794,32 @@ def _build_hybrid_portfolio(
             "ativos": {},
         }
 
-    hybrid_series = []
-    for idx, date in enumerate(portfolio_dates):
-        value = sum(
-            HYBRID_PORTFOLIO_WEIGHTS[key] * float(aligned[key][idx]["valor"])
-            for key in HYBRID_PORTFOLIO_WEIGHTS
-        )
-        hybrid_series.append({"data": date.strftime("%Y-%m-%d"), "valor": round(value, 4)})
+    # Rebalanceamento dinâmico: em cada intervalo, o retorno de cada bloco é
+    # aplicado novamente ao seu peso-alvo. Isso evita que uma alta passada faça
+    # o bloco "derivar" de peso nas semanas seguintes.
+    hybrid_value = 100.0
+    contribution_values = {key: 0.0 for key in HYBRID_PORTFOLIO_WEIGHTS}
+    hybrid_series = [{"data": portfolio_dates[0].strftime("%Y-%m-%d"), "valor": 100.0}]
+    contribution_series = {
+        key: [{"data": portfolio_dates[0].strftime("%Y-%m-%d"), "valor": 0.0}]
+        for key in HYBRID_PORTFOLIO_WEIGHTS
+    }
+    for idx in range(1, len(portfolio_dates)):
+        previous_value = hybrid_value
+        for key, weight in HYBRID_PORTFOLIO_WEIGHTS.items():
+            start_value = float(aligned[key][idx - 1]["valor"])
+            end_value = float(aligned[key][idx]["valor"])
+            period_return = end_value / start_value - 1.0
+            contribution_values[key] += previous_value * weight * period_return
+
+        hybrid_value = 100.0 + sum(contribution_values.values())
+        date_text = portfolio_dates[idx].strftime("%Y-%m-%d")
+        hybrid_series.append({"data": date_text, "valor": round(hybrid_value, 4)})
+        for key in HYBRID_PORTFOLIO_WEIGHTS:
+            contribution_series[key].append({
+                "data": date_text,
+                "valor": round(contribution_values[key], 4),
+            })
 
     componentes = []
     for key, weight in HYBRID_PORTFOLIO_WEIGHTS.items():
@@ -803,8 +830,9 @@ def _build_hybrid_portfolio(
             "nome": labels[key],
             "peso_pct": round(weight * 100.0, 2),
             "retorno_pct": round(component_return, 4),
-            "contribuicao_pct": round(weight * component_return, 4),
+            "contribuicao_pct": round(contribution_values[key], 4),
             "serie": records,
+            "contribuicao_serie": contribution_series[key],
         })
 
     comparisons = {
@@ -836,17 +864,27 @@ def _build_hybrid_portfolio(
         "comparativos": comparisons,
         "ativos": {
             "acoes_top20": {
-                "peso_total_pct": 40.0,
-                "peso_por_ativo_pct": round(40.0 / len(action_tickers), 4) if action_tickers else None,
+                "peso_total_pct": HYBRID_PORTFOLIO_WEIGHTS["acoes_top20"] * 100.0,
+                "peso_por_ativo_pct": round(
+                    HYBRID_PORTFOLIO_WEIGHTS["acoes_top20"] * 100.0 / len(action_tickers), 4
+                ) if action_tickers else None,
                 "tickers": action_tickers,
             },
             "fiis_top20": {
-                "peso_total_pct": 25.0,
-                "peso_por_ativo_pct": round(25.0 / len(fii_tickers), 4) if fii_tickers else None,
+                "peso_total_pct": HYBRID_PORTFOLIO_WEIGHTS["fiis_top20"] * 100.0,
+                "peso_por_ativo_pct": round(
+                    HYBRID_PORTFOLIO_WEIGHTS["fiis_top20"] * 100.0 / len(fii_tickers), 4
+                ) if fii_tickers else None,
                 "tickers": fii_tickers,
             },
-            "cdi": {"peso_total_pct": 20.0, "tickers": ["CDI"]},
-            "ivvb11": {"peso_total_pct": 15.0, "tickers": ["IVVB11"]},
+            "cdi": {
+                "peso_total_pct": HYBRID_PORTFOLIO_WEIGHTS["cdi"] * 100.0,
+                "tickers": ["CDI"],
+            },
+            "ivvb11": {
+                "peso_total_pct": HYBRID_PORTFOLIO_WEIGHTS["ivvb11"] * 100.0,
+                "tickers": ["IVVB11"],
+            },
         },
     }
 
@@ -877,12 +915,29 @@ def _calc_carteira_vs_benchmarks(
     fii_hist_path = os.path.join("data", "ml", "historico_fiis.parquet")
     acoes_hist_path = os.path.join("data", "ml", "historico_acoes.parquet")
 
+    # Só rebalanceia quando o snapshot contém simultaneamente os dois Top 20.
+    # Isso impede que uma coleta parcial troque apenas metade da carteira.
+    portfolio_history = _load_parquet_safe(carteira_path)
+    complete_dates = None
+    if {"Data_Carteira", "Tipo"}.issubset(portfolio_history.columns):
+        coverage = portfolio_history[["Data_Carteira", "Tipo"]].copy()
+        coverage["Data_Carteira"] = pd.to_datetime(
+            coverage["Data_Carteira"], errors="coerce"
+        ).dt.normalize()
+        coverage["Tipo"] = coverage["Tipo"].astype(str).str.upper().str.strip()
+        complete_dates = [
+            date
+            for date, group in coverage.dropna(subset=["Data_Carteira"]).groupby("Data_Carteira")
+            if {"FII", "ACAO"}.issubset(set(group["Tipo"]))
+        ]
+
     fiis_series = _build_portfolio_base100_from_history(
         tipo="FII",
         carteira_path=carteira_path,
         historico_path=fii_hist_path,
         ticker_col="FUNDOS",
         price_col="PREÇO ATUAL (R$)",
+        rebalance_dates=complete_dates,
     )
     acoes_series = _build_portfolio_base100_from_history(
         tipo="ACAO",
@@ -890,6 +945,7 @@ def _calc_carteira_vs_benchmarks(
         historico_path=acoes_hist_path,
         ticker_col="Ação",
         price_col="Preço",
+        rebalance_dates=complete_dates,
     )
 
     # Fallback honesto para o primeiro dia: se o parquet ainda não tiver sido

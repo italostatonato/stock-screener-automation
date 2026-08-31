@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "sources": {
+    "cvm_fii": {
+      "url_template": "https://dados.cvm.gov.br/dados/FII/DOC/INF_MENSAL/DADOS/inf_mensal_fii_{year}.zip",
+      "files": [
+        {
+          "path": "data/raw/point_in_time/cvm_fii/inf_mensal_fii_2021.zip",
+          "bytes": 869573,
+          "sha256": "d7450231a77295b9f8a0daac94510062912f6ca8335b0dedc48571123526de0b"
+        },
+        {
+          "path": "data/raw/point_in_time/cvm_fii/inf_mensal_fii_2022.zip",
+          "bytes": 1033449,
+          "sha256": "98fd1edbfaf2a3582dc287081af30861a6a548e5917f0d8fa7b9272b6bc21ec2"
+        },
+        {
+          "path": "data/raw/point_in_time/cvm_fii/inf_mensal_fii_2023.zip",
+          "bytes": 1157803,
+          "sha256": "24b0d858fa3b8b1481ae9e675e14b907f3d8a95038a770a55711a9ba5ea4d8a3"
+        },
+        {
+          "path": "data/raw/point_in_time/cvm_fii/inf_mensal_fii_2024.zip",
+          "bytes": 1346547,
+          "sha256": "1e9df17fbd3cc9a7118046f71622c8a32aa01739d604e5fc0d58536824e6c4e3"
+        },
+        {
+          "path": "data/raw/point_in_time/cvm_fii/inf_mensal_fii_2025.zip",
+          "bytes": 1522359,
+          "sha256": "12f2870898f8894538b81c58c1371a792caa90135564158a9003656518f2c35a"
+        },
+        {
+          "path": "data/raw/point_in_time/cvm_fii/inf_mensal_fii_2026.zip",
+          "bytes": 999368,
+          "sha256": "e3d1ea0a1ff70a1842731845024a30ac154a80c3f6921bc3a68bca77e16b10f5"
+        }
+      ]
+    },
+    "b3_cotahist": {
+      "url_template": "https://bvmf.bmfbovespa.com.br/InstDados/SerHist/COTAHIST_A{year}.ZIP",
+      "observacao": "preços não ajustados por proventos; usados para features/sinais, não retorno total",
+      "files": [
+        {
+          "path": "data/raw/point_in_time/b3/COTAHIST_A2021.ZIP",
+          "bytes": 49678679,
+          "sha256": "b0d4aed17d609c7ba615a23320c2fd513b580a251ae7d884a5015ef8a3fe4705"
+        },
+        {
+          "path": "data/raw/point_in_time/b3/COTAHIST_A2022.ZIP",
+          "bytes": 58597842,
+          "sha256": "a4f9015b755f797d9c08b0d13f19dbfab18a6c75f379c0271a1cf1b5f6323cd8"
+        },
+        {
+          "path": "data/raw/point_in_time/b3/COTAHIST_A2023.ZIP",
+          "bytes": 70216090,
+          "sha256": "ad1603788d78aaa1de806498572277f1d9443f88ae116452751b5800cb23523e"
+        },
+        {
+          "path": "data/raw/point_in_time/b3/COTAHIST_A2024.ZIP",
+          "bytes": 79261198,
+          "sha256": "96a003d10fab0fa2ace0c64cdc2b892b4c111adf9da8e538aa0b28437bd2a172"
+        },
+        {
+          "path": "data/raw/point_in_time/b3/COTAHIST_A2025.ZIP",
+          "bytes": 89056788,
+          "sha256": "6cc0ad851c8f605ca30418acac48be81f1767f6ed05b4f563772d06ae448047d"
+        },
+        {
+          "path": "data/raw/point_in_time/b3/COTAHIST_A2026.ZIP",
+          "bytes": 75695477,
+          "sha256": "2e118470d04c2cd2637c857561fbf59e19533a650aa29d71cd16d44110008ca0"
+        }
+      ]
+    }
+  },
+  "fundamental_rows": 61486,
+  "price_rows": 1784703
+}

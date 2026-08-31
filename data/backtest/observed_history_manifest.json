@@ -1,0 +1,513 @@
+{
+  "schema_version": 1,
+  "natureza": "OBSERVADO",
+  "descricao": "Carteiras efetivamente publicadas; não representa universo histórico completo.",
+  "primeira_data": "2026-06-17",
+  "ultima_data": "2026-08-27",
+  "total_datas": 55,
+  "datas_completas": 51,
+  "datas_incompletas": [
+    "2026-06-17",
+    "2026-08-21",
+    "2026-08-24",
+    "2026-08-25"
+  ],
+  "total_linhas": 2121,
+  "datas": [
+    {
+      "data": "2026-06-17",
+      "fiis": 2,
+      "acoes": 19,
+      "completo": false,
+      "origens": [
+        "excel_output"
+      ]
+    },
+    {
+      "data": "2026-06-18",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "excel_output"
+      ]
+    },
+    {
+      "data": "2026-06-21",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-06-22",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-06-23",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-06-24",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-06-25",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-06-26",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-06-28",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-06-29",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-06-30",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-07-01",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-07-02",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-07-03",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "dashboard_json"
+      ]
+    },
+    {
+      "data": "2026-07-04",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-06",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-07",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-08",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-09",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-10",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-13",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-14",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-15",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-16",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-17",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-20",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-21",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-22",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-23",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-24",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-25",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-27",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-28",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-29",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-30",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-07-31",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-03",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-04",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-05",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-06",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-07",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-10",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-11",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-12",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-13",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-14",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-17",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-18",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-19",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-20",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-21",
+      "fiis": 20,
+      "acoes": 0,
+      "completo": false,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-24",
+      "fiis": 20,
+      "acoes": 0,
+      "completo": false,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-25",
+      "fiis": 20,
+      "acoes": 0,
+      "completo": false,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-26",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    },
+    {
+      "data": "2026-08-27",
+      "fiis": 20,
+      "acoes": 20,
+      "completo": true,
+      "origens": [
+        "lake_top"
+      ]
+    }
+  ]
+}

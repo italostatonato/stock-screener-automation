@@ -1,0 +1,11 @@
+{
+  "data_sinal": "2024-01-31",
+  "natureza": "SIMULADO_POINT_IN_TIME",
+  "strategy_version": "fii_v1_legacy_selection",
+  "universe_rows": 321,
+  "top_rows": 1,
+  "target_rows": 20,
+  "carteira_completa": false,
+  "fundamento_mais_recente": "2023-12-01",
+  "disponibilidade_mais_recente": "2024-01-31"
+}

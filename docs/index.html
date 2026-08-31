@@ -1056,10 +1056,10 @@
       <div class="section-head"><div><h2>Carteira Híbrida Equilibrada</h2><p class="desc">Uma carteira teórica que combina crescimento, renda, proteção cambial e renda fixa.</p></div></div>
       <div class="hybrid-thesis"><span>Como se equilibra</span><p><b>Cada bloco tem uma função:</b> ações buscam crescimento, FIIs reforçam renda, CDI reduz oscilações e IVVB11 amplia a diversificação para fora do Brasil.</p></div>
       <div class="hybrid-allocation" aria-label="Alocação alvo e função de cada componente da carteira">
-        <article class="allocation-card acoes"><span class="allocation-kicker">Renda variável BR</span><div class="allocation-value-line"><strong>40%</strong><span class="allocation-role">Motor de crescimento</span></div><b class="allocation-title">Top 20 Ações BR</b><p>Reúne as ações brasileiras com melhor combinação de qualidade, preço e dividendos segundo o score.</p><div class="allocation-foot"><span>20 ativos</span><span>2,00% por ação</span></div></article>
-        <article class="allocation-card fiis"><span class="allocation-kicker">Renda imobiliária</span><div class="allocation-value-line"><strong>25%</strong><span class="allocation-role">Renda + imóveis</span></div><b class="allocation-title">Top 20 FIIs</b><p>Adiciona renda imobiliária e diversificação setorial por meio dos fundos mais bem ranqueados.</p><div class="allocation-foot"><span>20 fundos</span><span>1,25% por FII</span></div></article>
+        <article class="allocation-card acoes"><span class="allocation-kicker">Renda variável BR</span><div class="allocation-value-line"><strong>30%</strong><span class="allocation-role">Motor de crescimento</span></div><b class="allocation-title">Top 20 Ações BR</b><p>Reúne as ações brasileiras com melhor combinação de qualidade, preço e dividendos segundo o score.</p><div class="allocation-foot"><span>20 ativos</span><span>1,50% por ação</span></div></article>
+        <article class="allocation-card fiis"><span class="allocation-kicker">Renda imobiliária</span><div class="allocation-value-line"><strong>30%</strong><span class="allocation-role">Renda + imóveis</span></div><b class="allocation-title">Top 20 FIIs</b><p>Adiciona renda imobiliária e diversificação setorial por meio dos fundos mais bem ranqueados.</p><div class="allocation-foot"><span>20 fundos</span><span>1,50% por FII</span></div></article>
         <article class="allocation-card cdi"><span class="allocation-kicker">Renda fixa</span><div class="allocation-value-line"><strong>20%</strong><span class="allocation-role">Estabilidade</span></div><b class="allocation-title">CDI</b><p>Funciona como amortecedor da carteira, preservando liquidez e reduzindo parte das oscilações da renda variável.</p><div class="allocation-foot"><span>Pós-fixado</span><span>20% da carteira</span></div></article>
-        <article class="allocation-card ivvb"><span class="allocation-kicker">Exposição internacional</span><div class="allocation-value-line"><strong>15%</strong><span class="allocation-role">Diversificação global</span></div><b class="allocation-title">IVVB11</b><p>Traz exposição às maiores empresas dos EUA e ao dólar, diminuindo a dependência do mercado brasileiro.</p><div class="allocation-foot"><span>S&amp;P 500 + dólar</span><span>15% da carteira</span></div></article>
+        <article class="allocation-card ivvb"><span class="allocation-kicker">Exposição internacional</span><div class="allocation-value-line"><strong>20%</strong><span class="allocation-role">Diversificação global</span></div><b class="allocation-title">IVVB11</b><p>Traz exposição às maiores empresas dos EUA e ao dólar, diminuindo a dependência do mercado brasileiro.</p><div class="allocation-foot"><span>S&amp;P 500 + dólar</span><span>20% da carteira</span></div></article>
       </div>
       <div class="panel wide">
         <h3>Desempenho comparado</h3>
@@ -1074,7 +1074,7 @@
           </table>
         </div>
         <div class="holdings-grid" id="hybridHoldings"></div>
-        <div class="hybrid-method"><span>Pesos-alvo aplicados no início do período</span><span>Sem custos e impostos</span><span>Carteiras Top 20 igualmente ponderadas</span><span>Contribuições exibidas com 3 casas decimais</span><span>Proventos não reinvestidos nas séries Top 20</span></div>
+        <div class="hybrid-method"><span>Rebalanceamento a cada nova composição semanal</span><span>Sem custos e impostos</span><span>Carteiras Top 20 igualmente ponderadas</span><span>Contribuições exibidas com 3 casas decimais</span><span>Proventos não reinvestidos nas séries Top 20</span></div>
         <div class="chart-explain"><b>Como ler:</b> a contribuição ponderada é o resultado de cada componente multiplicado por seu peso. A soma dessas contribuições forma o resultado da Carteira Híbrida no período escolhido.</div>
       </div>
     </section>
@@ -2288,6 +2288,7 @@ const CHART_PERIODS = {
       if(value==null || !Number.isFinite(Number(value)) || Number(value)===0) return '';
       return Number(value)>0?'result-positive':'result-negative';
     }
+    const HYBRID_TARGET_WEIGHTS={acoes_top20:.30,fiis_top20:.30,cdi:.20,ivvb11:.20};
     function fullAssetName(rec,ticker,type){
       const candidates=type==='acao'
         ? [rec?.Empresa]
@@ -2304,12 +2305,12 @@ const CHART_PERIODS = {
       const fallbackActions=(state.data?.acoes||[]).map(x=>x['Ação']).filter(Boolean);
       const fallbackFiis=(state.data?.fiis||[]).map(x=>x.FUNDOS).filter(Boolean);
       const groups=[
-        {title:'Ações BR selecionadas',key:'acoes_top20',type:'acao',tickers:assets.acoes_top20?.tickers||fallbackActions,total:40},
-        {title:'FIIs selecionados',key:'fiis_top20',type:'fii',tickers:assets.fiis_top20?.tickers||fallbackFiis,total:25}
+        {title:'Ações BR selecionadas',key:'acoes_top20',type:'acao',tickers:assets.acoes_top20?.tickers||fallbackActions,total:30},
+        {title:'FIIs selecionados',key:'fiis_top20',type:'fii',tickers:assets.fiis_top20?.tickers||fallbackFiis,total:30}
       ];
       root.innerHTML=groups.map(group=>{
         const tickers=group.tickers||[];
-        const perAsset=assets[group.key]?.peso_por_ativo_pct ?? (tickers.length?group.total/tickers.length:null);
+        const perAsset=tickers.length?group.total/tickers.length:null;
         const detail=perAsset==null?'—':`${fmtNum(perAsset,2)}% por ativo`;
         const pills=tickers.length
           ? tickers.map(ticker=>{
@@ -2344,8 +2345,10 @@ const CHART_PERIODS = {
       }
       const calculated=components.map(component=>{
         const componentReturn=componentReturns?.[component.chave];
-        const contribution=componentReturn==null?null:Number(component.peso_pct)/100*Number(componentReturn);
-        return {component,componentReturn,contribution};
+        const contribution=componentReturns?.contributions?.[component.chave]
+          ?? (componentReturn==null?null:(HYBRID_TARGET_WEIGHTS[component.chave]??Number(component.peso_pct)/100)*Number(componentReturn));
+        const weightPct=(HYBRID_TARGET_WEIGHTS[component.chave]??Number(component.peso_pct)/100)*100;
+        return {component,componentReturn,contribution,weightPct};
       });
       const totalContribution=calculated.reduce((sum,item)=>finite(item.contribution)?sum+Number(item.contribution):sum,0);
       const maxMagnitude=Math.max(.01,...calculated.flatMap(item=>[Math.abs(Number(item.componentReturn)||0),Math.abs(Number(item.contribution)||0)]));
@@ -2354,7 +2357,7 @@ const CHART_PERIODS = {
         const width=finite(value)?Math.max(5,Math.min(100,Math.abs(Number(value))/maxMagnitude*100)):0;
         return `<div class="result-cell"><strong>${signedPctPoint(value,dec)}</strong><small>${reading}</small><span class="result-meter" aria-hidden="true"><i style="width:${width}%"></i></span></div>`;
       };
-      const rows=calculated.map(({component,componentReturn,contribution})=>`<tr><td><span class="component-name">${component.nome}</span><span class="component-note">${notes[component.chave]||''}</span></td><td>${fmtNum(component.peso_pct,2)}%</td><td class="${resultClass(componentReturn)}">${resultCell(componentReturn)}</td><td class="${resultClass(contribution)}">${resultCell(contribution,'contribution',3)}</td></tr>`).join('');
+      const rows=calculated.map(({component,componentReturn,contribution,weightPct})=>`<tr><td><span class="component-name">${component.nome}</span><span class="component-note">${notes[component.chave]||''}</span></td><td>${fmtNum(weightPct,2)}%</td><td class="${resultClass(componentReturn)}">${resultCell(componentReturn)}</td><td class="${resultClass(contribution)}">${resultCell(contribution,'contribution',3)}</td></tr>`).join('');
       body.innerHTML=`${rows}<tr class="total-row"><td>Carteira Híbrida Equilibrada</td><td>100,00%</td><td class="${resultClass(totalContribution)}">${resultCell(totalContribution,'result',3)}</td><td class="${resultClass(totalContribution)}">${resultCell(totalContribution,'contribution',3)}</td></tr>`;
     }
     function renderHybridPortfolio(){
@@ -2376,21 +2379,33 @@ const CHART_PERIODS = {
       const allLabels=[...new Set((hybrid.serie||[]).map(x=>String(x.data)))].sort();
       ensureChartPeriodControls('hybridPortfolioChart',allLabels);
       const labels=filteredLabelsForPeriod(allLabels,'hybridPortfolioChart');
-      const componentReturns={};
+      const componentReturns={contributions:{}};
       const componentArrays={};
+      const componentLevels={};
       components.forEach(component=>{
         const values=alignedReturnForWindow(component.serie||[],labels,{fillForward:true});
         componentArrays[component.chave]=values;
         componentReturns[component.chave]=lastNumeric(values);
+        componentLevels[component.chave]=alignSeriesToLabels(component.serie||[],labels,{fillForward:true});
+        componentReturns.contributions[component.chave]=0;
       });
+      let portfolioValue=100;
       const weightedReturn=labels.map((_,index)=>{
-        let total=0;
+        if(index===0) return 0;
+        const previousPortfolio=portfolioValue;
+        let intervalReturn=0;
         for(const component of components){
-          const value=componentArrays[component.chave]?.[index];
-          if(value==null || !Number.isFinite(Number(value))) return null;
-          total+=Number(component.peso_pct)/100*Number(value);
+          const levels=componentLevels[component.chave]||[];
+          const start=Number(levels[index-1]);
+          const end=Number(levels[index]);
+          if(!Number.isFinite(start)||!Number.isFinite(end)||start<=0||end<=0) return null;
+          const weight=HYBRID_TARGET_WEIGHTS[component.chave]??Number(component.peso_pct)/100;
+          const componentIntervalReturn=end/start-1;
+          intervalReturn+=weight*componentIntervalReturn;
+          componentReturns.contributions[component.chave]+=previousPortfolio*weight*componentIntervalReturn;
         }
-        return total;
+        portfolioValue=previousPortfolio*(1+intervalReturn);
+        return portfolioValue-100;
       });
       const comparisonOrder=['CDI','IFIX','Top 20 FIIs','Top 20 Ações BR','IPCA'];
       const datasets=[{
@@ -2409,7 +2424,7 @@ const CHART_PERIODS = {
       const yMax=Math.max(0,maxVal+padding);
       const first=labels[0]||hybrid.inicio;
       const last=labels[labels.length-1]||hybrid.fim||first;
-      if(note) note.textContent=`Retorno de ${first} até ${last}. Pesos-alvo reaplicados no início do período selecionado.`;
+      if(note) note.textContent=`Retorno de ${first} até ${last}. Pesos-alvo reaplicados a cada nova composição semanal.`;
       renderHybridTable(hybrid,componentReturns);
       const totalReturn=lastNumeric(weightedReturn);
       const cdiReturn=lastNumeric(datasets.find(ds=>ds.label==='CDI')?.data);

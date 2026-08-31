@@ -52,6 +52,9 @@ src/
   market_data.py                IPCA, Selic, IGP-M, câmbio e cripto
   benchmark.py                  IBOV, IFIX, IMOB, CDI e séries de mercado
   backtest.py                   Backtest e carteira histórica Top 20
+  backtest_engine.py            Backtest auditável com calendário, custos e cobertura
+  observed_history.py           Recupera carteiras realmente publicadas
+  point_in_time.py              Backfill mensal sem look-ahead com CVM + B3
   ml_storage.py                 Append dos históricos consolidados em Parquet
   dataset_builder.py            Feature engineering e targets futuros
   ml_models.py                  Modelos ML em modo sombra
@@ -71,6 +74,7 @@ data/
   output/                       Excel diário final
   ml/                           Históricos, datasets e previsões ML
   backtest/                     Carteiras históricas
+  point_in_time/                Rankings retroativos sintéticos, isolados do observado
   lake/                         Fonte incremental oficial
     manifest.json               Manifesto global do lake
     quality_report.json         Último relatório de qualidade
@@ -79,6 +83,10 @@ data/
 scripts/
   healthcheck_data.py           Validação de dados, duplicatas e dashboard
   rebuild_from_lake.py          Reconstrução de derivados a partir do lake
+  build_observed_history.py     Consolida o histórico realmente observado
+  build_point_in_time_history.py Backfill mensal de FIIs desde 2021
+  run_observed_backtest.py      Backtest das carteiras publicadas
+  run_point_in_time_backtest.py Backtest do histórico sintético point-in-time
 
 tests/                          Testes automatizados
 .github/workflows/
@@ -121,7 +129,7 @@ O dashboard web é publicado via GitHub Pages e carrega sempre o snapshot mais r
 Principais telas:
 
 - **Visão geral**: KPIs comparativos, score, resumo Top 20 e comparativos em base 100.
-- **Carteira Híbrida**: 40% Top 20 Ações BR, 25% Top 20 FIIs, 20% CDI e 15% IVVB11, com contribuição ponderada e benchmarks.
+- **Carteira Híbrida**: 30% Top 20 Ações BR, 30% Top 20 FIIs, 20% CDI e 20% IVVB11, rebalanceada a cada nova composição semanal, com contribuição ponderada e benchmarks.
 - **Ações**: ranking de ações com preço, score e principais indicadores.
 - **FIIs**: ranking de FIIs com preço, score, DY, P/VP, liquidez e setor.
 - **Recorrentes**: ativos que mais apareceram no Top 20 histórico, com indicadores atuais.
@@ -186,6 +194,26 @@ docs/data/YYYY-MM-DD.json
 ```
 
 O dashboard deve receber dados agregados e prontos para tela. Histórico bruto deve ficar no lake e nos Parquets.
+
+### 4. Histórico retroativo e backtests auditáveis
+
+O projeto mantém duas naturezas de dado sem misturá-las:
+
+- `OBSERVADO`: carteira que foi efetivamente publicada na data registrada;
+- `SIMULADO_POINT_IN_TIME`: ranking reconstruído depois, usando apenas informação que já estava pública na data do sinal.
+
+Para reconstruir e testar:
+
+```powershell
+python scripts/build_observed_history.py
+python scripts/run_observed_backtest.py
+python scripts/build_point_in_time_history.py --start 2021-01-01
+python scripts/run_point_in_time_backtest.py
+```
+
+O motor entra no pregão seguinte ao sinal, usa preços ajustados, equal weight,
+10 bps de custo por turnover por padrão e audita ativos sem preço. Veja
+`docs/BACKTEST_RETROATIVO.md` para premissas, saídas e limitações.
 
 ---
 

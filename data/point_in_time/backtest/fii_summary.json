@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "natureza": "SIMULADO_POINT_IN_TIME",
+  "strategy_version": "fii_v1_legacy_selection",
+  "carteiras_parciais_incluidas": false,
+  "summary": {
+    "tipo": "FII",
+    "metodologia": "equal_weight; sinal no fechamento D; entrada no próximo pregão; preços ajustados",
+    "primeiro_sinal": "2021-02-26",
+    "primeira_entrada": "2021-03-01",
+    "ultima_saida": "2026-08-27",
+    "periodos": 61,
+    "retorno_liquido_pct": 29.219,
+    "cagr_pct": 4.7804,
+    "max_drawdown_pct": -11.6152,
+    "cobertura_media_pct": 72.0406,
+    "turnover_medio_pct": 45.0,
+    "custo_configurado_bps": 10.0,
+    "missing_asset_policy": "cash",
+    "precos_defasados_periodos": 2,
+    "retorno_ifix_proxy_pct": 27.4052,
+    "alpha_vs_ifix_proxy_pct": 1.8137
+  },
+  "b3_price_only_summary": {
+    "tipo": "FII",
+    "metodologia": "equal_weight; sinal no fechamento D; entrada no próximo pregão; COTAHIST B3 sem ajuste por proventos (retorno de preço)",
+    "primeiro_sinal": "2021-02-26",
+    "primeira_entrada": "2021-03-01",
+    "ultima_saida": "2026-08-27",
+    "periodos": 61,
+    "retorno_liquido_pct": -47.4535,
+    "cagr_pct": -11.0611,
+    "max_drawdown_pct": -46.9051,
+    "cobertura_media_pct": 94.6678,
+    "turnover_medio_pct": 45.0,
+    "custo_configurado_bps": 10.0,
+    "missing_asset_policy": "cash",
+    "precos_defasados_periodos": 7,
+    "retorno_ifix_proxy_preco_pct": 27.4052,
+    "alpha_vs_ifix_proxy_preco_pct": -74.8588
+  }
+}

@@ -31,3 +31,12 @@ def test_dashboard_mobile_reduz_histograma_e_nao_forca_scroll_ml():
 def test_dashboard_tooltip_nao_repete_ticker_como_nome_completo():
     assert "function fullAssetName(rec,ticker,type)" in HTML
     assert "Nome completo não disponível na fonte" in HTML
+
+
+def test_dashboard_hibrida_exibe_novos_pesos_e_serie_rebalanceada():
+    assert '<strong>30%</strong><span class="allocation-role">Motor de crescimento' in HTML
+    assert '<strong>30%</strong><span class="allocation-role">Renda + imóveis' in HTML
+    assert HTML.count('<strong>20%</strong>') >= 2
+    assert "const HYBRID_TARGET_WEIGHTS={acoes_top20:.30,fiis_top20:.30,cdi:.20,ivvb11:.20}" in HTML
+    assert "portfolioValue=previousPortfolio*(1+intervalReturn)" in HTML
+    assert "Pesos-alvo reaplicados a cada nova composição semanal" in HTML

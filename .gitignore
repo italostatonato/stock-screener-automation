@@ -2,6 +2,8 @@
 data/input/
 data/output/
 data/old/
+data/raw/
+data/point_in_time/foundation/
 logs/
 
 # Python
@@ -12,6 +14,7 @@ __pycache__/
 venv/
 *.egg-info/
 .pytest_cache/
+.test-tmp/
 
 # Credenciais
 .env

@@ -1,0 +1,11 @@
+{
+  "data_sinal": "2026-08-27",
+  "natureza": "SIMULADO_POINT_IN_TIME",
+  "strategy_version": "fii_v1_legacy_selection",
+  "universe_rows": 373,
+  "top_rows": 20,
+  "target_rows": 20,
+  "carteira_completa": true,
+  "fundamento_mais_recente": "2026-07-01",
+  "disponibilidade_mais_recente": "2026-08-20"
+}
