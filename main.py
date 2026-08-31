@@ -1,7 +1,8 @@
 import logging
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
@@ -30,6 +31,21 @@ from src.data_lake import (
 from src.delivery import deliver_excel
 
 
+APP_TIMEZONE = ZoneInfo("America/Sao_Paulo")
+
+
+def current_run_date(now: datetime | None = None) -> str:
+    """Retorna a data civil da execução no fuso oficial do dashboard.
+
+    O GitHub Actions roda em UTC. Sem a conversão explícita, execuções no
+    começo da madrugada UTC podiam criar o snapshot do dia seguinte no Brasil.
+    """
+    current = now or datetime.now(timezone.utc)
+    if current.tzinfo is None:
+        current = current.replace(tzinfo=timezone.utc)
+    return current.astimezone(APP_TIMEZONE).strftime("%Y-%m-%d")
+
+
 def setup_logging(logs_dir: str):
     os.makedirs(logs_dir, exist_ok=True)
 
@@ -41,7 +57,7 @@ def setup_logging(logs_dir: str):
 
     log_file = os.path.join(
         logs_dir,
-        f"{datetime.today().strftime('%Y-%m-%d')}.log",
+        f"{current_run_date()}.log",
     )
 
     logging.basicConfig(
@@ -64,7 +80,7 @@ def main():
 
     paths = cfg["paths"]
 
-    data_hoje = datetime.today().strftime("%Y-%m-%d")
+    data_hoje = current_run_date()
 
     data_dir = paths.get("data_dir", "data")
     ml_dir = os.path.join(data_dir, "ml")

@@ -115,7 +115,16 @@ def get_benchmarks(meses: int = 13) -> dict:
     result = {}
 
     for nome, ticker in YAHOO_TICKERS.items():
-        result[nome] = _fetch_yahoo(ticker, nome, meses)
+        serie = _fetch_yahoo(ticker, nome, meses)
+        if len(serie) < 2:
+            logger.warning(
+                "%s (%s): apenas %s ponto(s); benchmark omitido por não formar uma série",
+                nome,
+                ticker,
+                len(serie),
+            )
+            serie = pd.DataFrame(columns=["data", "valor"])
+        result[nome] = serie
 
     for nome, codigo in BCB_SERIES.items():
         df_raw = _fetch_bcb(codigo, meses)

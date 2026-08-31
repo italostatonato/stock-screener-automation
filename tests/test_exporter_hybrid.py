@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from src.exporter import _build_hybrid_portfolio
+from src.exporter import _base100_records_from_date, _build_hybrid_portfolio
 
 
 def _records(start, end):
@@ -54,3 +54,12 @@ def test_build_hybrid_portfolio_exige_ivvb11():
     assert result["disponivel"] is False
     assert "IVVB11" in result["motivo"]
     assert result["serie"] == []
+
+
+def test_base100_rejeita_benchmark_com_apenas_um_ponto():
+    single = pd.DataFrame({
+        "data": pd.to_datetime(["2026-01-09"]),
+        "valor": [123.0],
+    })
+
+    assert _base100_records_from_date(single, pd.Timestamp("2026-01-02")) == []

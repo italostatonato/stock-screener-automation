@@ -58,7 +58,7 @@ def select_top_fiis(df: pd.DataFrame, cfg: dict):
     """
     required_cols = [
         "P/VP", "DIVIDEND YIELD", "LIQUIDEZ DIÁRIA (R$)",
-        "PATRIMÔNIO LÍQUIDO", "VOLATILIDADE"
+        "PATRIMÔNIO LÍQUIDO", "VOLATILIDADE", "Score"
     ]
     missing = [c for c in required_cols if c not in df.columns]
     if missing:
@@ -118,9 +118,14 @@ def select_top_fiis(df: pd.DataFrame, cfg: dict):
         result = base.copy()
         used_quartil_fallback = True
 
+    # Os filtros definem o universo elegível; o ranking final precisa refletir
+    # o score multifatorial exibido no site. DY, P/VP e liquidez já participam
+    # do score e não devem substituir a ordenação oficial nesta etapa.
+    result["Score"] = pd.to_numeric(result["Score"], errors="coerce")
     result = result.sort_values(
-        by=["DIVIDEND YIELD", "P/VP", "LIQUIDEZ DIÁRIA (R$)"],
-        ascending=[False, True, False]
+        by=["Score", "FUNDOS"],
+        ascending=[False, True],
+        na_position="last",
     ).head(f["top_n"]).reset_index(drop=True)
 
     logger.info(f"Top {len(result)} FIIs selecionados.")

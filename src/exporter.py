@@ -18,6 +18,9 @@ HYBRID_PORTFOLIO_WEIGHTS = {
     "ivvb11": 0.15,
 }
 
+ML_MIN_VALID_WINDOWS = 3
+ML_MAX_ABS_EXPECTED_RETURN = 0.50
+
 
 def _safe(val):
     if val is None:
@@ -292,7 +295,9 @@ def _base100_records_from_date(df_serie, start_date: pd.Timestamp | None = None)
         clean_all.append({"data_ts": data, "data": data.strftime("%Y-%m-%d"), "valor": valor})
 
     clean_all = sorted(clean_all, key=lambda x: x["data_ts"])
-    if not clean_all:
+    # Um único fechamento não contém variação e não pode ser apresentado como
+    # benchmark plano. É melhor sinalizar indisponibilidade do que sugerir 0%.
+    if len({r["data"] for r in clean_all}) < 2:
         return []
 
     if start_date is None:
@@ -1089,6 +1094,90 @@ def _performance_records(path: str) -> list:
     return [{col: _safe(row[col]) for col in existing} for _, row in df[existing].iterrows()]
 
 
+def _apply_ml_prediction_guardrails(records: list, performance_records: list) -> list:
+    """Separa score de ranking de projeção de retorno ainda imatura.
+
+    O ranking continua disponível em modo sombra, mas a projeção só é exibida
+    depois de três janelas realizadas do mesmo modelo/horizonte. Projeções com
+    magnitude acima de 50% também ficam ocultas e marcadas como outlier; o
+    valor bruto é preservado no JSON para auditoria.
+    """
+    windows_by_model = {
+        (
+            str(row.get("Tipo") or "").upper(),
+            str(row.get("Modelo") or "").strip().casefold(),
+            str(row.get("Horizonte") or "").lower(),
+        ): int(row.get("Janelas_Validas") or 0)
+        for row in (performance_records or [])
+    }
+
+    guarded = []
+    for original in records or []:
+        row = dict(original)
+        if row.get("retorno_esperado_7d") is not None:
+            raw_return = row.get("retorno_esperado_7d")
+            horizon = "7d"
+        else:
+            raw_return = row.get("retorno_esperado_30d")
+            horizon = "30d"
+
+        try:
+            numeric_return = float(raw_return) if raw_return is not None else None
+            if numeric_return is not None and not np.isfinite(numeric_return):
+                numeric_return = None
+        except (TypeError, ValueError):
+            numeric_return = None
+
+        model = str(row.get("modelo_lider") or "").strip()
+        model_key = model.casefold()
+        tipo = str(row.get("Tipo") or "").upper()
+        windows = windows_by_model.get((tipo, model_key, horizon), 0)
+        is_outlier = numeric_return is not None and abs(numeric_return) > ML_MAX_ABS_EXPECTED_RETURN
+        enough_history = windows >= ML_MIN_VALID_WINDOWS
+        reliable = numeric_return is not None and enough_history and not is_outlier
+
+        if numeric_return is None:
+            reason = "Projeção ainda não calculada para este ativo."
+        elif is_outlier:
+            reason = (
+                f"Projeção bruta de {numeric_return:+.2%} ocultada por exceder o limite "
+                f"de ±{ML_MAX_ABS_EXPECTED_RETURN:.0%}."
+            )
+        elif not enough_history:
+            reason = (
+                f"{model or 'Modelo'} possui {windows} de {ML_MIN_VALID_WINDOWS} "
+                f"janelas válidas de {horizon}; projeção ainda em validação."
+            )
+        else:
+            reason = f"Projeção respaldada por {windows} janelas válidas de {horizon}."
+
+        row.update({
+            "retorno_esperado_exibicao": round(numeric_return, 4) if reliable else None,
+            "retorno_esperado_horizonte": horizon,
+            "projecao_confiavel": reliable,
+            "projecao_outlier": is_outlier,
+            "janelas_validas_modelo": windows,
+            "min_janelas_validas_projecao": ML_MIN_VALID_WINDOWS,
+            "motivo_projecao": reason,
+        })
+        guarded.append(row)
+    return guarded
+
+
+def _mark_immature_ml_performance(performance_records: list) -> list:
+    marked = []
+    for original in performance_records or []:
+        row = dict(original)
+        windows = int(row.get("Janelas_Validas") or 0)
+        model = str(row.get("Modelo") or "")
+        if model != "Score Top" and windows < ML_MIN_VALID_WINDOWS:
+            row["Status_Exibicao"] = "Em validação"
+        else:
+            row["Status_Exibicao"] = row.get("Status")
+        marked.append(row)
+    return marked
+
+
 _ML_HISTORY_SCORE_COLUMNS = {
     "score_top": "Score Top",
     "score_ridge": "Ridge",
@@ -1310,6 +1399,9 @@ def _calc_modelos_ml(top_fiis: pd.DataFrame = None, top_acoes: pd.DataFrame = No
         horizon_days=7,
     )
     performance = add_confidence_to_performance_records(performance, confidence)
+    performance = _mark_immature_ml_performance(performance)
+    acoes = _apply_ml_prediction_guardrails(acoes, performance)
+    fiis = _apply_ml_prediction_guardrails(fiis, performance)
     performance_history = _model_performance_history_records(
         os.path.join(ml_dir, "model_predictions_acoes.parquet"),
         os.path.join(ml_dir, "dataset_acoes.parquet"),
@@ -1345,6 +1437,14 @@ def _calc_modelos_ml(top_fiis: pd.DataFrame = None, top_acoes: pd.DataFrame = No
         },
         "performance": performance,
         "performance_historica": performance_history,
+        "guardrails": {
+            "min_janelas_validas_projecao": ML_MIN_VALID_WINDOWS,
+            "limite_retorno_esperado_abs_pct": ML_MAX_ABS_EXPECTED_RETURN * 100.0,
+            "politica": (
+                "Projeções de retorno são ocultadas até o modelo completar o mínimo de janelas "
+                "válidas e quando excedem o limite de magnitude; scores continuam em modo sombra."
+            ),
+        },
         "modelos": [
             "Score Top",
             "Ridge",

@@ -19,6 +19,7 @@ def _make_fii_df(n=20):
         "LIQUIDEZ DIÁRIA (R$)": np.round(np.random.uniform(50_000, 2_000_000, n), 2),
         "PATRIMÔNIO LÍQUIDO": np.round(np.random.uniform(50_000_000, 1_000_000_000, n), 2),
         "VOLATILIDADE": np.round(np.random.uniform(5, 100, n), 2),
+        "Score": np.round(np.random.uniform(0, 100, n), 1),
     })
 
 
@@ -87,13 +88,13 @@ def test_select_top_fiis_filtro_fixo_elimina_dy_baixo():
     assert "Eliminado no filtro fixo" in status_linha_0
 
 
-def test_select_top_fiis_ordenacao_por_dy_desc():
+def test_select_top_fiis_ordenacao_por_score_desc():
     df = _make_fii_df(n=30)
     cfg = _base_cfg()
     top, base = select_top_fiis(df, cfg)
     if len(top) > 1:
-        dys = top["DIVIDEND YIELD"].tolist()
-        assert dys == sorted(dys, reverse=True) or len(set(dys)) < len(dys)  # tolera empates
+        scores = top["Score"].tolist()
+        assert scores == sorted(scores, reverse=True)
 
 
 # ── select_top_acoes ──────────────────────────────────────────────────────────
