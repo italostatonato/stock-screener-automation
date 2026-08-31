@@ -20,6 +20,7 @@ HYBRID_PORTFOLIO_WEIGHTS = {
 
 ML_MIN_VALID_WINDOWS = 3
 ML_MAX_ABS_EXPECTED_RETURN = 0.50
+DASHBOARD_KPI_HISTORY_FILENAME = "kpi-history.json"
 
 
 def _safe(val):
@@ -34,6 +35,74 @@ def _safe(val):
     if isinstance(val, (np.bool_,)):
         return bool(val)
     return val
+
+
+def _finite_number(value):
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return round(number, 4) if np.isfinite(number) else None
+
+
+def _record_mean(records: list[dict], keys: tuple[str, ...]):
+    values = []
+    for record in records or []:
+        value = next((record.get(key) for key in keys if record.get(key) is not None), None)
+        number = _finite_number(value)
+        if number is not None:
+            values.append(number)
+    return round(float(np.mean(values)), 4) if values else None
+
+
+def _dashboard_kpi_history_row(payload: dict, fallback_date: str) -> dict:
+    """Extrai apenas as métricas necessárias para comparativos e sparklines."""
+    kpis = payload.get("kpis") or {}
+    fiis = payload.get("fiis") or []
+    acoes = payload.get("acoes") or []
+    return {
+        "data": str(payload.get("data") or fallback_date)[:10],
+        "dyFiis": _finite_number(kpis.get("dy_medio_fiis_carteira"))
+        if kpis.get("dy_medio_fiis_carteira") is not None
+        else _record_mean(fiis, ("DIVIDEND YIELD",)),
+        "pvpFiis": _finite_number(kpis.get("pvp_medio_fiis_carteira"))
+        if kpis.get("pvp_medio_fiis_carteira") is not None
+        else _record_mean(fiis, ("P/VP",)),
+        "scoreFiis": _finite_number(kpis.get("score_medio_fiis_carteira"))
+        if kpis.get("score_medio_fiis_carteira") is not None
+        else _record_mean(fiis, ("score", "Score")),
+        "scoreAcoes": _finite_number(kpis.get("score_medio_acoes_carteira"))
+        if kpis.get("score_medio_acoes_carteira") is not None
+        else _record_mean(acoes, ("score", "Score")),
+    }
+
+
+def rebuild_dashboard_kpi_history(output_dir: str) -> list[dict]:
+    """Gera um histórico compacto para evitar baixar todos os snapshots no navegador."""
+    rows = []
+    for filename in os.listdir(output_dir):
+        if not filename.endswith(".json") or filename in {"index.json", DASHBOARD_KPI_HISTORY_FILENAME}:
+            continue
+        stem = filename[:-5]
+        try:
+            normalized_date = pd.to_datetime(stem).strftime("%Y-%m-%d")
+        except Exception:
+            continue
+        path = os.path.join(output_dir, filename)
+        try:
+            with open(path, encoding="utf-8") as source:
+                payload = json.load(source)
+            rows.append(_dashboard_kpi_history_row(payload, normalized_date))
+        except (OSError, ValueError, TypeError) as exc:
+            logger.warning("Snapshot ignorado no histórico compacto (%s): %s", filename, exc)
+
+    rows.sort(key=lambda row: row["data"])
+    history_path = os.path.join(output_dir, DASHBOARD_KPI_HISTORY_FILENAME)
+    temp_path = f"{history_path}.tmp"
+    with open(temp_path, "w", encoding="utf-8") as target:
+        json.dump({"version": 1, "items": rows}, target, ensure_ascii=False, separators=(",", ":"))
+    os.replace(temp_path, history_path)
+    return rows
 
 
 def _usable_asset_name(value, ticker: str) -> str | None:
@@ -1637,4 +1706,6 @@ def export_dashboard_json(
     with open(index_path, "w", encoding="utf-8") as f:
         json.dump(datas, f, ensure_ascii=False, indent=2)
 
+    history_rows = rebuild_dashboard_kpi_history(output_dir)
     logger.info(f"Indice reconstruido a partir dos arquivos: {len(datas)} datas disponíveis.")
+    logger.info(f"Historico compacto de KPIs reconstruido: {len(history_rows)} datas disponíveis.")

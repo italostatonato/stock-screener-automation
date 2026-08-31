@@ -157,7 +157,7 @@ def load_dashboard_portfolios(docs_data_dir: str | Path) -> pd.DataFrame:
     root = Path(docs_data_dir)
     rows: list[dict[str, Any]] = []
     for path in sorted(root.glob("*.json")):
-        if path.name == "index.json":
+        if path.name in {"index.json", "kpi-history.json"}:
             continue
         payload = json.loads(path.read_text(encoding="utf-8"))
         date_str = pd.to_datetime(payload.get("data") or path.stem).strftime("%Y-%m-%d")

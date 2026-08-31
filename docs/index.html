@@ -933,7 +933,7 @@
     :root{
       --bg:#070a12; --surface:#0b1020; --surface2:#10182b; --card:#111a2d;
       --border:rgba(177,195,222,.15); --border-strong:rgba(177,195,222,.32);
-      --text:#f5f7fb; --muted:#9ca9bf; --muted2:#6e7d96;
+      --text:#f5f7fb; --muted:#9ca9bf; --muted2:#8392aa;
       --accent:#e3be72; --accent2:#8fd7ff; --acao:#54c7ff; --fii:#a78bfa;
       --shadow:0 24px 70px rgba(0,0,0,.32); --radius:24px;
     }
@@ -996,10 +996,37 @@
     @media(max-width:860px){.hero{padding-top:32px !important}.hero-grid{grid-template-columns:1fr !important;gap:20px !important}.hero h1{font-size:clamp(44px,12vw,62px) !important}.asof{max-width:none !important}.signal-strip{grid-template-columns:1fr 1fr}.signal-cell{border-top:1px solid rgba(177,195,222,.12)}.signal-cell:nth-child(2){border-left:0}.signal-cell:first-child{grid-column:1/-1;border-top:0}.hero-tags{margin-top:18px}}
     @media(max-width:860px){.hybrid-allocation{grid-template-columns:1fr 1fr}.holdings-grid{grid-template-columns:1fr}}
     @media(max-width:620px){.nav{min-height:0 !important}.brand-name{font-size:18px}.hero h1{font-size:45px !important}.hero p{font-size:14px !important}.hero-tags span{font-size:10px;padding:6px 8px}.signal-cell{padding:12px}.signal-cell b{font-size:12px}.panel{padding:16px !important}.section h2{font-size:27px !important}.kpi .value{font-size:22px !important}.hybrid-thesis{align-items:flex-start;flex-direction:column;gap:5px}.hybrid-allocation{grid-template-columns:1fr;gap:8px}.allocation-card{min-height:0;padding:15px}.allocation-card strong{font-size:26px}.hybrid-table{min-width:620px}}
+
+    /* Ajustes de usabilidade, foco e legibilidade. */
+    html{scroll-padding-top:calc(var(--topbar-h,68px) + 16px)}
+    .skip-link{position:fixed;left:12px;top:10px;z-index:3000;transform:translateY(-160%);padding:10px 14px;border-radius:10px;background:var(--accent);color:#111827;font-weight:900;text-decoration:none;transition:transform .16s ease}
+    .skip-link:focus{transform:translateY(0)}
+    :where(a,button,input,[tabindex]):focus-visible{outline:2px solid var(--accent2)!important;outline-offset:3px}
+    .tabs{overscroll-behavior-inline:contain;scroll-snap-type:x proximity}
+    .tab{scroll-snap-align:start}
+    .kpi .note,.kpi-windowbar .window-label{color:#91a0b6!important}
+
+    @media(max-width:720px){
+      .tab,.kpi-window,.chart-period,.hero-tag-link,.about-toggle,.github-top,.ml-chart-toggle{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+      .section-head{align-items:stretch!important;flex-direction:column;gap:12px!important}
+      .toolbar{width:100%}
+      .kpi{min-height:116px!important}
+      .kpi .label{font-size:11px!important;line-height:1.25!important}
+      .kpi .note{font-size:11px!important;line-height:1.3!important;white-space:normal!important}
+      .name{font-size:12px!important;line-height:1.3!important;-webkit-line-clamp:2!important}
+      #fiis .metric span,#acoes .metric span{font-size:11px!important;line-height:1.2!important}
+      #fiis .metric-tone-label,#acoes .metric-tone-label{font-size:10px!important}
+    }
+    @media(max-width:390px){.kpi .note{font-size:10.5px!important}}
+    @media(max-width:340px){#fiis .metric span,#acoes .metric span{font-size:10.5px!important}}
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+    }
   </style>
 </head>
 <body>
-  <div class="topbar">
+  <a class="skip-link" href="#overview">Ir para o conteúdo principal</a>
+  <header class="topbar">
     <div class="wrap nav">
       <div class="brand-area"><div class="brand"><div class="logo">RS</div><div><div class="brand-name">Radar Semanal</div><small class="muted">Ações e FIIs BR · leitura quantitativa</small></div></div><a class="github-top" href="https://github.com/italostatonato/stock-screener-automation" target="_blank" rel="noopener">● GitHub</a></div>
       <div class="tabs" role="tablist" aria-label="Seções do Radar Semanal">
@@ -1013,7 +1040,7 @@
         <button type="button" id="tab-score" class="tab" role="tab" aria-controls="score" aria-selected="false" tabindex="-1" data-tab="score">Score e Info</button>
       </div>
     </div>
-  </div>
+  </header>
 
   <main class="wrap">
     <section class="hero">
@@ -1023,7 +1050,7 @@
           <h1>Radar <em>Semanal</em></h1>
           <p>Uma leitura objetiva do mercado: ações e FIIs selecionados por score multifatorial, acompanhados de benchmarks, histórico e sinais para análise.</p>
           <div class="hero-tags"><span>Seleção quantitativa</span><button type="button" class="hero-tag-link fii" data-go-tab="fiis">Ver Top 20 FIIs</button><button type="button" class="hero-tag-link" data-go-tab="acoes">Ver Top 20 Ações</button><span>Dados públicos</span></div>
-          <div class="author-row">Criado por: <a href="https://www.linkedin.com/in/italo-petricioni-statonato/" target="_blank" rel="noopener">Ítalo Petricioni Statonato</a> <button id="aboutItaloBtn" class="about-toggle" type="button">Sobre Ítalo</button></div>
+          <div class="author-row">Criado por: <a href="https://www.linkedin.com/in/italo-petricioni-statonato/" target="_blank" rel="noopener">Ítalo Petricioni Statonato</a> <button id="aboutItaloBtn" class="about-toggle" type="button" aria-controls="aboutItaloPanel" aria-expanded="false">Sobre Ítalo</button></div>
           <div id="aboutItaloPanel" class="about-panel" aria-hidden="true"><img class="about-photo" src="assets/italo-profile.png" alt="Foto de Ítalo Petricioni Statonato" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'about-fallback',textContent:'IP'}));"><div><h3>Ítalo Petricioni Statonato</h3><p>Profissional de dados, analytics e estratégia, com experiência em automação, produtos de dados, CX, performance operacional e indicadores executivos. Este dashboard nasceu como projeto pessoal para unir tecnologia, mercado financeiro e investimento em renda variável, com foco em critérios quantitativos, disciplina analítica e evolução contínua dos modelos.</p></div></div>
         </div>
         <aside class="asof" id="dataStatusCard">
@@ -1045,8 +1072,8 @@
       <section class="kpis" id="kpis"></section>
       <div class="section-head"><div><h2>Visão geral</h2><p class="desc">Resumo executivo do dia: carteira, score, comparativos e concentração.</p></div></div>
       <div class="charts">
-        <div class="panel"><h3>Histograma de score dos Top 20</h3><p>Distribuição em intervalos adaptados aos scores observados no processamento atual.</p><div class="chart-box"><canvas id="scoreChart" role="img" aria-label="Histograma da distribuição dos scores de ações e FIIs do Top 20"></canvas></div><div class="chart-explain"><b>Como ler:</b> cada barra conta os ativos dentro de um intervalo contínuo de score. Intervalos estreitos revelam concentração e dispersão sem desperdiçar espaço com faixas vazias.</div></div>
-        <div class="panel"><h3>Resumo Top 20 Ações e FII de hoje</h3><p>Top 20 lado a lado por posição no ranking, com preço atual e score.</p><div class="rank-table-wrap"><table class="table rank-table"><thead><tr><th>Rank</th><th>Ação</th><th>FII</th></tr></thead><tbody id="rankTableBody"></tbody></table></div><div class="chart-explain"><b>Como ler:</b> cada linha mostra a ação e o FII que ocupam a mesma posição no ranking do dia. Preço e score ajudam a comparar rapidamente valuation, força relativa e prioridade dentro de cada classe.</div></div>
+        <div class="panel"><h3>Histograma de score dos Top 20</h3><p>Distribuição em intervalos adaptados aos scores observados no processamento atual.</p><div class="chart-box"><canvas id="scoreChart" role="img" aria-label="Histograma da distribuição dos scores de ações e FIIs do Top 20" aria-describedby="scoreChartExplain"></canvas></div><div class="chart-explain" id="scoreChartExplain"><b>Como ler:</b> cada barra conta os ativos dentro de um intervalo contínuo de score. Intervalos estreitos revelam concentração e dispersão sem desperdiçar espaço com faixas vazias.</div></div>
+        <div class="panel"><h3>Resumo Top 20 Ações e FII de hoje</h3><p>Top 20 lado a lado por posição no ranking, com preço atual e score.</p><div class="rank-table-wrap"><table class="table rank-table"><caption class="sr-only">Comparação por posição entre as 20 ações e os 20 FIIs mais bem classificados</caption><thead><tr><th>Rank</th><th>Ação</th><th>FII</th></tr></thead><tbody id="rankTableBody"></tbody></table></div><div class="chart-explain"><b>Como ler:</b> cada linha mostra a ação e o FII que ocupam a mesma posição no ranking do dia. Preço e score ajudam a comparar rapidamente valuation, força relativa e prioridade dentro de cada classe.</div></div>
         <div class="panel wide"><h3>Backtest FIIs Top 20</h3><p>Retorno acumulado da carteira real registrada no histórico contra IFIX, IMOB e CDI.</p><div class="chart-box"><canvas id="overviewFiisBacktestChart" role="img" aria-label="Retorno acumulado da carteira Top 20 FIIs comparado a IFIX, IMOB e CDI"></canvas></div><div class="mini-note" id="overviewFiisBacktestNote"></div><div class="chart-explain"><b>Como ler:</b> todas as linhas começam em 0% na primeira data real da carteira. Se a linha da carteira ficar acima dos benchmarks, o Top 20 FIIs está crescendo mais que as referências comparadas no mesmo período.</div></div>
         <div class="panel wide"><h3>Backtest Ações Top 20</h3><p>Retorno acumulado da carteira real registrada no histórico contra IBOV, IPCA e CDI.</p><div class="chart-box"><canvas id="overviewAcoesBacktestChart" role="img" aria-label="Retorno acumulado da carteira Top 20 Ações comparado a IBOV, IPCA e CDI"></canvas></div><div class="mini-note" id="overviewAcoesBacktestNote"></div><div class="chart-explain"><b>Como ler:</b> compara a evolução da carteira de ações com bolsa, inflação e renda fixa. A carteira só aparece a partir da primeira data em que o robô salvou uma carteira Top 20 real.</div></div>
       </div>
@@ -1069,6 +1096,7 @@
         <div id="hybridUnavailable" class="empty hybrid-empty" hidden></div>
         <div class="hybrid-table-wrap">
           <table class="table hybrid-table">
+            <caption class="sr-only">Composição, resultado e contribuição da Carteira Híbrida Equilibrada</caption>
             <thead><tr><th>Componente</th><th>Alocação</th><th>Resultado no período</th><th>Contribuição ponderada</th></tr></thead>
             <tbody id="hybridCompositionBody"></tbody>
           </table>
@@ -1099,6 +1127,7 @@
         <p>Ranking histórico separado por Ações e FIIs, com recorrência, score médio e indicadores atuais do último snapshot.</p>
         <div class="rec-table-wrap">
           <table class="table rec-table">
+            <caption class="sr-only">Ranking histórico de recorrência de ações e FIIs no Top 20</caption>
             <thead><tr class="rec-group-head"><th rowspan="2">Rank</th><th colspan="6" class="group-acao">Ações BR</th><th colspan="6" class="group-fii">FIIs</th></tr><tr><th>Ação</th><th>Aparições</th><th>Score médio</th><th>Preço atual</th><th>DY</th><th>P/VPA</th><th>FII</th><th>Aparições</th><th>Score médio</th><th>Preço atual</th><th>DY</th><th>P/VP</th></tr></thead>
             <tbody id="recorrentesTableBody"></tbody>
           </table>
@@ -1148,6 +1177,7 @@
         <div class="mini-note" id="mlStatusNote"></div>
         <div class="rec-table-wrap">
           <table class="table rec-table">
+            <caption class="sr-only">Ranking comparativo dos modelos de seleção de ativos</caption>
             <thead><tr><th>Rank</th><th>Tipo</th><th>Ativo</th><th>Score Top</th><th>Ridge</th><th>Random Forest</th><th>Extra Trees</th><th>XGBoost</th><th>LightGBM</th><th>CatBoost</th><th>Ensemble</th><th>Modelo líder</th><th>Ret. exp.</th><th>Status</th></tr></thead>
             <tbody id="mlRankingBody"></tbody>
           </table>
@@ -1159,6 +1189,7 @@
         <p>Métricas acumuladas conforme os retornos futuros de 30 dias passam a ficar disponíveis.</p>
         <div class="rec-table-wrap">
           <table class="table rec-table">
+            <caption class="sr-only">Métricas de performance histórica dos modelos</caption>
             <thead><tr><th>Tipo</th><th>Modelo</th><th>Horizonte</th><th>Janelas válidas</th><th>Retorno médio Top 20</th><th>Hit rate</th><th>Spearman IC</th><th>Alpha vs Score Top</th><th>Status</th></tr></thead>
             <tbody id="mlPerformanceBody"></tbody>
           </table>
@@ -1216,12 +1247,12 @@
         <div class="info-card">
           <h3>Pesos usados para FIIs</h3>
           <p>Sete indicadores igualmente ponderados; 14,29% é o valor arredondado de 1/7.</p>
-          <table class="table"><thead><tr><th>Indicador</th><th>Leitura</th><th>Peso</th></tr></thead><tbody><tr><td>DY médio (12 meses)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>P/VP</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Liquidez diária</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Patrimônio líquido</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Rentabilidade do período</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Taxa de administração</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Taxa de performance</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr></tbody></table>
+          <table class="table"><caption class="sr-only">Pesos e interpretação dos indicadores usados no score de FIIs</caption><thead><tr><th>Indicador</th><th>Leitura</th><th>Peso</th></tr></thead><tbody><tr><td>DY médio (12 meses)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>P/VP</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Liquidez diária</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Patrimônio líquido</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Rentabilidade do período</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Taxa de administração</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Taxa de performance</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr></tbody></table>
         </div>
         <div class="info-card">
           <h3>Pesos usados para Ações</h3>
           <p>Sete indicadores igualmente ponderados; 14,29% é o valor arredondado de 1/7.</p>
-          <table class="table"><thead><tr><th>Indicador</th><th>Leitura</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Preço/VPA</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>EV/EBITDA</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Margem Líquida</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>ROIC (ROInvC)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>ROE (RPL)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Volume diário médio (3 meses)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr></tbody></table>
+          <table class="table"><caption class="sr-only">Pesos e interpretação dos indicadores usados no score de ações</caption><thead><tr><th>Indicador</th><th>Leitura</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Preço/VPA</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>EV/EBITDA</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Margem Líquida</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>ROIC (ROInvC)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>ROE (RPL)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Volume diário médio (3 meses)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr></tbody></table>
         </div>
       </div>
 
@@ -1232,7 +1263,7 @@
         </div>
         <div class="info-card">
           <h3>Fontes de dados</h3>
-          <table class="table compact-source-table"><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Fundamentus (tabela pública)</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio</td><td>AwesomeAPI</td></tr><tr><td>Cripto</td><td>CoinGecko · ranking por valor de mercado</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table>
+          <table class="table compact-source-table"><caption class="sr-only">Fontes dos dados exibidos no dashboard</caption><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Fundamentus (tabela pública)</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio</td><td>AwesomeAPI</td></tr><tr><td>Cripto</td><td>CoinGecko · ranking por valor de mercado</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table>
         </div>
         <div class="info-card">
           <h3>Sobre o projeto</h3>
@@ -1246,7 +1277,7 @@
   <footer><div class="wrap">Atualizado automaticamente uma vez por semana · GitHub Pages · dados públicos e APIs gratuitas</div></footer>
 
   <script>
-    const state = { data:null, charts:{}, allDates:[], selectedDate:null, kpiWindow:'WoW', snapshotCache:{}, kpiHistoryLoading:false, chartWindows:{}, marketFallbackLoading:false, marketFallbackAttempted:false, marketFallbackLive:false, mlChartType:'ACAO', mlChartMetric:'Retorno_Top20' };
+    const state = { data:null, charts:{}, allDates:[], selectedDate:null, kpiWindow:'WoW', snapshotCache:{}, kpiHistory:{}, kpiHistoryLoading:false, chartWindows:{}, marketFallbackLoading:false, marketFallbackAttempted:false, marketFallbackLive:false, mlChartType:'ACAO', mlChartMetric:'Retorno_Top20' };
     const BR = 'pt-BR';
     if(window.Chart){ Chart.defaults.font.family = 'Roboto, Inter, system-ui, -apple-system, Segoe UI, sans-serif'; }
     const fmtNum = (v,d=2)=> v==null || Number.isNaN(Number(v)) ? '—' : Number(v).toLocaleString(BR,{maximumFractionDigits:d,minimumFractionDigits:d});
@@ -1355,9 +1386,11 @@
       state.selectedDate = date;
       state.data = await fetch(`data/${date}.json`, {cache:'no-store'}).then(r=>r.json());
       state.snapshotCache[date] = state.data;
+      window.__radarLatestPayload = state.data;
       const dataBase = state.data.data || date;
       renderDataStatus(dataBase);
       renderAll();
+      document.dispatchEvent(new CustomEvent('radar:data-loaded',{detail:state.data}));
       preloadSnapshotsForKpis();
     }
 
@@ -1431,13 +1464,19 @@
       const bar=document.createElement('section');
       bar.id='kpiWindowbar';
       bar.className='kpi-windowbar';
-      bar.innerHTML=`<span class="window-label">Janela dos KPIs</span>${Object.keys(KPI_WINDOWS).map(k=>`<button type="button" class="kpi-window ${state.kpiWindow===k?'active':''}" data-window="${k}" title="${KPI_WINDOWS[k].tip}">${k}</button>`).join('')}`;
+      bar.setAttribute('role','group');
+      bar.setAttribute('aria-label','Janela de comparação dos KPIs');
+      bar.innerHTML=`<span class="window-label">Janela dos KPIs</span>${Object.keys(KPI_WINDOWS).map(k=>`<button type="button" class="kpi-window ${state.kpiWindow===k?'active':''}" data-window="${k}" title="${KPI_WINDOWS[k].tip}" aria-pressed="${state.kpiWindow===k?'true':'false'}">${k}</button>`).join('')}`;
       kpis.parentNode.insertBefore(bar,kpis);
       bar.addEventListener('click',ev=>{
         const btn=ev.target.closest('.kpi-window');
         if(!btn) return;
         state.kpiWindow=btn.dataset.window;
-        bar.querySelectorAll('.kpi-window').forEach(b=>b.classList.toggle('active',b===btn));
+        bar.querySelectorAll('.kpi-window').forEach(b=>{
+          const active=b===btn;
+          b.classList.toggle('active',active);
+          b.setAttribute('aria-pressed',active?'true':'false');
+        });
         renderKpis();
         renderMlModelsTables();
       });
@@ -1446,14 +1485,27 @@
       if(state.kpiHistoryLoading) return;
       state.kpiHistoryLoading=true;
       try{
+        const response=await fetch('data/kpi-history.json',{cache:'no-store'});
+        if(!response.ok) throw new Error(`HTTP ${response.status}`);
+        const payload=await response.json();
+        const rows=Array.isArray(payload) ? payload : (payload.items||[]);
+        rows.forEach(row=>{ if(row?.data) state.kpiHistory[row.data]=row; });
+      }catch(e){
         const dates=state.allDates || [];
-        await Promise.all(dates.map(async date=>{
+        const required=new Set(dates.slice(-12));
+        Object.values(KPI_WINDOWS).forEach(win=>{
+          const date=closestDateOnOrBefore(dateMinus(state.selectedDate,win.days));
+          if(date) required.add(date);
+        });
+        await Promise.all([...required].map(async date=>{
           if(state.snapshotCache[date]) return;
-          try{ state.snapshotCache[date]=await fetch(`data/${date}.json`,{cache:'no-store'}).then(r=>r.json()); }catch(e){}
+          try{ state.snapshotCache[date]=await fetch(`data/${date}.json`,{cache:'no-store'}).then(r=>r.json()); }catch(error){}
         }));
+      }finally{
         renderKpis();
         renderMlModelsTables();
-      }finally{ state.kpiHistoryLoading=false; }
+        state.kpiHistoryLoading=false;
+      }
     }
     function dateMinus(dateStr,days){ const d=new Date(`${dateStr}T12:00:00`); d.setDate(d.getDate()-days); return d.toISOString().slice(0,10); }
     function closestDateOnOrBefore(target){
@@ -1462,6 +1514,7 @@
     }
     function dataMetric(d,key){
       if(!d) return null;
+      if(Object.prototype.hasOwnProperty.call(d,key)) return d[key];
       const fiis=d.fiis||[], acoes=d.acoes||[], k=d.kpis||{};
       if(key==='dyFiis') return k.dy_medio_fiis_carteira ?? avg(fiis.map(x=>x['DIVIDEND YIELD']));
       if(key==='pvpFiis') return k.pvp_medio_fiis_carteira ?? avg(fiis.map(x=>x['P/VP']));
@@ -1474,7 +1527,7 @@
       const win=KPI_WINDOWS[state.kpiWindow] || KPI_WINDOWS.WoW;
       const prevDate=closestDateOnOrBefore(dateMinus(latestDate,win.days));
       const cur=dataMetric(state.data,key);
-      const prev=prevDate ? dataMetric(state.snapshotCache[prevDate],key) : null;
+      const prev=prevDate ? dataMetric(state.kpiHistory[prevDate]||state.snapshotCache[prevDate],key) : null;
       const diff=(cur!=null && prev!=null) ? Number(cur)-Number(prev) : null;
       return {cur,prev,diff,prevDate,label:state.kpiWindow};
     }
@@ -1489,7 +1542,7 @@
       const latest=state.data?.data || state.selectedDate;
       const start=dateMinus(latest,win.days);
       const dates=(state.allDates||[]).filter(d=>d>=start && d<=latest).sort();
-      const arr=dates.map(date=>({date, value:dataMetric(state.snapshotCache[date]|| (date===state.selectedDate?state.data:null),metricKey)})).filter(x=>x.value!=null && Number.isFinite(Number(x.value)));
+      const arr=dates.map(date=>({date, value:dataMetric(state.kpiHistory[date]||state.snapshotCache[date]|| (date===state.selectedDate?state.data:null),metricKey)})).filter(x=>x.value!=null && Number.isFinite(Number(x.value)));
       if(arr.length<2){
         const cur=dataMetric(state.data,metricKey);
         return cur==null?[]:[{date:latest,value:cur},{date:latest,value:cur}];
@@ -1527,7 +1580,7 @@
       const btn=document.getElementById('aboutItaloBtn'), panel=document.getElementById('aboutItaloPanel');
       if(!btn || !panel || btn.dataset.bound) return;
       btn.dataset.bound='1';
-      btn.addEventListener('click',()=>{ const open=!panel.classList.contains('open'); panel.classList.toggle('open',open); panel.setAttribute('aria-hidden',open?'false':'true'); });
+      btn.addEventListener('click',()=>{ const open=!panel.classList.contains('open'); panel.classList.toggle('open',open); panel.setAttribute('aria-hidden',open?'false':'true'); btn.setAttribute('aria-expanded',open?'true':'false'); });
     }
 function renderKpis(){
       const d=state.data, fiis=d.fiis||[], acoes=d.acoes||[], k=d.kpis||{};
@@ -2261,10 +2314,12 @@ const CHART_PERIODS = {
         bar=document.createElement('div');
         bar.className='chart-periodbar';
         bar.dataset.chart=chartId;
+        bar.setAttribute('role','group');
+        bar.setAttribute('aria-label','Período exibido no gráfico');
         panel.insertBefore(bar, anchor);
       }
       const active=state.chartWindows[chartId];
-      bar.innerHTML=`<span>Período</span>${Object.entries(CHART_PERIODS).map(([key,conf])=>`<button type="button" class="chart-period ${active===key?'active':''}" data-period="${key}">${conf.label}</button>`).join('')}`;
+      bar.innerHTML=`<span>Período</span>${Object.entries(CHART_PERIODS).map(([key,conf])=>`<button type="button" class="chart-period ${active===key?'active':''}" data-period="${key}" aria-pressed="${active===key?'true':'false'}">${conf.label}</button>`).join('')}`;
       bar.onclick=(ev)=>{
         const btn=ev.target.closest('.chart-period');
         if(!btn) return;
@@ -2556,7 +2611,9 @@ const CHART_PERIODS = {
         item.classList.toggle('active',active);
         item.setAttribute('aria-hidden',active?'false':'true');
       });
-      section.scrollIntoView({behavior:'smooth',block:'start'});
+      const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+      btn.scrollIntoView({behavior,block:'nearest',inline:'center'});
+      section.scrollIntoView({behavior,block:'start'});
       setTimeout(()=>Object.values(state.charts).forEach(chart=>chart.resize()),80);
     }
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>activateTab(btn.dataset.tab)));
@@ -2685,17 +2742,17 @@ const CHART_PERIODS = {
     }
   }
 
-  async function loadLatestConfidence() {
-    try {
-      const index = await fetch("data/index.json", { cache: "no-store" }).then(r => r.json());
-      const latest = Array.isArray(index) ? [...index].sort().at(-1) : null;
-      if (!latest) return render({});
-      const payload = await fetch(`data/${latest}.json`, { cache: "no-store" }).then(r => r.json());
-      const conf = payload && payload.modelos_ml && payload.modelos_ml.confiabilidade;
-      render(conf);
-    } catch (err) {
-      render({ mensagem: "Não foi possível carregar a confiabilidade dos modelos neste momento." });
+  function renderPayloadConfidence(payload) {
+    const conf = payload && payload.modelos_ml && payload.modelos_ml.confiabilidade;
+    render(conf || {});
+  }
+
+  function loadLatestConfidence() {
+    if (window.__radarLatestPayload) {
+      renderPayloadConfidence(window.__radarLatestPayload);
+      return;
     }
+    document.addEventListener("radar:data-loaded", event => renderPayloadConfidence(event.detail), { once: true });
   }
 
   if (document.readyState === "loading") {

@@ -26,6 +26,10 @@ def test_load_dashboard_tolera_cabecalhos_mojibake(tmp_path: Path):
         [{"FUNDOS": "HGLG11", "PRE�O ATUAL (R$)": "R$ 150,25", "score": 72.0}],
         [{"A��o": "PETR4", "Pre�o": "31,50", "score": 68.0}],
     )
+    (docs / "kpi-history.json").write_text(
+        json.dumps({"version": 1, "items": [{"data": "2026-06-21", "scoreFiis": 72.0}]}),
+        encoding="utf-8",
+    )
 
     out = load_dashboard_portfolios(docs)
 

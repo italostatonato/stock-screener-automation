@@ -52,3 +52,33 @@ def test_dashboard_exibe_sete_indicadores_com_pesos_iguais_por_classe():
     assert "ROIC (ROInvC)" in HTML
     assert "ROE (RPL)" in HTML
     assert "Volume diário médio (3 meses)" in HTML
+
+
+def test_dashboard_compensa_cabecalho_fixo_e_respeita_reducao_de_movimento():
+    assert "scroll-padding-top:calc(var(--topbar-h,68px) + 16px)" in HTML
+    assert "prefers-reduced-motion:reduce" in HTML
+    assert "btn.scrollIntoView({behavior,block:'nearest',inline:'center'})" in HTML
+
+
+def test_dashboard_mobile_tem_alvos_e_textos_mais_legiveis():
+    assert ".tab,.kpi-window,.chart-period,.hero-tag-link,.about-toggle,.github-top,.ml-chart-toggle{min-height:44px" in HTML
+    assert ".kpi .label{font-size:11px!important" in HTML
+    assert "#fiis .metric span,#acoes .metric span{font-size:11px!important" in HTML
+
+
+def test_dashboard_estados_interativos_sao_anunciados():
+    assert 'aria-controls="aboutItaloPanel" aria-expanded="false"' in HTML
+    assert "btn.setAttribute('aria-expanded',open?'true':'false')" in HTML
+    assert 'aria-pressed="${state.kpiWindow===k?' in HTML
+    assert 'aria-pressed="${active===key?' in HTML
+
+
+def test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual():
+    assert "fetch('data/kpi-history.json'" in HTML
+    assert "window.__radarLatestPayload = state.data" in HTML
+    assert 'fetch("data/index.json"' not in HTML
+    assert 'fetch(`data/${latest}.json`' not in HTML
+
+
+def test_dashboard_tabelas_tem_legendas_acessiveis():
+    assert HTML.count('<caption class="sr-only">') == 8
