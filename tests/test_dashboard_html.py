@@ -33,6 +33,18 @@ def test_dashboard_tooltip_nao_repete_ticker_como_nome_completo():
     assert "Nome completo não disponível na fonte" in HTML
 
 
+def test_dashboard_cards_priorizam_valores_financeiros_sem_corte():
+    assert 'grid-template-areas:"label value" "tone tone"!important' in HTML
+    assert "grid-template-columns:minmax(0,1fr) max-content!important" in HTML
+    assert "font-variant-numeric:tabular-nums" in HTML
+
+
+def test_dashboard_tooltip_de_ml_e_compacto_e_nao_repete_contexto():
+    assert "afterBody:items=>" in HTML
+    assert "afterLabel:context=>" not in HTML
+    assert "padding:8,bodySpacing:2,titleMarginBottom:4,boxWidth:7,boxHeight:7" in HTML
+
+
 def test_dashboard_hibrida_exibe_novos_pesos_e_serie_rebalanceada():
     assert '<strong>30%</strong><span class="allocation-role">Motor de crescimento' in HTML
     assert '<strong>30%</strong><span class="allocation-role">Renda + imóveis' in HTML

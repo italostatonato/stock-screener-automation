@@ -1019,6 +1019,39 @@
     }
     @media(max-width:390px){.kpi .note{font-size:10.5px!important}}
     @media(max-width:340px){#fiis .metric span,#acoes .metric span{font-size:10.5px!important}}
+
+    /* Valores financeiros têm prioridade nos cards compactos. */
+    #fiis .metric,
+    #acoes .metric{
+      grid-template-columns:minmax(0,1fr) max-content!important;
+      grid-template-areas:"label value" "tone tone"!important;
+      column-gap:4px!important;
+      row-gap:2px!important;
+    }
+    #fiis .metric > span:first-child,
+    #acoes .metric > span:first-child{
+      grid-area:label;
+      min-width:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    #fiis .metric > b,
+    #acoes .metric > b{
+      grid-area:value;
+      justify-self:end;
+      overflow:visible!important;
+      text-overflow:clip!important;
+      font-size:11px!important;
+      font-variant-numeric:tabular-nums;
+    }
+    #fiis .metric > .metric-tone-label,
+    #acoes .metric > .metric-tone-label{
+      grid-area:tone;
+      min-width:0;
+      margin-top:0!important;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
     }
@@ -1790,13 +1823,19 @@ function renderKpis(){
           interaction:{mode:'index',intersect:false},
           plugins:{
             legend:{position:'bottom',labels:{usePointStyle:true,padding:15,boxWidth:8}},
-            tooltip:{mode:'index',intersect:false,callbacks:{
+            tooltip:{
+              mode:'index',intersect:false,padding:8,bodySpacing:2,titleMarginBottom:4,boxWidth:7,boxHeight:7,
+              titleFont:{family:'Roboto,Inter,system-ui,-apple-system,Segoe UI,sans-serif',size:10,weight:'700'},
+              bodyFont:{family:'Roboto,Inter,system-ui,-apple-system,Segoe UI,sans-serif',size:10,lineHeight:1.15},
+              callbacks:{
+              title:items=>fmtDateShort(items?.[0]?.label),
               label:context=>`${context.dataset.label}: ${metric.format(context.parsed.y)}`,
-              afterLabel:context=>{
-                const row=context.dataset.metaRows?.[context.dataIndex];
+              afterBody:items=>{
+                const context=items.find(item=>item.dataset.metaRows?.[item.dataIndex]);
+                const row=context?.dataset.metaRows?.[context.dataIndex];
                 if(!row) return '';
                 if(row.Data_Resultado||row.Ativos_Avaliados){
-                  return `Resultado em ${fmtDateShort(row.Data_Resultado)} · Top ${row.Ativos_Top20||20} de ${row.Ativos_Avaliados||'—'} ativos`;
+                  return `Resultado ${fmtDateShort(row.Data_Resultado)} · Top ${row.Ativos_Top20||20}/${row.Ativos_Avaliados||'—'} ativos`;
                 }
                 const confidence=finite(row.Confiabilidade_Pct)?` · confiança ${fmtNum(row.Confiabilidade_Pct,1)}%`:'';
                 return `${row.Janelas_Validas??'—'} janelas válidas${confidence}`;
