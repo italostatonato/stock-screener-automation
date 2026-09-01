@@ -85,6 +85,14 @@ def test_dashboard_estados_interativos_sao_anunciados():
     assert 'aria-pressed="${active===key?' in HTML
 
 
+def test_dashboard_oferece_janelas_de_sete_e_quinze_dias_nos_graficos():
+    assert "'7D': {days:7, label:'7D'}" in HTML
+    assert "'15D': {days:15, label:'15D'}" in HTML
+    assert "if(key==='7D') return 7" in HTML
+    assert "if(key==='15D') return 8" in HTML
+    assert "Object.entries(CHART_PERIODS)" in HTML
+
+
 def test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual():
     assert "fetch('data/kpi-history.json'" in HTML
     assert "window.__radarLatestPayload = state.data" in HTML

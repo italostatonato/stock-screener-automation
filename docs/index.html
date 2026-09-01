@@ -2302,6 +2302,8 @@ function renderKpis(){
       return `A carteira recomendada de ${assetType} ficou ${cdiPart} e ${benchPart}, com rentabilidade total de ${mainLast>=0?'+':''}${fmtNum(mainLast,2)}% no período selecionado.`;
     }
 const CHART_PERIODS = {
+      '7D': {days:7, label:'7D'},
+      '15D': {days:15, label:'15D'},
       '30D': {days:30, label:'30D'},
       '90D': {days:90, label:'90D'},
       '6M': {days:182, label:'6M'},
@@ -2335,6 +2337,8 @@ const CHART_PERIODS = {
     }
     function chartMaxTicks(chartId){
       const key=state.chartWindows[chartId] || 'ALL';
+      if(key==='7D') return 7;
+      if(key==='15D') return 8;
       if(key==='30D') return 7;
       if(key==='90D') return 8;
       if(key==='6M') return 7;
