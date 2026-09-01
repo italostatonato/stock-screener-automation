@@ -2368,6 +2368,7 @@ const CHART_PERIODS = {
         if(!btn) return;
         state.chartWindows[chartId]=btn.dataset.period;
         if(chartId==='hybridPortfolioChart') renderHybridPortfolio();
+        else if(chartId==='proxyFiisChart' || chartId==='proxyAcoesChart') renderProxyCharts();
         else renderOverviewBacktestCharts();
       };
     }

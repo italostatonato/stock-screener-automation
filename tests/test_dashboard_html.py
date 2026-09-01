@@ -91,6 +91,8 @@ def test_dashboard_oferece_janelas_de_sete_e_quinze_dias_nos_graficos():
     assert "if(key==='7D') return 7" in HTML
     assert "if(key==='15D') return 8" in HTML
     assert "Object.entries(CHART_PERIODS)" in HTML
+    assert "chartId==='proxyFiisChart' || chartId==='proxyAcoesChart'" in HTML
+    assert "renderProxyCharts();" in HTML
 
 
 def test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual():
