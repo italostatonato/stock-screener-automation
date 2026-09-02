@@ -12,6 +12,9 @@ def test_dashboard_tabs_e_buscas_tem_rotulos_acessiveis():
     assert 'for="searchAcoes">Buscar ação ou empresa</label>' in HTML
     assert "item.setAttribute('aria-selected',active?'true':'false')" in HTML
     assert "item.setAttribute('aria-hidden',active?'false':'true')" in HTML
+    ordem = ["overview", "hibrida", "modelos", "recorrentes", "acoes", "fiis", "indicadores", "score"]
+    posicoes = [HTML.index(f'id="tab-{tab}"') for tab in ordem]
+    assert posicoes == sorted(posicoes)
 
 
 def test_dashboard_graficos_tem_descricao_e_textos_revisados():
@@ -73,14 +76,14 @@ def test_dashboard_compensa_cabecalho_fixo_e_respeita_reducao_de_movimento():
 
 
 def test_dashboard_mobile_tem_alvos_e_textos_mais_legiveis():
-    assert ".tab,.kpi-window,.chart-period,.hero-tag-link,.about-toggle,.github-top,.ml-chart-toggle{min-height:44px" in HTML
+    assert ".tab,.kpi-window,.chart-period,.hero-tag-link,.github-top,.ml-chart-toggle{min-height:44px" in HTML
     assert ".kpi .label{font-size:11px!important" in HTML
     assert "#fiis .metric span,#acoes .metric span{font-size:11px!important" in HTML
 
 
 def test_dashboard_estados_interativos_sao_anunciados():
-    assert 'aria-controls="aboutItaloPanel" aria-expanded="false"' in HTML
-    assert "btn.setAttribute('aria-expanded',open?'true':'false')" in HTML
+    assert 'class="about-card" aria-labelledby="aboutItaloTitle"' in HTML
+    assert 'id="aboutItaloBtn"' not in HTML
     assert 'aria-pressed="${state.kpiWindow===k?' in HTML
     assert 'aria-pressed="${active===key?' in HTML
 
@@ -93,6 +96,14 @@ def test_dashboard_oferece_janelas_de_sete_e_quinze_dias_nos_graficos():
     assert "Object.entries(CHART_PERIODS)" in HTML
     assert "chartId==='proxyFiisChart' || chartId==='proxyAcoesChart'" in HTML
     assert "renderProxyCharts();" in HTML
+
+
+def test_dashboard_hero_e_faixa_de_contexto_sao_compactos():
+    assert 'grid-template-areas:"copy about status"' in HTML
+    assert ".hero{padding:20px 0 14px!important}" in HTML
+    assert ".asof strong{margin-top:7px!important;font-size:18px!important" in HTML
+    assert ".signal-cell{display:flex;align-items:center;gap:9px;min-width:0;padding:9px 14px}" in HTML
+    assert "DoD:{label:'DoD'" not in HTML
 
 
 def test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual():
