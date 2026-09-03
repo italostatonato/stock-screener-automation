@@ -121,3 +121,10 @@ def test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual():
 
 def test_dashboard_tabelas_tem_legendas_acessiveis():
     assert HTML.count('<caption class="sr-only">') == 8
+
+
+def test_dashboard_apresentacao_abre_em_visualizacao_protegida():
+    assert "/presentation/d/1I61xKNvQ8kfBDXqel5YaoVeTCqhdRXxYmw3mCQqed60/preview?rm=minimal" in HTML
+    assert 'class="hero-tag-link presentation-link"' in HTML
+    assert 'target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"' in HTML
+    assert 'aria-label="Abrir apresentação do Radar Semanal em modo somente leitura"' in HTML
