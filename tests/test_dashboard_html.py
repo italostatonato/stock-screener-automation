@@ -106,6 +106,12 @@ def test_dashboard_hero_e_faixa_de_contexto_sao_compactos():
     assert "DoD:{label:'DoD'" not in HTML
 
 
+def test_dashboard_histograma_preserva_barras_das_extremidades():
+    assert "valueLabelPlugin:{enabled:true,hideZero:true}" in HTML
+    assert "offset:true,ticks:{maxRotation:0,minRotation:0}" in HTML
+    assert "ticks:{precision:0,padding:6,callback:v=>fmtNum(Number(v),0)}" in HTML
+
+
 def test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual():
     assert "fetch('data/kpi-history.json'" in HTML
     assert "window.__radarLatestPayload = state.data" in HTML

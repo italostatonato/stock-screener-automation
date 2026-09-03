@@ -2142,7 +2142,7 @@ function renderKpis(){
         options:baseOptions({
           layout:{padding:{top:18}},
           plugins:{
-            valueLabelPlugin:{enabled:true},
+            valueLabelPlugin:{enabled:true,hideZero:true},
             legend:{labels:{color:css('--muted'),boxWidth:10}},
             tooltip:{
               mode:'nearest',
@@ -2155,8 +2155,8 @@ function renderKpis(){
             }
           },
           scales:{
-            x:{title:axisTitle(`Intervalos de ${fmtNum(width,0)} pontos`),offset:false,ticks:{maxRotation:0,minRotation:0}},
-            y:{title:axisTitle('Quantidade de ativos'),beginAtZero:true,suggestedMax:maxCount+2,ticks:{precision:0}}
+            x:{title:axisTitle(`Intervalos de ${fmtNum(width,0)} pontos`),offset:true,ticks:{maxRotation:0,minRotation:0}},
+            y:{title:axisTitle('Quantidade de ativos'),beginAtZero:true,suggestedMax:maxCount+2,ticks:{precision:0,padding:6,callback:v=>fmtNum(Number(v),0)}}
           }
         })
       });
