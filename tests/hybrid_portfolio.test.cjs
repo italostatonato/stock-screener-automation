@@ -11,9 +11,23 @@ function loadDashboard(data=fixture()){
   class Element{
     constructor(dataset={}){this.dataset=dataset;this.value='';this.innerHTML='';this.textContent='';this.hidden=false;this.children=[];this.attributes={};this.listeners={};}
     setAttribute(name,value){this.attributes[name]=value;}
-    addEventListener(name,fn){this.listeners[name]=fn;}
+    addEventListener(name,fn){(this.listeners[name]??=[]).push(fn);}
+    removeEventListener(name,fn){this.listeners[name]=(this.listeners[name]||[]).filter(listener=>listener!==fn);}
+    getRootNode(){return context.document;}
+    setSelectionRange(start,end){this.selectionStart=start;this.selectionEnd=end;}
+    edit(text,start=0,end=this.value.length){
+      context.document.activeElement=this;
+      this.setSelectionRange(start,end);
+      this.dispatch('keydown',{key:'Unidentified'});
+      let prevented=false;
+      this.dispatch('beforeinput',{cancelable:true,inputType:'insertText',data:text,preventDefault:()=>{prevented=true;}});
+      if(prevented) return;
+      this.value=this.value.slice(0,start)+text+this.value.slice(end);
+      this.setSelectionRange(start+text.length,start+text.length);
+      this.dispatch('input');
+    }
     querySelectorAll(selector){return selector==='[data-hybrid-preset]'?presets:[];}
-    dispatch(name){this.listeners[name]?.();}
+    dispatch(name,event={}){this.listeners[name]?.forEach(listener=>listener(event));}
   }
   const keys=['acoes_top20','fiis_top20','cdi','ivvb11'];
   const presets=['agressivo','meio_agressivo','balanceado','conservador','muito_conservador'].map(key=>new Element({hybridPreset:key}));
@@ -23,7 +37,7 @@ function loadDashboard(data=fixture()){
   inputs.forEach((input,index)=>elements[`hybridWeight-${keys[index]}`]=input);
   const context=vm.createContext({
     state:{data,charts:{},chartWindows:{}},BR:'pt-BR',
-    document:{getElementById:id=>elements[id],querySelectorAll:selector=>({'[data-hybrid-preset]':presets,'[data-hybrid-weight]':inputs,'[data-hybrid-foot]':feet}[selector]||[])},
+    document:{getElementById:id=>elements[id],addEventListener:()=>{},removeEventListener:()=>{},querySelectorAll:selector=>({'[data-hybrid-preset]':presets,'[data-hybrid-weight]':inputs,'[data-hybrid-foot]':feet}[selector]||[])},
     getComputedStyle:()=>({getPropertyValue:()=>''}),
     setTimeout:()=>1,clearTimeout:()=>{},
     ensureChartPeriodControls:()=>{},filteredLabelsForPeriod:labels=>labels,
@@ -31,6 +45,7 @@ function loadDashboard(data=fixture()){
     axisTitle:()=>({}),chartMaxTicks:()=>6,diffPhrase:()=>'',
     emptyPortfolioChart:()=>{context.chart=null;}
   });
+  vm.runInContext(fs.readFileSync(path.join(__dirname,'../docs/assets/vendor/imask-7.6.1.min.js'),'utf8'),context);
   vm.runInContext([
     between('    const fmtNum =','    function mergeDeep'),
     between('    function seriesMap','    function emptyLineChart'),
@@ -63,14 +78,49 @@ test('five presets total 100%, preserve balanced and increase CDI progressively'
   assert.equal(run('Object.values(HYBRID_PRESETS).map(p=>p.weights.cdi).join(",")'),'0.05,0.1,0.2,0.55,0.8');
 });
 
-test('BRL input accepts local formatting and rejects incomplete or unsafe amounts',()=>{
+test('BRL mask separates the numeric value from Brazilian formatting',()=>{
   const {context,run}=loadDashboard();
-  for(const [text,value] of [['10.000,00',10000],['R$ 1.234,56',1234.56],['10000',10000],['10000.50',10000.5],['1.000',1000],['1.000,01',1000.01]]){
-    context.input=text; assert.equal(run('parseHybridAmount(input)'),value);
+  run('const mask=createHybridAmountMask(document.getElementById("hybridAmount"))');
+  for(const [text,value,formatted] of [['10.000,00',10000,'10.000,00'],['R$ 1.234,56',1234.56,'1.234,56'],['10000',10000,'10.000,00'],['1.000',1000,'1.000,00']]){
+    context.input=text;
+    run('mask.value=input');
+    assert.equal(run('mask.typedValue'),value);
+    assert.equal(run('mask.value'),formatted);
   }
-  for(const text of ['', ' ', '0', '-100', '999,99', '0,01', '1,234', 'Infinity', '1e10', '12abc', '1.2.3', '1000000000001']){
-    context.input=text; assert.equal(run('parseHybridAmount(input)'),null,text);
+});
+
+test('currency edits regroup thousands, preserve the caret and update simulation values',()=>{
+  for(const [text,start,end,expected,value,caret] of [
+    ['5',0,0,'510.000,00',510000,1],
+    ['5',4,4,'100.500,00',100500,5],
+    ['5',6,6,'100.005,00',100005,7],
+    ['9',7,8,'10.000,90',10000.9,8],
+    ['9',7,7,'10.000,90',10000.9,8],
+    ['9',8,8,'10.000,09',10000.09,9],
+    ['',1,2,'1.000,00',1000,1],
+    ['250',0,2,'250.000,00',250000,3]
+  ]){
+    const {run,elements}=loadDashboard(); run('renderHybridPortfolio()');
+    elements.hybridAmount.edit(text,start,end);
+    assert.equal(elements.hybridAmount.value,expected);
+    assert.equal(elements.hybridAmount.selectionStart,caret);
+    assert.equal(run('hybridSettings.amount'),value);
+    assert.equal(elements.hybridAmount.attributes['aria-invalid'],'false');
   }
+});
+
+test('currency input accepts paste and intermediate edits, then pads cents on blur',()=>{
+  const {run,elements}=loadDashboard(); run('renderHybridPortfolio()');
+  const input=elements.hybridAmount;
+  for(const [text,value] of [['R$ 25.678,90',25678.9],['25678.90',25678.9],['25.678',25678],['1000000000001',null],['',null]]){
+    input.edit(text);
+    assert.equal(run('hybridSettings.amount'),value,text);
+  }
+  for(const digit of '1234') input.edit(digit,input.value.length,input.value.length);
+  assert.equal(input.value,'1.234');
+  assert.equal(run('hybridSettings.amount'),1234);
+  input.dispatch('blur');
+  assert.equal(input.value,'1.234,00');
 });
 
 test('purchase quantities use snapshot prices, whole units and direct CDI allocation',()=>{
@@ -248,9 +298,9 @@ test('preset and input events update weights, holdings, purchases, table and cha
   assert.equal(elements.hybridResults.hidden,false);
   assert.equal(inputs[0].value,'35');
   assert.match(elements.hybridProfileName.textContent,/Personalizado/);
-  elements.hybridAmount.value='1.000,00'; elements.hybridAmount.dispatch('input');
+  elements.hybridAmount.edit('1.000,00');
   assert.match(elements['hybridSimulation-acoes_top20'].innerHTML,/17 ações/);
-  elements.hybridAmount.value='-1'; elements.hybridAmount.dispatch('input');
+  elements.hybridAmount.edit('-1');
   assert.equal(elements.hybridAmount.attributes['aria-invalid'],'true');
   assert.match(elements['hybridSimulation-acoes_top20'].innerHTML,/Informe um aporte válido/);
   assert.equal(elements.hybridResults.hidden,false);
@@ -311,12 +361,12 @@ test('amounts below R$ 1,000 clear purchases and monetary estimates immediately'
   const data=fixture(); data.carteira_vs={carteira_hibrida:history()};
   const {run,elements}=loadDashboard(data);
   run('renderHybridPortfolio()');
-  elements.hybridAmount.value='999,99'; elements.hybridAmount.dispatch('input');
+  elements.hybridAmount.edit('999,99');
   assert.equal(elements.hybridAmount.attributes['aria-invalid'],'true');
   assert.match(elements.hybridAmountStatus.textContent,/pelo menos R\$ 1\.000,00/);
   assert.match(elements.hybridCompositionBody.innerHTML,/aporte mínimo/);
   assert.equal(elements.hybridSimulationSummary.innerHTML,'');
-  elements.hybridAmount.value='1.000,00'; elements.hybridAmount.dispatch('input');
+  elements.hybridAmount.edit('1.000,00');
   assert.equal(elements.hybridAmount.attributes['aria-invalid'],'false');
   assert.match(elements.hybridCompositionBody.innerHTML,/Saldo teórico/);
 });
@@ -330,7 +380,7 @@ test('monetary results use historical contributions and update when the investme
   assert.equal(run('hybridEstimatedCents(null,10000)'),null);
   assert.match(elements.hybridCompositionBody.innerHTML,/-R\$\s9,00/);
   assert.match(elements.hybridCompositionBody.innerHTML,/Saldo teórico: R\$\s9\.991,00/);
-  elements.hybridAmount.value='20.000,00'; elements.hybridAmount.dispatch('input');
+  elements.hybridAmount.edit('20.000,00');
   assert.match(elements.hybridCompositionBody.innerHTML,/-R\$\s18,00/);
   assert.match(elements.hybridCompositionBody.innerHTML,/Saldo teórico: R\$\s19\.982,00/);
   assert.equal((elements.hybridCompositionBody.innerHTML.match(/<td(?:\s|>)/g)||[]).length,25);

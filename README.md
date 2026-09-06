@@ -139,6 +139,8 @@ Principais telas:
 
 Os gráficos com eixo de tempo abrem em **90D**, com seleção manual dos outros períodos. Na Carteira Híbrida, o aporte mínimo é **R$ 1.000,00**; uma barra colorida representa os quatro blocos, as compras usam linhas compactas com detalhes ao passar o mouse ou focar pelo teclado, e a tabela mostra o ganho/perda estimado em reais a partir do aporte e das contribuições históricas, além do saldo teórico total.
 
+O campo de aporte usa a máscara numérica [IMask](https://imask.js.org/guide.html#masked-number) 7.6.1, distribuída localmente em `docs/assets/vendor/` com licença MIT. Os separadores de milhar se ajustam durante a edição, preservando o cursor; os centavos são completados ao sair do campo. A validação do mínimo é separada da máscara para permitir apagar e redigitar o valor.
+
 Cores principais:
 
 - Ações: `#54C7FF`

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="assets/vendor/imask-7.6.1.min.js"></script>
   <style>
     :root{
       --bg:#080c18; --surface:#0e1426; --surface2:#111a31; --card:#121b32;
@@ -2584,13 +2585,29 @@ const CHART_PERIODS = {
     function hybridProfileName(){
       return Object.values(HYBRID_PRESETS).find(preset=>HYBRID_KEYS.every(key=>Math.abs(preset.weights[key]-hybridSettings.weights[key])<1e-8))?.name||'Personalizado';
     }
-    function parseHybridAmount(value){
-      let text=String(value).trim().replace(/^R\$\s*/i,'').replace(/\s/g,'');
-      if(/^\d{1,3}(\.\d{3})+(,\d{1,2})?$/.test(text)) text=text.replace(/\./g,'').replace(',','.');
-      else if(/^\d+(,\d{1,2})?$/.test(text)) text=text.replace(',','.');
-      else if(!/^\d+\.\d{1,2}$/.test(text)) return null;
-      const amount=Number(text);
-      return validHybridAmount(amount)?amount:null;
+    function createHybridAmountMask(input){
+      const mask=IMask(input,{
+        mask:Number,scale:2,radix:',',thousandsSeparator:'.',mapToRadix:['.'],
+        normalizeZeros:true,padFractionalZeros:true,min:0,
+        // Keep intermediate edits possible; validate the investment minimum separately.
+        prepare:value=>{
+          const text=value.replace(/^\s*R\$\s*/i,'').replace(/\s/g,'');
+          // Pasted grouping dots must not be interpreted as decimal keystrokes.
+          return text.includes(',') || /^\d{1,3}(\.\d{3})+$/.test(text)?text.replace(/\./g,''):text;
+        }
+      });
+      input.addEventListener('beforeinput',event=>{
+        const start=input.selectionStart;
+        const radix=input.value.indexOf(',');
+        // With two fixed cents, typing over a cent replaces that digit.
+        if(event.cancelable && !event.isComposing && event.inputType==='insertText' && /^\d$/.test(event.data)
+          && start===input.selectionEnd && radix>=0 && start>radix && start<input.value.length){
+          event.preventDefault();
+          mask.value=input.value.slice(0,start)+event.data+input.value.slice(start+1);
+          input.setSelectionRange(start+1,start+1);
+        }
+      });
+      return mask;
     }
     function hybridTickers(data,key){
       const exported=data?.carteira_vs?.carteira_hibrida?.ativos?.[key]?.tickers;
@@ -2700,12 +2717,11 @@ const CHART_PERIODS = {
       });
       const amount=document.getElementById('hybridAmount');
       amount.value=fmtNum(hybridSettings.amount,2);
-      amount.addEventListener('input',()=>{
-        hybridSettings.amount=parseHybridAmount(amount.value);
+      const amountMask=createHybridAmountMask(amount);
+      amountMask.on('accept',()=>{
+        const value=amountMask.typedValue;
+        hybridSettings.amount=amountMask.unmaskedValue!=='' && validHybridAmount(value)?value:null;
         renderHybridPortfolio();
-      });
-      amount.addEventListener('blur',()=>{
-        if(hybridSettings.amount!=null) amount.value=fmtNum(hybridSettings.amount,2);
       });
     }
     function renderHybridDistribution(){
