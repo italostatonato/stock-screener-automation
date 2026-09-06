@@ -995,7 +995,45 @@
     .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
     @media(max-width:720px){.compare-layout{gap:8px}.chart-ai{grid-template-columns:1fr;gap:5px}.chart-ai b{border-right:0;border-bottom:1px solid rgba(227,190,114,.20);padding:0 0 5px}.metric-scale-legend,.sector-legend{justify-content:flex-start;margin-top:0}.result-cell{min-width:130px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ml-chart-controls{display:grid;grid-template-columns:1fr;width:100%}.ml-control-group{display:grid;width:100%;overflow:visible;grid-template-columns:repeat(4,minmax(0,1fr));border-radius:16px}.ml-control-group[aria-label="Classe de ativos"]{grid-template-columns:repeat(2,minmax(0,1fr))}.ml-control-label{position:static;grid-column:1/-1;padding:2px 6px;background:transparent}.ml-chart-toggle{min-width:0;padding:8px 5px}.ml-evolution-summary{grid-template-columns:1fr}.ml-evolution-chart{height:330px}}
     @media(max-width:860px){.hero{padding-top:32px !important}.hero-grid{grid-template-columns:1fr !important;gap:20px !important}.hero h1{font-size:clamp(44px,12vw,62px) !important}.asof{max-width:none !important}.signal-strip{grid-template-columns:1fr 1fr}.signal-cell{border-top:1px solid rgba(177,195,222,.12)}.signal-cell:nth-child(2){border-left:0}.signal-cell:first-child{grid-column:1/-1;border-top:0}.hero-tags{margin-top:18px}}
-    @media(max-width:860px){.hybrid-allocation{grid-template-columns:1fr 1fr}.holdings-grid{grid-template-columns:1fr}}
+    .hybrid-controls{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;margin-bottom:16px}
+    .hybrid-control-label{display:block;margin-bottom:10px;font-size:14px;font-weight:800;color:var(--text)}
+    .hybrid-presets{display:flex;flex-wrap:wrap;gap:8px}
+    .hybrid-presets button{min-height:44px;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.03);color:var(--text);font:inherit;font-size:14px;cursor:pointer}
+    .hybrid-presets button[aria-pressed="true"]{background:rgba(227,190,114,.15);border-color:var(--accent);color:var(--accent)}
+    .hybrid-control-help{font-size:13px!important;line-height:1.5;margin:10px 0 0!important;color:var(--muted2)}
+    .hybrid-money-input{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:rgba(4,8,17,.3);color:var(--accent)}
+    .hybrid-money-input input{width:100%;min-width:0;border:0;background:transparent;color:var(--text);font:inherit;font-size:20px;padding:10px 0}
+    .hybrid-weight-status{grid-column:1/-1;margin:0!important;color:var(--good)!important;font-size:14px!important}
+    .hybrid-weight-status[data-invalid="true"],#hybridAmountStatus[data-invalid="true"]{color:var(--bad)!important}
+    .hybrid-distribution{grid-column:1/-1;margin:0;padding-top:14px;border-top:1px solid var(--border)}
+    .hybrid-distribution figcaption{margin-bottom:10px;font-size:14px;font-weight:800}
+    .hybrid-distribution-bar{display:flex;width:100%;height:22px;overflow:hidden;border-radius:8px;background:var(--surface2)}
+    .hybrid-distribution-bar>span{flex-shrink:0;height:100%}
+    .hybrid-distribution-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
+    .hybrid-distribution-legend li{display:flex;align-items:center;gap:8px;min-width:0;font-size:14px}
+    .hybrid-distribution-legend i{flex:0 0 10px;width:10px;height:10px;border-radius:3px}
+    .hybrid-distribution-legend b{margin-left:auto;font-variant-numeric:tabular-nums}
+    @media(max-width:620px){.hybrid-distribution-legend{grid-template-columns:1fr 1fr;gap:10px 20px}}
+    .allocation-weight{display:flex;align-items:center;gap:4px;color:var(--allocation-color);font-size:26px;font-weight:800}
+    .allocation-weight input{width:112px;min-height:48px;max-width:100%;padding:6px 8px;border:1px solid var(--allocation-color);border-radius:10px;background:rgba(4,8,17,.28);color:inherit;font:inherit;font-size:26px}
+    .hybrid-presets button:focus-visible,.allocation-weight input:focus-visible,.hybrid-money-input:focus-within{outline:2px solid var(--accent);outline-offset:3px}
+    #hybridResults[hidden]{display:none}.hybrid-simulation{margin-bottom:16px}
+    .hybrid-simulation-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+    .hybrid-simulation-stat{padding:14px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025);min-width:0}
+    .hybrid-simulation-stat span{display:block;color:var(--muted2);font-size:14px;margin-bottom:6px}
+    .hybrid-simulation-stat strong{font-size:clamp(17px,2vw,23px);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+    .hybrid-column{display:grid;grid-template-rows:subgrid;grid-row:span 2;gap:12px;min-width:0}
+    .hybrid-buy-list{align-self:start;min-width:0;padding:16px;border:1px solid var(--border);border-radius:16px;background:rgba(4,8,17,.18)}
+    .hybrid-buy-list h4{margin:0 0 6px;font-size:15px}.hybrid-buy-budget{margin:0 0 14px;color:var(--muted);font-size:14px}
+    .hybrid-buy-list ul{list-style:none;padding:0;margin:0}.hybrid-buy-list li{padding:8px 0;border-top:1px solid var(--border);cursor:help}
+    .hybrid-buy-heading{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px 8px;font-size:14px;line-height:1.3}
+    .hybrid-buy-heading strong{color:var(--accent);font-size:12px}.hybrid-buy-price{margin:4px 0 0;font-size:12px;line-height:1.3;color:var(--muted)}
+    .hybrid-buy-invested{margin-left:auto;font-size:13px;font-weight:800;white-space:nowrap}
+    .hybrid-money-result{display:block;font-variant-numeric:tabular-nums;white-space:nowrap}.hybrid-money-note{display:block;margin-top:3px;font-size:11px;color:var(--muted);font-weight:400}
+    .hybrid-buy-list dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;font-variant-numeric:tabular-nums}
+    .hybrid-buy-list dt{font-size:12px;color:var(--muted)}.hybrid-buy-list dd{margin:2px 0 0;font-size:14px;overflow-wrap:anywhere}
+    .hybrid-buy-list .hybrid-buy-total{padding-top:14px;border-top:1px solid var(--border-strong)}.hybrid-buy-total dd{font-weight:800;color:var(--accent)}
+    @media(max-width:860px){.hybrid-allocation{grid-template-columns:1fr 1fr}.holdings-grid{grid-template-columns:1fr}.hybrid-controls{grid-template-columns:1fr}.hybrid-simulation-summary{grid-template-columns:1fr 1fr}}
     @media(max-width:620px){.nav{min-height:0 !important}.brand-name{font-size:18px}.hero h1{font-size:45px !important}.hero p{font-size:14px !important}.hero-tags span{font-size:10px;padding:6px 8px}.signal-cell{padding:12px}.signal-cell b{font-size:12px}.panel{padding:16px !important}.section h2{font-size:27px !important}.kpi .value{font-size:22px !important}.hybrid-thesis{align-items:flex-start;flex-direction:column;gap:5px}.hybrid-allocation{grid-template-columns:1fr;gap:8px}.allocation-card{min-height:0;padding:15px}.allocation-card strong{font-size:26px}.hybrid-table{min-width:620px}}
 
     /* Ajustes de usabilidade, foco e legibilidade. */
@@ -1057,7 +1095,7 @@
     /* Hero compacto: apresentação, autoria e atualização sem áreas ociosas. */
     .hero{padding:20px 0 14px!important}
     .hero-grid{
-      grid-template-columns:minmax(0,1.15fr) minmax(280px,.75fr) minmax(280px,.65fr)!important;
+      grid-template-columns:minmax(0,1.4fr) minmax(260px,.72fr) 220px!important;
       grid-template-areas:"copy about status";
       gap:18px!important;
       align-items:stretch!important;
@@ -1099,18 +1137,18 @@
       justify-self:stretch!important;
       width:100%!important;
       max-width:none!important;
-      padding:14px 16px!important;
+      padding:10px 12px!important;
       border-radius:16px!important;
     }
     .asof .pill{padding:5px 8px;font-size:9.5px}
-    .asof strong{margin-top:7px!important;font-size:18px!important;line-height:1.2!important;letter-spacing:-.03em!important}
+    .asof strong{margin-top:5px!important;font-size:14px!important;line-height:1.2!important;letter-spacing:-.02em!important}
     .update-note{margin-top:4px!important;font-size:10.5px!important;line-height:1.35!important}
     .signal-strip{grid-template-columns:1.35fr repeat(3,1fr);margin:0 0 18px}
     .signal-cell{display:flex;align-items:center;gap:9px;min-width:0;padding:9px 14px}
     .signal-cell span{flex:0 0 auto;margin:0;font-size:8px;line-height:1.2}
     .signal-cell b{min-width:0;font-size:10.5px;line-height:1.3}
     @media(max-width:1200px){
-      .hero-grid{grid-template-columns:minmax(0,1fr) minmax(300px,.8fr)!important;grid-template-areas:"copy copy" "about status"}
+      .hero-grid{grid-template-columns:minmax(0,1fr) 220px!important;grid-template-areas:"copy copy" "about status"}
       .hero-copy{max-width:820px}
     }
     @media(max-width:860px){
@@ -1190,30 +1228,66 @@
     </section>
 
     <section id="hibrida" class="section" role="tabpanel" aria-labelledby="tab-hibrida" aria-hidden="true">
-      <div class="section-head"><div><h2>Carteira Híbrida Equilibrada</h2><p class="desc">Uma carteira teórica que combina crescimento, renda, proteção cambial e renda fixa.</p></div></div>
-      <div class="hybrid-thesis"><span>Como se equilibra</span><p><b>Cada bloco tem uma função:</b> ações buscam crescimento, FIIs reforçam renda, CDI reduz oscilações e IVVB11 amplia a diversificação para fora do Brasil.</p></div>
-      <div class="hybrid-allocation" aria-label="Alocação alvo e função de cada componente da carteira">
-        <article class="allocation-card acoes"><span class="allocation-kicker">Renda variável BR</span><div class="allocation-value-line"><strong>30%</strong><span class="allocation-role">Motor de crescimento</span></div><b class="allocation-title">Top 20 Ações BR</b><p>Reúne as ações brasileiras com melhor combinação de qualidade, preço e dividendos segundo o score.</p><div class="allocation-foot"><span>20 ativos</span><span>1,50% por ação</span></div></article>
-        <article class="allocation-card fiis"><span class="allocation-kicker">Renda imobiliária</span><div class="allocation-value-line"><strong>30%</strong><span class="allocation-role">Renda + imóveis</span></div><b class="allocation-title">Top 20 FIIs</b><p>Adiciona renda imobiliária e diversificação setorial por meio dos fundos mais bem ranqueados.</p><div class="allocation-foot"><span>20 fundos</span><span>1,50% por FII</span></div></article>
-        <article class="allocation-card cdi"><span class="allocation-kicker">Renda fixa</span><div class="allocation-value-line"><strong>20%</strong><span class="allocation-role">Estabilidade</span></div><b class="allocation-title">CDI</b><p>Funciona como amortecedor da carteira, preservando liquidez e reduzindo parte das oscilações da renda variável.</p><div class="allocation-foot"><span>Pós-fixado</span><span>20% da carteira</span></div></article>
-        <article class="allocation-card ivvb"><span class="allocation-kicker">Exposição internacional</span><div class="allocation-value-line"><strong>20%</strong><span class="allocation-role">Diversificação global</span></div><b class="allocation-title">IVVB11</b><p>Traz exposição às maiores empresas dos EUA e ao dólar, diminuindo a dependência do mercado brasileiro.</p><div class="allocation-foot"><span>S&amp;P 500 + dólar</span><span>20% da carteira</span></div></article>
+      <div class="section-head"><div><h2>Carteira Híbrida <span id="hybridProfileName">· Balanceado</span></h2><p class="desc">Escolha um perfil, ajuste a divisão entre os blocos e simule seu aporte.</p></div></div>
+      <div class="panel hybrid-controls" id="hybridControls">
+        <div><span class="hybrid-control-label" id="hybridPresetsLabel">Perfil de alocação</span><div class="hybrid-presets" role="group" aria-labelledby="hybridPresetsLabel">
+          <button type="button" data-hybrid-preset="agressivo" aria-pressed="false">Agressivo</button>
+          <button type="button" data-hybrid-preset="meio_agressivo" aria-pressed="false">Meio-Agressivo</button>
+          <button type="button" data-hybrid-preset="balanceado" aria-pressed="true">Balanceado</button>
+          <button type="button" data-hybrid-preset="conservador" aria-pressed="false">Conservador</button>
+          <button type="button" data-hybrid-preset="muito_conservador" aria-pressed="false">Muito conservador</button>
+        </div><p class="hybrid-control-help">Ajuste de 1% em 1%. Ao aumentar um bloco, o maior dos demais diminui; ao reduzir, ele recebe a diferença. O total permanece em 100%.</p></div>
+        <div class="hybrid-amount-field"><label class="hybrid-control-label" for="hybridAmount">Quanto você quer investir?</label><div class="hybrid-money-input"><span aria-hidden="true">R$</span><input id="hybridAmount" type="text" inputmode="decimal" value="10.000,00" autocomplete="off" aria-describedby="hybridAmountStatus" /></div><p id="hybridAmountStatus" class="hybrid-control-help" role="status">Aporte mínimo: R$ 1.000,00.</p></div>
+        <p id="hybridWeightStatus" class="hybrid-weight-status" role="status" aria-live="polite">Total: 100% · Balanceado</p>
+        <figure class="hybrid-distribution" aria-labelledby="hybridDistributionTitle">
+          <figcaption id="hybridDistributionTitle">Distribuição da carteira</figcaption>
+          <div id="hybridDistributionBar" class="hybrid-distribution-bar" role="img" aria-label="Distribuição entre ações BR, FIIs, CDI e IVVB11"></div>
+          <ul id="hybridDistributionLegend" class="hybrid-distribution-legend" aria-label="Percentual de cada bloco"></ul>
+        </figure>
       </div>
+      <div class="hybrid-thesis"><span>Como se equilibra</span><p><b>Cada bloco tem uma função:</b> ações buscam crescimento, FIIs reforçam renda, CDI reduz oscilações e IVVB11 amplia a diversificação para fora do Brasil.</p></div>
+      <div class="panel wide hybrid-simulation" aria-labelledby="hybridSimulationTitle">
+        <h3 id="hybridSimulationTitle">Simulação do aporte</h3>
+        <p id="hybridSimulationNote"></p>
+        <div id="hybridSimulationSummary" class="hybrid-simulation-summary" aria-live="polite"></div>
+        <p class="mini-note">As compras aparecem abaixo de cada bloco. Ações, FIIs e IVVB11 usam unidades inteiras, arredondadas para baixo. O saldo fica separado, sem redistribuição automática. CDI representa um valor destinado à renda fixa. A simulação não considera custos, impostos ou mínimos de aplicação.</p>
+      </div>
+      <div class="hybrid-allocation" aria-label="Alocação alvo e função de cada componente da carteira">
+        <div class="hybrid-column">
+          <article class="allocation-card acoes"><span class="allocation-kicker">Renda variável BR</span><div class="allocation-value-line"><label class="allocation-weight"><span class="sr-only">Percentual em ações BR</span><input type="number" id="hybridWeight-acoes_top20" data-hybrid-weight="acoes_top20" min="0" max="100" step="1" value="30" aria-describedby="hybridWeightStatus" /><span>%</span></label><span class="allocation-role">Motor de crescimento</span></div><b class="allocation-title">Top 20 Ações BR</b><p>Reúne as ações brasileiras com melhor combinação de qualidade, preço e dividendos segundo o score.</p><div class="allocation-foot" data-hybrid-foot="acoes_top20"></div></article>
+          <section id="hybridSimulation-acoes_top20" class="hybrid-buy-list" aria-label="Simulação de compras de ações BR"></section>
+        </div>
+        <div class="hybrid-column">
+          <article class="allocation-card fiis"><span class="allocation-kicker">Renda imobiliária</span><div class="allocation-value-line"><label class="allocation-weight"><span class="sr-only">Percentual em FIIs</span><input type="number" id="hybridWeight-fiis_top20" data-hybrid-weight="fiis_top20" min="0" max="100" step="1" value="30" aria-describedby="hybridWeightStatus" /><span>%</span></label><span class="allocation-role">Renda + imóveis</span></div><b class="allocation-title">Top 20 FIIs</b><p>Adiciona renda imobiliária e diversificação setorial por meio dos fundos mais bem ranqueados.</p><div class="allocation-foot" data-hybrid-foot="fiis_top20"></div></article>
+          <section id="hybridSimulation-fiis_top20" class="hybrid-buy-list" aria-label="Simulação de compras de FIIs"></section>
+        </div>
+        <div class="hybrid-column">
+          <article class="allocation-card cdi"><span class="allocation-kicker">Renda fixa</span><div class="allocation-value-line"><label class="allocation-weight"><span class="sr-only">Percentual em CDI</span><input type="number" id="hybridWeight-cdi" data-hybrid-weight="cdi" min="0" max="100" step="1" value="20" aria-describedby="hybridWeightStatus" /><span>%</span></label><span class="allocation-role">Estabilidade</span></div><b class="allocation-title">CDI</b><p>Funciona como amortecedor da carteira, preservando liquidez e reduzindo parte das oscilações da renda variável.</p><div class="allocation-foot" data-hybrid-foot="cdi"></div></article>
+          <section id="hybridSimulation-cdi" class="hybrid-buy-list" aria-label="Simulação do valor destinado ao CDI"></section>
+        </div>
+        <div class="hybrid-column">
+          <article class="allocation-card ivvb"><span class="allocation-kicker">Exposição internacional</span><div class="allocation-value-line"><label class="allocation-weight"><span class="sr-only">Percentual em IVVB11</span><input type="number" id="hybridWeight-ivvb11" data-hybrid-weight="ivvb11" min="0" max="100" step="1" value="20" aria-describedby="hybridWeightStatus" /><span>%</span></label><span class="allocation-role">Diversificação global</span></div><b class="allocation-title">IVVB11</b><p>Traz exposição às maiores empresas dos EUA e ao dólar, diminuindo a dependência do mercado brasileiro.</p><div class="allocation-foot" data-hybrid-foot="ivvb11"></div></article>
+          <section id="hybridSimulation-ivvb11" class="hybrid-buy-list" aria-label="Simulação de compras de IVVB11"></section>
+        </div>
+      </div>
+      <div id="hybridResults">
       <div class="panel wide">
         <h3>Desempenho comparado</h3>
         <p>Retorno da carteira contra CDI, IFIX, Top 20 FIIs, Top 20 Ações BR e IPCA, todos partindo de 0% no período selecionado.</p>
-        <div class="chart-box"><canvas id="hybridPortfolioChart" role="img" aria-label="Desempenho da Carteira Híbrida Equilibrada comparado aos principais benchmarks"></canvas></div>
+        <div class="chart-box"><canvas id="hybridPortfolioChart" role="img" aria-label="Desempenho da Carteira Híbrida com os percentuais escolhidos comparado aos principais benchmarks"></canvas></div>
         <div class="mini-note" id="hybridPortfolioNote"></div>
         <div id="hybridUnavailable" class="empty hybrid-empty" hidden></div>
         <div class="hybrid-table-wrap">
           <table class="table hybrid-table">
-            <caption class="sr-only">Composição, resultado e contribuição da Carteira Híbrida Equilibrada</caption>
-            <thead><tr><th>Componente</th><th>Alocação</th><th>Resultado no período</th><th>Contribuição ponderada</th></tr></thead>
+            <caption class="sr-only">Composição, resultado e contribuição da Carteira Híbrida com os percentuais escolhidos</caption>
+            <thead><tr><th>Componente</th><th>Alocação</th><th>Resultado no período</th><th>Contribuição ponderada</th><th>Resultado estimado (R$)</th></tr></thead>
             <tbody id="hybridCompositionBody"></tbody>
           </table>
         </div>
         <div class="holdings-grid" id="hybridHoldings"></div>
         <div class="hybrid-method"><span>Rebalanceamento a cada nova composição semanal</span><span>Sem custos e impostos</span><span>Carteiras Top 20 igualmente ponderadas</span><span>Contribuições exibidas com 3 casas decimais</span><span>Proventos não reinvestidos nas séries Top 20</span></div>
-        <div class="chart-explain"><b>Como ler:</b> a contribuição ponderada é o resultado de cada componente multiplicado por seu peso. A soma dessas contribuições forma o resultado da Carteira Híbrida no período escolhido.</div>
+        <div class="chart-explain"><b>Como ler:</b> os percentuais escolhidos são aplicados em cada intervalo de rebalanceamento. A soma das contribuições acumuladas forma o resultado da carteira no período. O resultado em reais multiplica o aporte pela contribuição de cada bloco; é uma simulação do período histórico, sem custos e impostos. O saldo teórico soma o aporte ao resultado. O gráfico e essa estimativa usam os pesos teóricos, sem o arredondamento de quantidades das compras.</div>
+      </div>
       </div>
     </section>
 
@@ -1490,7 +1564,7 @@
       const range=document.getElementById('asOfRange');
       if(card) card.classList.toggle('stale', !current);
       if(pill) pill.innerHTML=`<span class="dot"></span> ${current?'Atualizado nesta semana':'Atualização semanal pendente'}`;
-      if(asOf) asOf.textContent=`Último snapshot: ${fmtDateShort(last)}`;
+      if(asOf) asOf.textContent=`Snapshot: ${fmtDateShort(last)}`;
       if(range) range.innerHTML=`Histórico: <b>${fmtDateShort(first)}</b> até <b>${fmtDateShort(last)}</b>`;
     }
     async function loadDate(date){
@@ -1863,7 +1937,12 @@ function renderKpis(){
         button.setAttribute('aria-pressed',button.dataset.mlMetric===state.mlChartMetric?'true':'false');
         button.onclick=()=>{ state.mlChartMetric=button.dataset.mlMetric; renderMlPerformanceChart(); };
       });
-      const {labels,datasets,metric,realized}=mlEvolutionData();
+      const evolution=mlEvolutionData();
+      const {metric,realized}=evolution;
+      ensureChartPeriodControls('mlPerformanceChart',evolution.labels);
+      const labels=filteredLabelsForPeriod(evolution.labels,'mlPerformanceChart');
+      const positions=labels.map(label=>evolution.labels.indexOf(label));
+      const datasets=evolution.datasets.map(dataset=>({...dataset,data:positions.map(index=>dataset.data[index]),metaRows:positions.map(index=>dataset.metaRows?.[index])}));
       if(!labels.length||!datasets.length){
         if(summary) summary.innerHTML=mlEvolutionStat('Histórico','Em formação','Aguardando a primeira janela válida');
         if(note) note.innerHTML='<span class="warning-dot"></span>O gráfico aparecerá assim que houver uma métrica realizada para este universo.';
@@ -1914,7 +1993,7 @@ function renderKpis(){
             }}
           },
           scales:{
-            x:{title:axisTitle('Processamento'),ticks:{autoSkip:true,maxTicksLimit:10,maxRotation:0,minRotation:0}},
+            x:{title:axisTitle('Processamento'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('mlPerformanceChart'),maxRotation:0,minRotation:0}},
             y:{title:axisTitle(metric.axis),ticks:{callback:value=>metric.format(Number(value))},grid:{color:context=>Number(context.tick.value)===0?'rgba(238,242,255,.34)':'rgba(148,163,184,.08)',lineWidth:context=>Number(context.tick.value)===0?2:1}}
           }
         })
@@ -2238,20 +2317,24 @@ function renderKpis(){
     function base100ToReturn(arr){ return (arr||[]).map(x=>({data:x.data, valor:Number(x.valor)-100})); }
     function renderMarketChart(){
       const ibov=benchmarkBase100('IBOV'), ifix=benchmarkBase100('IFIX');
-      const labels=[...new Set([...ibov,...ifix].map(x=>String(x.data)))].sort();
+      const allLabels=[...new Set([...ibov,...ifix].map(x=>String(x.data)))].sort();
+      ensureChartPeriodControls('marketChart',allLabels);
+      const labels=filteredLabelsForPeriod(allLabels,'marketChart');
       if(!labels.length){
         emptyLineChart('marketChart','Aguardando séries de IBOV e IFIX');
         return;
       }
       makeChart('marketChart',{type:'line',data:{labels,datasets:[
-        {label:'IBOV',data:alignSeriesToLabels(base100ToReturn(ibov),labels),spanGaps:true,tension:.25},
-        {label:'IFIX',data:alignSeriesToLabels(base100ToReturn(ifix),labels),spanGaps:true,tension:.25}
+        {label:'IBOV',data:alignedReturnForWindow(ibov,labels),spanGaps:true,tension:.25},
+        {label:'IFIX',data:alignedReturnForWindow(ifix,labels),spanGaps:true,tension:.25}
       ]},options:baseOptions({interaction:{mode:'index',intersect:false},scales:{x:{title:axisTitle('Data')},y:{title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
     }
     function renderMacroChart(){
       const ind=state.data.indicadores||{};
       const series=[['IPCA 12M',ind.ipca_12m||[]],['IGP-M',ind.igpm||[]],['Selic',ind.selic||[]]];
-      const labels=[...new Set(series.flatMap(s=>s[1].map(x=>String(x.data))))].sort();
+      const allLabels=[...new Set(series.flatMap(s=>s[1].map(x=>String(x.data))))].sort();
+      ensureChartPeriodControls('macroChart',allLabels);
+      const labels=filteredLabelsForPeriod(allLabels,'macroChart');
       if(!labels.length){
         emptyLineChart('macroChart','Aguardando séries macroeconômicas');
         return;
@@ -2385,9 +2468,8 @@ const CHART_PERIODS = {
       if(!start || !end) return 0;
       return Math.round((new Date(`${end}T12:00:00`) - new Date(`${start}T12:00:00`))/(1000*60*60*24));
     }
-    function defaultChartPeriod(labels){
-      if(!labels || labels.length<2) return 'ALL';
-      return dateDiffDays(labels[0], labels[labels.length-1]) >= 365 ? '1A' : 'ALL';
+    function defaultChartPeriod(){
+      return '90D';
     }
     function dateMinusIso(dateStr,days){
       const d=new Date(`${dateStr}T12:00:00`);
@@ -2399,7 +2481,7 @@ const CHART_PERIODS = {
       if(!labels.length) return labels;
       if(!state.chartWindows[chartId]) state.chartWindows[chartId]=defaultChartPeriod(labels);
       const key=state.chartWindows[chartId];
-      const conf=CHART_PERIODS[key] || CHART_PERIODS.ALL;
+      const conf=CHART_PERIODS[key] || CHART_PERIODS['90D'];
       if(!conf.days) return labels;
       const end=labels[labels.length-1];
       const start=dateMinusIso(end, conf.days);
@@ -2407,7 +2489,7 @@ const CHART_PERIODS = {
       return filtered.length ? filtered : labels;
     }
     function chartMaxTicks(chartId){
-      const key=state.chartWindows[chartId] || 'ALL';
+      const key=state.chartWindows[chartId] || defaultChartPeriod();
       if(key==='7D') return 7;
       if(key==='15D') return 8;
       if(key==='30D') return 7;
@@ -2440,6 +2522,9 @@ const CHART_PERIODS = {
         state.chartWindows[chartId]=btn.dataset.period;
         if(chartId==='hybridPortfolioChart') renderHybridPortfolio();
         else if(chartId==='proxyFiisChart' || chartId==='proxyAcoesChart') renderProxyCharts();
+        else if(chartId==='marketChart') renderMarketChart();
+        else if(chartId==='macroChart') renderMacroChart();
+        else if(chartId==='mlPerformanceChart') renderMlPerformanceChart();
         else renderOverviewBacktestCharts();
       };
     }
@@ -2459,6 +2544,244 @@ const CHART_PERIODS = {
       return Number(value)>0?'result-positive':'result-negative';
     }
     const HYBRID_TARGET_WEIGHTS={acoes_top20:.30,fiis_top20:.30,cdi:.20,ivvb11:.20};
+    const HYBRID_PRESETS={
+      agressivo:{name:'Agressivo',weights:{acoes_top20:.45,fiis_top20:.20,cdi:.05,ivvb11:.30}},
+      meio_agressivo:{name:'Meio-Agressivo',weights:{acoes_top20:.40,fiis_top20:.25,cdi:.10,ivvb11:.25}},
+      balanceado:{name:'Balanceado',weights:{...HYBRID_TARGET_WEIGHTS}},
+      conservador:{name:'Conservador',weights:{acoes_top20:.15,fiis_top20:.20,cdi:.55,ivvb11:.10}},
+      muito_conservador:{name:'Muito conservador',weights:{acoes_top20:.05,fiis_top20:.10,cdi:.80,ivvb11:.05}}
+    };
+    const HYBRID_KEYS=Object.keys(HYBRID_TARGET_WEIGHTS);
+    const HYBRID_NAMES={acoes_top20:'Top 20 Ações BR',fiis_top20:'Top 20 FIIs',cdi:'CDI · renda fixa',ivvb11:'IVVB11'};
+    const hybridSettings={weights:{...HYBRID_TARGET_WEIGHTS},amount:10000};
+    function validHybridAmount(amount){
+      return Number.isFinite(amount) && amount>=1000 && amount<=1e12;
+    }
+    function validHybridWeight(weight){
+      return Number.isFinite(weight) && weight>=0 && weight<=1
+        && Math.abs(weight*100-Math.round(weight*100))<1e-8;
+    }
+    function validHybridWeights(weights){
+      return HYBRID_KEYS.every(key=>validHybridWeight(weights[key]))
+        && HYBRID_KEYS.reduce((sum,key)=>sum+Math.round(weights[key]*100),0)===100;
+    }
+    function rebalanceHybridWeights(weights,changedKey,targetPct){
+      if(!validHybridWeights(weights) || !HYBRID_KEYS.includes(changedKey)
+        || !Number.isInteger(targetPct) || targetPct<0 || targetPct>100) return null;
+      const percentages=Object.fromEntries(HYBRID_KEYS.map(key=>[key,Math.round(weights[key]*100)]));
+      const others=HYBRID_KEYS.filter(key=>key!==changedKey);
+      const largestOther=()=>others.reduce((largest,key)=>percentages[key]>percentages[largest]?key:largest,others[0]);
+      const difference=targetPct-percentages[changedKey];
+      // Reevaluate the largest other block for each point, including typed jumps.
+      for(let point=0;point<difference;point++) percentages[largestOther()]--;
+      if(difference<0) percentages[largestOther()]-=difference;
+      percentages[changedKey]=targetPct;
+      return Object.fromEntries(HYBRID_KEYS.map(key=>[key,percentages[key]/100]));
+    }
+    function syncHybridWeightInputs(){
+      HYBRID_KEYS.forEach(key=>document.getElementById(`hybridWeight-${key}`).value=String(Math.round(hybridSettings.weights[key]*100)));
+    }
+    function hybridProfileName(){
+      return Object.values(HYBRID_PRESETS).find(preset=>HYBRID_KEYS.every(key=>Math.abs(preset.weights[key]-hybridSettings.weights[key])<1e-8))?.name||'Personalizado';
+    }
+    function parseHybridAmount(value){
+      let text=String(value).trim().replace(/^R\$\s*/i,'').replace(/\s/g,'');
+      if(/^\d{1,3}(\.\d{3})+(,\d{1,2})?$/.test(text)) text=text.replace(/\./g,'').replace(',','.');
+      else if(/^\d+(,\d{1,2})?$/.test(text)) text=text.replace(',','.');
+      else if(!/^\d+\.\d{1,2}$/.test(text)) return null;
+      const amount=Number(text);
+      return validHybridAmount(amount)?amount:null;
+    }
+    function hybridTickers(data,key){
+      const exported=data?.carteira_vs?.carteira_hibrida?.ativos?.[key]?.tickers;
+      const fallback=key==='acoes_top20'?(data?.acoes||[]).map(row=>row['Ação']):(data?.fiis||[]).map(row=>row.FUNDOS);
+      return [...new Set((exported?.length?exported:fallback).filter(Boolean).map(ticker=>String(ticker).trim().toUpperCase()).filter(Boolean))];
+    }
+    function allocateHybridCents(total,weights){
+      const parts=weights.map((weight,index)=>({index,raw:total*weight,cents:Math.floor(total*weight)}));
+      let remaining=total-parts.reduce((sum,part)=>sum+part.cents,0);
+      const order=[...parts].sort((a,b)=>(b.raw-b.cents)-(a.raw-a.cents));
+      for(let i=0;i<remaining;i++) order[i%order.length].cents++;
+      return parts.map(part=>part.cents);
+    }
+    function buildHybridSimulation(data,weights,amount){
+      if(!validHybridWeights(weights) || !validHybridAmount(amount)) return null;
+      const totalCents=Math.round(amount*100);
+      const budgets=allocateHybridCents(totalCents,HYBRID_KEYS.map(key=>weights[key]));
+      const ivvbQuote=(data?.benchmarks?.IVVB11||[])
+        .filter(row=>row.data && row.data<=data?.data && Number.isFinite(Number(row.valor)) && Number(row.valor)>0)
+        .sort((a,b)=>String(b.data).localeCompare(String(a.data)))[0];
+      const groups=HYBRID_KEYS.map((key,index)=>{
+        const budgetCents=budgets[index];
+        const tickers=key==='cdi'?['CDI']:key==='ivvb11'?['IVVB11']:hybridTickers(data,key);
+        const items=tickers.length?tickers:[null];
+        const targets=allocateHybridCents(budgetCents,items.map(()=>1/items.length));
+        const rows=items.map((ticker,i)=>{
+          const record=key==='acoes_top20'?(data?.acoes||[]).find(row=>String(row['Ação']).trim().toUpperCase()===ticker)
+            :key==='fiis_top20'?(data?.fiis||[]).find(row=>String(row.FUNDOS).trim().toUpperCase()===ticker):null;
+          const rawPrice=key==='ivvb11'?ivvbQuote?.valor:key==='acoes_top20'?record?.['Preço']:record?.['PREÇO ATUAL (R$)'];
+          const priceCents=Number.isFinite(Number(rawPrice)) && Number(rawPrice)>0?Math.round(Number(rawPrice)*100):null;
+          const targetCents=targets[i];
+          const quantity=key==='cdi' || !priceCents?null:Math.floor(targetCents/priceCents);
+          const investedCents=key==='cdi'?targetCents:quantity==null?0:quantity*priceCents;
+          return {ticker,key,targetCents,priceCents,quantity,investedCents,remainingCents:targetCents-investedCents,quoteDate:key==='ivvb11'?ivvbQuote?.data:data?.data};
+        });
+        return {key,budgetCents,rows,investedCents:rows.reduce((sum,row)=>sum+row.investedCents,0)};
+      });
+      const investedCents=groups.reduce((sum,group)=>sum+group.investedCents,0);
+      const cdiCents=groups.find(group=>group.key==='cdi').investedCents;
+      return {totalCents,groups,investedCents,cdiCents,securitiesCents:investedCents-cdiCents,remainingCents:totalCents-investedCents};
+    }
+    function calculateHybridHistory(components,labels,weights){
+      const componentReturns={contributions:{}};
+      const levels={};
+      const activeKeys=HYBRID_KEYS.filter(key=>weights[key]>0);
+      components.forEach(component=>{
+        const values=alignedReturnForWindow(component.serie||[],labels,{fillForward:true});
+        componentReturns[component.chave]=lastNumeric(values);
+        levels[component.chave]=alignSeriesToLabels(component.serie||[],labels,{fillForward:true});
+      });
+      HYBRID_KEYS.forEach(key=>componentReturns.contributions[key]=0);
+      const complete=validHybridWeights(weights) && labels.length>0 && activeKeys.every(key=>
+        (levels[key]||[]).length===labels.length && levels[key].every(value=>value!=null && Number.isFinite(Number(value)) && Number(value)>0));
+      if(!complete){
+        HYBRID_KEYS.forEach(key=>componentReturns.contributions[key]=weights[key]===0?0:null);
+        return {weightedReturn:labels.map(()=>null),componentReturns};
+      }
+      let portfolioValue=100;
+      const weightedReturn=labels.map((_,index)=>{
+        if(index===0) return 0;
+        const previousPortfolio=portfolioValue;
+        let intervalReturn=0;
+        for(const key of activeKeys){
+          const componentIntervalReturn=Number(levels[key][index])/Number(levels[key][index-1])-1;
+          intervalReturn+=weights[key]*componentIntervalReturn;
+          componentReturns.contributions[key]+=previousPortfolio*weights[key]*componentIntervalReturn;
+        }
+        portfolioValue=previousPortfolio*(1+intervalReturn);
+        return portfolioValue-100;
+      });
+      return {weightedReturn,componentReturns};
+    }
+    function initHybridControls(){
+      const root=document.getElementById('hybridControls');
+      if(!root || root.dataset.ready) return;
+      root.dataset.ready='true';
+      root.querySelectorAll('[data-hybrid-preset]').forEach(button=>button.addEventListener('click',()=>{
+        hybridSettings.weights={...HYBRID_PRESETS[button.dataset.hybridPreset].weights};
+        syncHybridWeightInputs();
+        renderHybridPortfolio();
+      }));
+      syncHybridWeightInputs();
+      document.querySelectorAll('[data-hybrid-weight]').forEach(input=>{
+        input.setAttribute('inputmode','numeric');
+        input.addEventListener('keydown',event=>{
+          if(!event.ctrlKey && !event.metaKey && ['e','E','+','-',',','.'].includes(event.key)) event.preventDefault();
+        });
+        input.addEventListener('input',()=>{
+          const value=input.value.trim();
+          const next=/^\d{1,3}$/.test(value)?rebalanceHybridWeights(hybridSettings.weights,input.dataset.hybridWeight,Number(value)):null;
+          if(!next){
+            if(value!=='') input.value=String(Math.round(hybridSettings.weights[input.dataset.hybridWeight]*100));
+            input.setAttribute('aria-invalid','true');
+            const status=document.getElementById('hybridWeightStatus');
+            status.dataset.invalid='true';
+            status.textContent='Digite um percentual inteiro entre 0 e 100. A distribuição anterior permanece aplicada, somando 100%.';
+            return;
+          }
+          hybridSettings.weights=next;
+          syncHybridWeightInputs();
+          renderHybridPortfolio();
+        });
+        input.addEventListener('blur',()=>{
+          syncHybridWeightInputs();
+          renderHybridControls();
+        });
+      });
+      const amount=document.getElementById('hybridAmount');
+      amount.value=fmtNum(hybridSettings.amount,2);
+      amount.addEventListener('input',()=>{
+        hybridSettings.amount=parseHybridAmount(amount.value);
+        renderHybridPortfolio();
+      });
+      amount.addEventListener('blur',()=>{
+        if(hybridSettings.amount!=null) amount.value=fmtNum(hybridSettings.amount,2);
+      });
+    }
+    function renderHybridDistribution(){
+      const blocks=[
+        {key:'acoes_top20',name:'Ações BR',color:'var(--acao)'},
+        {key:'fiis_top20',name:'FIIs',color:'var(--fii)'},
+        {key:'cdi',name:'CDI',color:'var(--good)'},
+        {key:'ivvb11',name:'IVVB11',color:'#f472b6'}
+      ].map(block=>({...block,pct:Math.round(hybridSettings.weights[block.key]*100)}));
+      const bar=document.getElementById('hybridDistributionBar');
+      bar.setAttribute('aria-label',blocks.map(block=>`${block.name}: ${block.pct}%`).join('; '));
+      bar.innerHTML=blocks.map(block=>`<span style="width:${block.pct}%;background:${block.color}" title="${block.name}: ${block.pct}%" aria-hidden="true"></span>`).join('');
+      document.getElementById('hybridDistributionLegend').innerHTML=blocks.map(block=>`<li><i style="background:${block.color}" aria-hidden="true"></i><span>${block.name}</span><b>${block.pct}%</b></li>`).join('');
+    }
+    function renderHybridControls(){
+      initHybridControls();
+      const weights=hybridSettings.weights;
+      const valid=validHybridWeights(weights);
+      if(valid) renderHybridDistribution();
+      const total=HYBRID_KEYS.reduce((sum,key)=>sum+(Number.isFinite(weights[key])?weights[key]*100:0),0);
+      const validFields=HYBRID_KEYS.every(key=>validHybridWeight(weights[key]));
+      const status=document.getElementById('hybridWeightStatus');
+      status.dataset.invalid=String(!valid);
+      status.textContent=valid?`Total: 100% · ${hybridProfileName()} · resultados atualizados automaticamente`
+        :!validFields?'Use percentuais inteiros entre 0 e 100 em todos os blocos.'
+        :`Total: ${fmtNum(total,2)}% · ${total<100?'Faltam':'Reduza'} ${fmtNum(Math.abs(100-total),2)} pontos percentuais para exibir os resultados.`;
+      document.getElementById('hybridProfileName').textContent=`· ${valid?hybridProfileName():'Ajustando percentuais'}`;
+      document.getElementById('hybridResults').hidden=!valid;
+      document.querySelectorAll('[data-hybrid-preset]').forEach(button=>{
+        const preset=HYBRID_PRESETS[button.dataset.hybridPreset];
+        button.setAttribute('aria-pressed',String(valid && preset.name===hybridProfileName()));
+      });
+      const amountValid=validHybridAmount(hybridSettings.amount);
+      const amountStatus=document.getElementById('hybridAmountStatus');
+      amountStatus.dataset.invalid=String(!amountValid);
+      amountStatus.textContent=amountValid?'Aporte mínimo: R$ 1.000,00.':'Informe pelo menos R$ 1.000,00, com até 2 casas decimais. Ex.: 10.000,00.';
+      document.getElementById('hybridAmount').setAttribute('aria-invalid',String(!amountValid));
+      document.querySelectorAll('[data-hybrid-foot]').forEach(foot=>{
+        const key=foot.dataset.hybridFoot;
+        const input=document.getElementById(`hybridWeight-${key}`);
+        input.setAttribute('aria-invalid',String(!valid));
+        const tickers=['acoes_top20','fiis_top20'].includes(key)?hybridTickers(state.data,key):[];
+        const detail=tickers.length?`${tickers.length} ativos · ${fmtNum(weights[key]*100/tickers.length,2)}% por ativo`
+          :key==='cdi'?'Pós-fixado':key==='ivvb11'?'S&P 500 + dólar':'Composição indisponível';
+        foot.innerHTML=`<span>${valid?escapeAttr(detail):'Ajuste os percentuais'}</span>${valid && amountValid?`<span>${fmtMoney(hybridSettings.amount*weights[key])} alvo</span>`:''}`;
+      });
+      return valid;
+    }
+    function renderHybridSimulation(){
+      const note=document.getElementById('hybridSimulationNote');
+      const summary=document.getElementById('hybridSimulationSummary');
+      const simulation=buildHybridSimulation(state.data,hybridSettings.weights,hybridSettings.amount);
+      if(!simulation){
+        note.textContent='Informe um aporte de pelo menos R$ 1.000,00 para simular as compras.';
+        summary.innerHTML='';
+        HYBRID_KEYS.forEach(key=>document.getElementById(`hybridSimulation-${key}`).innerHTML='<p class="hybrid-buy-budget">Informe um aporte válido para calcular este bloco.</p>');
+        return;
+      }
+      const missing=simulation.groups.flatMap(group=>group.rows).filter(row=>row.key!=='cdi' && row.targetCents>0 && !row.priceCents);
+      note.textContent=`Preços de referência do snapshot de ${state.data?.data||'data indisponível'}. A data de cada preço aparece junto ao ativo. Valores divididos igualmente entre os ativos de cada Top 20.${missing.length?' Valores sem cotação ou composição permanecem no saldo disponível.':''}`;
+      summary.innerHTML=[['Aporte total',simulation.totalCents],['Compra de ativos',simulation.securitiesCents],['Destinado ao CDI',simulation.cdiCents],['Saldo disponível',simulation.remainingCents]]
+        .map(([label,cents])=>`<div class="hybrid-simulation-stat"><span>${label}</span><strong>${fmtMoney(cents/100)}</strong></div>`).join('');
+      simulation.groups.forEach(group=>{
+        const rows=group.rows.map(row=>{
+          const purchaseTicker=row.key==='acoes_top20' && row.ticker && row.quantity>0 && row.quantity%100!==0 && !row.ticker.endsWith('F')?`${row.ticker}F`:row.ticker;
+          const name=escapeAttr(purchaseTicker||'Composição indisponível');
+          const price=row.priceCents?`${fmtMoney(row.priceCents/100)} por unidade · ${escapeAttr(row.quoteDate||'Data indisponível')}`:row.key==='cdi'?'Valor destinado à renda fixa':'Sem cotação';
+          const unit=row.key==='acoes_top20'?(row.quantity===1?'ação':'ações'):(row.quantity===1?'cota':'cotas');
+          const quantity=row.key==='cdi'?'Renda fixa':row.quantity==null?'—':`${fmtNum(row.quantity,0)} ${unit}`;
+          const detail=[purchaseTicker||'Composição indisponível',quantity,price,`Valor alvo: ${fmtMoney(row.targetCents/100)}`,`Valor aplicado: ${fmtMoney(row.investedCents/100)}`,`Peso efetivo: ${fmtNum(row.investedCents/simulation.totalCents*100,2)}%`,`Saldo: ${fmtMoney(row.remainingCents/100)}`].join('\n');
+          const shortPrice=row.key==='cdi'?'Aplicação em R$':row.priceCents?`Preço ${fmtMoney(row.priceCents/100)}`:'Sem cotação';
+          return `<li tabindex="0" data-tooltip="${escapeAttr(detail)}" aria-label="${escapeAttr(detail)}"><div class="hybrid-buy-heading"><b>${name}</b><strong>${quantity}</strong><span class="hybrid-buy-invested">${fmtMoney(row.investedCents/100)}</span></div><p class="hybrid-buy-price">${shortPrice} · Saldo ${fmtMoney(row.remainingCents/100)}${!row.targetCents?' · Sem alocação':''}</p></li>`;
+        }).join('');
+        document.getElementById(`hybridSimulation-${group.key}`).innerHTML=`<h4>Simulação · ${HYBRID_NAMES[group.key]}</h4><p class="hybrid-buy-budget">${fmtMoney(group.budgetCents/100)} alvo · ${fmtNum(hybridSettings.weights[group.key]*100,0)}% da carteira</p><ul>${rows}</ul><dl class="hybrid-buy-total"><div><dt>Total aplicado</dt><dd>${fmtMoney(group.investedCents/100)}</dd></div><div><dt>Saldo do bloco</dt><dd>${fmtMoney((group.budgetCents-group.investedCents)/100)}</dd></div></dl>`;
+      });
+    }
     function fullAssetName(rec,ticker,type){
       const candidates=type==='acao'
         ? [rec?.Empresa]
@@ -2471,12 +2794,9 @@ const CHART_PERIODS = {
     function renderHybridHoldings(hybrid){
       const root=document.getElementById('hybridHoldings');
       if(!root) return;
-      const assets=hybrid?.ativos||{};
-      const fallbackActions=(state.data?.acoes||[]).map(x=>x['Ação']).filter(Boolean);
-      const fallbackFiis=(state.data?.fiis||[]).map(x=>x.FUNDOS).filter(Boolean);
       const groups=[
-        {title:'Ações BR selecionadas',key:'acoes_top20',type:'acao',tickers:assets.acoes_top20?.tickers||fallbackActions,total:30},
-        {title:'FIIs selecionados',key:'fiis_top20',type:'fii',tickers:assets.fiis_top20?.tickers||fallbackFiis,total:30}
+        {title:'Ações BR selecionadas',key:'acoes_top20',type:'acao',tickers:hybridTickers(state.data,'acoes_top20'),total:hybridSettings.weights.acoes_top20*100},
+        {title:'FIIs selecionados',key:'fiis_top20',type:'fii',tickers:hybridTickers(state.data,'fiis_top20'),total:hybridSettings.weights.fiis_top20*100}
       ];
       root.innerHTML=groups.map(group=>{
         const tickers=group.tickers||[];
@@ -2494,49 +2814,57 @@ const CHART_PERIODS = {
               return `<span class="holding-pill" tabindex="0" data-tooltip="${escapeAttr(lines.join('\n'))}" aria-label="Detalhes de ${escapeAttr(ticker)}">${ticker}<small>${detail}</small></span>`;
             }).join('')
           : '<span class="muted">Composição ainda não disponível.</span>';
-        return `<article class="holdings-card"><h4>${group.title}</h4><p>${fmtNum(group.total,0)}% da carteira · pesos iguais dentro do grupo</p><div class="holding-pills">${pills}</div></article>`;
+        return `<article class="holdings-card"><h4>${group.title}</h4><p>${fmtNum(group.total,2)}% da carteira · pesos iguais dentro do grupo</p><div class="holding-pills">${pills}</div></article>`;
       }).join('');
+    }
+    function hybridEstimatedCents(contribution,amount=hybridSettings.amount){
+      return validHybridAmount(amount) && finite(contribution)?Math.round(amount*Number(contribution)):null;
     }
     function renderHybridTable(hybrid,componentReturns){
       const body=document.getElementById('hybridCompositionBody');
       if(!body) return;
-      const actionCount=hybrid?.ativos?.acoes_top20?.tickers?.length||20;
-      const fiiCount=hybrid?.ativos?.fiis_top20?.tickers?.length||20;
+      const actionCount=hybridTickers(state.data,'acoes_top20').length;
+      const fiiCount=hybridTickers(state.data,'fiis_top20').length;
       const notes={
         acoes_top20:`${actionCount} ações igualmente ponderadas`,
         fiis_top20:`${fiiCount} FIIs igualmente ponderados`,
         cdi:'referência de renda fixa',
         ivvb11:'ETF com exposição ao S&P 500 em reais'
       };
-      const components=hybrid?.componentes||[];
-      if(!components.length){
-        body.innerHTML='<tr><td colspan="4" class="muted">Aguardando histórico completo dos quatro componentes.</td></tr>';
-        return;
-      }
+      const components=HYBRID_KEYS.map(key=>(hybrid?.componentes||[]).find(component=>component.chave===key)||{chave:key,nome:HYBRID_NAMES[key]});
       const calculated=components.map(component=>{
         const componentReturn=componentReturns?.[component.chave];
-        const contribution=componentReturns?.contributions?.[component.chave]
-          ?? (componentReturn==null?null:(HYBRID_TARGET_WEIGHTS[component.chave]??Number(component.peso_pct)/100)*Number(componentReturn));
-        const weightPct=(HYBRID_TARGET_WEIGHTS[component.chave]??Number(component.peso_pct)/100)*100;
-        return {component,componentReturn,contribution,weightPct};
+        const weightPct=hybridSettings.weights[component.chave]*100;
+        const contribution=weightPct===0?0:componentReturns?.contributions?.[component.chave]??null;
+        return {component,componentReturn,contribution,weightPct,estimatedCents:hybridEstimatedCents(contribution)};
       });
-      const totalContribution=calculated.reduce((sum,item)=>finite(item.contribution)?sum+Number(item.contribution):sum,0);
+      const totalContribution=calculated.every(item=>finite(item.contribution))?calculated.reduce((sum,item)=>sum+Number(item.contribution),0):null;
+      const totalEstimatedCents=calculated.every(item=>item.estimatedCents!=null)?calculated.reduce((sum,item)=>sum+item.estimatedCents,0):null;
       const maxMagnitude=Math.max(.01,...calculated.flatMap(item=>[Math.abs(Number(item.componentReturn)||0),Math.abs(Number(item.contribution)||0)]));
       const resultCell=(value,kind='result',dec=2)=>{
         const reading=!finite(value)?'sem histórico':Math.abs(Number(value))<.005?'estável':kind==='contribution'?(Number(value)>0?'elevou o resultado':'reduziu o resultado'):(Number(value)>0?'valorização no período':'queda no período');
         const width=finite(value)?Math.max(5,Math.min(100,Math.abs(Number(value))/maxMagnitude*100)):0;
         return `<div class="result-cell"><strong>${signedPctPoint(value,dec)}</strong><small>${reading}</small><span class="result-meter" aria-hidden="true"><i style="width:${width}%"></i></span></div>`;
       };
-      const rows=calculated.map(({component,componentReturn,contribution,weightPct})=>`<tr><td><span class="component-name">${component.nome}</span><span class="component-note">${notes[component.chave]||''}</span></td><td>${fmtNum(weightPct,2)}%</td><td class="${resultClass(componentReturn)}">${resultCell(componentReturn)}</td><td class="${resultClass(contribution)}">${resultCell(contribution,'contribution',3)}</td></tr>`).join('');
-      body.innerHTML=`${rows}<tr class="total-row"><td>Carteira Híbrida Equilibrada</td><td>100,00%</td><td class="${resultClass(totalContribution)}">${resultCell(totalContribution,'result',3)}</td><td class="${resultClass(totalContribution)}">${resultCell(totalContribution,'contribution',3)}</td></tr>`;
+      const moneyCell=(cents,isTotal=false)=>{
+        if(cents==null) return `<span class="hybrid-money-result">—</span><small class="hybrid-money-note">${validHybridAmount(hybridSettings.amount)?'sem histórico':'aporte mínimo: R$ 1.000,00'}</small>`;
+        const detail=isTotal?`Saldo teórico: ${fmtMoney((Math.round(hybridSettings.amount*100)+cents)/100)}`:cents>0?'ganho no período':cents<0?'perda no período':'sem variação';
+        return `<strong class="hybrid-money-result">${cents>0?'+':''}${fmtMoney(cents/100)}</strong><small class="hybrid-money-note">${detail}</small>`;
+      };
+      const rows=calculated.map(({component,componentReturn,contribution,weightPct,estimatedCents})=>`<tr><td><span class="component-name">${component.nome}</span><span class="component-note">${notes[component.chave]||''}</span></td><td>${fmtNum(weightPct,2)}%</td><td class="${resultClass(componentReturn)}">${resultCell(componentReturn)}</td><td class="${resultClass(contribution)}">${resultCell(contribution,'contribution',3)}</td><td class="${resultClass(estimatedCents)}">${moneyCell(estimatedCents)}</td></tr>`).join('');
+      body.innerHTML=`${rows}<tr class="total-row"><td>Carteira Híbrida · ${hybridProfileName()}</td><td>100,00%</td><td class="${resultClass(totalContribution)}">${resultCell(totalContribution,'result',3)}</td><td class="${resultClass(totalContribution)}">${resultCell(totalContribution,'contribution',3)}</td><td class="${resultClass(totalEstimatedCents)}">${moneyCell(totalEstimatedCents,true)}</td></tr>`;
     }
     function renderHybridPortfolio(){
+      clearTimeout(hybridSettings.insightTimer);
+      if(!renderHybridControls()) return;
+      renderHybridSimulation();
       const hybrid=state.data?.carteira_vs?.carteira_hibrida||{};
       const note=document.getElementById('hybridPortfolioNote');
       const unavailable=document.getElementById('hybridUnavailable');
       renderHybridHoldings(hybrid);
 
       if(!hybrid.disponivel || !(hybrid.serie||[]).length){
+        document.querySelectorAll('.chart-ai[data-chart="hybridPortfolioChart"]').forEach(item=>item.remove());
         if(unavailable){ unavailable.hidden=false; unavailable.textContent=hybrid.motivo||'Aguardando histórico completo da carteira.'; }
         renderHybridTable(hybrid,{});
         emptyPortfolioChart('hybridPortfolioChart','hybridPortfolioNote',hybrid.motivo||'Aguardando histórico completo da carteira.');
@@ -2549,37 +2877,10 @@ const CHART_PERIODS = {
       const allLabels=[...new Set((hybrid.serie||[]).map(x=>String(x.data)))].sort();
       ensureChartPeriodControls('hybridPortfolioChart',allLabels);
       const labels=filteredLabelsForPeriod(allLabels,'hybridPortfolioChart');
-      const componentReturns={contributions:{}};
-      const componentArrays={};
-      const componentLevels={};
-      components.forEach(component=>{
-        const values=alignedReturnForWindow(component.serie||[],labels,{fillForward:true});
-        componentArrays[component.chave]=values;
-        componentReturns[component.chave]=lastNumeric(values);
-        componentLevels[component.chave]=alignSeriesToLabels(component.serie||[],labels,{fillForward:true});
-        componentReturns.contributions[component.chave]=0;
-      });
-      let portfolioValue=100;
-      const weightedReturn=labels.map((_,index)=>{
-        if(index===0) return 0;
-        const previousPortfolio=portfolioValue;
-        let intervalReturn=0;
-        for(const component of components){
-          const levels=componentLevels[component.chave]||[];
-          const start=Number(levels[index-1]);
-          const end=Number(levels[index]);
-          if(!Number.isFinite(start)||!Number.isFinite(end)||start<=0||end<=0) return null;
-          const weight=HYBRID_TARGET_WEIGHTS[component.chave]??Number(component.peso_pct)/100;
-          const componentIntervalReturn=end/start-1;
-          intervalReturn+=weight*componentIntervalReturn;
-          componentReturns.contributions[component.chave]+=previousPortfolio*weight*componentIntervalReturn;
-        }
-        portfolioValue=previousPortfolio*(1+intervalReturn);
-        return portfolioValue-100;
-      });
+      const {componentReturns,weightedReturn}=calculateHybridHistory(components,labels,hybridSettings.weights);
       const comparisonOrder=['CDI','IFIX','Top 20 FIIs','Top 20 Ações BR','IPCA'];
       const datasets=[{
-        label:'Carteira Híbrida Equilibrada',data:weightedReturn,spanGaps:true,borderWidth:4,pointRadius:labels.length<=2?4:2,tension:.18,valueLabelPlugin:{enabled:true}
+        label:`Carteira Híbrida · ${hybridProfileName()}`,data:weightedReturn,spanGaps:true,borderWidth:4,pointRadius:labels.length<=2?4:2,tension:.18,valueLabelPlugin:{enabled:true}
       }];
       comparisonOrder.forEach(name=>{
         const series=comparisons[name]||[];
@@ -2594,16 +2895,17 @@ const CHART_PERIODS = {
       const yMax=Math.max(0,maxVal+padding);
       const first=labels[0]||hybrid.inicio;
       const last=labels[labels.length-1]||hybrid.fim||first;
-      if(note) note.textContent=`Retorno de ${first} até ${last}. Pesos-alvo reaplicados a cada nova composição semanal.`;
+      if(note) note.textContent=`Retorno de ${first} até ${last} · ${hybridProfileName()}. Pesos-alvo reaplicados a cada nova composição semanal. Simulação com os percentuais escolhidos para todo o período.`;
       renderHybridTable(hybrid,componentReturns);
       const totalReturn=lastNumeric(weightedReturn);
       const cdiReturn=lastNumeric(datasets.find(ds=>ds.label==='CDI')?.data);
       const cdiText=cdiReturn==null?'sem comparação disponível com o CDI':`${diffPhrase(totalReturn-cdiReturn)} CDI`;
       const summary=totalReturn==null
         ? 'Histórico ainda insuficiente para calcular o resultado da carteira.'
-        : `A Carteira Híbrida acumula ${signedPctPoint(totalReturn)} no período e ficou ${cdiText}.`;
+        : `A Carteira Híbrida · ${hybridProfileName()} acumula ${signedPctPoint(totalReturn)} no período e ficou ${cdiText}.`;
       makeChart('hybridPortfolioChart',{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')}},scales:{x:{title:axisTitle('Data'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('hybridPortfolioChart'),maxRotation:0,minRotation:0}},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
-      setTimeout(()=>addAiInsight('hybridPortfolioChart',summary),50);
+      clearTimeout(hybridSettings.insightTimer);
+      hybridSettings.insightTimer=setTimeout(()=>addAiInsight('hybridPortfolioChart',summary),50);
     }
     function renderPortfolioComparison(chartId,noteId,comparisonKey,portfolioLabel,benchmarkNames){
       const note=document.getElementById(noteId);

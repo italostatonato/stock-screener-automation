@@ -129,13 +129,15 @@ O dashboard web é publicado via GitHub Pages e carrega sempre o snapshot mais r
 Principais telas:
 
 - **Visão geral**: KPIs comparativos, score, resumo Top 20 e comparativos em base 100.
-- **Carteira Híbrida**: 30% Top 20 Ações BR, 30% Top 20 FIIs, 20% CDI e 20% IVVB11, rebalanceada a cada nova composição semanal, com contribuição ponderada e benchmarks.
+- **Carteira Híbrida**: percentuais editáveis de 1% em 1% para Top 20 Ações BR, Top 20 FIIs, CDI e IVVB11. Ao aumentar um bloco, cada ponto sai do maior dos outros blocos; ao reduzir, a diferença vai para o maior dos demais. Empates seguem a ordem dos blocos na tela. O total permanece em 100%. Cinco perfis de simulação (na mesma ordem dos blocos): Agressivo 45/20/5/30, Meio-Agressivo 40/25/10/25, Balanceado 30/30/20/20, Conservador 15/20/55/10 e Muito conservador 5/10/80/5. O Balanceado preserva a configuração original. Gráfico, contribuições e pesos por ativo acompanham a seleção, com rebalanceamento a cada nova composição semanal. O simulador inicia com R$ 10.000,00 e exibe as compras em listas abertas abaixo do card de cada bloco, na mesma coluna. Usa os preços do snapshot selecionado e o último fechamento disponível de IVVB11 até essa data, calcula unidades inteiras, destino ao CDI, percentuais efetivos e saldo não aplicado, sem redistribuir sobras. O desempenho histórico continua teórico, sem arredondamento de quantidades. Valores sem cotação ou composição ficam no saldo.
 - **Ações**: ranking de ações com preço, score e principais indicadores.
 - **FIIs**: ranking de FIIs com preço, score, DY, P/VP, liquidez e setor.
 - **Recorrentes**: ativos que mais apareceram no Top 20 histórico, com indicadores atuais.
 - **Modelos ML**: comparação entre score atual e modelos preditivos em modo sombra.
 - **Indicadores**: mercado, macro, câmbio, cripto e benchmarks.
 - **Score e Info**: metodologia, premissas, fontes e limitações.
+
+Os gráficos com eixo de tempo abrem em **90D**, com seleção manual dos outros períodos. Na Carteira Híbrida, o aporte mínimo é **R$ 1.000,00**; uma barra colorida representa os quatro blocos, as compras usam linhas compactas com detalhes ao passar o mouse ou focar pelo teclado, e a tabela mostra o ganho/perda estimado em reais a partir do aporte e das contribuições históricas, além do saldo teórico total.
 
 Cores principais:
 

@@ -49,9 +49,11 @@ def test_dashboard_tooltip_de_ml_e_compacto_e_nao_repete_contexto():
 
 
 def test_dashboard_hibrida_exibe_novos_pesos_e_serie_rebalanceada():
-    assert '<strong>30%</strong><span class="allocation-role">Motor de crescimento' in HTML
-    assert '<strong>30%</strong><span class="allocation-role">Renda + imóveis' in HTML
-    assert HTML.count('<strong>20%</strong>') >= 2
+    for key, value in [("acoes_top20", 30), ("fiis_top20", 30), ("cdi", 20), ("ivvb11", 20)]:
+        assert f'data-hybrid-weight="{key}" min="0" max="100" step="1" value="{value}"' in HTML
+    assert HTML.count('type="button" data-hybrid-preset=') == 5
+    assert 'for="hybridAmount"' in HTML
+    assert 'aria-describedby="hybridWeightStatus"' in HTML
     assert "const HYBRID_TARGET_WEIGHTS={acoes_top20:.30,fiis_top20:.30,cdi:.20,ivvb11:.20}" in HTML
     assert "portfolioValue=previousPortfolio*(1+intervalReturn)" in HTML
     assert "Pesos-alvo reaplicados a cada nova composição semanal" in HTML
@@ -101,7 +103,7 @@ def test_dashboard_oferece_janelas_de_sete_e_quinze_dias_nos_graficos():
 def test_dashboard_hero_e_faixa_de_contexto_sao_compactos():
     assert 'grid-template-areas:"copy about status"' in HTML
     assert ".hero{padding:20px 0 14px!important}" in HTML
-    assert ".asof strong{margin-top:7px!important;font-size:18px!important" in HTML
+    assert ".asof strong{margin-top:5px!important;font-size:14px!important" in HTML
     assert ".signal-cell{display:flex;align-items:center;gap:9px;min-width:0;padding:9px 14px}" in HTML
     assert "DoD:{label:'DoD'" not in HTML
 
@@ -121,6 +123,19 @@ def test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual():
 
 def test_dashboard_tabelas_tem_legendas_acessiveis():
     assert HTML.count('<caption class="sr-only">') == 8
+
+
+def test_simulacao_fica_aberta_abaixo_do_card_do_bloco_correspondente():
+    from bs4 import BeautifulSoup
+
+    soup = BeautifulSoup(HTML, "html.parser")
+    columns = soup.select("#hibrida .hybrid-column")
+    assert len(columns) == 4
+    for column in columns:
+        key = column.select_one("[data-hybrid-weight]")["data-hybrid-weight"]
+        assert column.select_one(f"#hybridSimulation-{key}") is not None
+        assert column.find("details") is None
+    assert soup.find(id="hybridAmount")["value"] == "10.000,00"
 
 
 def test_dashboard_apresentacao_abre_em_visualizacao_protegida():
