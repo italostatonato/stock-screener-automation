@@ -1,4 +1,4 @@
-# Arquitetura técnica
+# Como Funciona
 
 Revisado em 07/09/2026. O Radar Semanal executa uma coleta semanal de FIIs e
 ações, gera rankings e derivados e publica um dashboard estático.
@@ -15,7 +15,7 @@ ações, gera rankings e derivados e publica um dashboard estático.
 numéricas compatíveis. `src/scorer.py` calcula sete percentis com pesos iguais
 no universo completo. `src/filters.py` aplica pisos de elegibilidade, ordena
 pelo score, desempata pelo ticker e limita o Top N. A seleção de ações também
-remove classes duplicadas de uma mesma empresa. Veja [Metodologia](METHODOLOGY.md).
+remove classes duplicadas de uma mesma empresa. Veja [Metodologia](https://github.com/italostatonato/stock-screener-automation/blob/main/docs/METHODOLOGY.md).
 
 Um Top FII vazio interrompe a execução antes das escritas de histórico.
 Coleta, score e Top Ações não vazio também são obrigatórios. Uma falha de
@@ -61,7 +61,7 @@ para reconstruir os históricos de `data/ml/` e a carteira de `data/backtest/`.
 `src/ml_confidence.py` resume maturidade e desempenho validado.
 Treino e previsão ainda acontecem juntos. A chamada principal usa 30d,
 enquanto o exporter declara 7d como horizonte principal da tela.
-Leia [Pipeline ML](ML_PIPELINE.md) para essa diferença operacional.
+Leia [Pipeline ML](https://github.com/italostatonato/stock-screener-automation/wiki/Modelos-ML) para essa diferença operacional.
 
 O histórico retroativo é separado da execução semanal:
 
@@ -72,7 +72,7 @@ O histórico retroativo é separado da execução semanal:
 - `data/point_in_time/`: snapshots sintéticos e resultados isolados do lake.
 
 Esses scripts não são chamados pelo workflow semanal. Suas premissas diferem
-das curvas de preço do dashboard. Veja [Backtests](BACKTEST_RETROATIVO.md).
+das curvas de preço do dashboard. Veja [Backtests](https://github.com/italostatonato/stock-screener-automation/wiki/Backtests).
 
 ## Exportação e interface
 
@@ -103,7 +103,7 @@ de recuperação, não a fonte primária da coleta.
 
 ## Orquestração e limites
 
-O workflow [run_screener.yml](../.github/workflows/run_screener.yml) roda às
+O workflow [run_screener.yml](https://github.com/italostatonato/stock-screener-automation/blob/main/.github/workflows/run_screener.yml) roda às
 segundas, 08h de São Paulo, ou por acionamento manual. `test` precede `screener`.
 O job `deploy` consulta a `main` atual e roda quando os testes passam, mesmo
 se `screener` falhar. A etapa independente de healthcheck bloqueia o commit

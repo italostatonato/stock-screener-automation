@@ -3,7 +3,7 @@
 Revisado em 07/09/2026. Os comandos deste guia são executados separadamente;
 não integram o workflow semanal de coleta. Faça backup de `data/` antes de
 reprocessar. As curvas teóricas do dashboard têm premissas próprias, descritas
-no [guia do dashboard](DASHBOARD.md).
+no [guia do dashboard](https://github.com/italostatonato/stock-screener-automation/wiki/Dashboard).
 
 ## Separação obrigatória
 

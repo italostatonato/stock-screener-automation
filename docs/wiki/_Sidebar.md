@@ -1,0 +1,13 @@
+[Radar Semanal](https://github.com/italostatonato/stock-screener-automation/wiki/Home)
+
+- [Como funciona](https://github.com/italostatonato/stock-screener-automation/wiki/Como-Funciona)
+- [Dashboard](https://github.com/italostatonato/stock-screener-automation/wiki/Dashboard)
+- [Metodologia de filtros e score](https://github.com/italostatonato/stock-screener-automation/wiki/Metodologia-de-Filtros)
+- [Modelos ML](https://github.com/italostatonato/stock-screener-automation/wiki/Modelos-ML)
+- [Confiabilidade ML](https://github.com/italostatonato/stock-screener-automation/wiki/Confiabilidade-ML)
+- [Backtests](https://github.com/italostatonato/stock-screener-automation/wiki/Backtests)
+- [Configuração (config.yaml)](https://github.com/italostatonato/stock-screener-automation/wiki/Configura%C3%A7%C3%A3o-%28config.yaml%29)
+- [Fontes de dados](https://github.com/italostatonato/stock-screener-automation/wiki/Fontes-de-Dados)
+- [Como rodar localmente](https://github.com/italostatonato/stock-screener-automation/wiki/Como-Rodar-Localmente)
+- [Troubleshooting](https://github.com/italostatonato/stock-screener-automation/wiki/Troubleshooting)
+- [Manutenção da documentação](https://github.com/italostatonato/stock-screener-automation/wiki/Manutencao-da-Documentacao)

@@ -1,4 +1,4 @@
-# Operação e troubleshooting
+# Troubleshooting
 
 Revisado em 07/09/2026.
 
@@ -69,7 +69,7 @@ Não publique alterações de manifesto/relatório produzidas só pela auditoria
 
 ## Workflow e publicação
 
-[Weekly FII Screener](../.github/workflows/run_screener.yml) roda toda segunda,
+[Weekly FII Screener](https://github.com/italostatonato/stock-screener-automation/blob/main/.github/workflows/run_screener.yml) roda toda segunda,
 **08h de São Paulo** (`0 11 * * 1`), ou por **Actions → Weekly FII Screener →
 Run workflow**. Não possui gatilho de push.
 
@@ -91,7 +91,7 @@ O workflow já declara `contents: write`; a publicação usa
 Uma edição documental não inicia automaticamente uma coleta nem um deploy.
 
 A revisão documental semanal é separada, **segunda-feira às 12h de São Paulo**,
-e é administrada no Codex. Veja [Manutenção da documentação](DOCUMENTATION.md).
+e é administrada no Codex. Veja [Manutenção da documentação](https://github.com/italostatonato/stock-screener-automation/wiki/Manutencao-da-Documentacao).
 
 ## Fonte indisponível ou seleção vazia
 
@@ -130,7 +130,7 @@ python scripts/run_point_in_time_backtest.py
 
 `--offline` está disponível em `build_point_in_time_history.py`,
 `run_observed_backtest.py` e `run_point_in_time_backtest.py`; exige caches já
-preenchidos. Leia [Backtests](BACKTEST_RETROATIVO.md) antes de reprocessar.
+preenchidos. Leia [Backtests](https://github.com/italostatonato/stock-screener-automation/wiki/Backtests) antes de reprocessar.
 Não copie snapshots sintéticos para o lake observado.
 
 `scripts/refresh_ml_7d_primary_from_docs.py` regrava derivados ML e o JSON mais

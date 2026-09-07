@@ -1,300 +1,120 @@
 # Radar Semanal — Contexto para assistentes de IA
 
-## O que é este projeto
+Revisado em 07/09/2026.
 
-Screener automático de FIIs e ações brasileiras. O projeto coleta dados públicos, limpa e normaliza indicadores financeiros, calcula scores, aplica filtros adaptativos por quartis, gera Excel formatado, publica dashboard web via GitHub Pages, acumula histórico em Parquet, mantém um data lake incremental e executa modelos de Machine Learning em modo sombra.
+## Projeto e documentação
 
-- Dashboard: https://italostatonato.github.io/stock-screener-automation/
-- Repositório: https://github.com/italostatonato/stock-screener-automation
+Screener semanal de FIIs e ações brasileiras com score, Top 20, Excel,
+dashboard, lake incremental, backtests e ML em modo sombra.
 
-O projeto é educacional e analítico. Não tratar como recomendação de investimento.
+- [Dashboard](https://italostatonato.github.io/stock-screener-automation/)
+- [Repositório](https://github.com/italostatonato/stock-screener-automation)
+- [Wiki](https://github.com/italostatonato/stock-screener-automation/wiki)
 
----
+Projeto educacional e analítico, não uma recomendação de investimento.
+O [README](README.md) orienta o setup. Consulte os guias de
+[arquitetura](docs/ARCHITECTURE.md), [metodologia](docs/METHODOLOGY.md),
+[dashboard](docs/DASHBOARD.md), [ML](docs/ML_PIPELINE.md),
+[confiabilidade](docs/ML_CONFIDENCE.md), [backtests](docs/BACKTEST_RETROATIVO.md)
+e [operação](docs/OPERATIONS.md). A wiki também tem cópia em `docs/wiki/`.
 
-## Estado atual
+## Princípios
 
-O projeto já possui:
+1. **Preservar histórico.** Faça backup antes de alterar/reprocessar `data/`.
+   Preserve também `docs/data/` se for reescrever snapshots.
+2. **Lake como fonte oficial observada.** Históricos consolidados são derivados;
+   dados sintéticos point-in-time ficam separados.
+3. **Dashboard leve.** Exporte JSONs prontos para apresentação; o navegador
+   pode calcular alocações e simulações a partir deles.
+4. **ML em modo sombra.** Modelos não substituem o ranking oficial.
+5. **Operação padrão gratuita.** Não introduza APIs, serviços ou cloud pagos.
+6. **Testar antes de publicar.** Rode `python -m pytest tests/ -v` e o
+   healthcheck. Em alterações documentais, rode o healthcheck numa cópia
+   temporária, pois ele modifica manifesto, índice e relatório.
 
-- coleta semanal de FIIs e ações;
-- score multifatorial 0-100;
-- filtros fixos e filtros móveis por quartis;
-- Excel semanal formatado;
-- dashboard web estático;
-- histórico consolidado em Parquet;
-- camada incremental `data/lake/snapshots/YYYY-MM-DD/`;
-- datasets ML com targets futuros;
-- modelos ML em modo sombra;
-- carteira histórica para backtest;
-- aba de recorrentes;
-- aba de modelos ML;
-- comparativos em base 100 contra benchmarks;
-- healthcheck de dados;
-- rebuild a partir do lake;
-- GitHub Actions com testes, cache, healthcheck e commit automático dos dados.
-- FIIs via Fundsexplorer e ações via tabela pública do Fundamentus.
-- dashboard público chamado **Radar Semanal**, com Roboto na interface.
+## Regras implementadas
 
----
+- FIIs: Fundsexplorer via Selenium/Chrome, ou Excel local quando presente.
+- Ações: tabela HTTP do Fundamentus; brapi/investsite são alternativas.
+- Score no universo completo, antes da seleção: sete fatores por classe,
+  peso `1/7`, percentis invertidos para menor-é-melhor e nota neutra 50
+  para dado ausente.
+- Pisos de elegibilidade com limites estritos `>`, ordem por score e ticker,
+  até 20 selecionados. Ações são deduplicadas por empresa.
+- Não há filtro de quartis nem fallback automático para completar Top 20.
+- `Volume Diário Médio (3 meses)` recebe a liquidez de dois meses do
+  Fundamentus; `RPL` é ROE e `ROInvC` é ROIC.
+- IFIX é representado pela proxy XFIX11.
+- A data oficial dos snapshots e logs usa `America/Sao_Paulo`.
 
-## Princípios importantes
+A carteira híbrida possui quatro blocos, cinco perfis, pesos editáveis com
+total de 100% e simulação de compras em unidades inteiras. Aporte padrão
+R$ 10.000 e mínimo R$ 1.000. Os gráficos temporais iniciam em 90D.
+O histórico teórico usa pesos fracionários; as séries Top 20 não reinvestem
+proventos e a simulação híbrida não inclui custos/impostos.
 
-1. **Não perder histórico.** Nunca sobrescrever `data/` sem backup explícito.
-2. **Data lake é a fonte incremental oficial.** Parquets consolidados são derivados/cache.
-3. **Dashboard deve ser leve.** `docs/data/*.json` deve conter dados prontos para tela, não histórico bruto inteiro.
-4. **ML em modo sombra.** Modelos não substituem o score oficial até existir maturidade estatística.
-5. **Tudo gratuito/open source.** Não usar APIs pagas, OpenAI API, cloud paga ou serviços externos pagos.
-6. **Sempre testar antes de subir.** Rodar `pytest tests/ -v` e `python scripts/healthcheck_data.py`.
+## Pipeline e dados
 
----
+`main.py`: configuração → FIIs → ações → indicadores/benchmarks → carteira
+histórica → lake → reconstrução de consolidados → datasets/ML → Excel/JSON
+→ qualidade → entrega opcional.
 
-## Arquitetura — responsabilidades
-
-```text
-main.py                         Orquestra o pipeline completo
-config.yaml                     Caminhos, fontes, filtros e colunas
-requirements.txt                Dependências Python
-
-src/
-  config.py                     Carrega config.yaml e resolve ${VAR} nos paths
-  scraper.py                    Fundsexplorer (Selenium) + Fundamentus (HTTP)
-  cleaner.py                    Normalização de percentuais, moedas e números
-  filters.py                    Filtros fixos + quartis adaptativos
-  scorer.py                     Score multifatorial 0-100
-  storage.py                    Histórico Excel e snapshots
-  formatter.py                  Excel formatado com openpyxl
-  market_data.py                Indicadores macro, câmbio e cripto
-  benchmark.py                  IBOV, IFIX, IMOB, CDI e séries macro
-  backtest.py                   Backtest inicial e carteira histórica
-  ml_storage.py                 Append dos históricos consolidados
-  dataset_builder.py            Feature engineering e targets futuros
-  ml_models.py                  Modelos ML em modo sombra
-  data_lake.py                  Snapshots incrementais, manifesto e qualidade
-  exporter.py                   Exporta JSON do dashboard
-
-docs/
-  index.html                    Dashboard web estático
-  data/index.json               Índice de snapshots
-  data/YYYY-MM-DD.json          Payload por execução
-  ARCHITECTURE.md               Arquitetura técnica
-  ML_PIPELINE.md                Pipeline ML
-  OPERATIONS.md                 Operação e troubleshooting
-
-data/
-  old/                          Excel histórico Top 20
-  output/                       Excel final por execução
-  ml/                           Históricos, datasets e previsões ML
-  backtest/                     Carteiras históricas
-  lake/                         Snapshots incrementais oficiais
-
-scripts/
-  healthcheck_data.py           Validação de saúde dos dados
-  rebuild_from_lake.py          Reconstrói derivados a partir do lake
-
-tests/                          Testes automatizados
-.github/workflows/run_screener.yml
-```
-
----
-
-## Pipeline principal
-
-1. Carrega `config.yaml`.
-2. Configura logs.
-3. Coleta FIIs.
-4. Limpa FIIs.
-5. Calcula score FIIs no universo completo.
-6. Seleciona Top 20 FIIs.
-7. Atualiza histórico Excel FIIs.
-8. Salva universo FIIs em `data/ml/historico_fiis.parquet`.
-9. Coleta ações.
-10. Calcula score ações no universo completo.
-11. Seleciona Top 20 ações.
-12. Atualiza histórico Excel ações.
-13. Salva universo ações em `data/ml/historico_acoes.parquet`.
-14. Coleta indicadores e benchmarks.
-15. Atualiza carteira histórica.
-16. Salva snapshot incremental em `data/lake/snapshots/YYYY-MM-DD/`.
-17. Gera datasets ML.
-18. Roda pipeline ML sombra.
-19. Gera Excel final.
-20. Exporta JSON do dashboard.
-21. Reconstrói índice do dashboard.
-22. Executa quality checks.
-
----
-
-## Data lake
-
-Estrutura:
+Top vazio ou falha de ações interrompe a execução antes do novo lake/JSON.
+Algumas escritas locais de FIIs já podem ter ocorrido. Módulos auxiliares
+possuem tratamento de erro com log; a conclusão de `main.py` não dispensa
+a validação das saídas.
 
 ```text
-data/lake/snapshots/YYYY-MM-DD/
-  fii_universe.parquet
-  acoes_universe.parquet
-  top_fiis.parquet
-  top_acoes.parquet
-  carteira.parquet
-  manifest.json
-
-data/lake/manifest.json
-data/lake/quality_report.json
+data/lake/snapshots/YYYY-MM-DD/       fonte oficial observada por data
+data/ml/                            históricos, datasets, previsões e performance
+data/backtest/                      carteira, preços e backtests observados
+data/point_in_time/                  pesquisa sintética isolada
+data/old/ e data/output/             Excel local, ignorado pelo Git
+data/delivery/                      auditoria da entrega
+docs/data/                          payloads e índice do dashboard
 ```
 
-Objetivo:
+Chaves sem nulos/duplicatas:
 
-- reduzir risco de perda de histórico;
-- permitir rebuild dos derivados;
-- evitar dependência exclusiva de parquets consolidados que mudam a cada execução;
-- preparar evolução para particionamento futuro.
+- FIIs: `Data_Execucao` + `FUNDOS`.
+- Ações: `Data_Execucao` + `Ação`.
+- Carteiras: `Data_Carteira` + `Tipo` + `Ticker`.
 
----
+O esquema da carteira inclui `Preco_Entrada`, `Score` e `Posicao`.
+Preserve a grafia `Ação`; variantes são compatibilidade de leitura.
+Novas execuções precisam dos tipos FII e ACAO. Exceções históricas conhecidas
+são registradas em `data/lake/known_incomplete_snapshots.json`.
 
-## Arquivos de dados importantes
+## ML: horizontes e limites
 
-```text
-data/ml/historico_fiis.parquet
-data/ml/historico_acoes.parquet
-data/ml/dataset_fiis.parquet
-data/ml/dataset_acoes.parquet
-data/ml/model_predictions_fiis.parquet
-data/ml/model_predictions_acoes.parquet
-data/ml/model_performance.parquet
-data/backtest/carteiras_historicas.parquet
-```
+Datasets possuem targets de 7, 30, 60 e 90 dias corridos.
+`run_ml_pipeline()` tem padrão 7, mas `main.py` e o rebuild passam 30.
+O exporter declara principal 7d, estratégico 30d e histórico realizado de 7d;
+a performance agregada mantém seu próprio `Horizonte`.
+Não apresente métricas de horizontes diferentes como equivalentes.
 
-Chaves esperadas:
+Modelos: Score Top, Ridge, Random Forest, Extra Trees, XGBoost, LightGBM,
+CatBoost e Ensemble. O mínimo de treino é 20 linhas e uma data anterior.
 
-- FIIs histórico: `Data_Execucao` + `FUNDOS`
-- Ações histórico: `Data_Execucao` + `Ação`
-- Carteiras: `Data_Carteira` + `Tipo` + `Ticker`
+Confiabilidade: mínimo de uma janela, meta de cinco. Projeção visível:
+três janelas do mesmo modelo/classe/horizonte e magnitude de até 50%.
+`modelo_lider` por ativo não é promoção automática do modelo à estratégia.
 
-Essas chaves não devem ter duplicatas **nem valores nulos**. Linha com chave
-nula não deduplica e não aparece na checagem de duplicatas — o healthcheck
-valida os dois casos.
+## Workflow e manutenção
 
-Esquema obrigatório de `carteiras_historicas.parquet`:
+`Weekly FII Screener` roda segunda-feira às 08h BRT (`0 11 * * 1`) ou
+manualmente. Jobs: testes → screener; deploy quando testes passam, inclusive
+se a coleta falhar. Publica `docs/`, retém artefatos por 90 dias e commita
+`docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
+Não existe gatilho de push.
 
-```text
-Data_Carteira  Tipo  Ticker  Preco_Entrada  Score  Posicao
-```
+A revisão documental é uma automação separada do Codex, solicitada para
+segunda-feira às 12h em São Paulo. Procedimento em
+[Manutenção da documentação](docs/DOCUMENTATION.md).
 
-`Preco_Entrada` não é opcional: sem ele a carteira não serve para backtest.
-Toda data precisa ter os dois tipos (`FII` e `ACAO`).
-
-Atenção ao nome da coluna de ticker de ações: o pipeline exporta `Ação`
-acentuado. Sempre preservar a grafia e aceitar a variante sem acento apenas
-como compatibilidade de leitura.
-
----
-
-## Modelos ML
-
-Modelos atuais:
-
-- Score Top atual;
-- Ridge;
-- Random Forest;
-- Extra Trees;
-- XGBoost;
-- LightGBM;
-- CatBoost;
-- Ensemble.
-
-Horizonte operacional atual: 7 dias. O horizonte estratégico de validação é
-30 dias; os dois não devem ser apresentados como se fossem a mesma métrica.
-
-Métricas auxiliares:
-
-- hit rate;
-- Spearman IC;
-- alpha vs Score Top;
-- janelas válidas;
-- maturidade/status.
-
-Enquanto houver pouco histórico, manter status **Aquecendo**.
-
----
-
-## Workflow GitHub Actions
-
-O workflow semanal **Weekly FII Screener**:
-
-- roda testes;
-- instala dependências com cache de pip;
-- executa `python main.py`;
-- roda `python scripts/healthcheck_data.py`;
-- salva artefatos;
-- commita dados gerados em:
-  - `docs/data/`
-  - `data/lake/`
-  - `data/ml/`
-  - `data/backtest/`
-- usa cron `0 11 * * 1`, equivalente a segunda-feira, 08h BRT;
-- usa `concurrency` para evitar sobreposição;
-- pode notificar falha via Telegram.
-- publica o dashboard quando os testes passam, mesmo se uma fonte pública
-  estiver temporariamente indisponível; nesse caso não grava snapshot parcial.
-
----
-
-## Comandos úteis
-
-Rodar pipeline:
-
-```powershell
-python main.py
-```
-
-Rodar testes:
-
-```powershell
-pytest tests/ -v
-```
-
-Healthcheck:
-
-```powershell
-python scripts/healthcheck_data.py
-```
-
-Rebuild:
-
-```powershell
-python scripts/rebuild_from_lake.py
-```
-
-Dashboard local:
-
-```powershell
-python -m http.server 8000
-```
-
-Acessar:
-
-```text
-http://localhost:8000/docs/
-```
-
----
-
-## Regras para alterações futuras
-
-- Pacotes visuais devem mexer só em `docs/index.html` e, se necessário, `src/exporter.py`.
-- Alterações que tocam `data/` exigem backup antes.
-- Não commitar `backups/`.
-- Não trocar nomes de colunas sem atualizar filtros, scorer, exporter e testes.
-- Não colocar caminho de máquina em `config.yaml`; use `${VAR}` e documente a variável.
-- Ao alterar pipeline, atualizar README, CLAUDE e docs técnicos.
-- Ao alterar dashboard, verificar se `docs/data/index.json` aponta para o snapshot mais recente.
-- Em conflitos de `docs/data/index.json`, reconstruir o índice varrendo `docs/data/*.json`.
-
----
-
-## Estado desejado de longo prazo
-
-- `data/lake` como fonte oficial.
-- Parquets consolidados reconstruíveis.
-- ML treinando em cadência controlada.
-- Previsão semanal separada de treinamento.
-- Dashboard carregando somente dados agregados.
-- Histórico particionado por período se o repo crescer demais.
+Ao alterar comportamento, atualize README, este contexto, guias e wiki.
+Mudanças visuais normalmente envolvem `docs/index.html` e, quando preciso,
+`src/exporter.py`; inclua testes ou assets somente quando a mudança exigir.
+Não adicione caminhos pessoais a `config.yaml`, não commite backups e
+preserve trabalhos locais de outras tarefas. Publicar `docs/wiki/` no projeto
+não publica a wiki: ela tem repositório Git separado.

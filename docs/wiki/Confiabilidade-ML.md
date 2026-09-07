@@ -48,7 +48,7 @@ pipeline principal treina em 30d e o Parquet de performance preserva o horizonte
 avaliado. `build_ml_confidence_summary()` não filtra nem converte as linhas pelo
 argumento `horizon_days`: esse argumento orienta a maturidade e o texto do resumo.
 Confira `Horizonte` de cada linha e do modelo mais confiável. Detalhes em
-[Pipeline ML](ML_PIPELINE.md).
+[Pipeline ML](https://github.com/italostatonato/stock-screener-automation/wiki/Modelos-ML).
 
 O bloqueio de projeções é definido em `src/exporter.py` por
 `ML_MIN_VALID_WINDOWS = 3` e `ML_MAX_ABS_EXPECTED_RETURN = 0.50`. O valor bruto

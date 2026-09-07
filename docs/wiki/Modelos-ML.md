@@ -1,4 +1,4 @@
-# Pipeline de Machine Learning
+# Modelos ML
 
 Revisado em 07/09/2026 contra `main.py`, `src/dataset_builder.py`,
 `src/ml_models.py` e `src/exporter.py`.
@@ -103,7 +103,7 @@ A confiabilidade começa em uma janela válida, com meta de cobertura de cinco.
 A projeção de retorno só é exibida com três janelas do mesmo modelo, classe e
 horizonte e valor finito dentro de ±50%. O ranking experimental pode permanecer
 visível enquanto a projeção está oculta. Fórmula e limites estão em
-[Confiabilidade ML](ML_CONFIDENCE.md).
+[Confiabilidade ML](https://github.com/italostatonato/stock-screener-automation/wiki/Confiabilidade-ML).
 
 ## Evoluções pendentes
 

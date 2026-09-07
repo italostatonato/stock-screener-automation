@@ -6,7 +6,9 @@
 
 Boletim quantitativo semanal de **FIIs** e **ações brasileiras**, com coleta de dados públicos, score multifatorial, histórico, backtest e dashboard web no GitHub Pages.
 
-**Dashboard ao vivo:** https://italostatonato.github.io/stock-screener-automation/
+**[Dashboard ao vivo](https://italostatonato.github.io/stock-screener-automation/)** · **[Wiki](https://github.com/italostatonato/stock-screener-automation/wiki)**
+
+Documentação revisada em **07/09/2026** contra o código e a configuração versionados.
 
 > Projeto educacional e analítico. Não constitui recomendação de investimento.
 
@@ -22,7 +24,7 @@ O fluxo atual combina:
 - coleta semanal de ações na tabela pública do Fundamentus;
 - limpeza de números, percentuais e moedas no formato brasileiro;
 - score de 0 a 100 calculado no universo completo;
-- filtro em duas camadas: critérios mínimos + quartis móveis;
+- pisos de elegibilidade, seguidos de ordenação pelo score de sete fatores com pesos iguais;
 - Top 20 FIIs e Top 20 ações;
 - Excel semanal formatado;
 - dashboard web com rankings, recorrência, indicadores, backtests, carteira híbrida e modelos ML;
@@ -45,7 +47,7 @@ src/
   config.py                     Carrega config.yaml com caminhos portáveis
   scraper.py                    Coleta FIIs via Selenium e ações por tabela pública
   cleaner.py                    Limpeza e normalização de dados financeiros
-  filters.py                    Pisos de elegibilidade antes do score
+  filters.py                    Elegibilidade e seleção pelo score já calculado
   scorer.py                     Score multifatorial 0-100
   storage.py                    Histórico Excel e snapshots
   formatter.py                  Formatação do Excel final
@@ -58,27 +60,36 @@ src/
   ml_storage.py                 Append dos históricos consolidados em Parquet
   dataset_builder.py            Feature engineering e targets futuros
   ml_models.py                  Modelos ML em modo sombra
+  ml_confidence.py              Maturidade, confiabilidade e janelas válidas
   data_lake.py                  Camada incremental, manifesto e qualidade
+  delivery.py                   Entrega opcional do Excel e log de auditoria
   exporter.py                   JSON do dashboard
 
 docs/
   index.html                    Dashboard web estático
   data/index.json               Índice de snapshots do dashboard
-  data/YYYY-MM-DD.json          Payload diário do dashboard
+  data/YYYY-MM-DD.json          Payload por data de execução (America/Sao_Paulo)
   ARCHITECTURE.md               Arquitetura técnica
   ML_PIPELINE.md                Pipeline de Machine Learning
+  ML_CONFIDENCE.md              Fórmula de confiabilidade e limites de exibição
+  METHODOLOGY.md                Score, elegibilidade e fontes de dados
+  DASHBOARD.md                  Telas, carteira híbrida e simulador
+  BACKTEST_RETROATIVO.md        Histórico observado e simulações point-in-time
   OPERATIONS.md                 Operação, validação e troubleshooting
+  DOCUMENTATION.md              Revisão e publicação da documentação e da wiki
+  wiki/                         Cópia versionada das páginas da wiki
 
 data/
   old/                          Históricos Excel Top 20
-  output/                       Excel diário final
+  output/                       Excel final por execução
+  delivery/                     Log das entregas locais
   ml/                           Históricos, datasets e previsões ML
   backtest/                     Carteiras históricas
   point_in_time/                Rankings retroativos sintéticos, isolados do observado
   lake/                         Fonte incremental oficial
     manifest.json               Manifesto global do lake
     quality_report.json         Último relatório de qualidade
-    snapshots/YYYY-MM-DD/       Snapshot diário particionado
+    snapshots/YYYY-MM-DD/       Snapshot por data de execução
 
 scripts/
   healthcheck_data.py           Validação de dados, duplicatas e dashboard
@@ -112,13 +123,20 @@ tests/                          Testes automatizados
 13. Coleta indicadores de mercado e benchmarks.
 14. Atualiza carteira histórica em `data/backtest/carteiras_historicas.parquet`.
 15. Salva snapshot incremental em `data/lake/snapshots/YYYY-MM-DD/`.
-16. Gera datasets derivados com targets futuros.
-17. Executa modelos ML em modo sombra.
+16. Reconstrói os históricos consolidados e a carteira a partir do lake.
+17. Gera datasets com targets de 7, 30, 60 e 90 dias e executa os modelos ML em modo sombra.
 18. Gera snapshot Excel em `data/output/`.
 19. Exporta JSON da execução em `docs/data/YYYY-MM-DD.json`.
 20. Reconstrói `docs/data/index.json` com snapshots existentes.
 21. Executa checagens de qualidade.
 22. Copia o Excel para OneDrive local quando configurado.
+
+O score é calculado no universo completo **antes** dos filtros. Cada classe usa
+sete indicadores com peso `1/7`; dados ausentes recebem percentil neutro 50.
+A seleção aplica os pisos de `config.yaml`, ordena por score decrescente e
+desempata pelo ticker. Ações também são deduplicadas por empresa. Os limites
+de DY, liquidez e patrimônio/valor de mercado são estritos (`>`); pode haver
+menos de 20 aprovados. Veja a [metodologia completa](docs/METHODOLOGY.md).
 
 ---
 
@@ -141,6 +159,11 @@ Os gráficos com eixo de tempo abrem em **90D**, com seleção manual dos outros
 
 O campo de aporte usa a máscara numérica [IMask](https://imask.js.org/guide.html#masked-number) 7.6.1, distribuída localmente em `docs/assets/vendor/` com licença MIT. Os separadores de milhar se ajustam durante a edição, preservando o cursor; os centavos são completados ao sair do campo. A validação do mínimo é separada da máscara para permitir apagar e redigitar o valor.
 
+As séries Top 20 da carteira híbrida usam preços dos snapshots, sem reinvestimento
+de proventos, custos ou impostos. O benchmark rotulado IFIX usa o ETF **XFIX11**
+como proxy. Essas curvas têm premissas diferentes dos scripts de backtest com
+preços ajustados e custos. Consulte o [guia do dashboard](docs/DASHBOARD.md).
+
 Cores principais:
 
 - Ações: `#54C7FF`
@@ -153,7 +176,7 @@ Cores principais:
 
 ## Camada de dados
 
-O projeto usa três camadas:
+O projeto organiza os dados nas seguintes camadas:
 
 ### 1. Lake incremental
 
@@ -217,7 +240,9 @@ python scripts/run_point_in_time_backtest.py
 
 O motor entra no pregão seguinte ao sinal, usa preços ajustados, equal weight,
 10 bps de custo por turnover por padrão e audita ativos sem preço. Veja
-`docs/BACKTEST_RETROATIVO.md` para premissas, saídas e limitações.
+[Histórico retroativo e backtest](docs/BACKTEST_RETROATIVO.md) para premissas,
+saídas e limitações. Esses scripts são executados separadamente; o workflow
+semanal não reconstrói automaticamente o histórico point-in-time.
 
 ---
 
@@ -253,7 +278,18 @@ Métricas monitoradas:
 - número de janelas válidas;
 - status de maturidade.
 
-No começo, os modelos podem aparecer como **Aquecendo**, porque ainda faltam janelas futuras suficientes para validação.
+O dashboard declara 7d como horizonte principal e 30d como estratégico, mas
+`main.py` e `scripts/rebuild_from_lake.py` passam explicitamente `horizon=30`
+ao treinamento. O padrão da função `run_ml_pipeline()` é 7. Portanto, confira
+o campo `Horizonte` de cada métrica e `retorno_esperado_horizonte` de cada ativo;
+o rótulo principal da tela não converte métricas de 30d em 7d.
+
+A confiabilidade começa com **1 janela válida** e usa **5 janelas** como meta
+de cobertura. Exibir uma projeção de retorno exige **3 janelas** do mesmo
+modelo, classe e horizonte, além de magnitude de no máximo **50%**. Sem dados
+suficientes, o ranking sombra pode continuar disponível com projeção oculta.
+Detalhes em [Pipeline ML](docs/ML_PIPELINE.md) e
+[Confiabilidade ML](docs/ML_CONFIDENCE.md).
 
 ---
 
@@ -274,15 +310,29 @@ O workflow `.github/workflows/run_screener.yml`:
   - `data/lake/`
   - `data/ml/`
   - `data/backtest/`
+  - `data/delivery/`
 - usa `concurrency` para evitar execuções simultâneas;
 - publica o GitHub Pages após os testes, inclusive quando uma fonte pública
   falhar temporariamente; quando a coleta conclui, o deploy usa o snapshot
   novo gerado pela própria execução;
 - notifica falha via Telegram quando os secrets estão configurados.
 
+O workflow tem os jobs `test`, `screener` e `deploy`, com Python 3.11 e Chrome
+no runner de coleta. Os artefatos ficam retidos por 90 dias. Não há gatilho de
+push: uma atualização apenas documental não inicia o screener nem um novo
+deploy por si só.
+
+A revisão semanal de documentação é uma tarefa separada, solicitada para
+**segunda-feira às 12h, America/Sao_Paulo**. Seu procedimento está em
+[Manutenção da documentação](docs/DOCUMENTATION.md).
+
 ---
 
 ## Setup local
+
+Use Python 3.11 ou superior, Git e Google Chrome instalado para a coleta de
+FIIs. Node.js é usado pelo teste JavaScript do simulador; o dashboard publicado
+é estático e não exige Node para servir os arquivos.
 
 ```bash
 git clone https://github.com/italostatonato/stock-screener-automation.git
@@ -292,9 +342,9 @@ python -m venv .venv
 
 ### Windows
 
-```bash
-.venv\Scripts\activate
-pip install -r requirements.txt
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
 python main.py
 ```
 
@@ -302,7 +352,7 @@ python main.py
 
 ```bash
 source .venv/bin/activate
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python main.py
 ```
 
@@ -325,8 +375,9 @@ Sem a variável, a cópia local é pulada e o Excel continua em `data/output/`.
 ### Fonte de ações sem custo
 
 Por padrão, as ações são coletadas da tabela pública do
-[Fundamentus](https://www.fundamentus.com.br/resultado.php), em **uma única
-requisição semanal**, sem conta, token ou custo. Ela fornece cotação,
+[Fundamentus](https://www.fundamentus.com.br/resultado.php), em **uma requisição
+por tentativa**, sem conta ou token. A configuração permite duas novas
+tentativas após falha. Ela fornece cotação,
 múltiplos, margens, ROIC/ROE, liquidez de dois meses, patrimônio, dívida
 líquida e crescimento de receita.
 
@@ -337,9 +388,15 @@ O projeto calcula o ROA por `P/Ativo ÷ P/L` e o valor de mercado por
 score atual. Não é necessário configurar `BRAPI_TOKEN` nem mantê-lo nos
 Secrets do GitHub para a execução padrão.
 
+A coluna legada `Volume Diário Médio (3 meses)` recebe `Liq.2meses` do
+Fundamentus; a janela da fonte padrão é de **dois meses**. `RPL` corresponde
+a ROE e `ROInvC` a ROIC. A coleta complementar de nomes ainda pode consultar
+a listagem pública da brapi e a busca do Yahoo, sem trocar a fonte dos fundamentos.
+
 A brapi continua disponível apenas como alternativa opcional: defina
-`acoes_source: "brapi"` no `config.yaml` e forneça um token de plano Pro, caso
-um dia queira voltar a essa fonte.
+`acoes_source: "brapi"` no `config.yaml` e forneça `BRAPI_TOKEN` com acesso
+aos fundamentos exigidos pelo coletor. O código dessa alternativa foi escrito
+para o plano Pro; ela não integra a execução padrão sem credenciais.
 
 ---
 
@@ -348,7 +405,7 @@ um dia queira voltar a essa fonte.
 Rodar testes:
 
 ```bash
-pytest tests/ -v
+python -m pytest tests/ -v
 ```
 
 Rodar healthcheck:
@@ -356,6 +413,11 @@ Rodar healthcheck:
 ```bash
 python scripts/healthcheck_data.py
 ```
+
+O healthcheck atualiza o manifesto do lake, o índice do dashboard e o relatório
+de qualidade. `error` encerra com código 1; `ok` e `warn`, com 0. Para revisar
+somente documentação, execute-o numa cópia temporária dos dados. Consulte
+[Operação](docs/OPERATIONS.md) antes de rodar comandos que reconstroem derivados.
 
 Reconstruir derivados a partir do lake:
 
@@ -391,32 +453,27 @@ http://localhost:8000/docs/
 
 ---
 
-## Roadmap
+## Limitações e próximos passos
 
-### Curto prazo
-
-- Melhorar legibilidade e completude dos gráficos do dashboard.
-- Adicionar busca/ordenação nas tabelas grandes.
-- Monitorar Action após a nova camada `data/lake`.
-- Confirmar maturidade inicial dos modelos ML.
-
-### Médio prazo
-
-- Separar treino e previsão dos modelos.
-- Treinar modelos com frequência menor que a previsão diária.
-- Criar critério formal para modelo líder.
-- Adicionar explicabilidade com SHAP ou importância de variáveis.
-- Particionar históricos por ano/mês se o repo crescer demais.
-
-### Longo prazo
-
-- Reduzir dependência de binários versionados a cada execução.
-- Avaliar armazenamento externo gratuito/barato para histórico pesado.
-- Criar relatório automático de performance dos modelos.
-- Criar documentação pública mais visual para portfólio.
+- Alinhar a chamada de treino em 30d com o horizonte principal de 7d do dashboard;
+  separar treino e previsão ainda é uma evolução futura.
+- Validar modelos em mais janelas e definir um critério de promoção. O campo
+  `modelo_lider` atual não substitui automaticamente o ranking oficial.
+- Completar a base histórica auditável de ações; o backfill point-in-time
+  disponível hoje cobre FIIs e tem limitações de cobertura e de indicadores.
+- Melhorar cobertura de preços de ativos renomeados/extintos e manter explícita
+  a diferença entre retorno de preço, retorno ajustado e simulação de aporte.
+- Avaliar particionamento ou armazenamento externo se os binários versionados
+  crescerem demais.
+- A entrega remota por Microsoft Graph permanece futura; hoje a cópia do Excel
+  depende de uma pasta local sincronizada.
 
 ---
 
-## Licença
+## Uso e licenciamento
 
-Projeto pessoal para estudo, portfólio e análise quantitativa. Uso por terceiros deve considerar limitações das fontes públicas, disponibilidade dos sites coletados e premissas metodológicas.
+Projeto pessoal para estudo, portfólio e análise quantitativa. O repositório
+não contém um arquivo de licença geral. A licença MIT da dependência IMask
+está em `docs/assets/vendor/imask-LICENSE.txt` e se aplica a essa dependência.
+Uso por terceiros deve considerar as limitações das fontes e as premissas
+metodológicas documentadas.
