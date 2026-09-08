@@ -1,0 +1,5420 @@
+{
+  "revision": "173a7e5e482512ec4dae5f93c0e11e1acedf99c2",
+  "commits": 199,
+  "shallow": false,
+  "refs": [
+    "refs/codex/turn-diffs/captures/1788838642370/ba3dc2ed-a16e-4388-8648-dadbf7c16ae1/base",
+    "refs/heads/cursor/fix-investsite-legenda-acoes",
+    "refs/heads/main",
+    "refs/remotes/origin/HEAD",
+    "refs/remotes/origin/cursor/fix-investsite-legenda-acoes",
+    "refs/remotes/origin/main",
+    "refs/remotes/origin/old",
+    "refs/stash"
+  ],
+  "tracked_files": 798,
+  "current_text_files_scanned": 307,
+  "history_blobs": 1765,
+  "history_text_blobs_scanned": 851,
+  "history_binary_blobs_excluded": 914,
+  "history_bytes": 252700280,
+  "history_scope": "All locally reachable refs, including remote-tracking branches and stash; no fetch, reflog-only or unreachable objects.",
+  "current_hits": [
+    {
+      "path": "config.yaml",
+      "line": 27,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]"
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 39,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]"
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 183,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]"
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 192,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]"
+    }
+  ],
+  "history_hits": [
+    {
+      "path": "config.yaml",
+      "line": 27,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]",
+      "blob": "d9a29f16bd58539ce3b7e7e82e863f6b3991f9da"
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 39,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]",
+      "blob": "cbc3a838b475aa04078990a356a4651afa3ee06d"
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 183,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]",
+      "blob": "73ef9154e990ecc5faaf27299d27d03bac3ff02c"
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 192,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]",
+      "blob": "73ef9154e990ecc5faaf27299d27d03bac3ff02c"
+    },
+    {
+      "path": "config.yaml",
+      "line": 26,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]",
+      "blob": "0d8a9cf9f3e73703871f3f194a86d82b7ce16ccd"
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 182,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]",
+      "blob": "f0aa245b4db7a424dba7663624fe56df27c44289"
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 191,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]",
+      "blob": "f0aa245b4db7a424dba7663624fe56df27c44289"
+    },
+    {
+      "path": "config.yaml",
+      "line": 26,
+      "pattern": "secret_literal",
+      "classification": "reference_or_fixture",
+      "value": "[REDACTED]",
+      "blob": "dd04abd0b3acc9d6da6a01a5e4027691879a703b"
+    }
+  ],
+  "imports": [
+    "__future__",
+    "argparse",
+    "bs4",
+    "catboost",
+    "concurrent.futures",
+    "dataclasses",
+    "datetime",
+    "hashlib",
+    "io",
+    "json",
+    "lightgbm",
+    "logging",
+    "main",
+    "math",
+    "numpy",
+    "openpyxl",
+    "openpyxl.chart",
+    "openpyxl.chart.axis",
+    "openpyxl.styles",
+    "openpyxl.utils",
+    "os",
+    "pandas",
+    "pathlib",
+    "platform",
+    "pytest",
+    "re",
+    "requests",
+    "selenium",
+    "selenium.common.exceptions",
+    "selenium.webdriver.chrome.service",
+    "selenium.webdriver.common.by",
+    "selenium.webdriver.support",
+    "selenium.webdriver.support.ui",
+    "shutil",
+    "sklearn.ensemble",
+    "sklearn.impute",
+    "sklearn.linear_model",
+    "sklearn.pipeline",
+    "sklearn.preprocessing",
+    "src",
+    "src.backtest",
+    "src.backtest_engine",
+    "src.benchmark",
+    "src.cleaner",
+    "src.config",
+    "src.data_lake",
+    "src.dataset_builder",
+    "src.delivery",
+    "src.exporter",
+    "src.filters",
+    "src.formatter",
+    "src.market_data",
+    "src.ml_confidence",
+    "src.ml_models",
+    "src.ml_storage",
+    "src.observed_history",
+    "src.point_in_time",
+    "src.scorer",
+    "src.scraper",
+    "src.storage",
+    "subprocess",
+    "sys",
+    "time",
+    "typing",
+    "unicodedata",
+    "webdriver_manager.chrome",
+    "xgboost",
+    "yaml",
+    "yfinance",
+    "zipfile",
+    "zoneinfo"
+  ],
+  "python_functions": [
+    {
+      "path": "main.py",
+      "line": 37,
+      "name": "current_run_date",
+      "decorators": []
+    },
+    {
+      "path": "main.py",
+      "line": 49,
+      "name": "setup_logging",
+      "decorators": []
+    },
+    {
+      "path": "main.py",
+      "line": 73,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_7d_primary_fix.py",
+      "line": 9,
+      "name": "replace_many",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_7d_primary_fix.py",
+      "line": 20,
+      "name": "patch_ml_models",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_7d_primary_fix.py",
+      "line": 47,
+      "name": "patch_ml_confidence",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_7d_primary_fix.py",
+      "line": 69,
+      "name": "patch_exporter",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_7d_primary_fix.py",
+      "line": 97,
+      "name": "patch_main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_7d_primary_fix.py",
+      "line": 118,
+      "name": "patch_dashboard",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_7d_primary_fix.py",
+      "line": 147,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_confidence_patch.py",
+      "line": 19,
+      "name": "_read",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_confidence_patch.py",
+      "line": 23,
+      "name": "_write",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_confidence_patch.py",
+      "line": 27,
+      "name": "patch_exporter",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_confidence_patch.py",
+      "line": 79,
+      "name": "patch_dashboard",
+      "decorators": []
+    },
+    {
+      "path": "scripts/apply_ml_confidence_patch.py",
+      "line": 169,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/build_observed_history.py",
+      "line": 24,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/build_point_in_time_history.py",
+      "line": 38,
+      "name": "_arguments",
+      "decorators": []
+    },
+    {
+      "path": "scripts/build_point_in_time_history.py",
+      "line": 46,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/debug_ml_targets.py",
+      "line": 12,
+      "name": "inspect",
+      "decorators": []
+    },
+    {
+      "path": "scripts/debug_ml_targets.py",
+      "line": 30,
+      "name": "latest_json",
+      "decorators": []
+    },
+    {
+      "path": "scripts/debug_ml_targets.py",
+      "line": 44,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/healthcheck_data.py",
+      "line": 21,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/rebuild_from_lake.py",
+      "line": 30,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 24,
+      "name": "_load_json",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 28,
+      "name": "_snapshot_files",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 35,
+      "name": "_decode_scalar",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 43,
+      "name": "_first_present",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 50,
+      "name": "_parse_number",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 94,
+      "name": "_to_number_series",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 98,
+      "name": "_ticker_text",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 113,
+      "name": "_normalize_rows_from_docs",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 160,
+      "name": "_numericize_common",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 199,
+      "name": "_add_basic_features",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 216,
+      "name": "_add_future_returns",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 265,
+      "name": "_build_dataset",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 279,
+      "name": "_save_parquet",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 284,
+      "name": "_rebuild_index",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 289,
+      "name": "_latest_dashboard_payload",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 296,
+      "name": "_count_valid",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 302,
+      "name": "_period",
+      "decorators": []
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "line": 309,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/run_observed_backtest.py",
+      "line": 32,
+      "name": "_atomic_parquet",
+      "decorators": []
+    },
+    {
+      "path": "scripts/run_observed_backtest.py",
+      "line": 39,
+      "name": "_atomic_json",
+      "decorators": []
+    },
+    {
+      "path": "scripts/run_observed_backtest.py",
+      "line": 46,
+      "name": "_arguments",
+      "decorators": []
+    },
+    {
+      "path": "scripts/run_observed_backtest.py",
+      "line": 54,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/run_point_in_time_backtest.py",
+      "line": 29,
+      "name": "_atomic_parquet",
+      "decorators": []
+    },
+    {
+      "path": "scripts/run_point_in_time_backtest.py",
+      "line": 36,
+      "name": "_atomic_json",
+      "decorators": []
+    },
+    {
+      "path": "scripts/run_point_in_time_backtest.py",
+      "line": 43,
+      "name": "_arguments",
+      "decorators": []
+    },
+    {
+      "path": "scripts/run_point_in_time_backtest.py",
+      "line": 56,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "scripts/test_delivery.py",
+      "line": 19,
+      "name": "find_latest_excel",
+      "decorators": []
+    },
+    {
+      "path": "scripts/test_delivery.py",
+      "line": 27,
+      "name": "main",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 39,
+      "name": "_first_present",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 47,
+      "name": "_portfolio_rows",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 95,
+      "name": "save_portfolio_snapshot",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 193,
+      "name": "_yahoo_ticker",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 197,
+      "name": "_resolve_date_col",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 204,
+      "name": "load_top20_snapshots",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 242,
+      "name": "_fetch_close_series",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 273,
+      "name": "_return_pct",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 286,
+      "name": "_asset_return",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 290,
+      "name": "_portfolio_return",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 304,
+      "name": "_chain_base100",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest.py",
+      "line": 310,
+      "name": "run_backtest",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 27,
+      "name": "_normalize_ticker",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 32,
+      "name": "prepare_prices",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 67,
+      "name": "_next_trading_date",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 72,
+      "name": "_last_trading_date",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 80,
+      "name": "_turnover",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 94,
+      "name": "_asset_period_return",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 116,
+      "name": "_benchmark_return",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 126,
+      "name": "run_portfolio_backtest",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 280,
+      "name": "_yahoo_symbol",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 287,
+      "name": "download_yahoo_adjusted_prices",
+      "decorators": []
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "line": 343,
+      "name": "merge_price_cache",
+      "decorators": []
+    },
+    {
+      "path": "src/benchmark.py",
+      "line": 36,
+      "name": "_fetch_yahoo",
+      "decorators": []
+    },
+    {
+      "path": "src/benchmark.py",
+      "line": 78,
+      "name": "_fetch_bcb",
+      "decorators": []
+    },
+    {
+      "path": "src/benchmark.py",
+      "line": 101,
+      "name": "_acumular_base100",
+      "decorators": []
+    },
+    {
+      "path": "src/benchmark.py",
+      "line": 112,
+      "name": "get_benchmarks",
+      "decorators": []
+    },
+    {
+      "path": "src/benchmark.py",
+      "line": 144,
+      "name": "_serie_to_records",
+      "decorators": []
+    },
+    {
+      "path": "src/benchmark.py",
+      "line": 157,
+      "name": "benchmarks_to_json",
+      "decorators": []
+    },
+    {
+      "path": "src/cleaner.py",
+      "line": 9,
+      "name": "_parse_percent",
+      "decorators": []
+    },
+    {
+      "path": "src/cleaner.py",
+      "line": 23,
+      "name": "_parse_money",
+      "decorators": []
+    },
+    {
+      "path": "src/cleaner.py",
+      "line": 34,
+      "name": "_parse_float",
+      "decorators": []
+    },
+    {
+      "path": "src/cleaner.py",
+      "line": 42,
+      "name": "_parse_integer",
+      "decorators": []
+    },
+    {
+      "path": "src/cleaner.py",
+      "line": 51,
+      "name": "clean_and_normalize",
+      "decorators": []
+    },
+    {
+      "path": "src/config.py",
+      "line": 25,
+      "name": "expand_env",
+      "decorators": []
+    },
+    {
+      "path": "src/config.py",
+      "line": 43,
+      "name": "load_config",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 43,
+      "name": "_safe_df",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 47,
+      "name": "_atomic_write_parquet",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 55,
+      "name": "_sha256",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 67,
+      "name": "_load_json",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 77,
+      "name": "_known_incomplete_snapshots",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 93,
+      "name": "_clear_incomplete_snapshot_marker",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 114,
+      "name": "_write_json",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 121,
+      "name": "_normal_date",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 127,
+      "name": "_snapshot_dir",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 131,
+      "name": "_write_frame",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 144,
+      "name": "_ensure_exec_date",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 164,
+      "name": "save_lake_snapshot",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 211,
+      "name": "list_lake_dates",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 226,
+      "name": "update_lake_manifest",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 252,
+      "name": "read_lake_dataset",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 274,
+      "name": "_dedupe_history",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 287,
+      "name": "_portfolio_from_top",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 329,
+      "name": "rebuild_legacy_tables_from_lake",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 407,
+      "name": "rebuild_dashboard_index",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 425,
+      "name": "run_data_quality_checks",
+      "decorators": []
+    },
+    {
+      "path": "src/data_lake.py",
+      "line": 430,
+      "name": "add_check",
+      "decorators": []
+    },
+    {
+      "path": "src/dataset_builder.py",
+      "line": 44,
+      "name": "_safe_read_parquet",
+      "decorators": []
+    },
+    {
+      "path": "src/dataset_builder.py",
+      "line": 57,
+      "name": "_validate_required_columns",
+      "decorators": []
+    },
+    {
+      "path": "src/dataset_builder.py",
+      "line": 73,
+      "name": "_prepare_base",
+      "decorators": []
+    },
+    {
+      "path": "src/dataset_builder.py",
+      "line": 96,
+      "name": "_add_future_returns",
+      "decorators": []
+    },
+    {
+      "path": "src/dataset_builder.py",
+      "line": 171,
+      "name": "_add_basic_features",
+      "decorators": []
+    },
+    {
+      "path": "src/dataset_builder.py",
+      "line": 206,
+      "name": "build_ml_dataset",
+      "decorators": []
+    },
+    {
+      "path": "src/dataset_builder.py",
+      "line": 257,
+      "name": "build_all_datasets",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 52,
+      "name": "_is_windows_path",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 56,
+      "name": "_is_usable_local_path",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 63,
+      "name": "sha256_file",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 71,
+      "name": "validate_excel_file",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 120,
+      "name": "_atomic_copy",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 129,
+      "name": "_delivery_config",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 158,
+      "name": "_write_delivery_log",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 171,
+      "name": "copy_to_local_onedrive",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 214,
+      "name": "deliver_excel",
+      "decorators": []
+    },
+    {
+      "path": "src/delivery.py",
+      "line": 46,
+      "name": "to_dict",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 26,
+      "name": "_safe",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 40,
+      "name": "_finite_number",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 48,
+      "name": "_record_mean",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 58,
+      "name": "_dashboard_kpi_history_row",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 80,
+      "name": "rebuild_dashboard_kpi_history",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 108,
+      "name": "_usable_asset_name",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 116,
+      "name": "_enrich_asset_names",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 177,
+      "name": "_df_to_records",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 190,
+      "name": "_serie_to_records",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 203,
+      "name": "_base100_records",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 228,
+      "name": "_calc_tendencia",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 243,
+      "name": "_load_previous_json",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 268,
+      "name": "_add_tendencias_fiis",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 284,
+      "name": "_add_tendencias_acoes",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 300,
+      "name": "_mean_numeric",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 309,
+      "name": "_calc_kpis",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 346,
+      "name": "_base100_records_from_date",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 416,
+      "name": "_normalize_ticker_series",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 420,
+      "name": "_load_parquet_safe",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 430,
+      "name": "_combine_current_frames",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 438,
+      "name": "_current_indicator_lookup",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 464,
+      "name": "_build_portfolio_base100_from_history",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 729,
+      "name": "_series_start_date",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 738,
+      "name": "_benchmark_dict_from_start",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 746,
+      "name": "_records_as_series",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 770,
+      "name": "_align_and_rebase_series",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 787,
+      "name": "_build_hybrid_portfolio",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 961,
+      "name": "_calc_carteira_vs_benchmarks",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1057,
+      "name": "_calc_recorrentes",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1158,
+      "name": "_latest_records_from_predictions",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1199,
+      "name": "_performance_records",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1222,
+      "name": "_apply_ml_prediction_guardrails",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1292,
+      "name": "_mark_immature_ml_performance",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1318,
+      "name": "_model_performance_history_records",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1422,
+      "name": "_baseline_ml_records_from_current",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1485,
+      "name": "_calc_modelos_ml",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1585,
+      "name": "export_dashboard_json",
+      "decorators": []
+    },
+    {
+      "path": "src/exporter.py",
+      "line": 1115,
+      "name": "build",
+      "decorators": []
+    },
+    {
+      "path": "src/filters.py",
+      "line": 11,
+      "name": "_normalized_company_name",
+      "decorators": []
+    },
+    {
+      "path": "src/filters.py",
+      "line": 27,
+      "name": "_company_key",
+      "decorators": []
+    },
+    {
+      "path": "src/filters.py",
+      "line": 41,
+      "name": "_build_status_column",
+      "decorators": []
+    },
+    {
+      "path": "src/filters.py",
+      "line": 75,
+      "name": "select_top_fiis",
+      "decorators": []
+    },
+    {
+      "path": "src/filters.py",
+      "line": 157,
+      "name": "select_top_acoes",
+      "decorators": []
+    },
+    {
+      "path": "src/formatter.py",
+      "line": 46,
+      "name": "_style_sheet",
+      "decorators": []
+    },
+    {
+      "path": "src/formatter.py",
+      "line": 104,
+      "name": "_add_premissas",
+      "decorators": []
+    },
+    {
+      "path": "src/formatter.py",
+      "line": 197,
+      "name": "_add_base_completa",
+      "decorators": []
+    },
+    {
+      "path": "src/formatter.py",
+      "line": 210,
+      "name": "_add_indicadores",
+      "decorators": []
+    },
+    {
+      "path": "src/formatter.py",
+      "line": 302,
+      "name": "_add_graficos",
+      "decorators": []
+    },
+    {
+      "path": "src/formatter.py",
+      "line": 387,
+      "name": "format_workbook",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 26,
+      "name": "_fetch_bcb_series",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 56,
+      "name": "_fetch_awesome_api",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 87,
+      "name": "_fetch_frankfurter_cambio",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 122,
+      "name": "_asset_name_from_brapi",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 147,
+      "name": "_asset_name_from_yahoo",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 177,
+      "name": "_fetch_asset_names",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 207,
+      "name": "_fetch_coingecko_top_cryptos",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 277,
+      "name": "get_market_indicators",
+      "decorators": []
+    },
+    {
+      "path": "src/market_data.py",
+      "line": 194,
+      "name": "resolve",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 27,
+      "name": "_safe_float",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 39,
+      "name": "_safe_int",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 51,
+      "name": "_clamp",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 55,
+      "name": "_linear_score",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 62,
+      "name": "_confidence_level",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 73,
+      "name": "_model_confidence",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 135,
+      "name": "load_snapshot_dates",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 156,
+      "name": "_parse_date",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 163,
+      "name": "_maturity_from_dates",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 187,
+      "name": "add_confidence_to_performance_records",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "line": 213,
+      "name": "build_ml_confidence_summary",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 130,
+      "name": "_safe_read_parquet",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 141,
+      "name": "_safe_to_parquet",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 146,
+      "name": "_normalize_ticker",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 150,
+      "name": "_percentile_score",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 159,
+      "name": "_model_factories",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 228,
+      "name": "_feature_columns",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 256,
+      "name": "_prepare_dataset",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 275,
+      "name": "_empty_prediction_frame",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 301,
+      "name": "_build_latest_base",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 327,
+      "name": "_train_predict_models",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 416,
+      "name": "_append_predictions",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 432,
+      "name": "_performance_for_predictions",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 523,
+      "name": "_warmup_performance_rows",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 542,
+      "name": "run_ml_pipeline",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_models.py",
+      "line": 400,
+      "name": "leader",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_storage.py",
+      "line": 10,
+      "name": "_prepare_for_parquet",
+      "decorators": []
+    },
+    {
+      "path": "src/ml_storage.py",
+      "line": 38,
+      "name": "append_historical_data",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 40,
+      "name": "_normalize_label",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 46,
+      "name": "_number",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 74,
+      "name": "_ticker_from_row",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 93,
+      "name": "_field",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 102,
+      "name": "_price_from_row",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 123,
+      "name": "_rows_from_records",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 155,
+      "name": "load_dashboard_portfolios",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 169,
+      "name": "load_lake_portfolios",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 194,
+      "name": "_excel_type",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 208,
+      "name": "load_excel_portfolios",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 242,
+      "name": "_atomic_write_parquet",
+      "decorators": []
+    },
+    {
+      "path": "src/observed_history.py",
+      "line": 249,
+      "name": "build_observed_history",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 35,
+      "name": "_atomic_parquet",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 42,
+      "name": "_atomic_json",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 49,
+      "name": "_sha256",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 57,
+      "name": "download_archive",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 74,
+      "name": "download_point_in_time_sources",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 94,
+      "name": "_read_zip_csv",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 102,
+      "name": "load_cvm_fii_archive",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 154,
+      "name": "load_cvm_fii_archives",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 174,
+      "name": "load_b3_cotahist_archive",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 204,
+      "name": "load_b3_cotahist_archives",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 216,
+      "name": "select_available_as_of",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 243,
+      "name": "monthly_signal_dates",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 257,
+      "name": "build_fii_universe_as_of",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 305,
+      "name": "build_monthly_fii_backfill",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 357,
+      "name": "load_fii_backfill_portfolios",
+      "decorators": []
+    },
+    {
+      "path": "src/point_in_time.py",
+      "line": 396,
+      "name": "source_manifest",
+      "decorators": []
+    },
+    {
+      "path": "src/scorer.py",
+      "line": 63,
+      "name": "_percentil_score",
+      "decorators": []
+    },
+    {
+      "path": "src/scorer.py",
+      "line": 76,
+      "name": "score_fiis",
+      "decorators": []
+    },
+    {
+      "path": "src/scorer.py",
+      "line": 107,
+      "name": "score_acoes",
+      "decorators": []
+    },
+    {
+      "path": "src/scorer.py",
+      "line": 138,
+      "name": "score_breakdown_fii",
+      "decorators": []
+    },
+    {
+      "path": "src/scorer.py",
+      "line": 165,
+      "name": "score_breakdown_acao",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 24,
+      "name": "_normalized_column_name",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 31,
+      "name": "_fundamentus_column",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 44,
+      "name": "_parse_fundamentus_number",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 69,
+      "name": "_fundamentus_series",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 79,
+      "name": "_safe_series_ratio",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 84,
+      "name": "build_fundamentus_acoes_frame",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 135,
+      "name": "scrape_acoes_fundamentus",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 185,
+      "name": "scrape_acoes",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 199,
+      "name": "_load_page",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 212,
+      "name": "_raise_if_investsite_login_required",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 225,
+      "name": "_chunks",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 231,
+      "name": "_to_float",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 239,
+      "name": "_safe_ratio",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 247,
+      "name": "_brapi_get",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 290,
+      "name": "_brapi_list_stocks",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 332,
+      "name": "_brapi_data_by_ticker",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 380,
+      "name": "_latest_statement",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 387,
+      "name": "_ttm_statement_value",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 401,
+      "name": "_mean_history_volume",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 416,
+      "name": "_build_brapi_acoes_frame",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 509,
+      "name": "_brapi_cache_is_fresh",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 519,
+      "name": "_refresh_brapi_market_fields",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 574,
+      "name": "_read_brapi_cache",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 585,
+      "name": "_write_brapi_cache",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 591,
+      "name": "validate_brapi_access",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 617,
+      "name": "scrape_acoes_brapi",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 681,
+      "name": "scrape_fundsexplorer",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 763,
+      "name": "clean_acoes_raw",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 791,
+      "name": "_wait_for_excel_download",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 828,
+      "name": "scrape_acoes_investsite",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 344,
+      "name": "fetch",
+      "decorators": []
+    },
+    {
+      "path": "src/scraper.py",
+      "line": 549,
+      "name": "ratio",
+      "decorators": []
+    },
+    {
+      "path": "src/storage.py",
+      "line": 10,
+      "name": "save_snapshot",
+      "decorators": []
+    },
+    {
+      "path": "src/storage.py",
+      "line": 19,
+      "name": "update_history",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 18,
+      "name": "test_resolve_date_col",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 26,
+      "name": "test_load_top20_snapshots",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 40,
+      "name": "test_chain_base100",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 45,
+      "name": "test_run_backtest_sem_historico",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 50,
+      "name": "test_run_backtest_com_mock",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 77,
+      "name": "_top_fiis_fake",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 85,
+      "name": "_top_acoes_fake",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 94,
+      "name": "test_save_portfolio_snapshot_registra_fiis_e_acoes",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 111,
+      "name": "test_save_portfolio_snapshot_preserva_preco_score_posicao",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 136,
+      "name": "test_save_portfolio_snapshot_aceita_acao_sem_acento",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 150,
+      "name": "test_save_portfolio_snapshot_substitui_carteira_do_mesmo_dia",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 57,
+      "name": "fake_portfolio",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "line": 60,
+      "name": "fake_asset",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest_engine.py",
+      "line": 9,
+      "name": "_portfolio",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest_engine.py",
+      "line": 20,
+      "name": "_prices",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest_engine.py",
+      "line": 34,
+      "name": "test_backtest_entra_no_pregao_seguinte_e_aplica_custo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest_engine.py",
+      "line": 53,
+      "name": "test_ativo_sem_preco_vira_caixa_e_fica_auditavel",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_backtest_engine.py",
+      "line": 69,
+      "name": "test_politica_error_interrompe_quando_preco_ausente",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_benchmark_quality.py",
+      "line": 6,
+      "name": "test_get_benchmarks_omits_single_point_yahoo_series",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 19,
+      "name": "test_parse_percent_basico",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 27,
+      "name": "test_parse_percent_com_milhar",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 33,
+      "name": "test_parse_percent_invalidos",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 39,
+      "name": "test_parse_percent_zero",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 45,
+      "name": "test_parse_percent_com_sufixo_anual_e_nao_disponivel",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 54,
+      "name": "test_parse_money_basico",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 61,
+      "name": "test_parse_money_sem_simbolo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 67,
+      "name": "test_parse_money_negativo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 73,
+      "name": "test_parse_money_invalidos",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 81,
+      "name": "test_parse_float_basico",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 89,
+      "name": "test_parse_float_invalido",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 97,
+      "name": "test_parse_integer_com_milhar",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 104,
+      "name": "test_parse_integer_invalido",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 112,
+      "name": "test_clean_and_normalize_completo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 140,
+      "name": "test_clean_and_normalize_strip_espacos",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "line": 148,
+      "name": "test_clean_and_normalize_descarta_taxas_negativas",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 6,
+      "name": "test_expand_env_resolve_variavel_definida",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 11,
+      "name": "test_expand_env_variavel_ausente_vira_vazio",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 18,
+      "name": "test_expand_env_preserva_valores_nao_string",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 24,
+      "name": "test_expand_env_recursivo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 30,
+      "name": "test_load_config_expande_paths",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 53,
+      "name": "test_config_versionado_nao_tem_caminho_pessoal",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_config.py",
+      "line": 69,
+      "name": "test_config_versionado_nao_tem_bloco_acoes_morto",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 7,
+      "name": "test_dashboard_tabs_e_buscas_tem_rotulos_acessiveis",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 20,
+      "name": "test_dashboard_graficos_tem_descricao_e_textos_revisados",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 28,
+      "name": "test_dashboard_mobile_reduz_histograma_e_nao_forca_scroll_ml",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 34,
+      "name": "test_dashboard_tooltip_nao_repete_ticker_como_nome_completo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 39,
+      "name": "test_dashboard_cards_priorizam_valores_financeiros_sem_corte",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 45,
+      "name": "test_dashboard_tooltip_de_ml_e_compacto_e_nao_repete_contexto",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 51,
+      "name": "test_dashboard_hibrida_exibe_novos_pesos_e_serie_rebalanceada",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 62,
+      "name": "test_dashboard_exibe_sete_indicadores_com_pesos_iguais_por_classe",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 74,
+      "name": "test_dashboard_compensa_cabecalho_fixo_e_respeita_reducao_de_movimento",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 80,
+      "name": "test_dashboard_mobile_tem_alvos_e_textos_mais_legiveis",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 86,
+      "name": "test_dashboard_estados_interativos_sao_anunciados",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 93,
+      "name": "test_dashboard_oferece_janelas_de_sete_e_quinze_dias_nos_graficos",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 103,
+      "name": "test_dashboard_hero_e_faixa_de_contexto_sao_compactos",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 111,
+      "name": "test_dashboard_histograma_preserva_barras_das_extremidades",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 117,
+      "name": "test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 124,
+      "name": "test_dashboard_tabelas_tem_legendas_acessiveis",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 128,
+      "name": "test_simulacao_fica_aberta_abaixo_do_card_do_bloco_correspondente",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "line": 141,
+      "name": "test_dashboard_apresentacao_abre_em_visualizacao_protegida",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_dashboard_hybrid.py",
+      "line": 9,
+      "name": "test_dashboard_hybrid_javascript",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 17,
+      "name": "test_data_lake_snapshot_and_rebuild",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 52,
+      "name": "test_portfolio_from_top_preenche_data_e_tipo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 69,
+      "name": "test_portfolio_from_top_ignora_indice_nao_sequencial",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 82,
+      "name": "_snapshot_com_top",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 93,
+      "name": "test_rebuild_carteira_sem_chaves_nulas",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 105,
+      "name": "test_rebuild_prioriza_top_sobre_carteira_residual",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 128,
+      "name": "test_quality_checks_detectam_chave_nula_e_tipo_faltando",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 148,
+      "name": "test_quality_checks_detectam_preco_entrada_ausente",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "line": 164,
+      "name": "test_quality_checks_sinalizam_snapshot_historico_marcado_como_incompleto",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_delivery.py",
+      "line": 8,
+      "name": "_make_workbook",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_delivery.py",
+      "line": 16,
+      "name": "test_validate_excel_and_hash",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_delivery.py",
+      "line": 28,
+      "name": "test_copy_to_local_onedrive_creates_dated_and_latest",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_delivery.py",
+      "line": 40,
+      "name": "test_deliver_excel_uses_legacy_onedrive_path",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 11,
+      "name": "_records",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 18,
+      "name": "_benchmark",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 25,
+      "name": "test_build_hybrid_portfolio_aplica_pesos_e_contribuicoes",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 49,
+      "name": "test_build_hybrid_portfolio_rebalanceia_pesos_em_cada_periodo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 82,
+      "name": "test_build_hybrid_portfolio_exige_ivvb11",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 96,
+      "name": "test_base100_rejeita_benchmark_com_apenas_um_ponto",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 105,
+      "name": "test_top20_usa_composicao_de_cada_data_no_intervalo_seguinte",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 52,
+      "name": "records",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "line": 58,
+      "name": "benchmark",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_kpi_history.py",
+      "line": 6,
+      "name": "test_rebuild_dashboard_kpi_history_gera_payload_compacto",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_ml.py",
+      "line": 6,
+      "name": "test_model_performance_history_preserva_janela_e_calcula_alpha",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_ml.py",
+      "line": 42,
+      "name": "test_ml_guardrail_oculta_projecao_com_amostra_insuficiente",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_ml.py",
+      "line": 64,
+      "name": "test_ml_guardrail_oculta_outlier_mesmo_com_historico",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_exporter_names.py",
+      "line": 4,
+      "name": "test_enrich_asset_names_substitui_ticker_e_preserva_nome_anterior",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 11,
+      "name": "_make_fii_df",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 27,
+      "name": "_base_cfg",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 46,
+      "name": "test_select_top_fiis_retorna_dois_dataframes",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 54,
+      "name": "test_select_top_fiis_respeita_top_n",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 61,
+      "name": "test_select_top_fiis_base_tem_status",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 69,
+      "name": "test_select_top_fiis_base_preserva_todas_linhas",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 76,
+      "name": "test_select_top_fiis_coluna_ausente_lanca_erro",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 83,
+      "name": "test_select_top_fiis_filtro_fixo_elimina_dy_baixo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 92,
+      "name": "test_select_top_fiis_ordenacao_por_score_desc",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 101,
+      "name": "test_select_top_fiis_nao_usa_volatilidade_ou_dy_mensal_como_filtro",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 112,
+      "name": "_make_acoes_df",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 135,
+      "name": "test_select_top_acoes_retorna_dois_dataframes",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 143,
+      "name": "test_select_top_acoes_respeita_top_n",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 150,
+      "name": "test_select_top_acoes_base_tem_status",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 158,
+      "name": "test_select_top_acoes_remove_duplicatas_empresa",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 166,
+      "name": "test_select_top_acoes_remove_classes_da_mesma_companhia_e_mantem_maior_score",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 180,
+      "name": "test_select_top_acoes_tambem_deduplica_nome_real_normalizado",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 193,
+      "name": "test_select_top_acoes_dropna_preco",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 201,
+      "name": "test_select_top_acoes_nao_exige_indicadores_fora_do_score",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_filters.py",
+      "line": 214,
+      "name": "test_select_top_acoes_ordenacao_por_score_desc",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_formatter.py",
+      "line": 6,
+      "name": "test_add_indicadores_aceita_cambio_sem_variacao_diaria",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_formatter.py",
+      "line": 26,
+      "name": "test_premissas_documentam_score_igual_sem_filtros_de_quartil",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 11,
+      "name": "test_fetch_bcb_series_descarta_observacoes_futuras",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 39,
+      "name": "test_fetch_coingecko_top_cryptos_normaliza_e_limita",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 77,
+      "name": "test_fetch_frankfurter_cambio_inverte_taxa_brl",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 100,
+      "name": "test_fetch_asset_names_combina_brapi_e_yahoo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 23,
+      "name": "raise_for_status",
+      "decorators": [
+        "staticmethod"
+      ]
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 27,
+      "name": "json",
+      "decorators": [
+        "staticmethod"
+      ]
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 59,
+      "name": "raise_for_status",
+      "decorators": [
+        "staticmethod"
+      ]
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 63,
+      "name": "json",
+      "decorators": [
+        "staticmethod"
+      ]
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 80,
+      "name": "raise_for_status",
+      "decorators": [
+        "staticmethod"
+      ]
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "line": 84,
+      "name": "json",
+      "decorators": [
+        "staticmethod"
+      ]
+    },
+    {
+      "path": "tests/test_ml_7d_primary.py",
+      "line": 6,
+      "name": "test_ml_7d_outputs_exist",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_ml_7d_primary.py",
+      "line": 14,
+      "name": "test_7d_has_more_targets_than_30d",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_ml_7d_primary.py",
+      "line": 22,
+      "name": "test_dashboard_uses_7d_as_primary",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_ml_confidence.py",
+      "line": 10,
+      "name": "test_confidence_zero_when_no_valid_windows",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_ml_confidence.py",
+      "line": 35,
+      "name": "test_confidence_positive_with_valid_windows",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_ml_confidence.py",
+      "line": 59,
+      "name": "test_enrich_performance_records_adds_columns",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_ml_storage.py",
+      "line": 11,
+      "name": "test_prepare_for_parquet_recupera_coluna_numerica_gravada_como_texto",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_ml_storage.py",
+      "line": 24,
+      "name": "test_append_harmoniza_texto_historico_com_numero_novo",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_observed_history.py",
+      "line": 13,
+      "name": "_write_dashboard",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_observed_history.py",
+      "line": 21,
+      "name": "test_load_dashboard_tolera_cabecalhos_mojibake",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_observed_history.py",
+      "line": 41,
+      "name": "test_build_observed_prioriza_lake_e_marca_data_incompleta",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_point_in_time.py",
+      "line": 16,
+      "name": "test_select_available_as_of_impede_lookahead",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_point_in_time.py",
+      "line": 30,
+      "name": "test_monthly_signal_dates_usa_ultimo_pregao",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_point_in_time.py",
+      "line": 40,
+      "name": "test_load_cvm_fii_archive_preserva_data_entrega",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_point_in_time.py",
+      "line": 62,
+      "name": "test_build_universe_usa_fundamento_ja_publicado",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_point_in_time.py",
+      "line": 86,
+      "name": "test_load_backfill_portfolios_preserva_natureza_e_completude",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_point_in_time.py",
+      "line": 105,
+      "name": "test_source_manifest_usa_caminho_relativo_e_hash",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_run_date.py",
+      "line": 6,
+      "name": "test_current_run_date_uses_sao_paulo_timezone",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scorer.py",
+      "line": 14,
+      "name": "test_fiis_usam_a_selecao_com_pesos_iguais",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scorer.py",
+      "line": 37,
+      "name": "test_acoes_usam_a_selecao_com_pesos_iguais",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scorer.py",
+      "line": 61,
+      "name": "test_dado_ausente_recebe_percentil_neutro",
+      "decorators": [
+        "pytest.mark.parametrize('direction', ['max', 'min'])"
+      ]
+    },
+    {
+      "path": "tests/test_scorer.py",
+      "line": 67,
+      "name": "test_coluna_inteira_ausente_mantem_seu_setimo_como_neutro",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 25,
+      "name": "test_clean_acoes_raw_remove_legenda_rodape",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 39,
+      "name": "test_clean_acoes_raw_remove_preco_nao_numerico",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 52,
+      "name": "test_clean_acoes_raw_vazio",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 56,
+      "name": "test_wait_for_excel_download_aceita_arquivo_da_execucao",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 70,
+      "name": "test_load_page_interrompe_recursos_apos_timeout",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 93,
+      "name": "test_investsite_login_gera_erro_explicito",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 101,
+      "name": "test_investsite_pagina_de_dados_nao_gera_erro",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 108,
+      "name": "test_brapi_mapeia_campos_exigidos_pelo_ranking_de_acoes",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 176,
+      "name": "test_brapi_plano_nao_pro_falha_antes_da_coleta",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 186,
+      "name": "test_brapi_plano_pro_passa_na_validacao",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 195,
+      "name": "test_fundamentus_mapeia_campos_exigidos_pelo_ranking_de_acoes",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 234,
+      "name": "test_fonte_padrao_de_acoes_e_fundamentus_sem_token",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 246,
+      "name": "test_fundamentus_html_preserva_virgula_decimal",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 283,
+      "name": "test_fundamentus_repete_requisicao_apos_timeout",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 309,
+      "name": "fake_get",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 72,
+      "name": "__init__",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 76,
+      "name": "set_page_load_timeout",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 79,
+      "name": "get",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 82,
+      "name": "execute_script",
+      "decorators": []
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 269,
+      "name": "raise_for_status",
+      "decorators": [
+        "staticmethod"
+      ]
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "line": 306,
+      "name": "raise_for_status",
+      "decorators": [
+        "staticmethod"
+      ]
+    },
+    {
+      "path": "tests/test_storage.py",
+      "line": 8,
+      "name": "test_update_history_deduplicates_accented_action_ticker",
+      "decorators": []
+    }
+  ],
+  "frontend_sinks": [
+    {
+      "path": "docs/index.html",
+      "line": 1567,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1569,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1654,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1741,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1751,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1772,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1797,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1818,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1822,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1948,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1949,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1960,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 1967,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2041,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2043,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2063,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2065,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2097,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2106,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2419,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2519,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2736,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2737,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2769,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2779,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2780,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2785,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2798,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2817,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 2871,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 3029,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "docs/index.html",
+      "line": 3164,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 12,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 284,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 285,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 286,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 287,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 290,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 302,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 305,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 312,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 313,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 322,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 323,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 324,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 325,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 327,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 332,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 334,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 367,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 368,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 371,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 381,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 382,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 384,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 385,
+      "patterns": [
+        "innerHTML"
+      ]
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "line": 386,
+      "patterns": [
+        "innerHTML"
+      ]
+    }
+  ],
+  "inventory": [
+    {
+      "path": ".gitattributes",
+      "lines": 20,
+      "bytes": 307,
+      "tracked": true,
+      "sha256": "96910a643a71ac396f39de3b6ea04766e51ee89fd6bfb25fe9b6cc9a1a9ed453"
+    },
+    {
+      "path": ".github/workflows/run_screener.yml",
+      "lines": 146,
+      "bytes": 4022,
+      "tracked": true,
+      "sha256": "6421d2497a863d358974b1855673c5efbc059a57459cc484088da5f4e253fa6a"
+    },
+    {
+      "path": ".gitignore",
+      "lines": 25,
+      "bytes": 290,
+      "tracked": true,
+      "sha256": "019ae1c5ba5f79ae054d0180fc70c568505bb8af6ad2bf43a2c08354d5d17c9b"
+    },
+    {
+      "path": "apresentacao/google-slides-edit/design-catalog.md",
+      "lines": 47,
+      "bytes": 1937,
+      "tracked": true,
+      "sha256": "4b71bebc4a428a474cd97cd9c4bcfc8202e3248b71d20a4989eede91cff97a23"
+    },
+    {
+      "path": "apresentacao/google-slides-edit/design-system.json",
+      "lines": 9660,
+      "bytes": 285780,
+      "tracked": true,
+      "sha256": "a993ab222e1b9c09fa6b4bd77a6037a54f8855ef6893ba21309c756168f68a19"
+    },
+    {
+      "path": "apresentacao/google-slides-edit/output-issues.json",
+      "lines": 18,
+      "bytes": 459,
+      "tracked": true,
+      "sha256": "d6771a0034d3278966cf14f3fbdbd208cce29e71cc886e84ec70f617c2ab2fa2"
+    },
+    {
+      "path": "apresentacao/google-slides-edit/plan.md",
+      "lines": 11,
+      "bytes": 876,
+      "tracked": true,
+      "sha256": "9711302b1275be54d78d50a8f103f64a6f1f8b315b7e6a1c3bc0d030e2984ad3"
+    },
+    {
+      "path": "apresentacao/google-slides-edit/raw-output.json",
+      "lines": 1,
+      "bytes": 532188,
+      "tracked": true,
+      "sha256": "3417a901441c2ac89f622d23f51db6de0d332d0582d97a44f9a955c1435b0c31"
+    },
+    {
+      "path": "apresentacao/google-slides-edit/raw-template.json",
+      "lines": 1,
+      "bytes": 526636,
+      "tracked": true,
+      "sha256": "1718431a55156fb7301e51312dea80242f064f18f02d33f057d099b998a9b7a6"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/design-catalog.md",
+      "lines": 47,
+      "bytes": 1962,
+      "tracked": true,
+      "sha256": "77f4a8e43e10d931e998809e9a3eb9be60b0595fd6b5000ada5259c2ea826f7a"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/design-system.json",
+      "lines": 6758,
+      "bytes": 207058,
+      "tracked": true,
+      "sha256": "8800ed3858ab430e5563d040dddc63527eb4a5a7619b159711ff4fc61c962d05"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/output-issues.json",
+      "lines": 18,
+      "bytes": 459,
+      "tracked": true,
+      "sha256": "771754c4e07139e582fe4e60acace7dd49db9968bb4b1ddfff5ae968c08be78a"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/plan.md",
+      "lines": 10,
+      "bytes": 1435,
+      "tracked": true,
+      "sha256": "bec59f1fb561130f45042093f1221299ab75ea5d6e8ad83fe4febac3837fce5f"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/QA-final.md",
+      "lines": 16,
+      "bytes": 1203,
+      "tracked": true,
+      "sha256": "57781c5c768151eda8e90c2ee6ffd043e2da8914f5ef9d3dcdb6450cf0ca627d"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/raw-final-structure.json",
+      "lines": 1,
+      "bytes": 420222,
+      "tracked": true,
+      "sha256": "787c9c140effb2740411187fb72466dce633f9c2ba95788ebd35faa168596d32"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/raw-output.json",
+      "lines": 1,
+      "bytes": 420090,
+      "tracked": true,
+      "sha256": "4f4c6200af56b2d885494f88aac9ace7ddf1c0bdfcaaf0680e35b43be0c3988e"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/raw-template.json",
+      "lines": 1,
+      "bytes": 377336,
+      "tracked": true,
+      "sha256": "2127fad00b84f512d87edf50520cc8b3a12a3d9311a0e5c58ec18c02abab82b7"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/repair-1.json",
+      "lines": 1,
+      "bytes": 3877,
+      "tracked": true,
+      "sha256": "86538764d9d2b8780beb0d529a5440f20946c57db8c57f673ff91c0ccbea19dc"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/requests.json",
+      "lines": 1,
+      "bytes": 26776,
+      "tracked": true,
+      "sha256": "c3e9c1961aedb28e99b9f67bbc84b73d91e76bfeb35399b90cca768cb7059c45"
+    },
+    {
+      "path": "apresentacao/onepage-presets-2026-09-06/update.mjs",
+      "lines": 60,
+      "bytes": 8092,
+      "tracked": true,
+      "sha256": "77f2d82e1dc389f5f2cebec678dd5d83cdaa118f18a565fad71ca5dcf04e79a2"
+    },
+    {
+      "path": "apresentacao/Radar_Semanal_Apresentacao_Carteira_Hibrida.pptx.inspect.ndjson",
+      "lines": 290,
+      "bytes": 42920,
+      "tracked": true,
+      "sha256": "6fbdf11f696563515a2e52917866919cd87f7642462068a6ce6a6ba1da0193bd"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/batches.json",
+      "lines": 1,
+      "bytes": 230380,
+      "tracked": true,
+      "sha256": "73e0085dfd5e0f979268e8ba3e48b754a90ac23772242b37eec18c37c40468af"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/build.mjs",
+      "lines": 130,
+      "bytes": 20426,
+      "tracked": true,
+      "sha256": "c000d84ad23c6b870e2d087530573eb4efab2384f4ba68ffdf86a1409e4dafa0"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/design-catalog.md",
+      "lines": 47,
+      "bytes": 1947,
+      "tracked": true,
+      "sha256": "ccf06922e6495aceb5abcc123dd6f6fd24f2a82133887dc292bdf213e889cc4e"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/design-system.json",
+      "lines": 9660,
+      "bytes": 285838,
+      "tracked": true,
+      "sha256": "7d4415dac82e99abd9ec1f77a5d11151b71e54e3f2021a2af0a06840e6f42a7c"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/output-design-system.json",
+      "lines": 6758,
+      "bytes": 207091,
+      "tracked": true,
+      "sha256": "98dcc8569fb33a95c338b752fb4f5a80c44747e07fcb574df8cbe4909e9845a6"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/output-issues.json",
+      "lines": 18,
+      "bytes": 459,
+      "tracked": true,
+      "sha256": "d4c1bed934481a6897862e0a69a298ddd54a816746e2718b207cd07cf4020fa7"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/plan.md",
+      "lines": 20,
+      "bytes": 2301,
+      "tracked": true,
+      "sha256": "0c22c27afe6ea7193c03e5e7da4f31e03e0fbb1aac75b5b402f683f2c9f461ad"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/qa.md",
+      "lines": 16,
+      "bytes": 1429,
+      "tracked": true,
+      "sha256": "cc497757187b4b61d35bc24a607e9a5781c86d73b0077fc28cd63bf6049a34a1"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/raw-output.json",
+      "lines": 1,
+      "bytes": 377364,
+      "tracked": true,
+      "sha256": "0f214071ebfc09f010de7f22ce159e0719199eae453b819bc6955f232f88e4be"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/raw-template.json",
+      "lines": 1,
+      "bytes": 532159,
+      "tracked": true,
+      "sha256": "a519f9187b95f377a52755e1e9811aedc13198b0f34668a93f29b7a88f11e9b3"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/repairs.json",
+      "lines": 50,
+      "bytes": 1187,
+      "tracked": true,
+      "sha256": "8816440d204bb825cfec2f4de2838af16ced6b7d421025d74262debdc8375e1d"
+    },
+    {
+      "path": "apresentacao/redesign-2026-09-06/slide-copy.json",
+      "lines": 213,
+      "bytes": 12193,
+      "tracked": true,
+      "sha256": "a43806062fc3ea64bb06114e4d70bfc7eaaac5f758992143a31e47b286a09f3f"
+    },
+    {
+      "path": "CLAUDE.md",
+      "lines": 120,
+      "bytes": 6012,
+      "tracked": true,
+      "sha256": "30c42ba84795b3cf1a0b3459e10182a23569b5073213f91bd392b1b3b79048ac"
+    },
+    {
+      "path": "config.yaml",
+      "lines": 76,
+      "bytes": 2409,
+      "tracked": true,
+      "sha256": "eca9bd570c7e9253f9f25d959492df407712831ef347acf9db57d5f9425bce6b"
+    },
+    {
+      "path": "data/backtest/observed_backtest_summary.json",
+      "lines": 47,
+      "bytes": 1480,
+      "tracked": true,
+      "sha256": "7581b0c54d0795535efd2faebc5bbd8472b41da02895816bc60a2ebcaea21c8c"
+    },
+    {
+      "path": "data/backtest/observed_history_manifest.json",
+      "lines": 513,
+      "bytes": 8624,
+      "tracked": true,
+      "sha256": "2bc6435c11c949c4f00cf05ce9fb57c930efcb1c68012be9752049088b681ed2"
+    },
+    {
+      "path": "data/delivery/delivery_log.jsonl",
+      "lines": 3,
+      "bytes": 1269,
+      "tracked": true,
+      "sha256": "6f942a645ec19de0cba416ce4371a8ba643bf5e2c58b442ed1d75c214dd1ed47"
+    },
+    {
+      "path": "data/lake/known_incomplete_snapshots.json",
+      "lines": 7,
+      "bytes": 327,
+      "tracked": true,
+      "sha256": "3282d368564786591d0560bc5b8b902e2fdbde6f5d84b22d608e15f648fa8770"
+    },
+    {
+      "path": "data/lake/manifest.json",
+      "lines": 1934,
+      "bytes": 67411,
+      "tracked": true,
+      "sha256": "1e8d26e2bab5e3bf9195dec8bd9e1b9c9340d5721c430e0046ee974c1cc11613"
+    },
+    {
+      "path": "data/lake/quality_report.json",
+      "lines": 141,
+      "bytes": 4214,
+      "tracked": true,
+      "sha256": "6203f92d6794420ec2fa02db607ecd101974524d875df8bb9edfde9fc00ad089"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-04/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "72a8cc551bd4f4fd33116ca814f3dc61ee9b0add0163305eff69677860ee712e"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-06/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "ca17c3f58b47302e712a6bab0ed1662f94d30f1ae7f359e10c010031e845f918"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-07/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "1eddd4306ebaa65b5413bfea7f5731d4e4b13ec0b14f6bf89400eeeff711f802"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-08/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "3fde39b2e554eaa075b246454c967789daa0b75674c7458621839d1035f07344"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-09/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "8e4b8473ad697305e9ed053b7ffe186201810cc56cd046026e479a7904b5e28e"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-10/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "b3cfd91aba2d964a055097844a253000a31cc70b9c61aa0f3ae27c3fb1743b8d"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-13/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "25c8df637d805fd3004ec839fd693025c694e658b2f854d89a81e633e072a093"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-14/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "10df82046f96d6c1a8104257591aa2bd138e8aa8728330d229b2695257978192"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-15/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "27a8968be19d18a21e103f71de60a034d1697664dfaf725a31ba23f94cbc2845"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-16/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "c3d5eae0082734780c538604999caa4f35a8b7d2156415aa4922c05877d7d5b0"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-17/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "b36db9826d2387ad205a4fb2aa348f8a989573e282df739c7a2137c7f944f635"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-20/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "06c82958cb0a80db75b363f8baa1a5c5dd1d90b1e2605bcf42c4cedee9339b9b"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-21/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "1d9f0850ed869d46ae845bfdc03e9171cb32f632e3b4ba4c0c91ec79de902754"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-22/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "c5b3db4c0853d6e7d34312b9fda35bbeab8fcff9f2886a6e2a1cd9c2fcf9c4f4"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-23/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "572bf704d3516850bb999109cbca595da3d2016bfdb69c0ceb5220ebc809f9e5"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-24/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "59e18a8532f3f1ab3cf6b9f2574fccd2fd0e7135a8014debd761ec99bb7f00aa"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-25/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "8cbc0d76e37cd2072b522a1531b17dfcf2a25aba0bb623007b3eca10dd2b4865"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-27/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "9f8d62528f5d955436274c94290e54a8b8a3eb5a90ccd936ac778b3e7f430524"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-28/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "5cb39efcfd17178de47cea5e3de7f0cd74f3d70cbf2ccfbb12e82d57cf0a0a01"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-29/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "54e5846c10a9860f0e42cf74b52071d8a4834f055ba952f53fda0f8fbf8f72a3"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-30/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "120f9b4ce3d08864467a8344a18fc699e3858f28f9b907feb4958f977f71b8e1"
+    },
+    {
+      "path": "data/lake/snapshots/2026-07-31/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "28a11d67087c113b1972f4fc6d45e8371b2dec2ab8115f781587308e1afd46e6"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-03/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "286e81d6a75410558d94172934f57f11a903f12cb8e9be0ad4393588e625c3a3"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-04/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "38dc4c2f4418280050487242244859f3ded0ded03c83b24a504297872b9cf48a"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-05/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "401b3acd61fd4487da34c985b31ad7861627d53bd046ebec2fccc5bc74f58290"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-06/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "df8c92142eaa5cd2de257238689aff9e6fa2c7250cee8acc3287ebed3fa226bc"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-07/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "735d64cae2af8aa0b22b95ead8cf9574229822acdd807ee7e71becf1b70db6f3"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-10/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "21ab0c9958e4863b5fa9a9e8e5495eaffcff439945ef77f3cda4fe32f2c14651"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-11/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "644ad7fb3a6341d5956b7b87759e27ed718090c404664477f56f96d08cbe88e7"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-12/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "19473ec9ff01e6985de4a44fe345511d996f199356324d0de891af2153d3bbfc"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-13/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "b88c9246763420bbe46a2305cd74bacc1381e7ad4408232b4142576de56d3901"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-14/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "0e7b7d88976af60144abe3d35e192fd197fd2d6ace37b71b356483c66c49960b"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-17/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "7a6ee33652a3f514131f7ac04f7181303d4c136ac492aadde7a83f996c2579bb"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-18/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "dcc0b0138b091fc0843d088d3be7bcd64c3fd17f72f86156a50b3f83ca5b1f38"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-19/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "5f17dd65a559d18c83f0412c0b2d696a43111a1929397de2ed7fb89da08ba316"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-20/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "cb1638f648f6948e98080316ad6008c1338710e9229b9d0f1bd583e666bd7aef"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-21/manifest.json",
+      "lines": 43,
+      "bytes": 1331,
+      "tracked": true,
+      "sha256": "489deab962bf691cb515755752c4b78e627114ae9108d4de9de2e1bfd189f15e"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-24/manifest.json",
+      "lines": 43,
+      "bytes": 1331,
+      "tracked": true,
+      "sha256": "537d365f7ed1562315dfb3799c999b2b06dd598c463322f0d37e58251772cde6"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-25/manifest.json",
+      "lines": 43,
+      "bytes": 1331,
+      "tracked": true,
+      "sha256": "1b799ef87487b5c2af3b01cfedce9d74e5b6415ca94a33760d8a165842d14bf1"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-26/manifest.json",
+      "lines": 43,
+      "bytes": 1379,
+      "tracked": true,
+      "sha256": "a4a46f98dd87731026133edd287f5688cf823d99b7c0f95386d78925cb978a55"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-27/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "a4ba422fd1827595ac5562be2b98b1ff7f454db0c8df275cd99080360df02e40"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-30/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "9a046584881541bb3aadc13a8435a5e184ad636340ce8c0d61d27bcaaaaf8c8e"
+    },
+    {
+      "path": "data/lake/snapshots/2026-08-31/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "8d5d3756487e6e625ea7a4a0a3635262511ae91b2ea182005bae969991b02ea8"
+    },
+    {
+      "path": "data/lake/snapshots/2026-09-01/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "1862e81970180eae212ec55d942e2063521c5338f279fa19b6f2823538368585"
+    },
+    {
+      "path": "data/lake/snapshots/2026-09-02/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "dd47c5b23db0cd1f5d470d2581033797f41291bf9b9fea9e505a8f6fca69f580"
+    },
+    {
+      "path": "data/lake/snapshots/2026-09-06/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "f413c0930d15a4c244e21a161ddc4daa1ff860dc604b3e1c5bfaa786409f5aac"
+    },
+    {
+      "path": "data/lake/snapshots/2026-09-07/manifest.json",
+      "lines": 43,
+      "bytes": 1336,
+      "tracked": true,
+      "sha256": "3bc000761f88087d7c5a620db49be1aebf612a660840342385e5c2befd65fac0"
+    },
+    {
+      "path": "data/point_in_time/backtest/fii_summary.json",
+      "lines": 42,
+      "bytes": 1463,
+      "tracked": true,
+      "sha256": "45c65f60fc6451f1ca1fa1720ef3fe197f73cc3506647945c8875ee1819dc326"
+    },
+    {
+      "path": "data/point_in_time/foundation/source_manifest.json",
+      "lines": 78,
+      "bytes": 3688,
+      "tracked": false,
+      "sha256": "353f8b4005b846e1210a92f8c5f67bb723d2ecb981b4c4e73839bd208ef7f18f"
+    },
+    {
+      "path": "data/point_in_time/manifest.json",
+      "lines": 887,
+      "bytes": 27204,
+      "tracked": true,
+      "sha256": "f2b436cb11d06a3e69c031d64487633de07cc2c1c4494edb97cda6a950fb614a"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-02-26/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "c71e1c3f8e710d70498a503c23e5ec1ef87a8c7b03288f93548adb768663de8a"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-03-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "82e66e4e745150151c889116a9282f0b9037501987064d530d493983f62c0c21"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-04-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "673b3df74b6bb97095798005c482ceacdd6778b0235480211ce3cd60036f4a64"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-05-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "30d6ab1c2047cab2e7a26b44639bfa97eefa4506301fad8e2677241d91cc1d64"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-06-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "ccfdaf17dfb7f3259f37134f84b4730fc8adccd2a7b284d5a653c93ab1c011c8"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-07-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "d185cbf9abe67d0ab3b127cb0f22d11eb25a659584feb6e13a89f0fa447dca01"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-08-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "f398170664aeec78d91f061f4214c4da9cf7a13eab2d5c29f1a3350cc3ea92ff"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-09-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "09c4a2c06ea8b0af7ece311748b340e8a5ce3f9caf20cb23a62bd1bf09dde524"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-10-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "f722085bd7afd24323188376d6c46423efa1ba52c45cd7c46a5c56910a6d5a5a"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-11-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "82a0bab56b299c3476e7c66ca572c4d53863229b11c4c770777c8fdade876983"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2021-12-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "0367b1a1d86e448c8adeb57d1f405caba1ae699f052e9ceecf0328ea8f814ef4"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-01-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "206ed9bd9ea49773e538c0b9ab5b6ef5e7ee43f4d361847d8aba6e7dc08e36de"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-02-25/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "0c07cdb641ac91658babe54011788a108c67f379988914239db1eb6310ea3acb"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-03-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "19e8cf4b424fc3a7d19776df8cb07203c7e5908d19925c8b4518eebc27b1e5bc"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-04-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "2ce2ad225f0f508d1d5226f6ea0884ee56c079ef4fe9c003cefd1d6043b750ba"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-05-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "db22b105007de87d97f8d88b31fe79803cf6f37e09a9e18e52306fdc590c5dbe"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-06-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "82c6d8490860641b86166288152357bfe7f3f837aebb7cb0b17adb86afc5b2c5"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-07-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "81bb355f4b3510f9126c8d549c901c0e481b590b1e4ad34157745c7ca9f820d6"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-08-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "11c0271f96dd95305a849c428de97d3b452f7ed1900866775791201c7d8d6255"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-09-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "303cdd3a9f77199a974acd5e26ea2584406d146ad9ac45ec95e078b263e2b2e7"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-10-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "4248a653c3067c3fb06cef9962237e59d82bf7726b1a612d9828eb915b1bc518"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-11-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "8d482f5990d3e5578f705bbb9a29e2cccd2f44cdca262fb1dad7f48619215e39"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2022-12-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "41690b2099f4e16aa44bb3df16fc892219cdfe6d84433fa741f29ea14d95e774"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-01-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "972aabe9c886a33ae5192e01a18dbc3baafcee57b70d6f8fa9f27072fb81f32a"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-02-28/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "0f2212c126bd21f4ebce96c4694fe9d7282d864372b068a2083c9e8676d99e01"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-03-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "c6125c58c9940218962c51be918e45864e403c68fd7eac2c5995a6644c708952"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-04-28/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "0dde24a26dace7eeef8b603b1b6b7fe282e581df7336e6d228e5f43539db0083"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-05-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "c08b8b75dc11f52cb7c7a6515a4238a8a00d018d04e67c3da60f7985e34ccbe9"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-06-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "d0ba0de2404388bb3870490239f01a03316af4805f32178ae87ec43493c8bcca"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-07-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "ce20fcf1f7995b1c38f3c096499be411a209b0cfc405c4a835bbd68c5299b8de"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-08-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "86159b470edd42fda051f8612128254a0285b5d89c1d2865726ab176ee423818"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-09-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "46dd27f72e64fa6cf50ea1436236bf897a0b9f1b0759fbf926e6a389b9f905ab"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-10-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "48acd3585b646f02e41a88f3ef9a703b28b5f80f88d60f98d97401cd93ee6635"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-11-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "1d9bead6c08f8c8cb2031f8243dad8cf6c155174c824c94c197f723c644261ea"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2023-12-28/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "656c49871b6bcd7c71a2ec48d577cfb6b1deb49928eed2dc54418172866e66d8"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-01-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "42a03013c31ecb6cc373d2558aed6a713e769c00da4f330eeaee2505b51da1b8"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-02-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "cb00c0f63cdb9313408aaecef8b4f706812e27f9a65352e37ad3677d895f97fb"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-03-28/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "7f8cc934347a20dd5f40e7435bdf2eef8052cf58521f290af9039c0493470c90"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-04-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "df68e587949c1c597463ff9a4dfff0aa05acfa63ef32d776fcdeed942c2dc72b"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-05-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "a1ba8fdd7d37498008397de62220a1719b64a20d4d68745839e1550491bf8576"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-06-28/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "f5efec8d10ebd2a2fe2789a9ac3d03d8e3bd70b70348b93ec7236251e8511820"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-07-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "d39d57847c9e2621eef2c160102fb3513b5c667942b909a790b77043cd64acf7"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-08-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "aae06151c209157dfb842c931ce8c0f27cab9d5db187de17bbaa3e21eef940f7"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-09-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "4d8068b0bce77f47a15be1df59f7eceea094179cdf1a316cf37a13115706498a"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-10-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "cf90e738258b4603122065f14a09366ce2e4355d79c317cac3daede3cb691e9e"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-11-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "a340df8f5d185eda143f69172eb4c87cc6df61419ea391808f424f0521a9699c"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2024-12-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "154f4e89ee28f72029ca435ea79f00a7fb37658602e9bbbc95914dc19f425c6f"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-01-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "c1167dcbac1eb68e3b450c04dff450d9b13c632c61246d2c464ada12aa127b62"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-02-28/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "9823c4aad2f09fcc3ba5fed6a0c01f5c0b5f0fc9603817b6c0bf7db7dd776a37"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-03-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "6e17cb547d84dfebe07eb7d10c3df302afe20ba87a1c6707b710519948c70272"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-04-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "846b19219ee15ed64ce7bd2d77bc896ab00144283d5d62514e2819d44b95e4df"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-05-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "0d9b5d3fb53fcdefda1663ee4f7bcf0c1fb71a70608ff3b191cf32db3e2e5274"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-06-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "bd8a065f982cebb0c118d3b1393433159e0c88171eb0a5c699985fb270f9aa17"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-07-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "ee96697fb9331fbf1073c3bcd102b41a2a7c9b1b150419ccd67518122a07240b"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-08-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "5b21c01c6a9db06cc87cd811aec2327f093608a5bbf522999b980b8262348bdd"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-09-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "fd36fb46bf2d7bddbd3cc35426198f9f66fa92f85ef7cd04d033d5c6b03f3df4"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-10-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "e81c16ef6e61e7f9f7cf4b422c2faa20d3cdd63f92a3ae51989d38583dfcf3c7"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-11-28/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "49561f3dffdfe46b660accf7689a31dcd905e7bee83ee3b80ed3586a5c8fefee"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2025-12-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "d2e89205600bc312bc73c22dc9c9bc05f1f2531e2381b960bce1f614aa6fcccb"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2026-01-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "22115764856a0df6b3b57725275e75fed51cec25441e4b3edce781d01115ea61"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2026-02-27/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "1f4114df7653a2340959ca2b5ddf8fe3fa90dcd18c287ea1f51679ba8e9597c5"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2026-03-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "3bb6196f6e368f7fc0c2ef6a89a55319cfab48d314f7cde3e237322f402cbdb1"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2026-04-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "1bb9ee1a096f928e76e32b00a7a0381caed445ca7673eda521f337b6075db4e3"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2026-05-29/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "7d8b5bfa1e89530277c6bc4e59f6897cd613c389cf5770c3940f79aca39176e9"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2026-06-30/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "aae6fcde856fd1d5d589dee89de3595dde45dd9c1a1aecd0475298590e62e9a4"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2026-07-31/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "b87a2f4e848e5db7839e309171407fbebcf9246737d30e753e2c7a5ff9a68d79"
+    },
+    {
+      "path": "data/point_in_time/snapshots/2026-08-27/manifest.json",
+      "lines": 11,
+      "bytes": 305,
+      "tracked": true,
+      "sha256": "9e7d2bf26f18a9a791f47a9b9b5f62d9d7cdd3d016c0d3513992d3436b680402"
+    },
+    {
+      "path": "data/point_in_time/source_manifest.json",
+      "lines": 78,
+      "bytes": 2998,
+      "tracked": true,
+      "sha256": "2ff70aa063006c5781abf482dc3d52f9d8b97f96fafc86090284eaa4dfec4edd"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "lines": 116,
+      "bytes": 5520,
+      "tracked": true,
+      "sha256": "e0bc300c85166b34712cf0182101e5fda5768dcc60784bdbee036cd6002cbcb8"
+    },
+    {
+      "path": "docs/assets/vendor/imask-7.6.1.min.js",
+      "lines": 2,
+      "bytes": 59248,
+      "tracked": true,
+      "sha256": "7fcd7b0428e446cb8fc10a9acde63838a2af5a1cf5e1d90596e326431e489610"
+    },
+    {
+      "path": "docs/assets/vendor/imask-LICENSE.txt",
+      "lines": 21,
+      "bytes": 1065,
+      "tracked": true,
+      "sha256": "8b4d4b2664470db8d22cd1c867956fa78635fb84924141731c08035af291f800"
+    },
+    {
+      "path": "docs/BACKTEST_RETROATIVO.md",
+      "lines": 118,
+      "bytes": 5499,
+      "tracked": true,
+      "sha256": "9630ff540b67128b17aaa28b5c076e720990d3aa4be9a95120ad55cb8b8d4e8f"
+    },
+    {
+      "path": "docs/DASHBOARD.md",
+      "lines": 86,
+      "bytes": 4221,
+      "tracked": true,
+      "sha256": "7c978b018dae7807072b3d87bdbd06c7d6b13ae16c1252e66effd0340407f076"
+    },
+    {
+      "path": "docs/data/2026-06-21.json",
+      "lines": 2363,
+      "bytes": 48583,
+      "tracked": true,
+      "sha256": "14bed09775f8341cde10f3173e5ea08e74427413c6bb46629a92fa9f2714c3b6"
+    },
+    {
+      "path": "docs/data/2026-06-22.json",
+      "lines": 2338,
+      "bytes": 47962,
+      "tracked": true,
+      "sha256": "5835fa4864d871c17c2202fc2ababf02d343485f4da7830cade60093d131bf1b"
+    },
+    {
+      "path": "docs/data/2026-06-23.json",
+      "lines": 5075,
+      "bytes": 103189,
+      "tracked": true,
+      "sha256": "021329dbce1a131bb2f009273c061bc23ef97426d6d98293ce30addcd218dd3c"
+    },
+    {
+      "path": "docs/data/2026-06-24.json",
+      "lines": 5071,
+      "bytes": 103086,
+      "tracked": true,
+      "sha256": "7ac7b7c17a2322949de4c565af08c77482bae2610b2d6d315fd1b2c6ea1e5883"
+    },
+    {
+      "path": "docs/data/2026-06-25.json",
+      "lines": 7419,
+      "bytes": 148546,
+      "tracked": true,
+      "sha256": "f9cd9ab686b5933ba2d1484443202e7b99f968e60503f091fe6bc3d84f5c0b4c"
+    },
+    {
+      "path": "docs/data/2026-06-26.json",
+      "lines": 7299,
+      "bytes": 145870,
+      "tracked": true,
+      "sha256": "9f9e0b68970e867679ba82f38a512a1c02efc75927d87dd9d1e3cfa3978f314a"
+    },
+    {
+      "path": "docs/data/2026-06-28.json",
+      "lines": 9694,
+      "bytes": 192585,
+      "tracked": true,
+      "sha256": "32a678c0643feaa2d845f08e25de5abd577f180c19bcb57bacba2b585575077b"
+    },
+    {
+      "path": "docs/data/2026-06-29.json",
+      "lines": 12655,
+      "bytes": 296499,
+      "tracked": true,
+      "sha256": "c81a360476c68a6129d8dde91d6a5077ad0da7bf22f0862c31977a274ba8bc02"
+    },
+    {
+      "path": "docs/data/2026-06-30.json",
+      "lines": 12617,
+      "bytes": 295334,
+      "tracked": true,
+      "sha256": "bd11831f58b44e5023317072b58c3cc186fc77e3fa7228f424b2a443636c4938"
+    },
+    {
+      "path": "docs/data/2026-07-01.json",
+      "lines": 12669,
+      "bytes": 296449,
+      "tracked": true,
+      "sha256": "73ba9d7578f2ae5eee3994cb727146aff28d4041e336c2d77bdd194ddd5c26dd"
+    },
+    {
+      "path": "docs/data/2026-07-02.json",
+      "lines": 12741,
+      "bytes": 298507,
+      "tracked": true,
+      "sha256": "3e080167a05c11ee81b330ce9775689aaa69d2461cc82e204ad9ef33e1b4e9c8"
+    },
+    {
+      "path": "docs/data/2026-07-03.json",
+      "lines": 12773,
+      "bytes": 299291,
+      "tracked": true,
+      "sha256": "98a0229b48e9d562572d84b24da5f52048895533aa93edf1a39d12ffa855d0cb"
+    },
+    {
+      "path": "docs/data/2026-07-04.json",
+      "lines": 12781,
+      "bytes": 286945,
+      "tracked": true,
+      "sha256": "077d5b986496ea94d4c50279cf433d4c1af449de6de67b169b490941719c4411"
+    },
+    {
+      "path": "docs/data/2026-07-06.json",
+      "lines": 12781,
+      "bytes": 287177,
+      "tracked": true,
+      "sha256": "1f9d149a8060200c1f291d6c076b32e03237737402134a14319e49f01409deee"
+    },
+    {
+      "path": "docs/data/2026-07-07.json",
+      "lines": 12809,
+      "bytes": 288011,
+      "tracked": true,
+      "sha256": "d5442bb19215b00b11af2dad9129d8f77684f8a7a4ca40e42647a73e401edea3"
+    },
+    {
+      "path": "docs/data/2026-07-08.json",
+      "lines": 10614,
+      "bytes": 248191,
+      "tracked": true,
+      "sha256": "12807a8ba45188fee2c55652394e1729cbfae200498283db34254aa2cf821366"
+    },
+    {
+      "path": "docs/data/2026-07-09.json",
+      "lines": 13183,
+      "bytes": 299594,
+      "tracked": true,
+      "sha256": "15e18448f3c7fce4e13d03b0a9b5d9a13c7de1efc14658c796a3cda8633eefc4"
+    },
+    {
+      "path": "docs/data/2026-07-10.json",
+      "lines": 13219,
+      "bytes": 300661,
+      "tracked": true,
+      "sha256": "4ab5441626f9e910083e2a8a5d234d48e47dedeb53170246bdf89811317f4953"
+    },
+    {
+      "path": "docs/data/2026-07-13.json",
+      "lines": 13203,
+      "bytes": 300482,
+      "tracked": true,
+      "sha256": "205399a6abfbbf0c11598cd916024ff61948067fa8887f9a60f84c4abb65f63f"
+    },
+    {
+      "path": "docs/data/2026-07-14.json",
+      "lines": 11514,
+      "bytes": 271095,
+      "tracked": true,
+      "sha256": "778fbb6a9c513f1a3e5df1fddb12aa2c360b8bf50716f97e35fe05ab9e9790bd"
+    },
+    {
+      "path": "docs/data/2026-07-15.json",
+      "lines": 13251,
+      "bytes": 301579,
+      "tracked": true,
+      "sha256": "d78b9c16a6d7b82de84baf85a0923604ca399f63ba8a9004fe676f54a1df737b"
+    },
+    {
+      "path": "docs/data/2026-07-16.json",
+      "lines": 13315,
+      "bytes": 302633,
+      "tracked": true,
+      "sha256": "51bc1bf15fc8fa058a2a3bd5046ba510ca48d7a355e7ac7962e0e7a447468716"
+    },
+    {
+      "path": "docs/data/2026-07-17.json",
+      "lines": 13351,
+      "bytes": 303518,
+      "tracked": true,
+      "sha256": "cfc6a7abb910411dff24447d857a76da55747daf02eb2182067fc57b3d8874bb"
+    },
+    {
+      "path": "docs/data/2026-07-20.json",
+      "lines": 13335,
+      "bytes": 303417,
+      "tracked": true,
+      "sha256": "6ff27a42b62ef46e12ab431583e624434d84556a18a36396ecd25f80e937fadf"
+    },
+    {
+      "path": "docs/data/2026-07-21.json",
+      "lines": 13363,
+      "bytes": 304056,
+      "tracked": true,
+      "sha256": "878d2142dc2fe36ee1690180344209602b43ae9a9cf87c1d0d836d43f4d85a1c"
+    },
+    {
+      "path": "docs/data/2026-07-22.json",
+      "lines": 13099,
+      "bytes": 295587,
+      "tracked": true,
+      "sha256": "1dd19039ae0008872447781c16d17f631166ad85663501e98de373b3d99bc645"
+    },
+    {
+      "path": "docs/data/2026-07-23.json",
+      "lines": 13560,
+      "bytes": 308715,
+      "tracked": true,
+      "sha256": "34c6ca37130ed385a979ef31f29704e8c291a9ac7b189aaedc10d2fd45067b10"
+    },
+    {
+      "path": "docs/data/2026-07-24.json",
+      "lines": 13596,
+      "bytes": 309266,
+      "tracked": true,
+      "sha256": "2c17158a65b6fdda14d58ebb7ca4f35417ea637d7e7fd2de4f90e7f525ea016b"
+    },
+    {
+      "path": "docs/data/2026-07-25.json",
+      "lines": 13596,
+      "bytes": 309580,
+      "tracked": true,
+      "sha256": "0110252837e610714227218926502204b14e1776239128b53ac95532294941be"
+    },
+    {
+      "path": "docs/data/2026-07-27.json",
+      "lines": 13624,
+      "bytes": 310367,
+      "tracked": true,
+      "sha256": "279a4c0575610f07f30f1bf7423fdb085205511472547ca71ca8dfaeca1582dd"
+    },
+    {
+      "path": "docs/data/2026-07-28.json",
+      "lines": 13636,
+      "bytes": 310582,
+      "tracked": true,
+      "sha256": "42ec6ae14b730c3375ecfbf27d281c753f86b32c60f684cb4de5d4f1104ed17c"
+    },
+    {
+      "path": "docs/data/2026-07-29.json",
+      "lines": 13692,
+      "bytes": 311486,
+      "tracked": true,
+      "sha256": "d0da5890bfa0fe23b1b1c6e0089614beec5fff237d0bf6b52b4a90064924be7e"
+    },
+    {
+      "path": "docs/data/2026-07-30.json",
+      "lines": 13744,
+      "bytes": 312749,
+      "tracked": true,
+      "sha256": "ea977465d11afc791642f40349d088f68d5eafd618277c8809a023fd75e25a5e"
+    },
+    {
+      "path": "docs/data/2026-07-31.json",
+      "lines": 13800,
+      "bytes": 314015,
+      "tracked": true,
+      "sha256": "4d7257d92006ade3d145691600421b896b10b81cd3d53c23cc2b21ce09fec02b"
+    },
+    {
+      "path": "docs/data/2026-08-03.json",
+      "lines": 13832,
+      "bytes": 314980,
+      "tracked": true,
+      "sha256": "cb1da0ffeec27ab7b317a900f17c828680e87aad01645c7235beaaa78bf77832"
+    },
+    {
+      "path": "docs/data/2026-08-04.json",
+      "lines": 13824,
+      "bytes": 314878,
+      "tracked": true,
+      "sha256": "8f642696fd23081b4af7f04ff796c45ff3a8fbf24b0f40d374b7df343f9e2e37"
+    },
+    {
+      "path": "docs/data/2026-08-05.json",
+      "lines": 13868,
+      "bytes": 315534,
+      "tracked": true,
+      "sha256": "d99a9113fc1ea9ccbe5f82dbd35bfea19a11fbf68b8145c9a686b70022307cb4"
+    },
+    {
+      "path": "docs/data/2026-08-06.json",
+      "lines": 14100,
+      "bytes": 319926,
+      "tracked": true,
+      "sha256": "818447a5602e4ed0bd5e7a9bb9c3d85b58c6e5b3baa88d53bf513352e433253a"
+    },
+    {
+      "path": "docs/data/2026-08-07.json",
+      "lines": 14132,
+      "bytes": 320637,
+      "tracked": true,
+      "sha256": "c1c46c21e5e59161fde859ad8e4904c32193df8524404a38d2e447d370a5db96"
+    },
+    {
+      "path": "docs/data/2026-08-10.json",
+      "lines": 14096,
+      "bytes": 320228,
+      "tracked": true,
+      "sha256": "b5bfdbb5a41f70c88753b1580d3e792ceed81b56e8c575253ac0328f05acf812"
+    },
+    {
+      "path": "docs/data/2026-08-11.json",
+      "lines": 14124,
+      "bytes": 320807,
+      "tracked": true,
+      "sha256": "90346ff60790b5466e30c254d29ca1e750626929e3e05c2afc2afa9891ee3bcb"
+    },
+    {
+      "path": "docs/data/2026-08-12.json",
+      "lines": 14196,
+      "bytes": 322327,
+      "tracked": true,
+      "sha256": "4f0deed83694f4196cc49db155f2a66099991e13915895749dae27db21011eff"
+    },
+    {
+      "path": "docs/data/2026-08-13.json",
+      "lines": 11748,
+      "bytes": 276846,
+      "tracked": true,
+      "sha256": "46b7ff06108acc818d9fdc7a3c2a892a7e81ecab9789931063f90f29b87b2ffa"
+    },
+    {
+      "path": "docs/data/2026-08-14.json",
+      "lines": 14272,
+      "bytes": 324017,
+      "tracked": true,
+      "sha256": "dad3ee5f99106619663e7a2f388a75aab8bd2768dad3fc2c9768abdfb84bd149"
+    },
+    {
+      "path": "docs/data/2026-08-17.json",
+      "lines": 13725,
+      "bytes": 313718,
+      "tracked": true,
+      "sha256": "003957c509c24a4af24815f267cbce153ec1df4405098b48ec303adaa2daa4b6"
+    },
+    {
+      "path": "docs/data/2026-08-18.json",
+      "lines": 13733,
+      "bytes": 313906,
+      "tracked": true,
+      "sha256": "345124a15db4e6a5aa787f6db9859a9ea3aeeb7b4b2f19ce00e7b12a25374148"
+    },
+    {
+      "path": "docs/data/2026-08-19.json",
+      "lines": 13805,
+      "bytes": 316296,
+      "tracked": true,
+      "sha256": "dc4b6a1ff3e3d6dca1eaa906955edfcc31df59df05462724807fb838e6b5fb67"
+    },
+    {
+      "path": "docs/data/2026-08-20.json",
+      "lines": 13869,
+      "bytes": 317390,
+      "tracked": true,
+      "sha256": "56e102d041ce56b8a639ec7b6714f447400f735881a3354bcb29a7bf8cba13bc"
+    },
+    {
+      "path": "docs/data/2026-08-21.json",
+      "lines": 13556,
+      "bytes": 307721,
+      "tracked": true,
+      "sha256": "dd7a29e304c7eaa450fb31ab8190c8a39eff9ea949ccb981d84450fbd1881f54"
+    },
+    {
+      "path": "docs/data/2026-08-24.json",
+      "lines": 13532,
+      "bytes": 307321,
+      "tracked": true,
+      "sha256": "11e3e5ac902584e9b679dcbd59215d1fbfa1d3da8aa78f9b4c5b5914c97f3c39"
+    },
+    {
+      "path": "docs/data/2026-08-25.json",
+      "lines": 13540,
+      "bytes": 307563,
+      "tracked": true,
+      "sha256": "59306970a864bd5da5482ed0e4512b61055c7691f7c774945dfb83ffeac62dff"
+    },
+    {
+      "path": "docs/data/2026-08-26.json",
+      "lines": 14743,
+      "bytes": 353558,
+      "tracked": true,
+      "sha256": "ae35fa2b9bf1c983f65e8626c827b2fd0198bf6d64d4ae8411083fa806bb3b22"
+    },
+    {
+      "path": "docs/data/2026-08-27.json",
+      "lines": 19870,
+      "bytes": 473451,
+      "tracked": true,
+      "sha256": "1d53758bb1421098a782763f939678da049e461b5edaf3f2939d2e23e6017b20"
+    },
+    {
+      "path": "docs/data/2026-08-30.json",
+      "lines": 20047,
+      "bytes": 459527,
+      "tracked": true,
+      "sha256": "979102f716bb9d86bb18de3e73c3804b676d333d4d9e305c9ec74d4a246fcf51"
+    },
+    {
+      "path": "docs/data/2026-08-31.json",
+      "lines": 21607,
+      "bytes": 520230,
+      "tracked": true,
+      "sha256": "17bde8eb08c9edd2f772aa22c630be7a4d2f5c658fb93be79fcdfc1d4680d29f"
+    },
+    {
+      "path": "docs/data/2026-09-01.json",
+      "lines": 21944,
+      "bytes": 529235,
+      "tracked": true,
+      "sha256": "f680aef6c62554c91c473a0838976cecc8f93644c21fa4d2f151772d1071ab05"
+    },
+    {
+      "path": "docs/data/2026-09-02.json",
+      "lines": 22320,
+      "bytes": 539417,
+      "tracked": true,
+      "sha256": "46bd943295fffe44f97e2d76e17b5690fa98c6aa0acc45828435a5617eed96f2"
+    },
+    {
+      "path": "docs/data/2026-09-06.json",
+      "lines": 22816,
+      "bytes": 554289,
+      "tracked": true,
+      "sha256": "d6553cd3c0723242024bb48159fac8036e6b20dbb0e8ef2dd5e7053f21912300"
+    },
+    {
+      "path": "docs/data/2026-09-07.json",
+      "lines": 23024,
+      "bytes": 560937,
+      "tracked": true,
+      "sha256": "fba6f700695923620fd2a25477e506309011babc7362b00018e6c9c67feb3a21"
+    },
+    {
+      "path": "docs/data/index.json",
+      "lines": 61,
+      "bytes": 947,
+      "tracked": true,
+      "sha256": "b5f3bd8fd87927f1d3cb223936b336d0bef0197a030530f9c3fb077adff6087a"
+    },
+    {
+      "path": "docs/data/kpi-history.json",
+      "lines": 1,
+      "bytes": 5471,
+      "tracked": true,
+      "sha256": "54327d6cbd027fbe1d5a00a95b33973748c2520ee04fcdc90d50b14819a36ce4"
+    },
+    {
+      "path": "docs/DOCUMENTATION.md",
+      "lines": 93,
+      "bytes": 4399,
+      "tracked": true,
+      "sha256": "e0bd106493ed29ed59b7f96efcab4e1ad83b17e4b8efbc344686890078a2a8f9"
+    },
+    {
+      "path": "docs/index.html",
+      "lines": 3199,
+      "bytes": 218080,
+      "tracked": true,
+      "sha256": "3a46941eb76e460c56708046f65dbae6253c1322603efb8fa447595b878827d9"
+    },
+    {
+      "path": "docs/METHODOLOGY.md",
+      "lines": 129,
+      "bytes": 5310,
+      "tracked": true,
+      "sha256": "10a6c2c561bba55286cbbf720be7a1edd799e85e28d0a4881c2a1dc14b1ae5ee"
+    },
+    {
+      "path": "docs/ML_CONFIDENCE.md",
+      "lines": 73,
+      "bytes": 3385,
+      "tracked": true,
+      "sha256": "722385553a789818eec594e61627028474bc1c2a66d97ca7c8938539c3bb00d7"
+    },
+    {
+      "path": "docs/ML_PIPELINE.md",
+      "lines": 113,
+      "bytes": 5086,
+      "tracked": true,
+      "sha256": "2d308fdee4368faa0bca4662b3fcf99b0362c0dfe32bb9fc5faa7880a366a42c"
+    },
+    {
+      "path": "docs/OPERATIONS.md",
+      "lines": 185,
+      "bytes": 7609,
+      "tracked": true,
+      "sha256": "3bd2ec2e2874577145d2f55f8f19af4789caa1da3a8d1b640f67c158698dd198"
+    },
+    {
+      "path": "docs/wiki/_Sidebar.md",
+      "lines": 13,
+      "bytes": 1274,
+      "tracked": true,
+      "sha256": "87711aa9e7cd4f42180dd4c24147c6ab5556dcf0fa10b655aa2b2129ae3dbf45"
+    },
+    {
+      "path": "docs/wiki/Backtests.md",
+      "lines": 118,
+      "bytes": 5561,
+      "tracked": true,
+      "sha256": "f738819eb90f907b2ed481337dfb0751b0e16001d18119c8b38ff8e2e42221d5"
+    },
+    {
+      "path": "docs/wiki/Como-Funciona.md",
+      "lines": 116,
+      "bytes": 5768,
+      "tracked": true,
+      "sha256": "4f72463ea97a97820747bbfbc8aad6e9851fc0432e6bcfeffb77abe951ae2ba0"
+    },
+    {
+      "path": "docs/wiki/Como-Rodar-Localmente.md",
+      "lines": 47,
+      "bytes": 1408,
+      "tracked": true,
+      "sha256": "acf5efabf033b0c97203330413c533d325550810757bf300e99673c228783729"
+    },
+    {
+      "path": "docs/wiki/Confiabilidade-ML.md",
+      "lines": 73,
+      "bytes": 3446,
+      "tracked": true,
+      "sha256": "1aaae0f6a1d8ebd5f18459ccba16700348dfc8241ba10bc922a9f236d315e1c7"
+    },
+    {
+      "path": "docs/wiki/Configuração-(config.yaml).md",
+      "lines": 48,
+      "bytes": 2241,
+      "tracked": true,
+      "sha256": "1f09cbdf94b55e89d18c39b8f1df70429b3b11871fb36adc2877ccc41b5ace2f"
+    },
+    {
+      "path": "docs/wiki/Dashboard.md",
+      "lines": 86,
+      "bytes": 4400,
+      "tracked": true,
+      "sha256": "4ef7f7896daa89edaaa216bfbe19fb09c14b089e5643f7e95866bfdecb06a15f"
+    },
+    {
+      "path": "docs/wiki/Fontes-de-Dados.md",
+      "lines": 50,
+      "bytes": 2253,
+      "tracked": true,
+      "sha256": "4dd2554e482332f16b154b54f0dcdd75feac63b104d3b5f74487ebb0ef5722d5"
+    },
+    {
+      "path": "docs/wiki/Home.md",
+      "lines": 46,
+      "bytes": 3003,
+      "tracked": true,
+      "sha256": "5f5728021a937af3d658ba4e4127958f50373a277c63276ee5caed31e9b42898"
+    },
+    {
+      "path": "docs/wiki/Manutencao-da-Documentacao.md",
+      "lines": 93,
+      "bytes": 4399,
+      "tracked": true,
+      "sha256": "e0bd106493ed29ed59b7f96efcab4e1ad83b17e4b8efbc344686890078a2a8f9"
+    },
+    {
+      "path": "docs/wiki/Metodologia-de-Filtros.md",
+      "lines": 85,
+      "bytes": 3262,
+      "tracked": true,
+      "sha256": "c293e09f3bf63787747b0fa5d3963d98b4267243b23e06b1b6c3319a4e29d0d1"
+    },
+    {
+      "path": "docs/wiki/Modelos-ML.md",
+      "lines": 113,
+      "bytes": 5134,
+      "tracked": true,
+      "sha256": "aa790d431d883230f5af75d8efab48ab7e69cf19b48ec7b88f2a39abe8e86862"
+    },
+    {
+      "path": "docs/wiki/Troubleshooting.md",
+      "lines": 185,
+      "bytes": 7790,
+      "tracked": true,
+      "sha256": "0c693d6dda1938a521509f6ec8723c2e27fed12a29a5c026d26b721378e242d6"
+    },
+    {
+      "path": "main.py",
+      "lines": 547,
+      "bytes": 16507,
+      "tracked": true,
+      "sha256": "8903a92b135186e35284f5724fc9a79dfa039fec59a2a32c909f9c0986474bdf"
+    },
+    {
+      "path": "README.md",
+      "lines": 479,
+      "bytes": 20155,
+      "tracked": true,
+      "sha256": "d81ef09f3f995653d54997189f0f61c8150c6787e37f911ff1ee6b6af6491cbb"
+    },
+    {
+      "path": "requirements.txt",
+      "lines": 15,
+      "bytes": 291,
+      "tracked": true,
+      "sha256": "93d00b9e1ab501eb9f453b158d3220aba92fa6de10d9a8fb2b02f1a2a7790427"
+    },
+    {
+      "path": "scripts/apply_ml_7d_primary_fix.py",
+      "lines": 160,
+      "bytes": 6376,
+      "tracked": true,
+      "sha256": "004b995c4c5e19055b0bd9a907f215d9956d1269e70d8237ce688d937dc7bc47"
+    },
+    {
+      "path": "scripts/apply_ml_confidence_patch.py",
+      "lines": 176,
+      "bytes": 7018,
+      "tracked": true,
+      "sha256": "37a8f47c241a66dbcea83c3ccdb4427f5ff6b2203e196ba48634929236cf1507"
+    },
+    {
+      "path": "scripts/build_observed_history.py",
+      "lines": 35,
+      "bytes": 968,
+      "tracked": true,
+      "sha256": "67ff66bc22eb8ec988975044487316fa811208e666daee27a5bf7f801bf3d72b"
+    },
+    {
+      "path": "scripts/build_point_in_time_history.py",
+      "lines": 107,
+      "bytes": 3870,
+      "tracked": true,
+      "sha256": "6fbe4168999ffbd4f376e8d2dd78b04c25560a0a6eacebbc2b62b4dde5911904"
+    },
+    {
+      "path": "scripts/debug_ml_targets.py",
+      "lines": 56,
+      "bytes": 2287,
+      "tracked": true,
+      "sha256": "f8a7339881298338d99659801aadfee42b4adbf00ed06fbb7b1ace78223e3985"
+    },
+    {
+      "path": "scripts/healthcheck_data.py",
+      "lines": 34,
+      "bytes": 917,
+      "tracked": true,
+      "sha256": "9657455f0871ebbca7013422d36beab7f6b592d41cf2a21608daeb2934867b14"
+    },
+    {
+      "path": "scripts/rebuild_from_lake.py",
+      "lines": 50,
+      "bytes": 1487,
+      "tracked": true,
+      "sha256": "826b72ab368b4de81a87e51b1851bf066bde27d2fd378296231d24ca91d6267a"
+    },
+    {
+      "path": "scripts/refresh_ml_7d_primary_from_docs.py",
+      "lines": 373,
+      "bytes": 14051,
+      "tracked": true,
+      "sha256": "8a2c69b0daa3ce2e3041d9f48283f3a9715d85ec6d934502df3e05ea5627514a"
+    },
+    {
+      "path": "scripts/run_observed_backtest.py",
+      "lines": 117,
+      "bytes": 4122,
+      "tracked": true,
+      "sha256": "ac00d0f6761cd6d6d3be052dc7602745f731669347ba8470b48d1d38e7923172"
+    },
+    {
+      "path": "scripts/run_point_in_time_backtest.py",
+      "lines": 129,
+      "bytes": 5034,
+      "tracked": true,
+      "sha256": "8f3155540d91a2e84c573d4e6e3bded7827ad78460d80ff11fe06bf8a4b737ad"
+    },
+    {
+      "path": "scripts/test_delivery.py",
+      "lines": 41,
+      "bytes": 1172,
+      "tracked": true,
+      "sha256": "d0805da85f9272573eacb2d198d23ad222d7daa2bbbf138135933c9f488b2d4b"
+    },
+    {
+      "path": "scripts/test_ml_confidence.py",
+      "lines": 16,
+      "bytes": 461,
+      "tracked": true,
+      "sha256": "c8dd7cbf027d209fcce4922ee366c47f505c5a22fccb4803d6cf980d13c88019"
+    },
+    {
+      "path": "src/__init__.py",
+      "lines": 1,
+      "bytes": 1,
+      "tracked": true,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "src/backtest.py",
+      "lines": 408,
+      "bytes": 11928,
+      "tracked": true,
+      "sha256": "642cb75a977062326e9455d30ad8969044629f052b4c16e6d5a3e931a30e970b"
+    },
+    {
+      "path": "src/backtest_engine.py",
+      "lines": 347,
+      "bytes": 14483,
+      "tracked": true,
+      "sha256": "724705c487a85c10f72bd9342ca0fb08f3e6baedfc885118dbdba683219f222c"
+    },
+    {
+      "path": "src/benchmark.py",
+      "lines": 158,
+      "bytes": 5115,
+      "tracked": true,
+      "sha256": "c04e2c39eb17795f7f192df605a62b4ca06e01f34808429db19cac663ea7db21"
+    },
+    {
+      "path": "src/cleaner.py",
+      "lines": 80,
+      "bytes": 2383,
+      "tracked": true,
+      "sha256": "6c6a9f7ff5f7fb55d619d3e283049bcde8653a8c5e5e95eaac2b31798b89879a"
+    },
+    {
+      "path": "src/config.py",
+      "lines": 55,
+      "bytes": 1667,
+      "tracked": true,
+      "sha256": "d3ca87afb9293f11f00a5914c364cd11ba6438de934f5b915871f576805f42cb"
+    },
+    {
+      "path": "src/data_lake.py",
+      "lines": 618,
+      "bytes": 23852,
+      "tracked": true,
+      "sha256": "4cffa3102a525006decffe8b670edee30d9b9c6a7239039a51a4b3be0193f992"
+    },
+    {
+      "path": "src/dataset_builder.py",
+      "lines": 295,
+      "bytes": 8636,
+      "tracked": true,
+      "sha256": "cfcce394a48b3b612da3836e759b35b534ff27b1ae356ec35b476f1f40f295a0"
+    },
+    {
+      "path": "src/delivery.py",
+      "lines": 280,
+      "bytes": 9485,
+      "tracked": true,
+      "sha256": "bd75dac564b08711f28db2d79a8d35a3b32c64ad63732cdd5845c6cc800ddeaa"
+    },
+    {
+      "path": "src/exporter.py",
+      "lines": 1711,
+      "bytes": 60976,
+      "tracked": true,
+      "sha256": "f77083e48e7b492c3c89129ff71b3a6070181629d3084e1380cc3e463fe6c6d3"
+    },
+    {
+      "path": "src/filters.py",
+      "lines": 261,
+      "bytes": 8540,
+      "tracked": true,
+      "sha256": "4284d911c5db68097468d8e75efb37ee0665f3f1d58370fcf47ab348bf4bb674"
+    },
+    {
+      "path": "src/formatter.py",
+      "lines": 436,
+      "bytes": 18452,
+      "tracked": true,
+      "sha256": "9382fd101054cbabfa428a5a570cfc957047889ba7f690948ce3fb88ec9dd71a"
+    },
+    {
+      "path": "src/market_data.py",
+      "lines": 324,
+      "bytes": 12576,
+      "tracked": true,
+      "sha256": "b6d91184c5f3c71405168123c8f05d6846ce48c10fec59ba42f1f6c07972a89e"
+    },
+    {
+      "path": "src/ml_confidence.py",
+      "lines": 293,
+      "bytes": 11296,
+      "tracked": true,
+      "sha256": "4ada8e7ade80a02cda2793432e2dc40c47a4c4c9fc69e7c69a84794096126f07"
+    },
+    {
+      "path": "src/ml_models.py",
+      "lines": 594,
+      "bytes": 22142,
+      "tracked": true,
+      "sha256": "0e7dd622b41a0d6956cb5e56c3817e0832aecebff011082ab3b9bb12bb8da3f5"
+    },
+    {
+      "path": "src/ml_storage.py",
+      "lines": 91,
+      "bytes": 2947,
+      "tracked": true,
+      "sha256": "a5d5f1dc251b20c4664642274609e40613fa71ad36bceaef9cc5f3c092fe08ac"
+    },
+    {
+      "path": "src/observed_history.py",
+      "lines": 352,
+      "bytes": 12931,
+      "tracked": true,
+      "sha256": "8df0082ba550542701dd87415ad377eca0a37ebb5e914de11e5d47b7e3101ea8"
+    },
+    {
+      "path": "src/point_in_time.py",
+      "lines": 412,
+      "bytes": 16447,
+      "tracked": true,
+      "sha256": "6ad435b25dbf5fcf6d502bf0fd100c7d8bd49fea1a03ebf48c48394426c0e97a"
+    },
+    {
+      "path": "src/scorer.py",
+      "lines": 189,
+      "bytes": 7096,
+      "tracked": true,
+      "sha256": "cf69eddaf95a1e116f15063802200ba69ff7dda307dac9102f38e6dc5b5dc887"
+    },
+    {
+      "path": "src/scraper.py",
+      "lines": 906,
+      "bytes": 36938,
+      "tracked": true,
+      "sha256": "422193b0bdeccb7487552cad3947154cd5aecacb55a6bea9f808ed4251f13c23"
+    },
+    {
+      "path": "src/storage.py",
+      "lines": 50,
+      "bytes": 1964,
+      "tracked": true,
+      "sha256": "f9bee223df49cc4335db61efdd7f3f196bad754827cc85cd8065e7f1a7d52795"
+    },
+    {
+      "path": "tests/__init__.py",
+      "lines": 0,
+      "bytes": 0,
+      "tracked": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/hybrid_portfolio.test.cjs",
+      "lines": 429,
+      "bytes": 24562,
+      "tracked": true,
+      "sha256": "8fef39c754e3db938940a500c65a5497c06fe38c4edb0fb6e14e6b929e526347"
+    },
+    {
+      "path": "tests/test_backtest.py",
+      "lines": 169,
+      "bytes": 5017,
+      "tracked": true,
+      "sha256": "b691b4661a63c24f8dd268b02fea6b0f3302e0574acd0766c617e03605aac901"
+    },
+    {
+      "path": "tests/test_backtest_engine.py",
+      "lines": 79,
+      "bytes": 2566,
+      "tracked": true,
+      "sha256": "3a149b93032357c627e2f997efa5fdc982c46eb1738c558f2f70050eae67df79"
+    },
+    {
+      "path": "tests/test_benchmark_quality.py",
+      "lines": 30,
+      "bytes": 775,
+      "tracked": true,
+      "sha256": "ddd5f544e55848fb18c9e01f362ad429ad263c38b3cf96f87791aa09d7f711f1"
+    },
+    {
+      "path": "tests/test_cleaner.py",
+      "lines": 162,
+      "bytes": 5380,
+      "tracked": true,
+      "sha256": "8eff1e86e9405e11653cd816691e6d89aa03ebe9fbfddfe38101331fde059fac"
+    },
+    {
+      "path": "tests/test_config.py",
+      "lines": 75,
+      "bytes": 2617,
+      "tracked": true,
+      "sha256": "621ef008ebd91aeac34e56ddb62bcbea78ee0b871252046f2962f0959443dca1"
+    },
+    {
+      "path": "tests/test_dashboard_html.py",
+      "lines": 145,
+      "bytes": 6722,
+      "tracked": true,
+      "sha256": "2b5f5d4847e184d8476a6d2dbeb177e9ba4ce546e25b8ce09c57f87b12255900"
+    },
+    {
+      "path": "tests/test_dashboard_hybrid.py",
+      "lines": 21,
+      "bytes": 632,
+      "tracked": true,
+      "sha256": "f15aa1697fe1c3518c9cd1203d99220b42f3e73f80383ef5f449f23bb146ef13"
+    },
+    {
+      "path": "tests/test_data_lake.py",
+      "lines": 185,
+      "bytes": 6792,
+      "tracked": true,
+      "sha256": "43e1a55b08aad5a58841ad345c92357369b045e7f43d3cd8ca2e48267883ed9b"
+    },
+    {
+      "path": "tests/test_delivery.py",
+      "lines": 57,
+      "bytes": 1599,
+      "tracked": true,
+      "sha256": "561023779b922aaa095730308e8e0653dfe39b44a7684d7d3c12af4ee19f5d3d"
+    },
+    {
+      "path": "tests/test_exporter_hybrid.py",
+      "lines": 144,
+      "bytes": 4901,
+      "tracked": true,
+      "sha256": "443ebef32ea369a0b16570a9f9e7b757b22d520d2931f4e02e16246dc4ad2c4b"
+    },
+    {
+      "path": "tests/test_exporter_kpi_history.py",
+      "lines": 49,
+      "bytes": 1542,
+      "tracked": true,
+      "sha256": "691b4b5c626fa3fb39600c027d98c6ca0d29def962dd40cf4750db3a23ae0825"
+    },
+    {
+      "path": "tests/test_exporter_ml.py",
+      "lines": 82,
+      "bytes": 2683,
+      "tracked": true,
+      "sha256": "17c8f9f121a99d5310812d5b1e018b91d0ed82f0ddcc965785709b8f30cf528d"
+    },
+    {
+      "path": "tests/test_exporter_names.py",
+      "lines": 28,
+      "bytes": 1028,
+      "tracked": true,
+      "sha256": "a75db1190c09481ce6c67e5fb243ba04b3ef694e1a9d06eaada7cfebd08b412b"
+    },
+    {
+      "path": "tests/test_filters.py",
+      "lines": 218,
+      "bytes": 7743,
+      "tracked": true,
+      "sha256": "7ff992ab66e8729d56261dd38b6e6e2bc612bc653515ee12056e9188b5871cd9"
+    },
+    {
+      "path": "tests/test_formatter.py",
+      "lines": 46,
+      "bytes": 1221,
+      "tracked": true,
+      "sha256": "8e0b5b7189d5a1af5512c0299c6043d58d61e72999fc4c463a7d751c5d38d1c2"
+    },
+    {
+      "path": "tests/test_market_data.py",
+      "lines": 115,
+      "bytes": 3329,
+      "tracked": true,
+      "sha256": "7b68e1517142238273fa2dbdbdddafaa6cb2f5251ee7ff6c9bf7694b258667c7"
+    },
+    {
+      "path": "tests/test_ml_7d_primary.py",
+      "lines": 28,
+      "bytes": 1254,
+      "tracked": true,
+      "sha256": "f44c4dd7adb68c50b4f25f33ded7c8a916e65de2e0aeef1084e6cc7336773b34"
+    },
+    {
+      "path": "tests/test_ml_confidence.py",
+      "lines": 79,
+      "bytes": 2495,
+      "tracked": true,
+      "sha256": "feba8ef501e8ce88445bc10d01f6209cfd4b43626c05698f235a3e2a4b5231c3"
+    },
+    {
+      "path": "tests/test_ml_storage.py",
+      "lines": 42,
+      "bytes": 1294,
+      "tracked": true,
+      "sha256": "fa79fb66b56267aafd88c6ebf182ae7e89581cf7b3c540407393bdc42d69b552"
+    },
+    {
+      "path": "tests/test_observed_history.py",
+      "lines": 80,
+      "bytes": 2774,
+      "tracked": true,
+      "sha256": "bc465f3aa7e3682adb90a6993f9e89e7d62a2f21cfcd0a6ab233768b420cac9d"
+    },
+    {
+      "path": "tests/test_point_in_time.py",
+      "lines": 114,
+      "bytes": 4487,
+      "tracked": true,
+      "sha256": "8f2b637c6b40417cb5447465178a0e243216d4ea442634ae8fa54d1a09cad5ad"
+    },
+    {
+      "path": "tests/test_run_date.py",
+      "lines": 9,
+      "bytes": 247,
+      "tracked": true,
+      "sha256": "16483a78f7b787e4cf58c5095e75fb801929c997bc650e7ffdd5c7b6364187d2"
+    },
+    {
+      "path": "tests/test_scorer.py",
+      "lines": 71,
+      "bytes": 2067,
+      "tracked": true,
+      "sha256": "8705f66fb30e32ecc0e3616fc555d075136506abdbfcbc4d044f34d42f19ab6a"
+    },
+    {
+      "path": "tests/test_scraper.py",
+      "lines": 322,
+      "bytes": 9426,
+      "tracked": true,
+      "sha256": "cc87933d372fce338d19d3e88574a983aa68ced0d00cfabf083814ef6a90f5e2"
+    },
+    {
+      "path": "tests/test_storage.py",
+      "lines": 33,
+      "bytes": 898,
+      "tracked": true,
+      "sha256": "63491053da7cf946d738f789429aafbef367df8c31202453e55dc2c814145ca1"
+    }
+  ],
+  "limitations": [
+    "Heuristic pattern search, with human triage; no proof of absence.",
+    "Binary files not decoded for secret hunting.",
+    "Ignored local logs, backups, environment and audit outputs excluded."
+  ]
+}

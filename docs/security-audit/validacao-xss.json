@@ -1,0 +1,72 @@
+{
+  "method": "Renderizadores reais em Node VM; DOM simulado, sem browser ou rede.",
+  "limitations": [
+    "Não executa evento onerror: prova propagação de markup até innerHTML, não exploração em produção.",
+    "Formatação numérica, gráficos e seleção de tickers híbridos usam stubs; fluxo da origem é validado separadamente por revisão estática.",
+    "Não demonstra que um visitante possa alterar os provedores."
+  ],
+  "cases": [
+    {
+      "label": "Ranking",
+      "path": "docs/index.html",
+      "line": 1797,
+      "marker_preserved_as_markup": true,
+      "rendered_excerpt": "ank-asset fii\"><span class=\"asset-name\"><img src=x onerror=\"globalThis.__auditMarker=1\"></span><span class=\"asset-detail\">R$ 0 ·"
+    },
+    {
+      "label": "Recorrentes",
+      "path": "docs/index.html",
+      "line": 1822,
+      "marker_preserved_as_markup": true,
+      "rendered_excerpt": "name\">TEST3</span><span class=\"rec-sub\"><img src=x onerror=\"globalThis.__auditMarker=1\"></span></span></div></td>\n          <td "
+    },
+    {
+      "label": "Ranking ML",
+      "path": "docs/index.html",
+      "line": 2043,
+      "marker_preserved_as_markup": true,
+      "rendered_excerpt": "name\">TEST3</span><span class=\"rec-sub\"><img src=x onerror=\"globalThis.__auditMarker=1\"> · R$ 0</span></span></div></td>\n       "
+    },
+    {
+      "label": "Legenda de setores",
+      "path": "docs/index.html",
+      "line": 2097,
+      "marker_preserved_as_markup": true,
+      "rendered_excerpt": "\" style=\"--swatch:#2563EB\"></span><span><img src=x onerror=\"globalThis.__auditMarker=1\"></span>"
+    },
+    {
+      "label": "Cards de ações",
+      "path": "docs/index.html",
+      "line": 2106,
+      "marker_preserved_as_markup": true,
+      "rendered_excerpt": "s=\"ticker\">TEST3</div><div class=\"name\"><img src=x onerror=\"globalThis.__auditMarker=1\"></div></div><span class=\"rank\">#1</span>"
+    },
+    {
+      "label": "Cards de FIIs",
+      "path": "docs/index.html",
+      "line": 2106,
+      "marker_preserved_as_markup": true,
+      "rendered_excerpt": "ss=\"asset-top\"><div><div class=\"ticker\"><img src=x onerror=\"globalThis.__auditMarker=1\"></div><div class=\"name sector-badge\"><im"
+    },
+    {
+      "label": "Carteira híbrida",
+      "path": "docs/index.html",
+      "line": 2817,
+      "marker_preserved_as_markup": true,
+      "rendered_excerpt": "t;globalThis.__auditMarker=1&quot;&gt;\"><img src=x onerror=\"globalThis.__auditMarker=1\"><small>0% por ativo</small></span></div>"
+    },
+    {
+      "label": "Câmbio e cripto",
+      "path": "docs/index.html",
+      "line": 3029,
+      "marker_preserved_as_markup": true,
+      "rendered_excerpt": "rmado.\"><span class=\"market-symbol\">USD/<img src=x onerror=\"globalThis.__auditMarker=1\"></span><span class=\"market-name\">Cotação"
+    }
+  ],
+  "unique_sinks": 7,
+  "checks": 8,
+  "control": {
+    "escapeAttr_neutralizes_marker": true
+  },
+  "event_executed": false
+}
