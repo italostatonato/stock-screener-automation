@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "presentation": {
+    "id": "1I61xKNvQ8kfBDXqel5YaoVeTCqhdRXxYmw3mCQqed60",
+    "title": "Radar_Semanal_Apresentacao_Carteira_Hibrida",
+    "revisionId": "RFou2s0zi8gM9Q",
+    "slideCount": 10
+  },
+  "snapshotSha256": "f80e0e6b16632b1c01bcec7b3d3889d52cdbe3742413224075603aecf67a780f",
+  "summary": {
+    "totalIssues": 0,
+    "reportedIssues": 0,
+    "truncated": false,
+    "bySeverity": {},
+    "byCode": {}
+  },
+  "issues": []
+}

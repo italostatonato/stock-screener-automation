@@ -1,0 +1,50 @@
+[
+  {
+    "replaceAllText": {
+      "containsText": {
+        "text": "Fundamentus para ações.\nFundsexplorer para FIIs.",
+        "matchCase": true
+      },
+      "replaceText": "Ações: Fundamentus.\nFIIs: Fundsexplorer.",
+      "pageObjectIds": [
+        "p3"
+      ]
+    }
+  },
+  {
+    "replaceAllText": {
+      "containsText": {
+        "text": "No modelo, cada Top 20 divide seu bloco\nem partes iguais: R$ 150 por ativo.\nRebalanceamento a cada composição.",
+        "matchCase": true
+      },
+      "replaceText": "Cada Top 20 divide seu bloco\nem 20 partes: R$ 150 por ativo.\nRebalanceamento semanal.",
+      "pageObjectIds": [
+        "p5"
+      ]
+    }
+  },
+  {
+    "replaceAllText": {
+      "containsText": {
+        "text": "Título emitido por um banco",
+        "matchCase": true
+      },
+      "replaceText": "Título bancário, pode seguir o CDI",
+      "pageObjectIds": [
+        "p7"
+      ]
+    }
+  },
+  {
+    "replaceAllText": {
+      "containsText": {
+        "text": "Modelos ML seguem em observação.",
+        "matchCase": true
+      },
+      "replaceText": "Modelos preditivos em observação.",
+      "pageObjectIds": [
+        "p8"
+      ]
+    }
+  }
+]

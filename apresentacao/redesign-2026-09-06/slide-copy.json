@@ -1,0 +1,213 @@
+[
+  {
+    "slide": "p1",
+    "text": [
+      "BOLETIM QUANTITATIVO",
+      "Radar",
+      "Semanal",
+      "Uma seleção organizada de\nações e FIIs para começar sua análise.",
+      "20",
+      "AÇÕES BRASILEIRAS",
+      "20",
+      "FUNDOS IMOBILIÁRIOS",
+      "Ítalo Petricioni Statonato",
+      "DADOS PÚBLICOS\nATUALIZAÇÃO SEMANAL",
+      "Abertura (20s). O Radar Semanal é um projeto de dados e automação que organiza ações e fundos imobiliários em uma lista para estudo. A proposta é reduzir o esforço de triagem inicial. Não há recomendação de compra.\nFonte: README.md e apresentação original p1. https://italostatonato.github.io/stock-screener-automation/"
+    ]
+  },
+  {
+    "slide": "p2",
+    "text": [
+      "O PROBLEMA",
+      "02",
+      "O Radar organiza por onde\ncomeçar a análise",
+      "1.505",
+      "ativos no universo coletado",
+      "956 ações brasileiras\n549 fundos imobiliários",
+      "40",
+      "ativos em destaque",
+      "Top 20 Ações + Top 20 FIIs",
+      "Universo e rankings de 02/09/2026. A seleção define uma prioridade de estudo.",
+      "Problema (25s). Com tantos papéis, comparar preços e indicadores manualmente consome tempo. No retrato de 02/09/2026, o projeto coletou 956 ações e 549 FIIs, totalizando 1.505 ativos. A publicação destacou 20 de cada classe. Esses números refletem o universo coletado nessa data, não todo o mercado de forma permanente.\nFonte: docs/data/2026-09-02.json, kpis.total_acoes_universo=956, kpis.total_fiis_universo=549, resumo.total_acoes=20, resumo.total_fiis=20."
+    ]
+  },
+  {
+    "slide": "p3",
+    "text": [
+      "O MÉTODO",
+      "03",
+      "Dados públicos passam pelo\nmesmo método toda semana",
+      "01",
+      "Coleta",
+      "Fundamentus para ações.\nFundsexplorer para FIIs.",
+      "02",
+      "Padronização",
+      "Preços e percentuais\nem formato comparável.",
+      "03",
+      "Score e filtros",
+      "Nota de 0 a 100 e\ncritérios mínimos.",
+      "04",
+      "Publicação",
+      "Top 20 de cada classe\nno painel e no histórico.",
+      "7",
+      "indicadores com pesos iguais\npor classe de ativo",
+      "0–100",
+      "posição relativa no universo",
+      "O score compara indicadores. Ele não representa uma previsão de retorno.",
+      "Método (40s). A rotina coleta fontes públicas, limpa formatos, calcula o score no universo completo da classe, aplica pisos de elegibilidade e publica a seleção. Cada classe possui sete fatores de peso 1/7. As ações usam dividend yield, preço/VPA, EV/EBITDA, margem líquida, ROInvC, RPL e volume diário médio. Nos FIIs, entram renda, preço/patrimônio, liquidez, patrimônio, desempenho no período e taxas. Fatores são transformados em percentis relativos ao universo de cada classe. Campos ausentes recebem nota neutra 50; isso é uma limitação. Menor preço relativo ou custo pontua em direção inversa.\nFontes: src/scorer.py, src/filters.py, config.yaml, README.md."
+    ]
+  },
+  {
+    "slide": "p4",
+    "text": [
+      "O PRODUTO",
+      "04",
+      "O ranking ganha contexto no site",
+      "Ações e FIIs",
+      "Busque um ativo e compare\npreço, score e indicadores.",
+      "Recorrentes",
+      "Veja quem aparece com\nfrequência nas seleções.",
+      "Score e Info",
+      "Confira método e fontes.",
+      "Recorte do painel de 02/09/2026: quatro primeiras posições. Site completo no link final.",
+      "Demonstração do produto (35s). O recorte mostra a comparação entre ações e FIIs por posição, com preço e score. Ações e FIIs têm telas de busca e indicadores. Recorrentes organiza frequência de presença nas composições. Indicadores traz contexto macroeconômico. Carteira Híbrida explica alocação, e Score e Info descreve método e fontes. Modelos ML ficam em observação, sem substituir o ranking oficial.\nImagem: captura do próprio site, resumo do ranking, base de 02/09/2026; só quatro posições aparecem neste recorte. https://italostatonato.github.io/stock-screener-automation/"
+    ]
+  },
+  {
+    "slide": "p5",
+    "text": [
+      "A CARTEIRA HÍBRIDA",
+      "05",
+      "R$ 10.000 distribuídos\nem quatro funções",
+      "30%",
+      "Ações brasileiras",
+      "R$ 3.000",
+      "30%",
+      "FIIs",
+      "R$ 3.000",
+      "20%   Renda fixa",
+      "R$ 2.000",
+      "20%   IVVB11",
+      "R$ 2.000",
+      "Crescimento no Brasil",
+      "Renda e exposição imobiliária",
+      "Menor oscilação no conjunto",
+      "Empresas dos EUA e câmbio",
+      "No modelo, cada Top 20 divide seu bloco\nem partes iguais: R$ 150 por ativo.\nRebalanceamento a cada composição.",
+      "Alocação educacional. O modelo usa CDI como referência da renda fixa. Diversificação não elimina riscos.",
+      "Carteira híbrida (35s). A regra combina 30% Top 20 ações, 30% Top 20 FIIs, 20% CDI e 20% IVVB11. Com R$ 10.000, são R$ 3.000 + R$ 3.000 + R$ 2.000 + R$ 2.000 = R$ 10.000. No modelo, a parcela de ações e a de FIIs dividem-se igualmente entre 20 ativos, equivalendo a R$ 150 por papel e 1,5% do total. O projeto rebalanceia a cada nova composição. O CDI é a referência teórica da parcela de renda fixa; os instrumentos reais do slide seguinte são exemplos educacionais. Os valores são alvos de alocação e não ordens executadas: quantidades inteiras, preços, custos e mínimos podem exigir ajustes. IVVB11 busca acompanhar o S&P 500 em reais, sujeitando-se às ações dos EUA e à variação cambial.\nFontes: README.md, docs/index.html seção hibrida, src/benchmark.py. IVVB11: https://www.blackrock.com/br/products/251902/ishares-sp-500-fi-em-cotas-de-fundo-de-ndice-inv-no-exterior-fund"
+    ]
+  },
+  {
+    "slide": "p6",
+    "text": [
+      "EXEMPLO DE APLICAÇÃO",
+      "06",
+      "R$ 3.000 em ações,\ncom nomes e valores",
+      "R$ 750",
+      "por empresa\nnesta ilustração",
+      "4 empresas do ranking\nde 02/09/2026",
+      "EMPRESA",
+      "CÓDIGO",
+      "ALOCAÇÃO",
+      "Petrobras",
+      "PETR4",
+      "R$ 750",
+      "Wiz Co",
+      "WIZC3",
+      "R$ 750",
+      "Guararapes",
+      "RIAA3",
+      "R$ 750",
+      "JHSF",
+      "JHSF3",
+      "R$ 750",
+      "Total em ações",
+      "",
+      "R$ 3.000",
+      "Ilustração reduzida a 4 empresas. A estratégia integral usa 20 ações. Valores de alocação, sem simular ordens.",
+      "Ações do exemplo (35s). Mantivemos as quatro primeiras posições da base de 02/09/2026: PETR4, PETROLEO BRASILEIRO S.A. PETROBRAS; WIZC3, WIZ CO PARTICIPAÇÕES E CORRETAGEM DE SEGUROS S.A.; RIAA3, Guararapes Confecções S.A.; JHSF3, JHSF PARTICIPACOES S.A. Destinamos R$ 750 para cada uma: 4 x 750 = 3.000. Esta simplificação ilustra a divisão de capital; não reproduz a estratégia integral nem seus pesos de 20 ações. São valores destinados a cada ativo, sem arredondamento de quantidade de ações, custos ou execução.\nFonte: docs/data/2026-09-02.json, acoes[0:4], e data/lake/snapshots/2026-09-02/top_acoes.parquet. Não é recomendação de investimento."
+    ]
+  },
+  {
+    "slide": "p7",
+    "text": [
+      "RENDA FIXA NA PRÁTICA",
+      "07",
+      "Os R$ 2.000 podem combinar\nprodutos com regras diferentes",
+      "EXEMPLO EDUCACIONAL",
+      "ALOCAÇÃO",
+      "Tesouro Selic\nTítulo público ligado à Selic",
+      "R$ 800",
+      "CDB\nTítulo emitido por um banco",
+      "R$ 700",
+      "LCI ou LCA\nCrédito imobiliário ou do agro",
+      "R$ 500",
+      "Total em renda fixa",
+      "R$ 2.000",
+      "CDI / taxa DI",
+      "Referência calculada pela B3\na partir de operações de um dia\nentre instituições financeiras.",
+      "Selic",
+      "Taxa básica da economia.\nO Copom define sua meta.\nO Tesouro Selic acompanha a Selic.",
+      "Valores hipotéticos, sem oferta ou taxa contratada. Liquidez, prazo, risco e condições variam por produto.",
+      "Renda fixa (50s). O exemplo soma R$ 800 em Tesouro Selic, R$ 700 em CDB e R$ 500 em uma LCI ou LCA, totalizando R$ 2.000. Não estamos afirmando disponibilidade de ofertas, taxas, mínimos de aplicação ou liquidez diária para todos os produtos. CDI é o nome usual da referência Taxa DI, calculada pela B3 com operações interfinanceiras de um dia, conforme metodologia oficial. A Selic é a taxa básica; o Copom fixa a meta e o Banco Central atua para manter a taxa efetiva em linha com ela. Embora próximas, são referências distintas. Tesouro Selic é vinculado à Selic. CDB e LCI/LCA podem ter remunerações diferentes, inclusive percentuais da taxa DI conforme o contrato. Antes de aplicar, conferir emissor, prazos, liquidez, custos, tributação e condições específicas. Não há promessa de proteção integral ou ausência de risco.\nFontes oficiais: https://www.bcb.gov.br/controleinflacao/taxaselic ; https://www.b3.com.br/pt_br/market-data-e-indices/indices/indices-de-segmentos-e-setoriais/di/metodologia-de-apuracao-da-taxa/ ; https://www.b3.com.br/pt_br/produtos-e-servicos/central-depositaria/renda-fixa-e-valores-mobiliarios/certificado-de-deposito-bancario.htm ; https://borainvestir.b3.com.br/tipos-de-investimentos/lc-lca-e-lci-o-que-sao-e-como-funcionam-as-letras-de-renda-fixa/ ; https://www.tesourodireto.com.br/produtos/titulos/selic"
+    ]
+  },
+  {
+    "slide": "p8",
+    "text": [
+      "TRANSPARÊNCIA",
+      "08",
+      "TRANSPARÊNCIA",
+      "O caminho\ndo dado fica\naberto à consulta",
+      "Fontes públicas e código aberto\npermitem examinar o processo.",
+      "Origem dos dados",
+      "As fontes ficam identificadas\nna página Score e Info.",
+      "Composições registradas",
+      "Cada execução preserva a seleção\ne a data dos dados utilizados.",
+      "Limites explícitos",
+      "Modelos ML seguem em observação.",
+      "Transparência (25s). O usuário consegue conferir fontes e critérios em Score e Info, consultar o código público e recuperar as composições que o projeto registrou. Os snapshots mantêm a data de referência. Verificações automatizadas buscam inconsistências, mas dados públicos podem apresentar falhas, atrasos e ausências. Os modelos preditivos operam em modo sombra e não substituem o score oficial.\nFontes: README.md, docs/ARCHITECTURE.md, docs/ML_PIPELINE.md, data/lake/manifest.json. https://github.com/italostatonato/stock-screener-automation"
+    ]
+  },
+  {
+    "slide": "p9",
+    "text": [
+      "CONHEÇA O RADAR",
+      "09",
+      "O próximo ativo a estudar\npode estar no Radar",
+      "Abra o ranking, compare os indicadores\ne aprofunde a análise.",
+      "Explorar o Radar Semanal",
+      "italostatonato.github.io/stock-screener-automation",
+      "Ítalo Petricioni Statonato",
+      "Conteúdo educacional.\nNão é recomendação de investimento.",
+      "Encerramento (20s). Convidar a pessoa a abrir o Radar pelo link, buscar um ativo conhecido, verificar os indicadores e aprofundar a análise. A decisão depende de objetivos, riscos e perfil. Projeto de Ítalo Petricioni Statonato, profissional de dados, analytics e estratégia.\nSite: https://italostatonato.github.io/stock-screener-automation/\nFoto: docs/assets/italo-profile.png, imagem original do projeto.\nPerfil: https://www.linkedin.com/in/italo-petricioni-statonato/"
+    ]
+  },
+  {
+    "slide": "p10",
+    "text": [
+      "APÊNDICE OCULTO",
+      "10",
+      "Guia visual do Radar Semanal",
+      "Paleta",
+      "Fundo",
+      "#070A12",
+      "Superfície",
+      "#111A2D",
+      "Destaque",
+      "#E3BE72",
+      "Ações",
+      "#54C7FF",
+      "FIIs",
+      "#A78BFA",
+      "Internacional",
+      "#B6C0D2",
+      "Proxima Nova",
+      "Bold para títulos. Regular para texto.\nTítulos de 41–45 pt e corpo de 18–25 pt.\nAbertura com escala tipográfica maior.",
+      "Composição",
+      "16:9. Margens de 52 pt.\nLinhas finas e superfícies azul-marinho.\nCores secundárias identificam as classes.\nTexto e dados permanecem editáveis.",
+      "Guia visual interno. Manter este slide oculto na apresentação. Proxima Nova Regular e Bold. Base #070A12, superfície #111A2D, destaque #E3BE72, ações #54C7FF, FIIs #A78BFA. As áreas no gráfico de alocação são proporcionais ao capital."
+    ]
+  }
+]
