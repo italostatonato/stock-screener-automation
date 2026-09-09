@@ -86,7 +86,6 @@ def test_dashboard_mobile_tem_alvos_e_textos_mais_legiveis():
 def test_dashboard_estados_interativos_sao_anunciados():
     assert 'class="about-card" aria-labelledby="aboutItaloTitle"' in HTML
     assert 'id="aboutItaloBtn"' not in HTML
-    assert 'aria-pressed="${state.kpiWindow===k?' in HTML
     assert 'aria-pressed="${active===key?' in HTML
 
 
@@ -114,15 +113,45 @@ def test_dashboard_histograma_preserva_barras_das_extremidades():
     assert "ticks:{precision:0,padding:6,callback:v=>fmtNum(Number(v),0)}" in HTML
 
 
-def test_dashboard_carrega_historico_compacto_e_reaproveita_payload_atual():
-    assert "fetch('data/kpi-history.json'" in HTML
+def test_dashboard_reaproveita_payload_atual_sem_carregar_kpis_ocultos():
+    assert "fetch('data/kpi-history.json'" not in HTML
     assert "window.__radarLatestPayload = state.data" in HTML
     assert 'fetch("data/index.json"' not in HTML
     assert 'fetch(`data/${latest}.json`' not in HTML
 
 
+def test_visao_geral_nao_exibe_mais_a_faixa_de_kpis():
+    assert 'id="kpis"' not in HTML
+    assert "function renderKpis()" not in HTML
+    assert "function renderKpiControls()" not in HTML
+    assert "preloadSnapshotsForKpis()" not in HTML
+
+
 def test_dashboard_tabelas_tem_legendas_acessiveis():
-    assert HTML.count('<caption class="sr-only">') == 8
+    assert HTML.count('<caption class="sr-only">') == 7
+
+
+def test_visao_geral_prioriza_mudancas_lideres_e_um_unico_grafico():
+    assert 'id="weeklyChanges"' in HTML
+    assert 'id="overviewTopFive"' in HTML
+    assert 'id="overviewPerformanceChart"' in HTML
+    assert HTML.count('data-overview-type=') == 2
+    assert 'id="rankTableBody"' not in HTML
+    assert 'id="overviewFiisBacktestChart"' not in HTML
+    assert 'id="overviewAcoesBacktestChart"' not in HTML
+    assert "function renderOverviewChanges()" in HTML
+    assert "function preloadOverviewComparison()" in HTML
+
+
+def test_histograma_fica_na_secao_de_metodologia():
+    score_section = HTML.index('<section id="score"')
+    histogram = HTML.index('id="scoreChart"')
+    assert histogram > score_section
+    assert "não devem ser comparados como se fossem a mesma escala econômica" in HTML
+
+
+def test_resumo_de_fiis_explica_limite_dos_proventos():
+    assert "a carteira de FIIs considera a variação dos preços e não reinveste os proventos" in HTML
 
 
 def test_simulacao_fica_aberta_abaixo_do_card_do_bloco_correspondente():
