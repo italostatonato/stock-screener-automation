@@ -1,11 +1,19 @@
 # Radar Semanal — Contexto para assistentes de IA
 
-Revisado em 07/09/2026.
+Revisado em 15/09/2026 contra a `main` consultada no GitHub (`3137e34`).
+Consulte [o estado da publicação](docs/DOCUMENTATION.md) para distinguir
+o comportamento publicado das alterações ainda pendentes no desenvolvimento.
 
 ## Projeto e documentação
 
 Screener semanal de FIIs e ações brasileiras com score, Top 20, Excel,
 dashboard, lake incremental, backtests e ML em modo sombra.
+
+Coleta agendada: segunda-feira, 08h de Brasília. Revisão documental: segunda,
+12h, em tarefa separada. Snapshots são por data de execução, inclusive manual.
+Liquidez diária, CDI diário, variações em 24h e horizontes ML em dias não
+significam que os rankings sejam atualizados diariamente. Revise também textos
+da interface, docstrings e descrições exportadas ao conferir a cadência.
 
 - [Dashboard](https://italostatonato.github.io/stock-screener-automation/)
 - [Repositório](https://github.com/italostatonato/stock-screener-automation)

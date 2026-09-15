@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Revisado em 07/09/2026.
+Revisado em 15/09/2026.
 
 ## Preparar e executar
 
@@ -67,11 +67,21 @@ Para conferir os dados numa auditoria documental, copie os dados e os módulos
 necessários para uma pasta temporária e rode o healthcheck nessa cópia.
 Não publique alterações de manifesto/relatório produzidas só pela auditoria.
 
+Se o pytest no Windows falhar por permissão no diretório temporário,
+escolha uma pasta nova no projeto:
+
+```powershell
+$TestRunDir = ".test-tmp/pytest-" + [guid]::NewGuid().ToString("N")
+python -m pytest tests/ -v --basetemp=$TestRunDir -o cache_dir=.test-tmp/pytest-cache
+```
+
 ## Workflow e publicação
 
 [Weekly FII Screener](https://github.com/italostatonato/stock-screener-automation/blob/main/.github/workflows/run_screener.yml) roda toda segunda,
 **08h de São Paulo** (`0 11 * * 1`), ou por **Actions → Weekly FII Screener →
-Run workflow**. Não possui gatilho de push.
+Run workflow**. Não possui gatilho de push. O horário das 08h é o início
+agendado da coleta; a publicação depende da conclusão dos jobs. Arquivos
+particionados por data não significam que a execução automática seja diária.
 
 - `test`: Python 3.11, instalação com cache pip e `pytest tests/ -v`.
 - `screener`: depende dos testes; prepara Chrome, sincroniza a `main`,

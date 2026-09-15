@@ -1,6 +1,6 @@
 # Confiabilidade dos modelos ML
 
-Revisado em 07/09/2026 contra `src/ml_confidence.py` e `src/exporter.py`.
+Revisado em 15/09/2026 contra `src/ml_confidence.py` e `src/exporter.py`.
 
 ## Três medidas distintas
 

@@ -1,7 +1,9 @@
 # Arquitetura técnica
 
-Revisado em 07/09/2026. O Radar Semanal executa uma coleta semanal de FIIs e
-ações, gera rankings e derivados e publica um dashboard estático.
+Revisado em 15/09/2026. O Radar Semanal executa uma coleta semanal de FIIs e
+ações, gera rankings e derivados e publica um dashboard estático. A coleta
+tem início agendado para segunda-feira às 08h de Brasília e também pode ser
+acionada manualmente; a revisão documental das 12h é uma tarefa separada.
 
 ## Ingestão e seleção
 

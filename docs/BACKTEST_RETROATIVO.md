@@ -1,6 +1,6 @@
 # Histórico retroativo e backtest
 
-Revisado em 07/09/2026. Os comandos deste guia são executados separadamente;
+Revisado em 15/09/2026. Os comandos deste guia são executados separadamente;
 não integram o workflow semanal de coleta. Faça backup de `data/` antes de
 reprocessar. As curvas teóricas do dashboard têm premissas próprias, descritas
 no [guia do dashboard](DASHBOARD.md).
@@ -16,6 +16,14 @@ gravados no mesmo lake como se fossem equivalentes.
 
 Essa distinção evita transformar um backfill em evidência de uma decisão que não
 foi realmente tomada no passado.
+
+## Frequência dos registros
+
+A rotina atual coleta semanalmente e aceita execuções manuais. O histórico
+observado reúne as datas efetivamente registradas; não pressupõe um snapshot
+por dia. O backtest legado rebalanceia a cada snapshot disponível. Séries de
+preços podem conter pregões diários, e o point-in-time de FIIs usa sinais
+mensais. Essas frequências não alteram o cron semanal do screener.
 
 ## Histórico observado
 
@@ -70,6 +78,8 @@ Elas podem ser incluídas apenas para sensibilidade com `--include-partial`.
 - custo de 10 bps multiplicado pelo turnover, configurável por CLI;
 - ativo sem preço vira caixa, sem ser removido silenciosamente da média;
 - cobertura, tickers ausentes, preços defasados e turnover são salvos por período;
+- turnover usa a troca de pesos-alvo entre composições; não inclui ajuste por
+  deriva dos pesos causada pela oscilação dos preços dentro de um período;
 - datas com carteira incompleta são excluídas por padrão.
 
 O benchmark de FIIs usa XFIX11 como **proxy de IFIX**. O custo de 10 bps

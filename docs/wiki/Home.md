@@ -3,8 +3,10 @@
 Boletim quantitativo semanal de ações e FIIs brasileiros, com dados públicos,
 score multifatorial, Excel, dashboard, histórico, backtests e ML em modo sombra.
 
-**Revisado em 07/09/2026.** A documentação descreve o código atual; snapshots
-históricos podem refletir regras anteriores. Projeto educacional e analítico,
+**Revisado em 15/09/2026.** Os guias descrevem o código da `main` consultada
+no GitHub (`3137e34`). As evoluções ainda pendentes estão identificadas no
+[estado da publicação](https://github.com/italostatonato/stock-screener-automation/wiki/Manutencao-da-Documentacao).
+Snapshots históricos podem refletir regras anteriores. Projeto educacional e analítico,
 não uma recomendação de investimento.
 
 ## Funcionamento atual
@@ -19,7 +21,9 @@ não uma recomendação de investimento.
 - ML em modo sombra: mínimo de uma janela para confiança, meta de cinco e
   três janelas para liberar projeções dentro dos limites de exibição.
 
-O screener roda segunda-feira às **08h de São Paulo** ou por acionamento manual.
+A coleta é agendada semanalmente, segunda-feira às **08h de São Paulo**,
+ou pode ser acionada manualmente. O novo ranking é publicado após o processamento.
+Datas dos snapshots e indicadores diários não implicam coleta diária do screener.
 A revisão documental semanal foi solicitada para **segunda-feira às 12h** no
 mesmo fuso e é administrada separadamente no Codex.
 

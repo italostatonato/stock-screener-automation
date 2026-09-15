@@ -1,6 +1,6 @@
 # Configuração (config.yaml)
 
-Revisado em 07/09/2026 contra
+Revisado em 15/09/2026 contra
 [config.yaml](https://github.com/italostatonato/stock-screener-automation/blob/main/config.yaml).
 
 ## Seções
@@ -16,6 +16,13 @@ Revisado em 07/09/2026 contra
 
 Não são todos os parâmetros do projeto: pesos do score, regras de ML,
 perfis híbridos e cron ficam no código ou no workflow.
+
+## Cadência
+
+A coleta é agendada para segunda-feira às 08h de Brasília no workflow;
+`config.yaml` não agenda a execução. Cotações da alternativa brapi são
+consultadas a cada execução, enquanto seus fundamentos usam cache de 30 dias.
+A revisão documental de segunda-feira às 12h é uma automação separada.
 
 ## Pisos atuais
 

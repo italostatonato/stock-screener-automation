@@ -1,6 +1,33 @@
 # Manutenção da documentação e da wiki
 
-Revisão de referência: **07/09/2026**.
+Revisão de referência: **15/09/2026**.
+
+## Estado da publicação de 15/09/2026
+
+Esta edição foi conferida contra a `main` do GitHub no commit `3137e34`.
+A wiki foi comparada ao commit `3f40e1e`, de 07/09/2026, antes da
+sincronização das 13 páginas. Não havia edições remotas adicionais a integrar.
+
+Os guias operacionais descrevem o código publicado nessa base:
+
+- coleta semanal, segunda-feira às 08h de Brasília, ou acionamento manual;
+- `main.py` e o rebuild treinam em 30d, embora o dashboard declare 7d
+  como horizonte principal; cada métrica conserva seu horizonte;
+- o healthcheck escreve manifesto, índice e relatório; essa versão
+  ainda não implementa `--read-only`; auditorias usam uma cópia temporária;
+- o workflow semanal aceita agenda e acionamento manual; não há
+  workflow `tests.yml` nem gatilho de testes por push/PR nessa base.
+
+O checkout de desenvolvimento contém alterações ainda não publicadas:
+treino principal em 7d, isolamento de horizontes em `src/ml_horizons.py`,
+healthcheck sem escrita, testes em pushes/PRs e correções de validação,
+persistência, exportação e renderização. Elas precisam de uma entrega de
+código própria. Esta publicação contém somente documentação e não apresenta
+essas evoluções como recursos disponíveis em um clone da `main`.
+
+Ao publicar essas implementações, revisar os comandos e as limitações
+dos guias no mesmo conjunto de alterações. A atualização do README e da
+wiki não aciona o screener nem um novo deploy do dashboard.
 
 ## Escopo e fontes de verdade
 
@@ -16,7 +43,10 @@ evidência em código, configuração ou teste verificável.
   aliases, proxies e alternativas.
 - `src/dataset_builder.py`, `src/ml_models.py`, `src/ml_confidence.py` e
   `src/exporter.py`: targets, horizontes, maturidade e proteção de projeções.
-- `docs/index.html`: telas, perfis híbridos, limites do aporte e premissas.
+- `docs/index.html`: telas, perfis híbridos, limites do aporte, premissas e
+  textos sobre frequência de atualização.
+- Docstrings, comentários de configuração, aba Premissas do Excel e
+  descrições exportadas: também podem reapresentar explicações antigas.
 - `src/data_lake.py`, `src/delivery.py`, `src/backtest_engine.py`,
   `src/observed_history.py`, `src/point_in_time.py` e `scripts/`: dados,
   entrega, reconstrução, backtests e comandos.
@@ -26,6 +56,26 @@ evidência em código, configuração ou teste verificável.
 Apresentações, planos e relatórios de QA com data são registros de entregas.
 Não devem ser reescritos como documentação operacional nem incluídos por
 acidente numa atualização documental.
+
+## Como revisar referências à frequência
+
+Pesquisar `diário`, `diária`, `diariamente`, `daily`, `todos os dias` e
+expressões semelhantes em Markdown, HTML, Python, YAML e strings de JSON.
+Interpretar cada ocorrência antes de alterar:
+
+- coleta e ranking: semanais, segunda-feira às 08h de Brasília, ou manuais;
+- históricos: por data de execução, sem pressupor um registro por dia;
+- tendências dos cards: entre coletas disponíveis; a Visão geral busca
+  uma referência de pelo menos sete dias antes;
+- indicadores de mercado: a frequência da métrica permanece a da fonte;
+- horizontes ML: dias corridos de retorno futuro, não agenda de execução;
+- revisão documental: segunda-feira às 12h, separada da coleta.
+
+Neste check recorrente, preservar os dados e as evidências históricas.
+Rótulos antigos nos JSONs devem ser identificados como metadados de época,
+não como descrição da rotina atual; eventual correção desses arquivos exige
+trabalho separado. Conferir o gerador para que a descrição correta seja usada
+nas próximas exportações.
 
 ## Revisão semanal
 
@@ -44,7 +94,11 @@ Procedimento:
 
 1. Conferir alterações locais e consultar a versão atual da branch padrão.
 2. Ler os commits desde a revisão anterior e conferir as páginas da wiki.
-3. Comparar fontes, regras, parâmetros, comandos, arquivos, telas, ML e backtests.
+3. Comparar fontes, regras, parâmetros, comandos, arquivos, telas, ML e
+   backtests; aplicar a revisão de frequência e distinguir alterações locais
+   do comportamento disponível na branch remota e na wiki publicada.
+   Guias publicados devem orientar um clone da versão remota; registrar
+   implementações ainda locais como pendências até a entrega do código.
 4. Corrigir divergências comprovadas; separar limitações e planos futuros
    das funcionalidades já implementadas.
 5. Validar caminhos, links e coerência numérica.
@@ -53,8 +107,10 @@ Procedimento:
    permanecer silencioso quando não houver novidade acionável.
 
 Não é necessário executar o screener, refazer o histórico, treinar modelos
-ou entregar Excel para conferir documentação. O healthcheck escreve manifesto,
-índice e relatório: em auditorias documentais, execute-o numa cópia temporária.
+ou entregar Excel para conferir documentação. Se um healthcheck for
+necessário neste check recorrente, usar uma cópia temporária. O `--read-only`
+existe nas alterações locais, mas não na `main` remota consultada; confirmar
+a versão antes de orientar esse comando para outro checkout.
 
 ## Cópia versionada da wiki
 

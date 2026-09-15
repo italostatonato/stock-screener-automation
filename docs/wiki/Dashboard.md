@@ -1,16 +1,33 @@
 # Dashboard e carteira híbrida
 
-Revisado em 07/09/2026 contra `docs/index.html` e `src/exporter.py`.
+Revisado em 15/09/2026 contra `docs/index.html` e `src/exporter.py`.
 
 O [dashboard público](https://italostatonato.github.io/stock-screener-automation/)
 é servido pelo GitHub Pages. Ele inicia pelo snapshot mais recente de
 `docs/data/index.json`. Os nomes dos arquivos usam a data da execução em
 `America/Sao_Paulo`; o snapshot não é uma cotação em tempo real.
 
+## Frequência de atualização
+
+A coleta é agendada para **toda segunda-feira, 08h de Brasília**. O novo
+snapshot fica disponível após processamento e publicação. Uma execução manual
+pode gerar outra data ou substituir o snapshot daquele dia. As tendências nos
+cards comparam a coleta selecionada com a anterior disponível, sem pressupor
+um intervalo de um dia.
+
+A Visão geral compara com o snapshot mais recente cuja data seja igual ou
+anterior a sete dias antes do atual. Se houver lacunas, a comparação cobre mais
+de uma semana. Sem essa base, o painel informa que não há comparação disponível.
+
+Liquidez diária, CDI diário e variações de câmbio/cripto em 24h são métricas
+dos provedores. Quando faltam cotações de câmbio ou cripto, o navegador tenta
+uma consulta pontual às APIs públicas; isso não recalcula o ranking semanal,
+os scores, as carteiras ou os modelos ML.
+
 ## Navegação
 
-- **Visão geral:** KPIs, comparação de ações/FIIs, distribuição do score e
-  séries de desempenho.
+- **Visão geral:** entradas, saídas e mudanças de posição na comparação
+  semanal descrita acima, líderes Top 5 por classe e desempenho contra referências.
 - **Carteira Híbrida:** alocação entre quatro blocos, perfis, simulação de aporte,
   curva comparativa, contribuições e pesos por ativo.
 - **Modelos ML:** rankings sombra, performance, confiabilidade e evolução

@@ -1,6 +1,6 @@
 # Modelos ML
 
-Revisado em 07/09/2026 contra `main.py`, `src/dataset_builder.py`,
+Revisado em 15/09/2026 contra `main.py`, `src/dataset_builder.py`,
 `src/ml_models.py` e `src/exporter.py`.
 
 ## Entradas e modo sombra
@@ -8,6 +8,10 @@ Revisado em 07/09/2026 contra `main.py`, `src/dataset_builder.py`,
 O ranking oficial continua sendo o Top N de `src/scorer.py` e `src/filters.py`.
 Os modelos geram rankings experimentais, previsões e métricas sem promover
 automaticamente um modelo ao lugar do score.
+
+O treino acompanha a execução semanal ou o acionamento manual. Os históricos
+acumulam snapshots por data de coleta. Os horizontes em dias abaixo indicam
+prazos de retorno futuro, não a frequência de coleta ou treinamento.
 
 ```text
 data/lake/snapshots/YYYY-MM-DD/

@@ -1,6 +1,6 @@
 # Como Rodar Localmente
 
-Revisado em 07/09/2026. Use Git, Python 3.11 ou superior e Chrome para coletar
+Revisado em 15/09/2026. Use Git, Python 3.11 ou superior e Chrome para coletar
 FIIs. Node.js permite executar os testes JavaScript do simulador.
 
 ```bash
@@ -22,6 +22,11 @@ No Linux/macOS:
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
+
+A coleta automática inicia segunda-feira às **08h de Brasília**. Os
+comandos abaixo permitem execução manual; datas nos arquivos não representam
+um agendamento diário. A revisão documental ocorre separadamente, segunda
+às **12h de Brasília**.
 
 ## Execução
 
