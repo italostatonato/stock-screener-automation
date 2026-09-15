@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T12:08:20",
+  "generated_at": "2026-09-15T22:42:11",
   "status": "warn",
   "checks": [
     {
@@ -70,17 +70,17 @@
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
       "status": "ok",
-      "detail": "14716 linhas"
+      "detail": "15229 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
       "status": "ok",
-      "detail": "14399 linhas"
+      "detail": "15355 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_performance.parquet",
       "status": "ok",
-      "detail": "16 linhas"
+      "detail": "2 linhas"
     },
     {
       "name": "duplicatas_historico_fiis.parquet",
@@ -131,6 +131,311 @@
       "name": "dashboard_index",
       "status": "ok",
       "detail": "61 datas no index.json"
+    },
+    {
+      "name": "dashboard_json_2026-09-15",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-09-09",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-09-07",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-09-06",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-09-02",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-09-01",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-31",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-30",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-27",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-26",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-25",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-24",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-21",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-20",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-19",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-18",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-17",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-14",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-13",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-12",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-11",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-10",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-07",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-06",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-05",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-04",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-08-03",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-31",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-30",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-29",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-28",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-27",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-25",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-24",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-23",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-22",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-21",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-20",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-17",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-16",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-15",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-14",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-13",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-10",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-09",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-08",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-07",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-06",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-04",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-03",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-02",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-07-01",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-30",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-29",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-28",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-26",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-25",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-24",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-23",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-22",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
+    },
+    {
+      "name": "dashboard_json_2026-06-21",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
     },
     {
       "name": "dashboard_latest_vs_lake",
