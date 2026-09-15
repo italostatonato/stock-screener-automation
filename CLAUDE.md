@@ -1,8 +1,7 @@
 # Radar Semanal — Contexto para assistentes de IA
 
-Revisado em 15/09/2026 contra a `main` consultada no GitHub (`3137e34`).
-Consulte [o estado da publicação](docs/DOCUMENTATION.md) para distinguir
-o comportamento publicado das alterações ainda pendentes no desenvolvimento.
+Revisado em 15/09/2026, junto com as correções do pipeline, dos dados,
+do ML e do dashboard. Consulte [o estado da revisão](docs/DOCUMENTATION.md).
 
 ## Projeto e documentação
 
@@ -37,8 +36,8 @@ e [operação](docs/OPERATIONS.md). A wiki também tem cópia em `docs/wiki/`.
 4. **ML em modo sombra.** Modelos não substituem o ranking oficial.
 5. **Operação padrão gratuita.** Não introduza APIs, serviços ou cloud pagos.
 6. **Testar antes de publicar.** Rode `python -m pytest tests/ -v` e o
-   healthcheck. Em alterações documentais, rode o healthcheck numa cópia
-   temporária, pois ele modifica manifesto, índice e relatório.
+   healthcheck. Em inspeções, use `python scripts/healthcheck_data.py --read-only`
+   para preservar manifesto, índice e relatório.
 
 ## Regras implementadas
 
@@ -67,10 +66,10 @@ proventos e a simulação híbrida não inclui custos/impostos.
 histórica → lake → reconstrução de consolidados → datasets/ML → Excel/JSON
 → qualidade → entrega opcional.
 
-Top vazio ou falha de ações interrompe a execução antes do novo lake/JSON.
-Algumas escritas locais de FIIs já podem ter ocorrido. Módulos auxiliares
-possuem tratamento de erro com log; a conclusão de `main.py` não dispensa
-a validação das saídas.
+Top vazio ou falha de ações interrompe antes das escritas de histórico.
+Falhas de lake, reconstrução, exportação ou qualidade com `error` interrompem
+a execução. Indicadores, ML e entrega opcional possuem tratamento por log.
+O ranking Excel substitui a composição completa de cada data recebida.
 
 ```text
 data/lake/snapshots/YYYY-MM-DD/       fonte oficial observada por data
@@ -96,7 +95,8 @@ são registradas em `data/lake/known_incomplete_snapshots.json`.
 ## ML: horizontes e limites
 
 Datasets possuem targets de 7, 30, 60 e 90 dias corridos.
-`run_ml_pipeline()` tem padrão 7, mas `main.py` e o rebuild passam 30.
+`run_ml_pipeline()`, `main.py` e o rebuild usam 7d. Targets de treino precisam
+estar realizados até a data prevista. Previsões preservam seu `Horizonte`.
 O exporter declara principal 7d, estratégico 30d e histórico realizado de 7d;
 a performance agregada mantém seu próprio `Horizonte`.
 Não apresente métricas de horizontes diferentes como equivalentes.
@@ -114,7 +114,8 @@ três janelas do mesmo modelo/classe/horizonte e magnitude de até 50%.
 manualmente. Jobs: testes → screener; deploy quando testes passam, inclusive
 se a coleta falhar. Publica `docs/`, retém artefatos por 90 dias e commita
 `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
-Não existe gatilho de push.
+`tests.yml` valida pushes de código/documentação e pull requests, sem coleta
+ou deploy. Os testes usam Python e Node 24.
 
 A revisão documental é uma automação separada do Codex, solicitada para
 segunda-feira às 12h em São Paulo. Procedimento em

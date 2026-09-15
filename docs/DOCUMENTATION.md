@@ -2,32 +2,27 @@
 
 Revisão de referência: **15/09/2026**.
 
-## Estado da publicação de 15/09/2026
+## Estado da revisão de 15/09/2026
 
-Esta edição foi conferida contra a `main` do GitHub no commit `3137e34`.
-A wiki foi comparada ao commit `3f40e1e`, de 07/09/2026, antes da
-sincronização das 13 páginas. Não havia edições remotas adicionais a integrar.
+Esta entrega reúne as correções do código e os guias correspondentes:
 
-Os guias operacionais descrevem o código publicado nessa base:
+- pipeline principal e rebuild com treinamento em 7d, previsões separadas
+  por horizonte e targets realizados até a data da previsão;
+- healthcheck com `--read-only`, sem escrita em manifesto, índice ou relatório;
+- testes Python e JavaScript em pushes de código/documentação e pull requests;
+- validação das etapas obrigatórias, persistência de números e datas,
+  exportação JSON estrita e escape de metadados na renderização do dashboard;
+- diagnóstico de falhas do Fundamentus, intervalos de retry de 15s/30s
+  e preservação dos logs de coleta no GitHub Actions.
 
-- coleta semanal, segunda-feira às 08h de Brasília, ou acionamento manual;
-- `main.py` e o rebuild treinam em 30d, embora o dashboard declare 7d
-  como horizonte principal; cada métrica conserva seu horizonte;
-- o healthcheck escreve manifesto, índice e relatório; essa versão
-  ainda não implementa `--read-only`; auditorias usam uma cópia temporária;
-- o workflow semanal aceita agenda e acionamento manual; não há
-  workflow `tests.yml` nem gatilho de testes por push/PR nessa base.
+A validação local concluiu 176 testes Python, incluindo os wrappers dos
+46 testes JavaScript, e uma execução integrada offline em cópia dos dados.
+O healthcheck apontou apenas os snapshots incompletos já conhecidos de
+21, 24 e 25/08/2026. Os dados históricos originais foram preservados.
 
-O checkout de desenvolvimento contém alterações ainda não publicadas:
-treino principal em 7d, isolamento de horizontes em `src/ml_horizons.py`,
-healthcheck sem escrita, testes em pushes/PRs e correções de validação,
-persistência, exportação e renderização. Elas precisam de uma entrega de
-código própria. Esta publicação contém somente documentação e não apresenta
-essas evoluções como recursos disponíveis em um clone da `main`.
-
-Ao publicar essas implementações, revisar os comandos e as limitações
-dos guias no mesmo conjunto de alterações. A atualização do README e da
-wiki não aciona o screener nem um novo deploy do dashboard.
+A coleta continua semanal, segunda-feira às 08h de Brasília, ou manual.
+Atualizações por push executam os testes; coleta e deploy permanecem no
+workflow semanal/manual. A wiki é sincronizada separadamente do projeto.
 
 ## Escopo e fontes de verdade
 
@@ -108,9 +103,8 @@ Procedimento:
 
 Não é necessário executar o screener, refazer o histórico, treinar modelos
 ou entregar Excel para conferir documentação. Se um healthcheck for
-necessário neste check recorrente, usar uma cópia temporária. O `--read-only`
-existe nas alterações locais, mas não na `main` remota consultada; confirmar
-a versão antes de orientar esse comando para outro checkout.
+necessário neste check recorrente, use
+`python scripts/healthcheck_data.py --read-only` para inspecionar sem escrita.
 
 ## Cópia versionada da wiki
 

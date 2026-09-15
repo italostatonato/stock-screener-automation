@@ -137,6 +137,7 @@ def scrape_acoes_fundamentus(cfg: dict) -> pd.DataFrame:
     url = str(cfg.get("fundamentus_url", "https://www.fundamentus.com.br/resultado.php"))
     timeout = float(cfg.get("fundamentus_timeout", 30))
     retries = max(0, int(cfg.get("fundamentus_retries", 2)))
+    retry_delay = max(0.0, float(cfg.get("fundamentus_retry_delay", 15)))
     headers = {
         "User-Agent": "stock-screener-automation/1.0 (coleta semanal; dados públicos)",
         "Accept-Language": "pt-BR,pt;q=0.9",
@@ -155,10 +156,22 @@ def scrape_acoes_fundamentus(cfg: dict) -> pd.DataFrame:
             )
             break
         except (requests.RequestException, ValueError) as exc:
+            if isinstance(exc, requests.ConnectTimeout):
+                reason = f"timeout de conexão ({timeout:g}s)"
+            elif isinstance(exc, requests.Timeout):
+                reason = f"timeout de resposta ({timeout:g}s)"
+            elif isinstance(exc, requests.ConnectionError):
+                reason = "falha de conexão"
+            elif isinstance(exc, requests.HTTPError):
+                status = exc.response.status_code if exc.response is not None else "desconhecido"
+                reason = f"erro HTTP {status}"
+            else:
+                reason = "resposta sem tabela legível"
             if attempt < retries:
-                wait_seconds = 2 ** attempt
+                wait_seconds = min(retry_delay * 2 ** attempt, 120)
                 logger.warning(
-                    "Fundamentus indisponível (tentativa %d/%d); nova tentativa em %ds.",
+                    "Fundamentus: %s (tentativa %d/%d); nova tentativa em %gs.",
+                    reason,
                     attempt + 1,
                     retries + 1,
                     wait_seconds,
@@ -166,8 +179,8 @@ def scrape_acoes_fundamentus(cfg: dict) -> pd.DataFrame:
                 time.sleep(wait_seconds)
                 continue
             raise RuntimeError(
-                "Falha ao ler a tabela pública de ações do Fundamentus. "
-                "A fonte pode estar indisponível ou ter alterado o formato."
+                f"Fundamentus: {reason} após {retries + 1} tentativas. "
+                "A coleta de ações não foi concluída."
             ) from exc
 
     for table in tables:
@@ -483,7 +496,7 @@ def _build_brapi_acoes_frame(
             "Volume Diário Médio (3 meses)": _mean_history_volume(price_history.get(ticker)),
             "Market Cap Empresa": _to_float(listing.get("market_cap") or stats.get("marketCap")),
             "# Ações Total": _to_float(stats.get("sharesOutstanding")),
-            # Bases para atualizar os múltiplos diariamente sem repetir a
+            # Bases para atualizar os múltiplos a cada coleta sem repetir a
             # coleta de demonstrações financeiras, que muda em ritmo trimestral.
             "Brapi VPA": _to_float(stats.get("bookValue")),
             "Brapi LPA": _to_float(stats.get("trailingEps")),

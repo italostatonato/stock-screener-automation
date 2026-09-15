@@ -1,6 +1,33 @@
 import pandas as pd
 
-from src.exporter import _apply_ml_prediction_guardrails, _model_performance_history_records
+from src.exporter import _apply_ml_prediction_guardrails, _model_performance_history_records, _latest_records_from_predictions
+
+
+def test_ranking_rejects_old_date_and_different_horizon(tmp_path):
+    path = tmp_path / "predictions.parquet"
+    pd.DataFrame({
+        "Data_Execucao": ["2026-01-01", "2026-01-02", "2026-01-02"],
+        "Ticker": ["OLD3", "MONTH3", "WEEK3"],
+        "Horizonte": ["7d", "30d", "7d"], "score_top": [70, 80, 60],
+    }).to_parquet(path, index=False)
+    records = _latest_records_from_predictions(str(path), data_hoje="2026-01-02")
+    assert [r["Ticker"] for r in records] == ["WEEK3"]
+
+
+def test_expected_return_uses_ensemble_validation():
+    records = [{"Tipo": "ACAO", "Horizonte": "7d", "modelo_lider": "Ridge",
+                "modelo_projecao": "Ensemble", "retorno_esperado_7d": 0.03}]
+    performance = [{"Tipo": "ACAO", "Modelo": "Ridge", "Horizonte": "7d", "Janelas_Validas": 10}]
+    result = _apply_ml_prediction_guardrails(records, performance)[0]
+    assert result["projecao_confiavel"] is False
+    assert result["janelas_validas_modelo"] == 0
+
+
+def test_warmup_does_not_fall_back_to_different_horizon():
+    row = {"Horizonte": "7d", "retorno_esperado_7d": None, "retorno_esperado_30d": 0.5}
+    result = _apply_ml_prediction_guardrails([row], [])[0]
+    assert result["retorno_esperado_horizonte"] == "7d"
+    assert result["retorno_esperado_exibicao"] is None
 
 
 def test_model_performance_history_preserva_janela_e_calcula_alpha(tmp_path):
@@ -10,6 +37,7 @@ def test_model_performance_history_preserva_janela_e_calcula_alpha(tmp_path):
         "Ticker": tickers,
         "score_top": list(range(25)),
         "score_ridge": list(reversed(range(25))),
+        "Horizonte": ["7d"] * 25,
     })
     dataset = pd.DataFrame({
         "Data_Execucao": ["2026-01-02"] * 25,

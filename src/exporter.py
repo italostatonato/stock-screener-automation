@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from src.ml_confidence import add_confidence_to_performance_records, build_ml_confidence_summary
+from src.ml_horizons import prediction_horizons, predictions_for_horizon
 logger = logging.getLogger(__name__)
 
 
@@ -24,9 +25,9 @@ DASHBOARD_KPI_HISTORY_FILENAME = "kpi-history.json"
 
 
 def _safe(val):
-    if val is None:
+    if val is None or val is pd.NA or val is pd.NaT:
         return None
-    if isinstance(val, float) and (np.isnan(val) or np.isinf(val)):
+    if isinstance(val, (float, np.floating)) and not np.isfinite(val):
         return None
     if isinstance(val, (np.integer,)):
         return int(val)
@@ -963,6 +964,7 @@ def _calc_carteira_vs_benchmarks(
     top_acoes: pd.DataFrame,
     benchmarks: dict,
     data_hoje: str,
+    data_dir: str = "data",
 ) -> dict:
     """Monta séries comparativas em base 100 tecnicamente consistentes.
 
@@ -980,9 +982,9 @@ def _calc_carteira_vs_benchmarks(
         if name in benchmarks:
             resultado[f"{name.lower()}_base100"] = _base100_records_from_date(benchmarks.get(name))
 
-    carteira_path = os.path.join("data", "backtest", "carteiras_historicas.parquet")
-    fii_hist_path = os.path.join("data", "ml", "historico_fiis.parquet")
-    acoes_hist_path = os.path.join("data", "ml", "historico_acoes.parquet")
+    carteira_path = os.path.join(data_dir, "backtest", "carteiras_historicas.parquet")
+    fii_hist_path = os.path.join(data_dir, "ml", "historico_fiis.parquet")
+    acoes_hist_path = os.path.join(data_dir, "ml", "historico_acoes.parquet")
 
     # Só rebalanceia quando o snapshot contém simultaneamente os dois Top 20.
     # Isso impede que uma coleta parcial troque apenas metade da carteira.
@@ -1060,16 +1062,17 @@ def _calc_recorrentes(
     top_acoes: pd.DataFrame = None,
     fii_universe: pd.DataFrame = None,
     acoes_universe: pd.DataFrame = None,
+    data_dir: str = "data",
 ) -> dict:
     """Calcula ativos mais recorrentes no Top 20 a partir da carteira histórica.
 
-    Usa data/backtest/carteiras_historicas.parquet, que salva diariamente:
+    Usa data/backtest/carteiras_historicas.parquet, que registra por data de coleta:
     Data_Carteira, Tipo, Ticker, Preco_Entrada, Score e Posicao.
 
-    Também enriquece a saída com indicadores atuais vindos do universo do dia:
+    Também enriquece a saída com indicadores do universo do snapshot:
     preço, Dividend Yield e P/VPA para ações; preço, Dividend Yield e P/VP para FIIs.
     """
-    carteira_path = os.path.join("data", "backtest", "carteiras_historicas.parquet")
+    carteira_path = os.path.join(data_dir, "backtest", "carteiras_historicas.parquet")
     df = _load_parquet_safe(carteira_path)
 
     if df.empty:
@@ -1155,7 +1158,7 @@ def _calc_recorrentes(
     }
 
 
-def _latest_records_from_predictions(path: str, top_n: int = 50) -> list:
+def _latest_records_from_predictions(path: str, top_n: int = 50, data_hoje: str | None = None, horizon: int = 7) -> list:
     """Lê parquet de previsões ML e devolve o snapshot mais recente para o dashboard."""
     df = _load_parquet_safe(path)
     if df.empty or "Data_Execucao" not in df.columns or "Ticker" not in df.columns:
@@ -1164,6 +1167,9 @@ def _latest_records_from_predictions(path: str, top_n: int = 50) -> list:
     base = df.copy()
     base["Data_Execucao"] = pd.to_datetime(base["Data_Execucao"], errors="coerce")
     base = base.dropna(subset=["Data_Execucao", "Ticker"])
+    base = base[prediction_horizons(base).eq(f"{horizon}d")]
+    if data_hoje is not None:
+        base = base[base["Data_Execucao"].eq(pd.Timestamp(data_hoje))]
     if base.empty:
         return []
 
@@ -1183,7 +1189,7 @@ def _latest_records_from_predictions(path: str, top_n: int = 50) -> list:
         "score_top", "score_ridge", "score_random_forest", "score_extra_trees", "score_xgboost",
         "score_lightgbm", "score_catboost", "score_ensemble", "retorno_esperado_7d",
         "retorno_esperado_30d",
-        "modelo_lider", "status_modelos", "motivo_status",
+        "modelo_lider", "modelo_projecao", "Horizonte", "status_modelos", "motivo_status",
     ]
     existing = [c for c in cols if c in latest.columns]
     records = []
@@ -1239,7 +1245,11 @@ def _apply_ml_prediction_guardrails(records: list, performance_records: list) ->
     guarded = []
     for original in records or []:
         row = dict(original)
-        if row.get("retorno_esperado_7d") is not None:
+        explicit_horizon = str(row.get("Horizonte") or "").lower()
+        if explicit_horizon in {"7d", "30d"}:
+            horizon = explicit_horizon
+            raw_return = row.get(f"retorno_esperado_{horizon}")
+        elif row.get("retorno_esperado_7d") is not None:
             raw_return = row.get("retorno_esperado_7d")
             horizon = "7d"
         else:
@@ -1253,7 +1263,7 @@ def _apply_ml_prediction_guardrails(records: list, performance_records: list) ->
         except (TypeError, ValueError):
             numeric_return = None
 
-        model = str(row.get("modelo_lider") or "").strip()
+        model = str(row.get("modelo_projecao") or row.get("modelo_lider") or "").strip()
         model_key = model.casefold()
         tipo = str(row.get("Tipo") or "").upper()
         windows = windows_by_model.get((tipo, model_key, horizon), 0)
@@ -1345,7 +1355,7 @@ def _model_performance_history_records(
     ):
         return []
 
-    pred = predictions.copy()
+    pred = predictions_for_horizon(predictions, horizon)
     pred["Data_Referencia"] = pd.to_datetime(pred["Data_Execucao"], errors="coerce").dt.strftime("%Y-%m-%d")
     pred["Ticker"] = pred["Ticker"].astype("string").str.strip().str.upper()
 
@@ -1474,6 +1484,8 @@ def _baseline_ml_records_from_current(
             "score_catboost": None,
             "score_ensemble": None,
             "retorno_esperado_30d": None,
+            "retorno_esperado_7d": None,
+            "Horizonte": "7d",
             "modelo_lider": "Score Top",
             "status_modelos": "Baseline",
             "motivo_status": "Parquet de previsões ainda não disponível; exibindo Score Top como baseline da aba ML.",
@@ -1482,15 +1494,16 @@ def _baseline_ml_records_from_current(
         records.append(payload)
     return records
 
-def _calc_modelos_ml(top_fiis: pd.DataFrame = None, top_acoes: pd.DataFrame = None, data_hoje: str = None) -> dict:
+def _calc_modelos_ml(top_fiis: pd.DataFrame = None, top_acoes: pd.DataFrame = None, data_hoje: str = None,
+                     data_dir: str = "data", dashboard_dir: str = "docs/data") -> dict:
     """Carrega previsões e métricas dos modelos ML em modo sombra.
 
     O ranking oficial do screener continua sendo o Score Top. Esta seção é
     apenas para acompanhar, no tempo, quais modelos começam a superar o baseline.
     """
-    ml_dir = os.path.join("data", "ml")
-    acoes = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_acoes.parquet"), top_n=50)
-    fiis = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_fiis.parquet"), top_n=50)
+    ml_dir = os.path.join(data_dir, "ml")
+    acoes = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_acoes.parquet"), top_n=50, data_hoje=data_hoje)
+    fiis = _latest_records_from_predictions(os.path.join(ml_dir, "model_predictions_fiis.parquet"), top_n=50, data_hoje=data_hoje)
 
     if not acoes:
         acoes = _baseline_ml_records_from_current(
@@ -1520,7 +1533,7 @@ def _calc_modelos_ml(top_fiis: pd.DataFrame = None, top_acoes: pd.DataFrame = No
     performance = _performance_records(os.path.join(ml_dir, "model_performance.parquet"))
     confidence = build_ml_confidence_summary(
         performance_records=performance,
-        docs_data_dir=os.path.join("docs", "data"),
+        docs_data_dir=dashboard_dir,
         horizon_days=7,
     )
     performance = add_confidence_to_performance_records(performance, confidence)
@@ -1594,8 +1607,10 @@ def export_dashboard_json(
     fii_scores: pd.Series = None,
     acoes_scores: pd.Series = None,
     backtest: dict = None,
+    data_dir: str = "data",
 ):
     os.makedirs(output_dir, exist_ok=True)
+    market_data = market_data or {}
 
     fii_universe = fii_universe if fii_universe is not None else pd.DataFrame()
     acoes_universe = acoes_universe if acoes_universe is not None else pd.DataFrame()
@@ -1647,7 +1662,7 @@ def export_dashboard_json(
     from src.benchmark import benchmarks_to_json
 
     benchmarks_json = benchmarks_to_json(benchmarks)
-    carteira_vs = _calc_carteira_vs_benchmarks(top_fiis, top_acoes, benchmarks, data_hoje)
+    carteira_vs = _calc_carteira_vs_benchmarks(top_fiis, top_acoes, benchmarks, data_hoje, data_dir=data_dir)
 
     payload = {
         "data": data_hoje,
@@ -1665,13 +1680,15 @@ def export_dashboard_json(
         "backtest": backtest or {"disponivel": False},
         "kpis": kpis,
         "recorrentes": _calc_recorrentes(
+            data_dir=data_dir,
             top_n=None,
             top_fiis=top_fiis,
             top_acoes=top_acoes,
             fii_universe=fii_universe,
             acoes_universe=acoes_universe,
         ),
-        "modelos_ml": _calc_modelos_ml(top_fiis=top_fiis, top_acoes=top_acoes, data_hoje=data_hoje),
+        "modelos_ml": _calc_modelos_ml(top_fiis=top_fiis, top_acoes=top_acoes, data_hoje=data_hoje,
+                                      data_dir=data_dir, dashboard_dir=output_dir),
         "resumo": {
             "total_fiis": len(top_fiis) if top_fiis is not None else 0,
             "total_acoes": len(top_acoes) if top_acoes is not None else 0,
@@ -1683,8 +1700,14 @@ def export_dashboard_json(
     }
 
     file_path = os.path.join(output_dir, f"{data_hoje}.json")
-    with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
+    temp_path = f"{file_path}.tmp"
+    try:
+        with open(temp_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2, allow_nan=False)
+        os.replace(temp_path, file_path)
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
     logger.info(f"JSON do dashboard salvo: {file_path}")
 
     # Reconstrói o índice a partir dos arquivos existentes em docs/data.

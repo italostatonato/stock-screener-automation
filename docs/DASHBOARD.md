@@ -94,8 +94,8 @@ suas premissas estão em [Backtests](BACKTEST_RETROATIVO.md).
 
 Uma projeção só é exibida com três janelas do mesmo modelo/classe/horizonte
 e magnitude de até 50%. A confiança usa mínimo de uma janela e meta de cinco.
-O treino principal é chamado em 30d, enquanto a tela declara 7d como principal;
-confira o horizonte de cada métrica. Veja [Pipeline ML](ML_PIPELINE.md) e
+O treino principal usa 7d. Previsões antigas de 30d não são convertidas para
+7d. Sem previsão na data/horizonte do snapshot, aparece o baseline atual. Veja [Pipeline ML](ML_PIPELINE.md) e
 [Confiabilidade ML](ML_CONFIDENCE.md).
 
 Quando uma fonte obrigatória falha, o pipeline interrompe a geração do novo

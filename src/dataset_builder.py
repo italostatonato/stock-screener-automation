@@ -1,7 +1,7 @@
 """
 dataset_builder.py — Camada 4: Dataset para Machine Learning
 
-Lê os históricos diários em Parquet e gera datasets enriquecidos com retornos
+Lê os históricos por data de coleta em Parquet e gera datasets com retornos
 futuros por ativo. Nesta primeira versão, o objetivo é preparar a estrutura
 para Random Forest / XGBoost sem depender de serviços pagos.
 
@@ -15,14 +15,16 @@ Saídas geradas:
 
 Observação:
 Com pouco histórico, as colunas de retorno futuro podem ficar vazias no começo.
-Isso é esperado. Conforme novas execuções diárias forem acumuladas, os targets
-passam a ser preenchidos automaticamente.
+Isso é esperado. Conforme novos snapshots da rotina semanal ou de execuções
+manuais forem acumulados, os targets passam a ser preenchidos. Os horizontes
+são medidos em dias corridos; não representam a frequência de execução.
 """
 
 from __future__ import annotations
 
 import logging
 import os
+from datetime import timedelta
 from typing import Iterable
 
 import pandas as pd
@@ -79,12 +81,12 @@ def _prepare_base(
     """Normaliza ticker, data e preço antes do cálculo de retornos."""
     base = df.copy()
 
-    base[id_col] = base[id_col].astype(str).str.strip().str.upper()
+    base[id_col] = base[id_col].astype("string").str.strip().str.upper()
     base[date_col] = pd.to_datetime(base[date_col], errors="coerce")
     base[price_col] = pd.to_numeric(base[price_col], errors="coerce")
 
     base = base.dropna(subset=[id_col, date_col, price_col])
-    base = base[base[id_col] != ""]
+    base = base[base[id_col].ne("") & base[price_col].gt(0) & base[price_col].lt(float("inf"))]
 
     # Se houver mais de uma linha para mesmo ativo/data, mantém a última.
     base = base.sort_values([id_col, date_col])
@@ -107,6 +109,7 @@ def _add_future_returns(
     em data >= Data_Execucao + horizonte. Isso é mais robusto do que exigir
     exatamente D+30, porque o screener não roda em todos os dias corridos.
     """
+    horizons = tuple(horizons)
     result = df.copy()
 
     for horizon in horizons:
@@ -126,14 +129,14 @@ def _add_future_returns(
         prices = group[price_col].tolist()
 
         for idx, row in group.iterrows():
-            current_date = row[date_col]
+            current_date = pd.Timestamp(row[date_col])
             current_price = row[price_col]
 
             if pd.isna(current_date) or pd.isna(current_price) or current_price == 0:
                 continue
 
             for horizon in horizons:
-                target_date = current_date + pd.Timedelta(days=horizon)
+                target_date = current_date.to_pydatetime() + timedelta(days=int(horizon))
 
                 future_idx = None
                 for pos, candidate_date in enumerate(dates):
@@ -196,7 +199,7 @@ def _add_basic_features(
             result["Status"]
             .astype(str)
             .str.upper()
-            .str.contains("APROV", na=False)
+            .str.match(r"^(?:APROVADO\b|RANK\s*#)", na=False)
             .astype(int)
         )
 
@@ -215,17 +218,15 @@ def build_ml_dataset(
     """Gera um dataset de ML a partir de um histórico de ativos."""
     df = _safe_read_parquet(input_path)
     if df.empty:
-        logger.warning("%s vazio — dataset não gerado.", dataset_name)
-        return pd.DataFrame()
+        raise ValueError(f"{dataset_name}: histórico ausente, ilegível ou vazio; dataset não gerado.")
 
     required_cols = [id_col, date_col, price_col]
     if not _validate_required_columns(df, required_cols, dataset_name):
-        return pd.DataFrame()
+        raise ValueError(f"{dataset_name}: histórico sem colunas obrigatórias.")
 
     base = _prepare_base(df, id_col=id_col, date_col=date_col, price_col=price_col)
     if base.empty:
-        logger.warning("%s sem dados válidos após preparação.", dataset_name)
-        return pd.DataFrame()
+        raise ValueError(f"{dataset_name}: sem dados válidos após preparação.")
 
     enriched = _add_basic_features(
         base,
@@ -241,7 +242,7 @@ def build_ml_dataset(
         horizons=horizons,
     )
 
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     enriched.to_parquet(output_path, index=False)
 
     logger.info(
@@ -260,6 +261,7 @@ def build_all_datasets(
 ) -> dict[str, pd.DataFrame]:
     """Gera datasets de FIIs e Ações usando os caminhos padrão do projeto."""
     ml_dir = os.path.join(data_dir, "ml")
+    horizons = tuple(horizons)
 
     fii_dataset = build_ml_dataset(
         input_path=os.path.join(ml_dir, "historico_fiis.parquet"),

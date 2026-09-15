@@ -25,6 +25,8 @@ PRICE_COLUMNS = ["Data", "Ticker", "Adjusted_Close", "Fonte"]
 
 
 def _normalize_ticker(value: object) -> str:
+    if pd.isna(value):
+        return ""
     ticker = str(value).strip().upper()
     return ticker[:-3] if ticker.endswith(".SA") else ticker
 
@@ -56,7 +58,7 @@ def prepare_prices(prices: pd.DataFrame) -> pd.DataFrame:
     out["Ticker"] = out["Ticker"].map(_normalize_ticker)
     out["Adjusted_Close"] = pd.to_numeric(out["Adjusted_Close"], errors="coerce")
     out = out.dropna(subset=["Data", "Ticker", "Adjusted_Close"])
-    out = out[out["Adjusted_Close"] > 0]
+    out = out[out["Ticker"].ne("") & out["Adjusted_Close"].gt(0) & np.isfinite(out["Adjusted_Close"])]
     return (
         out.sort_values(["Data", "Ticker"])
         .drop_duplicates(["Data", "Ticker"], keep="last")
@@ -137,6 +139,8 @@ def run_portfolio_backtest(
     """Executa backtest equal-weight e devolve períodos, curva e resumo."""
     if missing_asset_policy not in {"cash", "error"}:
         raise ValueError("missing_asset_policy deve ser 'cash' ou 'error'.")
+    if not math.isfinite(transaction_cost_bps) or not 0 <= transaction_cost_bps < 10_000:
+        raise ValueError("transaction_cost_bps deve estar entre 0 (inclusive) e 10000 (exclusive).")
     required = {"Data_Carteira", "Tipo", "Ticker"}
     missing = required - set(portfolios.columns)
     if missing:
@@ -147,6 +151,7 @@ def run_portfolio_backtest(
     p["Tipo"] = p["Tipo"].astype(str).str.strip().str.upper()
     p["Ticker"] = p["Ticker"].map(_normalize_ticker)
     p = p[p["Tipo"].eq(tipo.strip().upper())].dropna(subset=["Data_Carteira", "Ticker"])
+    p = p[p["Ticker"].ne("")]
     if require_complete_type and "Tipo_Completo" in p.columns:
         p = p[p["Tipo_Completo"].fillna(False).astype(bool)]
     p = p.drop_duplicates(["Data_Carteira", "Ticker"], keep="last")
@@ -234,8 +239,10 @@ def run_portfolio_backtest(
         for name, ticker in (benchmark_tickers or {}).items():
             benchmark_return = _benchmark_return(price_matrix, ticker, entry_date, exit_date)
             row[f"Retorno_{name}"] = benchmark_return
-            if benchmark_return is not None:
+            if benchmark_return is not None and benchmark_base[name] is not None:
                 benchmark_base[name] *= 1.0 + benchmark_return
+            else:
+                benchmark_base[name] = None
             row[f"Base100_{name}"] = benchmark_base[name]
         periods.append(row)
         previous_tickers = tickers
@@ -248,12 +255,15 @@ def run_portfolio_backtest(
     ]
     curve = period_df[curve_columns].rename(columns={"Data_Saida": "Data"}).copy()
     first_entry = pd.Timestamp(period_df.iloc[0]["Data_Entrada"])
+    initial = {"Data": first_entry.strftime("%Y-%m-%d"), "Base100": 100.0}
+    initial.update({f"Base100_{name}": 100.0 for name in (benchmark_tickers or {})})
+    curve = pd.DataFrame([initial, *curve.to_dict(orient="records")])
     last_exit = pd.Timestamp(period_df.iloc[-1]["Data_Saida"])
     elapsed_days = max(int((last_exit - first_entry).days), 1)
     total_return = float(period_df.iloc[-1]["Base100"] / 100.0 - 1.0)
     cagr = (1.0 + total_return) ** (365.25 / elapsed_days) - 1.0 if total_return > -1 else -1.0
-    running_peak = period_df["Base100"].cummax()
-    drawdown = period_df["Base100"] / running_peak - 1.0
+    running_peak = curve["Base100"].cummax()
+    drawdown = curve["Base100"] / running_peak - 1.0
     summary = {
         "tipo": tipo.strip().upper(),
         "metodologia": "equal_weight; sinal no fechamento D; entrada no próximo pregão; preços ajustados",
@@ -271,9 +281,10 @@ def run_portfolio_backtest(
         "precos_defasados_periodos": int(period_df["Tickers_Defasados"].ne("{}").sum()),
     }
     for name in (benchmark_tickers or {}):
-        value = float(period_df.iloc[-1][f"Base100_{name}"] / 100.0 - 1.0)
-        summary[f"retorno_{name.lower()}_pct"] = round(value * 100, 4)
-        summary[f"alpha_vs_{name.lower()}_pct"] = round((total_return - value) * 100, 4)
+        final_value = period_df.iloc[-1][f"Base100_{name}"]
+        value = float(final_value / 100.0 - 1.0) if pd.notna(final_value) else None
+        summary[f"retorno_{name.lower()}_pct"] = round(value * 100, 4) if value is not None else None
+        summary[f"alpha_vs_{name.lower()}_pct"] = round((total_return - value) * 100, 4) if value is not None else None
     return period_df, curve, summary
 
 

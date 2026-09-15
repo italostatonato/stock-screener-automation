@@ -6,12 +6,13 @@ import subprocess
 import pytest
 
 
-def test_dashboard_hybrid_javascript():
+@pytest.mark.parametrize("test_file", ["hybrid_portfolio.test.cjs", "dashboard_rendering.test.cjs"])
+def test_dashboard_hybrid_javascript(test_file):
     node = shutil.which("node")
     if node is None:
         pytest.skip("Node.js is required for the dashboard JavaScript tests")
     result = subprocess.run(
-        [node, "--test", "tests/hybrid_portfolio.test.cjs"],
+        [node, "--test", f"tests/{test_file}"],
         cwd=Path(__file__).resolve().parents[1],
         capture_output=True,
         encoding="utf-8",

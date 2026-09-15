@@ -20,6 +20,7 @@ scraper:
   fundamentus_url: "https://www.fundamentus.com.br/resultado.php"
   fundamentus_timeout: 30
   fundamentus_retries: 2
+  fundamentus_retry_delay: 15 # Esperas de 15s e 30s entre as tentativas.
 
   # Alternativa opcional para quem possuir plano Pro da brapi. Não é usada
   # enquanto acoes_source estiver como "fundamentus".
@@ -27,7 +28,8 @@ scraper:
   brapi_token: "${BRAPI_TOKEN}"
   brapi_timeout: 30
   # O plano Pro permite os fundamentos; eles são cacheados
-  # por 30 dias e a cotação é atualizada diariamente pela listagem pública.
+  # por 30 dias; a cotação é consultada na listagem pública a cada execução
+  # do screener (semanal pelo cron ou por acionamento manual).
   brapi_batch_size: 10
   brapi_page_size: 100
   brapi_workers: 6

@@ -20,6 +20,9 @@ from typing import Iterable
 
 import pandas as pd
 
+from src.cleaner import _parse_percent
+from src.ml_storage import _prepare_for_parquet
+
 logger = logging.getLogger(__name__)
 
 # Quantas datas recentes da carteira as checagens de qualidade inspecionam.
@@ -48,8 +51,11 @@ def _atomic_write_parquet(df: pd.DataFrame, path: Path) -> None:
     """Escreve parquet de forma segura usando arquivo temporário no mesmo diretório."""
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp")
-    df.to_parquet(tmp, index=False)
-    os.replace(tmp, path)
+    try:
+        _prepare_for_parquet(df).to_parquet(tmp, index=False)
+        os.replace(tmp, path)
+    finally:
+        tmp.unlink(missing_ok=True)
 
 
 def _sha256(path: Path, chunk_size: int = 1024 * 1024) -> str | None:
@@ -170,7 +176,7 @@ def save_lake_snapshot(
     top_acoes: pd.DataFrame | None = None,
     carteira_snapshot: pd.DataFrame | None = None,
 ) -> dict:
-    """Salva snapshot diário incremental em data/lake/snapshots/YYYY-MM-DD/.
+    """Salva o snapshot da execução em data/lake/snapshots/YYYY-MM-DD/.
 
     Reexecutar o mesmo dia substitui apenas a pasta daquele dia. Datas anteriores
     não são tocadas.
@@ -223,7 +229,7 @@ def list_lake_dates(data_dir: str | Path) -> list[str]:
     return sorted(set(dates))
 
 
-def update_lake_manifest(data_dir: str | Path) -> dict:
+def update_lake_manifest(data_dir: str | Path, *, write: bool = True) -> dict:
     """Reconstrói o manifesto global a partir dos snapshots existentes."""
     data_dir = Path(data_dir)
     root = data_dir / "lake" / "snapshots"
@@ -245,7 +251,8 @@ def update_lake_manifest(data_dir: str | Path) -> dict:
         "total_snapshots": len(snapshots),
         "snapshots": snapshots,
     }
-    _write_json(manifest_path, payload)
+    if write:
+        _write_json(manifest_path, payload)
     return payload
 
 
@@ -342,6 +349,12 @@ def rebuild_legacy_tables_from_lake(data_dir: str | Path = "data") -> dict:
     acoes = read_lake_dataset(data_dir, "acoes_universe.parquet")
 
     if not fiis.empty:
+        # Snapshots anteriores à inclusão desses campos na limpeza guardam
+        # percentuais brasileiros como texto. Normalize apenas o derivado;
+        # as partições originais continuam como foram observadas.
+        for column in ("RENTAB. PERÍODO", "TAX. PERFORMANCE", "TAX. ADMINISTRAÇÃO"):
+            if column in fiis:
+                fiis[column] = _parse_percent(fiis[column])
         fiis = _dedupe_history(fiis, ["Data_Execucao", "FUNDOS"])
         _atomic_write_parquet(fiis, ml_dir / "historico_fiis.parquet")
 
@@ -404,10 +417,11 @@ def rebuild_legacy_tables_from_lake(data_dir: str | Path = "data") -> dict:
     return result
 
 
-def rebuild_dashboard_index(output_dir: str | Path) -> list[str]:
+def rebuild_dashboard_index(output_dir: str | Path, *, write: bool = True) -> list[str]:
     """Reconstrói docs/data/index.json com base nos JSONs existentes."""
     output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    if write:
+        output_dir.mkdir(parents=True, exist_ok=True)
     dates = []
     for p in output_dir.glob("*.json"):
         if p.stem == "index":
@@ -417,12 +431,16 @@ def rebuild_dashboard_index(output_dir: str | Path) -> list[str]:
         except Exception:
             continue
     dates = sorted(set(dates), reverse=True)
-    _write_json(output_dir / "index.json", dates)
+    if write:
+        _write_json(output_dir / "index.json", dates)
     logger.info("Indice do dashboard reconstruido com %s datas.", len(dates))
     return dates
 
 
-def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | None = None) -> dict:
+def run_data_quality_checks(
+    data_dir: str | Path, dashboard_dir: str | Path | None = None,
+    *, read_only: bool = False, expected_date: str | None = None,
+) -> dict:
     """Executa checagens leves para detectar problemas antes do commit/deploy."""
     data_dir = Path(data_dir)
     checks: list[dict] = []
@@ -445,7 +463,7 @@ def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | No
         )
 
     latest_lake = dates[-1] if dates else None
-    manifest = update_lake_manifest(data_dir)
+    manifest = update_lake_manifest(data_dir, write=not read_only)
     add_check("lake_manifest", "ok" if manifest.get("total_snapshots", 0) == len(dates) else "warn", f"latest={manifest.get('latest')}")
 
     required_snapshot_files = ["fii_universe.parquet", "acoes_universe.parquet", "top_fiis.parquet", "top_acoes.parquet", "manifest.json"]
@@ -591,8 +609,26 @@ def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | No
 
     if dashboard_dir is not None:
         dashboard_dir = Path(dashboard_dir)
-        json_dates = rebuild_dashboard_index(dashboard_dir)
+        json_dates = rebuild_dashboard_index(dashboard_dir, write=not read_only)
         add_check("dashboard_index", "ok" if json_dates else "warn", f"{len(json_dates)} datas no index.json")
+        if read_only:
+            saved_index = _load_json(dashboard_dir / "index.json", [])
+            add_check("dashboard_index_consistencia", "ok" if saved_index == json_dates else "warn", "índice comparado aos arquivos existentes")
+        for date_str in json_dates:
+            try:
+                payload = json.loads((dashboard_dir / f"{date_str}.json").read_text(encoding="utf-8"))
+                if not isinstance(payload, dict) or payload.get("data") != date_str:
+                    raise ValueError("data interna não corresponde ao nome do snapshot")
+                for key in ("acoes", "fiis"):
+                    if not isinstance(payload.get(key), list):
+                        raise ValueError(f"{key} não é uma lista")
+                    if date_str == json_dates[0] and not payload[key]:
+                        raise ValueError(f"último snapshot sem {key}")
+                add_check(f"dashboard_json_{date_str}", "ok", "JSON e rankings válidos")
+            except (OSError, ValueError, TypeError) as exc:
+                add_check(f"dashboard_json_{date_str}", "error", str(exc))
+        if expected_date:
+            add_check("snapshot_da_execucao", "ok" if latest_lake == expected_date and expected_date in json_dates else "error", f"esperado={expected_date}, lake={latest_lake}")
         if latest_lake and json_dates:
             add_check(
                 "dashboard_latest_vs_lake",
@@ -613,6 +649,9 @@ def run_data_quality_checks(data_dir: str | Path, dashboard_dir: str | Path | No
     }
 
     report_path = data_dir / "lake" / "quality_report.json"
-    _write_json(report_path, report)
-    logger.info("Relatorio de qualidade salvo em %s com status %s", report_path, status)
+    if not read_only:
+        _write_json(report_path, report)
+        logger.info("Relatorio de qualidade salvo em %s com status %s", report_path, status)
+    else:
+        logger.info("Qualidade verificada sem alterar arquivos: %s", status)
     return report

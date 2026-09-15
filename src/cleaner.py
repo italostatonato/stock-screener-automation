@@ -1,9 +1,16 @@
 import logging
+from numbers import Number
 import pandas as pd
 
 logger = logging.getLogger(__name__)
 
 _INVALID = {"N/A", "nan", "None", ""}
+
+
+def _preserve_numeric(series, parsed):
+    """Excel fornece números prontos; só texto precisa perder separadores."""
+    numeric = series.map(lambda value: isinstance(value, Number) and not isinstance(value, bool))
+    return parsed.where(~numeric, pd.to_numeric(series.where(numeric), errors="coerce"))
 
 
 def _parse_percent(series):
@@ -17,7 +24,8 @@ def _parse_percent(series):
     s = s.str.replace(",", ".", regex=False)
     s = s.str.strip()
     s = s.replace(list(_INVALID), None)
-    return pd.to_numeric(s, errors="coerce") / 100
+    # Células percentuais numéricas do Excel já contêm a fração (0,045 = 4,5%).
+    return _preserve_numeric(series, pd.to_numeric(s, errors="coerce") / 100)
 
 
 def _parse_money(series):
@@ -28,7 +36,7 @@ def _parse_money(series):
     s = s.str.replace(",", ".", regex=False)
     s = s.str.strip()
     s = s.replace(list(_INVALID), None)
-    return pd.to_numeric(s, errors="coerce")
+    return _preserve_numeric(series, pd.to_numeric(s, errors="coerce"))
 
 
 def _parse_float(series):
@@ -45,7 +53,7 @@ def _parse_integer(series):
     s = s.str.replace(",", "", regex=False)
     s = s.str.strip()
     s = s.replace(list(_INVALID), None)
-    return pd.to_numeric(s, errors="coerce", downcast="integer")
+    return _preserve_numeric(series, pd.to_numeric(s, errors="coerce", downcast="integer"))
 
 
 def clean_and_normalize(df_raw, col_cfg):

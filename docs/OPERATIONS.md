@@ -6,7 +6,7 @@ Revisado em 15/09/2026.
 
 Use Git, Python 3.11 ou superior e Chrome para a coleta de FIIs.
 Instale as dependências de `requirements.txt` num ambiente virtual. Node.js
-permite executar o teste JavaScript da carteira híbrida.
+24 permite executar os testes JavaScript da carteira híbrida e de rendering.
 
 ```powershell
 python -m venv .venv
@@ -26,7 +26,9 @@ O arquivo `paths.local_input_file`, quando presente, substitui a coleta de
 FIIs. Logs ficam em `logs/YYYY-MM-DD.log`, o Excel em
 `data/output/Top20_Ranking_YYYY-MM-DD.xlsx` e o JSON em
 `docs/data/YYYY-MM-DD.json`. A data usa `America/Sao_Paulo`.
-Reexecutar no mesmo dia atualiza os arquivos daquela data.
+Reexecutar no mesmo dia substitui o ranking Excel daquela data, removendo
+ativos que saíram do Top N. Números lidos do Excel preservam suas unidades:
+percentuais numéricos já são frações; textos como `7,5%` são convertidos.
 
 ## Backup e escopo
 
@@ -56,19 +58,17 @@ python scripts/healthcheck_data.py
 O comando atualiza o manifesto do lake, reconstrói o índice do dashboard e
 grava `data/lake/quality_report.json`. Portanto, não é somente leitura.
 O retorno é código 1 para `error` e código 0 para `ok` ou `warn`.
+Para inspecionar sem escrever, use `python scripts/healthcheck_data.py --read-only`.
 
 A verificação cobre chaves nulas e duplicadas, esquema e preço de entrada
 da carteira, cobertura de FII/ACAO nas datas recentes, legibilidade de
-Parquets e coerência entre o lake e o índice do dashboard.
+Parquets, estrutura/data dos JSONs e coerência entre o lake e o índice do
+dashboard. O pipeline também exige o snapshot da data da execução.
 Snapshots históricos listados em `known_incomplete_snapshots.json` podem gerar
 avisos conhecidos; investigue avisos novos em vez de suprimi-los.
 
-Para conferir os dados numa auditoria documental, copie os dados e os módulos
-necessários para uma pasta temporária e rode o healthcheck nessa cópia.
-Não publique alterações de manifesto/relatório produzidas só pela auditoria.
-
-Se o pytest no Windows falhar por permissão no diretório temporário,
-escolha uma pasta nova no projeto:
+Use `--read-only` nas auditorias documentais. Se o pytest no Windows falhar
+por permissão no diretório temporário, escolha uma pasta nova no projeto:
 
 ```powershell
 $TestRunDir = ".test-tmp/pytest-" + [guid]::NewGuid().ToString("N")
@@ -83,7 +83,7 @@ Run workflow**. Não possui gatilho de push. O horário das 08h é o início
 agendado da coleta; a publicação depende da conclusão dos jobs. Arquivos
 particionados por data não significam que a execução automática seja diária.
 
-- `test`: Python 3.11, instalação com cache pip e `pytest tests/ -v`.
+- `test`: Python 3.11, Node 24, instalação com cache pip e `pytest tests/ -v`.
 - `screener`: depende dos testes; prepara Chrome, sincroniza a `main`,
   executa pipeline e healthcheck, salva artefatos por 90 dias e commita
   `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
@@ -98,7 +98,8 @@ A etapa opcional de notificação de falha do screener usa
 Para problemas de push, confira remote, credenciais e permissão de escrita.
 O workflow já declara `contents: write`; a publicação usa
 `pages: write` e `id-token: write` no job de deploy.
-Uma edição documental não inicia automaticamente uma coleta nem um deploy.
+O workflow `tests.yml` roda a suíte em pushes de código/documentação e pull
+requests, com permissão de leitura. Esses eventos não iniciam coleta nem deploy.
 
 A revisão documental semanal é separada, **segunda-feira às 12h de São Paulo**,
 e é administrada no Codex. Veja [Manutenção da documentação](DOCUMENTATION.md).
@@ -106,18 +107,21 @@ e é administrada no Codex. Veja [Manutenção da documentação](DOCUMENTATION.
 ## Fonte indisponível ou seleção vazia
 
 Consulte o log e repita a execução quando a fonte estiver disponível.
-O Fundamentus usa timeout e novas tentativas configuráveis. A coleta de FIIs
-depende de Chrome e do HTML do Fundsexplorer.
+O Fundamentus usa timeout de 30s e duas novas tentativas. O intervalo
+`fundamentus_retry_delay` começa em 15s e dobra (15s, 30s), limitado a 120s.
+O log distingue timeout de conexão, de resposta, erro HTTP e tabela ilegível.
+Falhas na etapa de coleta preservam `logs/` no artefato `screener-failure-ID`
+por 30 dias. A coleta de FIIs depende de Chrome e do HTML do Fundsexplorer.
 
 Não existe fallback de quartis. Se a seleção ficar vazia, confira colunas,
 unidades percentuais e pisos em `config.yaml`. O pipeline interrompe a
 geração de um novo snapshot quando a coleta/seleção obrigatória falha.
-Os históricos locais de FIIs podem já ter sido atualizados antes de uma
-falha posterior de ações; não trate todos os arquivos como uma transação atômica.
+Os dois rankings são validados antes da primeira escrita dos históricos.
+As escritas posteriores ainda não formam uma transação única entre arquivos.
 
-Falhas em indicadores, ML, exportação ou entrega podem aparecer apenas nos
-logs de `main.py`. Confira o healthcheck e as saídas esperadas mesmo quando
-a última linha do pipeline indicar conclusão.
+Falhas no lake, na reconstrução ou na exportação, e qualidade com `error`,
+interrompem `main.py`. Falhas em indicadores, ML sombra ou entrega opcional
+ficam nos logs. Uma falha ao construir datasets impede treinar dados antigos.
 
 ## Rebuild e scripts históricos
 
@@ -126,7 +130,8 @@ python scripts/rebuild_from_lake.py
 ```
 
 O rebuild não coleta fontes: reconstrói históricos, carteira, datasets e
-previsões ML em 30d, atualiza manifesto/índice e roda qualidade.
+previsões ML em 7d, atualiza manifesto/índice e roda qualidade.
+Sem snapshots no lake, encerra antes de reconstruir.
 Ele não recria os payloads completos do dashboard nem os Excels finais.
 
 Os scripts de pesquisa são executados separadamente:
@@ -143,9 +148,9 @@ python scripts/run_point_in_time_backtest.py
 preenchidos. Leia [Backtests](BACKTEST_RETROATIVO.md) antes de reprocessar.
 Não copie snapshots sintéticos para o lake observado.
 
-`scripts/refresh_ml_7d_primary_from_docs.py` regrava derivados ML e o JSON mais
-recente a partir dos snapshots; não faz parte da rotina semanal.
-Os scripts `apply_ml_*` são patches de migração, não comandos de setup.
+`scripts/refresh_ml_7d_primary_from_docs.py` encaminha ao rebuild do lake,
+preservando os JSONs históricos. Não usa Top N como universo ML completo.
+Os scripts `apply_ml_*` são comandos de compatibilidade sem escrita.
 
 ## Dashboard com data antiga
 

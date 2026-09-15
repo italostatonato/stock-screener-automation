@@ -14,11 +14,59 @@ from src.data_lake import (
 )
 
 
+def test_read_only_healthcheck_does_not_modify_files(tmp_path):
+    data_dir = tmp_path / "data"
+    dashboard_dir = tmp_path / "docs" / "data"
+    _snapshot_com_top(data_dir, "2026-06-29")
+    rebuild_legacy_tables_from_lake(data_dir)
+    dashboard_dir.mkdir(parents=True)
+    (dashboard_dir / "2026-06-29.json").write_text(json.dumps({
+        "data": "2026-06-29", "fiis": [{}], "acoes": [{}],
+    }), encoding="utf-8")
+    rebuild_dashboard_index(dashboard_dir)
+    before = {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
+    report = run_data_quality_checks(data_dir, dashboard_dir, read_only=True, expected_date="2026-06-29")
+    assert report["status"] != "error"
+    assert before == {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
+
+
+def test_healthcheck_detects_corrupted_dashboard_json(tmp_path):
+    data_dir = tmp_path / "data"
+    dashboard_dir = tmp_path / "docs" / "data"
+    _snapshot_com_top(data_dir, "2026-06-29")
+    rebuild_legacy_tables_from_lake(data_dir)
+    dashboard_dir.mkdir(parents=True)
+    (dashboard_dir / "2026-06-29.json").write_text("{broken", encoding="utf-8")
+    rebuild_dashboard_index(dashboard_dir)
+    report = run_data_quality_checks(data_dir, dashboard_dir, read_only=True)
+    assert report["status"] == "error"
+
+
+def test_rebuild_normalizes_mixed_historical_percentages_without_changing_snapshots(tmp_path):
+    data = tmp_path / "data"
+    for date, values in [("2026-06-29", ["5,00 %", "10,00 % A.A", "N/A"]),
+                         ("2026-07-06", [0.06, 0.10, 0.012])]:
+        frame = pd.DataFrame({"FUNDOS": ["TEST11"], "PREÇO ATUAL (R$)": [10.0],
+                              "RENTAB. PERÍODO": [values[0]], "TAX. PERFORMANCE": [values[1]],
+                              "TAX. ADMINISTRAÇÃO": [values[2]]})
+        actions = pd.DataFrame({"Ação": ["TEST3"], "Preço": [20.0]})
+        save_lake_snapshot(data, date, frame, actions, frame, actions)
+    before = {p: p.read_bytes() for p in (data / "lake" / "snapshots").rglob("*.parquet")}
+    rebuild_legacy_tables_from_lake(data)
+    derived = pd.read_parquet(data / "ml" / "historico_fiis.parquet")
+    assert derived["RENTAB. PERÍODO"].tolist() == [0.05, 0.06]
+    assert derived["TAX. PERFORMANCE"].tolist() == [0.1, 0.1]
+    assert pd.isna(derived.iloc[0]["TAX. ADMINISTRAÇÃO"])
+    assert before == {p: p.read_bytes() for p in before}
+
+
 def test_data_lake_snapshot_and_rebuild(tmp_path: Path):
     data_dir = tmp_path / "data"
     dashboard_dir = tmp_path / "docs" / "data"
     dashboard_dir.mkdir(parents=True)
-    (dashboard_dir / "2026-06-29.json").write_text("{}", encoding="utf-8")
+    (dashboard_dir / "2026-06-29.json").write_text(json.dumps({
+        "data": "2026-06-29", "fiis": [{"FUNDOS": "AAA11"}], "acoes": [{"Ação": "ABCD3"}],
+    }), encoding="utf-8")
 
     fii_universe = pd.DataFrame({"FUNDOS": ["AAA11"], "PREÇO ATUAL (R$)": [10.0], "Score": [55.0]})
     acoes_universe = pd.DataFrame({"Ação": ["ABCD3"], "Preço": [20.0], "Score": [60.0]})

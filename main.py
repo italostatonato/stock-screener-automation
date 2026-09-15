@@ -134,34 +134,6 @@ def main():
     if fii_scores_top.notna().sum() == 0:
         raise RuntimeError("Top FIIs possui Score, mas todos os Scores são nulos.")
 
-    update_history(
-        top_fiis,
-        os.path.join(paths["old_dir"], "Top_20_FII_BRL.xlsx"),
-        key_col="FUNDOS",
-    )
-
-    # Histórico ML — universo completo de FIIs
-    try:
-        fii_hist_source = (
-            fii_base
-            if fii_base is not None and not fii_base.empty
-            else df_clean
-        )
-
-        append_historical_data(
-            df=fii_hist_source,
-            data_execucao=data_hoje,
-            output_file=os.path.join(
-                ml_dir,
-                "historico_fiis.parquet",
-            ),
-            subset_cols=["Data_Execucao", "FUNDOS"],
-        )
-
-    except Exception as e:
-        logger.error(
-            f"Falha ao salvar historico ML FIIs: {e}"
-        )
     # ── Ações ─────────────────────────────────────────────────────────────
     logger.info("Coletando acoes...")
 
@@ -234,6 +206,36 @@ def main():
         "Top %d ações selecionadas.",
         len(top_actions),
     )
+
+    # Persistência só começa depois que os dois rankings foram validados.
+    update_history(
+        top_fiis,
+        os.path.join(paths["old_dir"], "Top_20_FII_BRL.xlsx"),
+        key_col="FUNDOS",
+    )
+
+    # Histórico ML — universo completo de FIIs
+    try:
+        fii_hist_source = (
+            fii_base
+            if fii_base is not None and not fii_base.empty
+            else df_clean
+        )
+
+        append_historical_data(
+            df=fii_hist_source,
+            data_execucao=data_hoje,
+            output_file=os.path.join(
+                ml_dir,
+                "historico_fiis.parquet",
+            ),
+            subset_cols=["Data_Execucao", "FUNDOS"],
+        )
+
+    except Exception as e:
+        logger.error(
+            f"Falha ao salvar historico ML FIIs: {e}"
+        )
 
     # O Investsite entrega a coluna acentuada ("Ação"). Mantemos as grafias
     # compatíveis para que a deduplicação do histórico funcione em ambos os
@@ -388,10 +390,7 @@ def main():
         )
 
     except Exception as e:
-        logger.error(
-            f"Falha ao salvar snapshot incremental "
-            f"do data lake: {e}"
-        )
+        raise RuntimeError("Falha ao salvar snapshot incremental do data lake.") from e
 
     # ── NOVO: reconstrução dos históricos derivados ──────────────────────
     #
@@ -419,10 +418,7 @@ def main():
         )
 
     except Exception as e:
-        logger.error(
-            "Falha ao reconstruir históricos a partir do Data Lake: %s",
-            e,
-        )
+        raise RuntimeError("Falha ao reconstruir históricos a partir do Data Lake.") from e
 
     # ── Datasets e modelos ML ─────────────────────────────────────────────
 
@@ -432,15 +428,9 @@ def main():
             horizons=(7, 30, 60, 90),
         )
 
-    except Exception as e:
-        logger.error(
-            f"Falha ao gerar datasets ML: {e}"
-        )
-
-    try:
         run_ml_pipeline(
             data_dir=data_dir,
-            horizon=30,
+            horizon=7,
         )
 
     except Exception as e:
@@ -476,6 +466,7 @@ def main():
 
     try:
         export_dashboard_json(
+            data_dir=data_dir,
             output_dir=os.path.join(
                 "docs",
                 "data",
@@ -493,15 +484,14 @@ def main():
         )
 
     except Exception as e:
-        logger.error(
-            f"Falha ao exportar JSON do dashboard: {e}"
-        )
+        raise RuntimeError("Falha ao exportar JSON do dashboard.") from e
 
     # ── Qualidade ─────────────────────────────────────────────────────────
 
     try:
         quality_report = run_data_quality_checks(
             data_dir=data_dir,
+            expected_date=data_hoje,
             dashboard_dir=os.path.join(
                 "docs",
                 "data",
@@ -512,11 +502,11 @@ def main():
             "Data quality status: "
             f"{quality_report.get('status')}"
         )
+        if quality_report.get("status") == "error":
+            raise RuntimeError("Checagens de qualidade encontraram erros nos dados.")
 
     except Exception as e:
-        logger.error(
-            f"Falha nas checagens de qualidade: {e}"
-        )
+        raise RuntimeError("Falha nas checagens de qualidade.") from e
 
     # ── Entrega Excel ─────────────────────────────────────────────────────
 

@@ -6,6 +6,31 @@ import pytest
 from src.backtest_engine import run_portfolio_backtest
 
 
+def test_drawdown_includes_loss_in_first_period():
+    portfolio = pd.DataFrame({"Data_Carteira": ["2026-01-02"], "Tipo": ["FII"], "Ticker": ["TEST11"]})
+    prices = pd.DataFrame({
+        "Data": ["2026-01-05", "2026-01-06"],
+        "Ticker": ["TEST11", "TEST11"], "Adjusted_Close": [100.0, 80.0],
+    })
+    _, curve, summary = run_portfolio_backtest(portfolio, prices, "FII", transaction_cost_bps=0)
+    assert curve.iloc[0]["Base100"] == 100.0
+    assert summary["max_drawdown_pct"] == -20.0
+
+
+def test_missing_benchmark_is_not_reported_as_zero_return():
+    _, _, summary = run_portfolio_backtest(
+        _portfolio(), _prices(), "FII", benchmark_tickers={"IBOV": "MISSING"}
+    )
+    assert summary["retorno_ibov_pct"] is None
+    assert summary["alpha_vs_ibov_pct"] is None
+
+
+@pytest.mark.parametrize("cost", [-1, 10000, float("nan"), float("inf")])
+def test_invalid_cost_is_rejected(cost):
+    with pytest.raises(ValueError, match="transaction_cost_bps"):
+        run_portfolio_backtest(_portfolio(), _prices(), "FII", transaction_cost_bps=cost)
+
+
 def _portfolio() -> pd.DataFrame:
     return pd.DataFrame(
         {

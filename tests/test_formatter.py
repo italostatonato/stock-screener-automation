@@ -1,6 +1,22 @@
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
+import pandas as pd
 
-from src.formatter import _add_indicadores, _add_premissas
+from src.formatter import _add_base_completa, _add_indicadores, _add_premissas
+
+
+def test_base_completa_preserves_excel_numeric_cells(tmp_path):
+    wb = Workbook()
+    _add_base_completa(wb, "Base", pd.DataFrame({
+        "Preço": [12.34, None], "DY": [0.075, None],
+    }), money_cols=["Preço"], pct_cols=["DY"], num_cols=[])
+    path = tmp_path / "base.xlsx"
+    wb.save(path)
+    saved = load_workbook(path)["Base"]
+    assert saved["A2"].value == 12.34
+    assert saved["B2"].value == 0.075
+    assert saved["A2"].data_type == "n"
+    assert saved["B2"].number_format == "0.00%"
+    assert saved["A3"].value is None
 
 
 def test_add_indicadores_aceita_cambio_sem_variacao_diaria():

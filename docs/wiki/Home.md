@@ -3,9 +3,9 @@
 Boletim quantitativo semanal de ações e FIIs brasileiros, com dados públicos,
 score multifatorial, Excel, dashboard, histórico, backtests e ML em modo sombra.
 
-**Revisado em 15/09/2026.** Os guias descrevem o código da `main` consultada
-no GitHub (`3137e34`). As evoluções ainda pendentes estão identificadas no
-[estado da publicação](https://github.com/italostatonato/stock-screener-automation/wiki/Manutencao-da-Documentacao).
+**Revisado em 15/09/2026.** Os guias acompanham as correções do pipeline,
+dos dados, do ML e do dashboard. Consulte o
+[estado da revisão](https://github.com/italostatonato/stock-screener-automation/wiki/Manutencao-da-Documentacao).
 Snapshots históricos podem refletir regras anteriores. Projeto educacional e analítico,
 não uma recomendação de investimento.
 

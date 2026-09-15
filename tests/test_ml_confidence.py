@@ -7,6 +7,19 @@ from src.ml_confidence import (
 )
 
 
+def test_global_confidence_does_not_use_other_horizon(tmp_path):
+    performance = [{
+        "Tipo": "ACAO", "Modelo": "Ridge", "Horizonte": "30d",
+        "Janelas_Validas": 10, "Hit_Rate_Top20": 0.7,
+        "Spearman_IC": 0.4, "Alpha_vs_Score_Top": 0.05,
+    }]
+    result = build_ml_confidence_summary(performance, docs_data_dir=tmp_path, horizon_days=7)
+    assert result["confiabilidade_preditiva_pct"] == 0
+    assert result["janelas_validas_max"] == 0
+    assert result["modelo_mais_confiavel"] is None
+    assert result["por_modelo"][0]["Confiabilidade_Pct"] > 0
+
+
 def test_confidence_zero_when_no_valid_windows(tmp_path: Path):
     docs = tmp_path / "docs" / "data"
     docs.mkdir(parents=True)

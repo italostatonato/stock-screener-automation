@@ -25,37 +25,45 @@ Os datasets contêm features numéricas e targets para 7, 30, 60 e 90 dias
 corridos. Para cada ativo, o target usa a primeira observação disponível em
 data igual ou posterior à data de origem mais o horizonte. Um retorno rotulado
 7d pode cobrir mais de sete dias quando há lacunas entre coletas.
-Sem observação futura, o target permanece nulo. São retornos entre preços dos
+Sem observação futura, o target permanece nulo. Tickers ausentes/vazios e
+preços não positivos ou infinitos são descartados. A feature `Aprovado_Filtro`
+inclui tanto `Rank #N` quanto os aprovados fora do Top N. Históricos inválidos
+interrompem a construção para não reutilizar silenciosamente um dataset antigo. São retornos entre preços dos
 snapshots, diferentes da série ajustada do motor de backtest separado.
 
 ## Horizontes realmente executados
 
-- `run_ml_pipeline()` tem `DEFAULT_HORIZON = 7`.
-- `main.py` passa explicitamente `horizon=30`.
-- `scripts/rebuild_from_lake.py` também passa `horizon=30`.
-- O exporter declara `horizonte_principal: 7d` e
-  `horizonte_estrategico: 30d`, calcula maturidade com sete dias e constrói
-  `performance_historica` com targets de 7d.
-- `modelos_ml.performance` vem do Parquet de performance e preserva
-  `Horizonte`; a confiabilidade recebe essas linhas sem convertê-las.
-- Para projeções, o exporter prefere `retorno_esperado_7d` quando disponível;
-  caso contrário, usa `retorno_esperado_30d` e informa o horizonte escolhido.
+`run_ml_pipeline()`, `main.py` e `scripts/rebuild_from_lake.py` usam **7d**.
+O exporter declara 7d como principal e 30d como estratégico; targets de 30,
+60 e 90 dias permanecem disponíveis para experimentos separados.
 
-Existe uma diferença entre a chamada operacional de treinamento e o horizonte
-principal declarado pela tela. Cada métrica deve ser lida com seu próprio
-`Horizonte`. Alinhar esses caminhos é trabalho futuro; a rotina atual não
-garante treinamento e avaliação simultâneos nos dois horizontes.
+Cada previsão recebe `Horizonte`. A persistência deduplica por data, classe,
+ticker e horizonte, permitindo guardar previsões 7d e 30d do mesmo ativo.
+`src/ml_horizons.py` identifica previsões antigas apenas quando as colunas de
+retorno permitem determinar um único horizonte; casos ambíguos ficam
+`indefinido`. Scores supervisionados de outro horizonte não entram na
+avaliação de 7d. O baseline Score Top independe de horizonte.
 
-`scripts/refresh_ml_7d_primary_from_docs.py` é uma ferramenta de
-reprocessamento: recupera bases dos JSONs, regrava históricos/datasets, roda
-ML em 7d e atualiza o payload mais recente. Não integra o workflow semanal
-e exige backup antes do uso. Os scripts `apply_ml_*` são utilitários de
-migração/patch, não etapas de instalação de um clone atualizado.
+O ranking exibido usa previsões da mesma data e horizonte do snapshot.
+Sem correspondência, usa o baseline atual. Previsões históricas de 30d e
+JSONs publicados são preservados; a correção não fabrica previsões passadas
+de 7d. Por isso, o painel pode voltar ao estado de aquecimento.
+
+`scripts/refresh_ml_7d_primary_from_docs.py` é um alias de compatibilidade
+para o rebuild canônico do lake. Não reconstrói o universo a partir do Top N
+dos JSONs nem altera snapshots do dashboard. Os scripts `apply_ml_*` apenas
+informam que as migrações já foram incorporadas, sem modificar arquivos.
+
+Na reconstrução, rentabilidade do período e taxas de administração e
+performance de FIIs são normalizadas: snapshots antigos usam texto com `%`,
+os novos usam frações numéricas. A conversão ocorre nos derivados e preserva
+as partições originais do lake.
 
 ## Treinamento e modelos
 
 A data mais recente recebe as previsões. O treino usa linhas de datas
-anteriores com target preenchido. O mínimo operacional é de **20 linhas
+anteriores com target preenchido e `Data_Futura_*` até a data prevista.
+Datas de realização ausentes suspendem o treino para evitar uso de informação futura. O mínimo operacional é de **20 linhas
 treináveis e uma data anterior**, definido por `MIN_TRAIN_ROWS` e
 `MIN_TRAIN_DATES`. Isso permite iniciar o experimento e não representa
 maturidade estatística.
@@ -72,7 +80,9 @@ Modelos disponíveis quando suas bibliotecas carregam e o treino conclui:
 - Ensemble, média dos scores dos modelos supervisionados disponíveis.
 
 Os retornos previstos são convertidos em percentis para ordenação. O retorno
-esperado agregado é a média das previsões disponíveis. `modelo_lider` indica
+esperado agregado é a média das previsões disponíveis, identificada por
+`modelo_projecao: Ensemble`. As janelas do Ensemble liberam essa projeção.
+`modelo_lider` indica
 o modelo com maior score para aquele ativo; não é uma promoção baseada no
 melhor desempenho fora da amostra. Falhas de bibliotecas ou treino ficam nos
 logs e podem deixar apenas parte dos modelos ou o baseline disponível.
@@ -111,7 +121,7 @@ visível enquanto a projeção está oculta. Fórmula e limites estão em
 
 ## Evoluções pendentes
 
-Separar treino e previsão, alinhar os horizontes e avaliar estabilidade,
+Separar treino e previsão e avaliar estabilidade,
 turnover e desempenho em mais ciclos são próximos passos. Ainda não existe
 regra implementada de promoção automática do modelo mais confiável ao ranking
 oficial.

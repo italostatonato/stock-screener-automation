@@ -85,7 +85,10 @@ def _fetch_awesome_api(pares: list) -> dict:
 
 
 def _fetch_frankfurter_cambio() -> dict:
-    """Fallback diário de câmbio quando a AwesomeAPI não responde.
+    """Consulta taxas de câmbio de referência diária se a AwesomeAPI falhar.
+
+    A consulta ocorre durante a execução do screener, agendada semanalmente
+    ou acionada manualmente; a frequência diária é a da taxa do provedor.
 
     A Frankfurter devolve quantas unidades de moeda estrangeira equivalem a
     BRL 1. O dashboard precisa do inverso: quantos reais valem uma unidade de

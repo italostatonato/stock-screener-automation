@@ -22,6 +22,7 @@ from src.data_lake import (  # noqa: E402
     rebuild_dashboard_index,
     run_data_quality_checks,
     update_lake_manifest,
+    list_lake_dates,
 )
 from src.dataset_builder import build_all_datasets  # noqa: E402
 from src.ml_models import run_ml_pipeline  # noqa: E402
@@ -31,9 +32,12 @@ def main() -> int:
     data_dir = PROJECT_ROOT / "data"
     dashboard_dir = PROJECT_ROOT / "docs" / "data"
 
+    if not list_lake_dates(data_dir):
+        raise RuntimeError("Nenhum snapshot no data lake; reconstrução cancelada.")
+
     rebuild_result = rebuild_legacy_tables_from_lake(data_dir)
     build_all_datasets(data_dir=str(data_dir), horizons=(7, 30, 60, 90))
-    run_ml_pipeline(data_dir=str(data_dir), horizon=30)
+    run_ml_pipeline(data_dir=str(data_dir), horizon=7)
     update_lake_manifest(data_dir)
     rebuild_dashboard_index(dashboard_dir)
     quality = run_data_quality_checks(data_dir=data_dir, dashboard_dir=dashboard_dir)

@@ -9,7 +9,8 @@ Revisado em 15/09/2026 contra
   arquivo local de FIIs e destino opcional da entrega.
 - `scraper`: fontes, URLs, timeouts, retries e parâmetros das alternativas.
   O padrão é `acoes_source: fundamentus`; timeout de 30 segundos e duas
-  novas tentativas para essa fonte.
+  novas tentativas para essa fonte. `fundamentus_retry_delay: 15` define
+  as esperas de 15s e 30s, com teto de 120s.
 - `filters`: pisos de FIIs e `top_n`; a subseção `acoes` controla ações.
 - `columns`: colunas percentuais, monetárias, inteiras e numéricas simples
   usadas para normalizar os FIIs.

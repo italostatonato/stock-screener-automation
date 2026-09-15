@@ -21,9 +21,8 @@ remove classes duplicadas de uma mesma empresa. Veja [Metodologia](METHODOLOGY.m
 
 Um Top FII vazio interrompe a execução antes das escritas de histórico.
 Coleta, score e Top Ações não vazio também são obrigatórios. Uma falha de
-ações ocorre antes do snapshot do lake e do JSON novo, mas os históricos
-locais de FIIs já podem ter sido atualizados. O pipeline não é uma transação
-única entre todos os arquivos.
+ações ocorre antes de escrever os históricos de qualquer classe. As escritas
+posteriores ainda não são uma transação única entre todos os arquivos.
 
 ## Persistência
 
@@ -61,9 +60,9 @@ para reconstruir os históricos de `data/ml/` e a carteira de `data/backtest/`.
 `src/dataset_builder.py` cria features e targets de 7, 30, 60 e 90 dias.
 `src/ml_models.py` treina e calcula previsões em modo sombra.
 `src/ml_confidence.py` resume maturidade e desempenho validado.
-Treino e previsão ainda acontecem juntos. A chamada principal usa 30d,
-enquanto o exporter declara 7d como horizonte principal da tela.
-Leia [Pipeline ML](ML_PIPELINE.md) para essa diferença operacional.
+Treino e previsão ainda acontecem juntos, em 7d no pipeline e no rebuild.
+Previsões são identificadas por horizonte e o treino exige targets realizados
+até a data prevista. Leia [Pipeline ML](ML_PIPELINE.md).
 
 O histórico retroativo é separado da execução semanal:
 
@@ -81,7 +80,12 @@ das curvas de preço do dashboard. Veja [Backtests](BACKTEST_RETROATIVO.md).
 `src/market_data.py` coleta indicadores e nomes de ativos.
 `src/benchmark.py` prepara séries de mercado e macroeconomia.
 `src/formatter.py` formata o Excel.
-`src/exporter.py` gera `docs/data/YYYY-MM-DD.json` e reconstrói o índice de datas.
+`src/exporter.py` gera `docs/data/YYYY-MM-DD.json` por substituição atômica e
+reconstrói o índice de datas. Valores numéricos não finitos não são aceitos no
+JSON. Os derivados respeitam `paths.data_dir`; o histórico de maturidade usa
+o diretório de saída do dashboard. O Excel conserva células numéricas.
+Metadados externos são escapados ao inserir texto em HTML e tooltips usam
+`textContent`. Os testes de rendering cobrem markup, aspas e entidades.
 
 `docs/index.html` concentra HTML, CSS e JavaScript da aplicação. O navegador
 consome os snapshots e calcula a alocação, as quantidades inteiras e as curvas
@@ -109,8 +113,10 @@ O workflow [run_screener.yml](../.github/workflows/run_screener.yml) roda às
 segundas, 08h de São Paulo, ou por acionamento manual. `test` precede `screener`.
 O job `deploy` consulta a `main` atual e roda quando os testes passam, mesmo
 se `screener` falhar. A etapa independente de healthcheck bloqueia o commit
-automático em caso de `error`; vários erros de módulos auxiliares dentro de
-`main.py` são registrados em log e não interrompem sozinhos a execução.
+automático em caso de `error`. O próprio `main.py` interrompe em falhas de lake,
+reconstrução, exportação ou qualidade. Indicadores, ML e entrega opcional
+podem falhar com registro em log. `tests.yml` valida pushes e pull requests
+sem executar coleta ou publicação.
 
 Os principais limites são dependência de fontes públicas, crescimento de
 binários no Git, cobertura de preços históricos e maturidade estatística.

@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 
 
 def save_snapshot(top_actions: pd.DataFrame, top_fiis: pd.DataFrame, snapshot_path: str):
-    """Salva snapshot do dia com Acoes e FIIs em abas separadas."""
-    os.makedirs(os.path.dirname(snapshot_path), exist_ok=True)
+    """Salva o snapshot da execução com Acoes e FIIs em abas separadas."""
+    os.makedirs(os.path.dirname(snapshot_path) or ".", exist_ok=True)
     with pd.ExcelWriter(snapshot_path, engine="openpyxl") as writer:
         top_actions.to_excel(writer, sheet_name="Acoes BR", index=False)
         top_fiis.to_excel(writer, sheet_name="FII", index=False)
@@ -17,17 +17,32 @@ def save_snapshot(top_actions: pd.DataFrame, top_fiis: pd.DataFrame, snapshot_pa
 
 
 def update_history(df_new: pd.DataFrame, hist_path: str, key_col: str):
-    """Atualiza arquivo historico sem duplicar entradas.
+    """Substitui o ranking das datas recebidas e preserva as demais datas.
 
     Args:
         df_new: DataFrame novo com coluna de data.
         hist_path: caminho do Excel historico.
         key_col: coluna que identifica o ativo (ex: 'FUNDOS' ou 'Acao').
     """
-    os.makedirs(os.path.dirname(hist_path), exist_ok=True)
+    os.makedirs(os.path.dirname(hist_path) or ".", exist_ok=True)
+
+    def normalize_dates(frame):
+        frame = frame.copy()
+        date_cols = [c for c in ("Data Preco", "Data Preço", "data_preco") if c in frame]
+        if date_cols:
+            dates = pd.Series(pd.NaT, index=frame.index, dtype="datetime64[ns]")
+            for column in date_cols:
+                dates = dates.fillna(pd.to_datetime(frame[column], errors="coerce", format="mixed"))
+            frame = frame.drop(columns=date_cols)
+            frame["Data Preco"] = dates.dt.strftime("%Y-%m-%d")
+        return frame
+
+    df_new = normalize_dates(df_new)
 
     if os.path.exists(hist_path):
-        old = pd.read_excel(hist_path)
+        old = normalize_dates(pd.read_excel(hist_path))
+        if "Data Preco" in df_new and "Data Preco" in old:
+            old = old[~old["Data Preco"].isin(df_new["Data Preco"].dropna())]
         combined = pd.concat([old, df_new], ignore_index=True)
         logger.info(f"Historico carregado: {len(old)} linhas antigas + {len(df_new)} novas")
     else:

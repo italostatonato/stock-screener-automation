@@ -76,6 +76,8 @@ Elas podem ser incluídas apenas para sensibilidade com `--include-partial`.
 - carteira equal weight;
 - preço ajustado para retorno e benchmark;
 - custo de 10 bps multiplicado pelo turnover, configurável por CLI;
+- curva inicia em 100 antes do primeiro retorno, incluindo a primeira perda no drawdown;
+- benchmark ausente em qualquer período deixa seu acumulado e alpha indisponíveis;
 - ativo sem preço vira caixa, sem ser removido silenciosamente da média;
 - cobertura, tickers ausentes, preços defasados e turnover são salvos por período;
 - turnover usa a troca de pesos-alvo entre composições; não inclui ajuste por

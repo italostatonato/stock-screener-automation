@@ -42,6 +42,25 @@ def test_chain_base100():
     assert _chain_base100(105.0, None) == pytest.approx(105.0)
 
 
+def test_legacy_backtest_respects_end_date(monkeypatch):
+    import src.backtest as module
+    monkeypatch.setattr(module, "load_top20_snapshots", lambda _: [
+        (pd.Timestamp("2026-01-02"), ["TEST11"]),
+        (pd.Timestamp("2026-02-02"), ["FUTURE11"]),
+    ])
+    intervals = []
+    def portfolio(tickers, start, end):
+        intervals.append((tickers, start, end))
+        return 0.05
+    monkeypatch.setattr(module, "_portfolio_return", portfolio)
+    monkeypatch.setattr(module, "_asset_return", lambda *args: None)
+    result = run_backtest("unused", data_fim="2026-01-10")
+    assert len(intervals) == 1
+    assert intervals[0][2] == pd.Timestamp("2026-01-10")
+    assert result["ifix"]["retorno_pct"] is None
+    assert result["bateu_ifix"] is None
+
+
 def test_run_backtest_sem_historico(tmp_path):
     result = run_backtest(str(tmp_path / "inexistente.xlsx"))
     assert result["disponivel"] is False

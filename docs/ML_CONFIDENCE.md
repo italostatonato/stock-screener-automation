@@ -43,19 +43,20 @@ baseline; não é a média de todos os modelos.
 
 ## Horizontes e limites
 
-O exporter declara 7d como principal e 30d como estratégico. Entretanto, o
-pipeline principal treina em 30d e o Parquet de performance preserva o horizonte
-avaliado. `build_ml_confidence_summary()` não filtra nem converte as linhas pelo
-argumento `horizon_days`: esse argumento orienta a maturidade e o texto do resumo.
-Confira `Horizonte` de cada linha e do modelo mais confiável. Detalhes em
-[Pipeline ML](ML_PIPELINE.md).
+O treino operacional e o exporter usam 7d. `build_ml_confidence_summary()`
+filtra os candidatos ao resumo global por `horizon_days`, incluindo o líder
+e a contagem de janelas. `por_modelo` conserva todas as linhas com seu próprio
+`Horizonte`. Métricas de 30d não elevam a confiabilidade global de 7d.
+Detalhes em [Pipeline ML](ML_PIPELINE.md).
 
 O bloqueio de projeções é definido em `src/exporter.py` por
 `ML_MIN_VALID_WINDOWS = 3` e `ML_MAX_ABS_EXPECTED_RETURN = 0.50`. O valor bruto
 é mantido para auditoria; `retorno_esperado_exibicao` recebe `null` quando a
 regra não é atendida. O JSON informa `retorno_esperado_horizonte`,
 `projecao_confiavel`, `projecao_outlier`, `janelas_validas_modelo`,
-`min_janelas_validas_projecao` e `motivo_projecao`.
+`min_janelas_validas_projecao` e `motivo_projecao`. O retorno médio previsto
+usa `modelo_projecao: Ensemble`; sua liberação depende das janelas desse
+modelo, não das de `modelo_lider` por ativo.
 
 ## Saída no JSON
 

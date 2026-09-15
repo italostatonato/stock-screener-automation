@@ -34,6 +34,8 @@ from typing import Callable
 import numpy as np
 import pandas as pd
 
+from src.ml_horizons import prediction_horizons, predictions_for_horizon
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_HORIZON = 7
@@ -144,7 +146,7 @@ def _safe_to_parquet(df: pd.DataFrame, path: str) -> None:
 
 
 def _normalize_ticker(series: pd.Series) -> pd.Series:
-    return series.astype(str).str.strip().str.upper()
+    return series.astype("string").str.strip().str.upper()
 
 
 def _percentile_score(values: pd.Series) -> pd.Series:
@@ -305,6 +307,8 @@ def _build_latest_base(df: pd.DataFrame, spec: AssetSpec, horizon: int) -> pd.Da
     out = pd.DataFrame()
     out["Data_Execucao"] = latest[spec.date_col].dt.strftime("%Y-%m-%d")
     out["Tipo"] = spec.tipo
+    out["Horizonte"] = f"{horizon}d"
+    out["modelo_projecao"] = "Ensemble"
     out["Ticker"] = latest[spec.ticker_col].astype(str).str.upper().values
     out["Nome"] = latest[spec.name_col].values if spec.name_col and spec.name_col in latest.columns else None
     out["preco_atual"] = pd.to_numeric(latest[spec.price_col], errors="coerce").values
@@ -346,9 +350,15 @@ def _train_predict_models(df: pd.DataFrame, spec: AssetSpec, horizon: int) -> pd
         latest_base["motivo_status"] = "Nenhuma feature numérica disponível para treinamento."
         return latest_base.drop(columns=["_source_index"], errors="ignore")
 
+    future_date_col = f"Data_Futura_{horizon}d"
+    if future_date_col not in data:
+        latest_base["motivo_status"] = "Datas de realização dos targets ausentes; treino suspenso."
+        return latest_base.drop(columns=["_source_index"], errors="ignore")
+
     train = data[
         data[spec.date_col].lt(latest_date)
         & pd.to_numeric(data[target_col], errors="coerce").notna()
+        & pd.to_datetime(data[future_date_col], errors="coerce").le(latest_date)
     ].copy()
 
     train_dates = train[spec.date_col].dt.normalize().nunique() if not train.empty else 0
@@ -360,9 +370,9 @@ def _train_predict_models(df: pd.DataFrame, spec: AssetSpec, horizon: int) -> pd
         return latest_base.drop(columns=["_source_index"], errors="ignore")
 
     latest_rows = data.loc[latest_base["_source_index"].values].copy()
-    x_train = train[feature_cols].apply(pd.to_numeric, errors="coerce")
+    x_train = train[feature_cols].apply(pd.to_numeric, errors="coerce").replace([np.inf, -np.inf], np.nan)
     y_train = pd.to_numeric(train[target_col], errors="coerce")
-    x_latest = latest_rows[feature_cols].apply(pd.to_numeric, errors="coerce")
+    x_latest = latest_rows[feature_cols].apply(pd.to_numeric, errors="coerce").replace([np.inf, -np.inf], np.nan)
 
     factories = _model_factories()
     expected_return_cols = []
@@ -421,8 +431,9 @@ def _append_predictions(new_predictions: pd.DataFrame, path: str) -> pd.DataFram
     combined = pd.concat([existing, new_predictions], ignore_index=True, sort=False) if not existing.empty else new_predictions.copy()
     combined["Data_Execucao"] = pd.to_datetime(combined["Data_Execucao"], errors="coerce").dt.strftime("%Y-%m-%d")
     combined["Ticker"] = _normalize_ticker(combined["Ticker"])
+    combined["Horizonte"] = prediction_horizons(combined)
     combined = combined.dropna(subset=["Data_Execucao", "Ticker"])
-    combined = combined.drop_duplicates(["Data_Execucao", "Tipo", "Ticker"], keep="last")
+    combined = combined.drop_duplicates(["Data_Execucao", "Tipo", "Ticker", "Horizonte"], keep="last")
     combined = combined.sort_values(["Tipo", "Data_Execucao", "Ticker"]).reset_index(drop=True)
     _safe_to_parquet(combined, path)
     logger.info("Previsões ML salvas: %s (%s linhas)", path, len(combined))
@@ -442,7 +453,7 @@ def _performance_for_predictions(pred: pd.DataFrame, dataset: pd.DataFrame, spec
     if target.empty:
         return pd.DataFrame()
 
-    base = pred.copy()
+    base = predictions_for_horizon(pred, horizon)
     base["Data_Execucao"] = pd.to_datetime(base["Data_Execucao"], errors="coerce").dt.strftime("%Y-%m-%d")
     base["Ticker"] = _normalize_ticker(base["Ticker"])
     merged = base.merge(target[["Data_Execucao", "Ticker", target_col]], on=["Data_Execucao", "Ticker"], how="inner")
@@ -545,7 +556,8 @@ def run_ml_pipeline(
 ) -> dict[str, pd.DataFrame]:
     """Executa a camada ML em modo sombra.
 
-    A função é segura para rodar diariamente. Ela não altera rankings oficiais,
+    A função integra a rotina semanal e pode ser acionada manualmente.
+    Ela não altera rankings oficiais,
     não sobrescreve históricos principais e só atualiza os parquets próprios da
     camada de modelos.
     """

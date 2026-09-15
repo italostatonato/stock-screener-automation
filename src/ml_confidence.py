@@ -241,7 +241,8 @@ def build_ml_confidence_summary(
         }
         per_model.append(payload)
 
-    valid_models = [r for r in per_model if _safe_int(r.get("Janelas_Validas"), 0) >= min_valid_windows]
+    horizon_models = [r for r in per_model if str(r.get("Horizonte")).lower() == f"{horizon_days}d"]
+    valid_models = [r for r in horizon_models if _safe_int(r.get("Janelas_Validas"), 0) >= min_valid_windows]
     if valid_models:
         leader = max(valid_models, key=lambda r: _safe_float(r.get("Confiabilidade_Pct"), 0.0) or 0.0)
         predictive = round(_safe_float(leader.get("Confiabilidade_Pct"), 0.0) or 0.0, 2)
@@ -265,7 +266,7 @@ def build_ml_confidence_summary(
         )
         leader_payload = None
 
-    max_windows = max([_safe_int(r.get("Janelas_Validas"), 0) for r in per_model], default=0)
+    max_windows = max([_safe_int(r.get("Janelas_Validas"), 0) for r in horizon_models], default=0)
 
     return {
         "status": status,

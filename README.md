@@ -8,7 +8,7 @@ Boletim quantitativo semanal de **FIIs** e **ações brasileiras**, com coleta d
 
 **[Dashboard público](https://italostatonato.github.io/stock-screener-automation/)** · **[Wiki](https://github.com/italostatonato/stock-screener-automation/wiki)**
 
-Documentação revisada em **15/09/2026** contra o código da `main` no GitHub (`3137e34`). Os comandos e comportamentos abaixo correspondem a essa versão. As evoluções ainda pendentes estão identificadas no [estado da publicação](docs/DOCUMENTATION.md).
+Documentação revisada em **15/09/2026**, junto com as correções do pipeline, dos dados, do ML e do dashboard. Veja o [estado da revisão](docs/DOCUMENTATION.md).
 
 > Projeto educacional e analítico. Não constitui recomendação de investimento.
 
@@ -65,6 +65,7 @@ src/
   dataset_builder.py            Feature engineering e targets futuros
   ml_models.py                  Modelos ML em modo sombra
   ml_confidence.py              Maturidade, confiabilidade e janelas válidas
+  ml_horizons.py                Identificação e isolamento de horizontes das previsões
   data_lake.py                  Camada incremental, manifesto e qualidade
   delivery.py                   Entrega opcional do Excel e log de auditoria
   exporter.py                   JSON do dashboard
@@ -106,6 +107,7 @@ scripts/
 tests/                          Testes automatizados
 .github/workflows/
   run_screener.yml              Automação semanal via GitHub Actions
+  tests.yml                     Testes em pushes e pull requests
 ```
 
 ---
@@ -113,27 +115,21 @@ tests/                          Testes automatizados
 ## Pipeline semanal
 
 1. Carrega `config.yaml` e configura logs.
-2. Coleta FIIs ou usa arquivo local quando configurado.
-3. Limpa e normaliza FIIs.
-4. Calcula score FIIs no universo completo.
-5. Aplica pisos de elegibilidade e ordena pelo score de sete fatores iguais.
-6. Atualiza histórico Excel do Top 20 FIIs.
-7. Salva universo FIIs em `data/ml/historico_fiis.parquet`.
-8. Coleta ações na tabela pública do Fundamentus.
-9. Calcula score ações no universo completo.
-10. Aplica pisos de elegibilidade e ordena pelo score de sete fatores iguais.
-11. Atualiza histórico Excel do Top 20 ações.
-12. Salva universo ações em `data/ml/historico_acoes.parquet`.
-13. Coleta indicadores de mercado e benchmarks.
-14. Atualiza carteira histórica em `data/backtest/carteiras_historicas.parquet`.
-15. Salva snapshot incremental em `data/lake/snapshots/YYYY-MM-DD/`.
-16. Reconstrói os históricos consolidados e a carteira a partir do lake.
-17. Gera datasets com targets de 7, 30, 60 e 90 dias e executa os modelos ML em modo sombra.
-18. Gera snapshot Excel em `data/output/`.
-19. Exporta JSON da execução em `docs/data/YYYY-MM-DD.json`.
-20. Reconstrói `docs/data/index.json` com snapshots existentes.
-21. Executa checagens de qualidade.
-22. Copia o Excel para OneDrive local quando configurado.
+2. Coleta e normaliza FIIs; calcula score, aplica elegibilidade e valida o Top N.
+3. Coleta ações; calcula score, aplica elegibilidade e valida o Top N.
+4. Após validar os dois rankings, atualiza históricos Excel e universos ML.
+5. Coleta indicadores e benchmarks e calcula o backtest legado de FIIs.
+6. Atualiza a carteira histórica e salva o snapshot incremental no lake.
+7. Reconstrói históricos consolidados e carteira a partir do lake.
+8. Gera targets de 7, 30, 60 e 90 dias e executa os modelos sombra em **7d**.
+9. Gera o Excel formatado e exporta o JSON, o índice e o histórico compacto de KPIs.
+10. Verifica a qualidade e a presença do snapshot da execução.
+11. Copia o Excel para o destino local quando configurado.
+
+Falhas no lake, na reconstrução, na exportação ou checagens com `error`
+interrompem a execução. Indicadores, ML sombra e entrega opcional podem falhar
+com registro em log. Um erro ao construir datasets impede treinar dados antigos.
+Reexecutar no mesmo dia substitui o ranking Excel daquela data.
 
 O score é calculado no universo completo **antes** dos filtros. Cada classe usa
 sete indicadores com peso `1/7`; dados ausentes recebem percentil neutro 50.
@@ -282,11 +278,11 @@ Métricas monitoradas:
 - número de janelas válidas;
 - status de maturidade.
 
-O dashboard declara 7d como horizonte principal e 30d como estratégico, mas
-`main.py` e `scripts/rebuild_from_lake.py` passam explicitamente `horizon=30`
-ao treinamento. O padrão da função `run_ml_pipeline()` é 7. Portanto, confira
-o campo `Horizonte` de cada métrica e `retorno_esperado_horizonte` de cada ativo;
-o rótulo principal da tela não converte métricas de 30d em 7d.
+O pipeline principal e o rebuild treinam em **7d**, alinhados ao dashboard.
+Os datasets também guardam targets de 30, 60 e 90 dias. Cada previsão conserva
+seu `Horizonte`: previsões históricas de 30d não são reaproveitadas como 7d.
+O ranking ML usa a data do snapshot; sem previsão correspondente, mostra o
+baseline atual. O treino só usa targets realizados até a data da previsão.
 
 A confiabilidade começa com **1 janela válida** e usa **5 janelas** como meta
 de cobertura. Exibir uma projeção de retorno exige **3 janelas** do mesmo
@@ -322,9 +318,9 @@ O workflow `.github/workflows/run_screener.yml`:
 - notifica falha via Telegram quando os secrets estão configurados.
 
 O workflow tem os jobs `test`, `screener` e `deploy`, com Python 3.11 e Chrome
-no runner de coleta. Os artefatos ficam retidos por 90 dias. Não há gatilho de
-push: uma atualização apenas documental não inicia o screener nem um novo
-deploy por si só.
+no runner de coleta. Os artefatos ficam retidos por 90 dias. O workflow
+`tests.yml` executa testes Python e JavaScript em pushes de código/documentação
+e pull requests. Esses gatilhos não iniciam coleta nem deploy.
 
 A revisão semanal de documentação é uma tarefa separada, solicitada para
 **segunda-feira às 12h, America/Sao_Paulo**. Seu procedimento está em
@@ -335,8 +331,9 @@ A revisão semanal de documentação é uma tarefa separada, solicitada para
 ## Setup local
 
 Use Python 3.11 ou superior, Git e Google Chrome instalado para a coleta de
-FIIs. Node.js é usado pelo teste JavaScript do simulador; o dashboard publicado
-é estático e não exige Node para servir os arquivos.
+FIIs. Node.js 24 é a versão definida no workflow de testes.
+Ele permite executar os testes JavaScript do simulador e da renderização;
+o dashboard é estático e não exige Node para servir os arquivos.
 
 ```bash
 git clone https://github.com/italostatonato/stock-screener-automation.git
@@ -381,7 +378,7 @@ Sem a variável, a cópia local é pulada e o Excel continua em `data/output/`.
 Por padrão, as ações são coletadas da tabela pública do
 [Fundamentus](https://www.fundamentus.com.br/resultado.php), em **uma requisição
 por tentativa**, sem conta ou token. A configuração permite duas novas
-tentativas após falha. Ela fornece cotação,
+tentativas após falha, com intervalos de 15s e 30s. Ela fornece cotação,
 múltiplos, margens, ROIC/ROE, liquidez de dois meses, patrimônio, dívida
 líquida e crescimento de receita.
 
@@ -415,12 +412,12 @@ python -m pytest tests/ -v
 Rodar healthcheck:
 
 ```bash
-python scripts/healthcheck_data.py
+python scripts/healthcheck_data.py --read-only
 ```
 
-O healthcheck atualiza o manifesto do lake, o índice do dashboard e o relatório
-de qualidade. `error` encerra com código 1; `ok` e `warn`, com 0. Para revisar
-somente documentação, execute-o numa cópia temporária dos dados. Consulte
+Sem `--read-only`, o healthcheck atualiza o manifesto do lake, o índice do dashboard e o relatório
+de qualidade. Com `--read-only`, compara o índice aos arquivos e valida os
+JSONs sem escrever. `error` encerra com código 1; `ok` e `warn`, com 0. Consulte
 [Operação](docs/OPERATIONS.md) antes de rodar comandos que reconstroem derivados.
 
 Reconstruir derivados a partir do lake:
@@ -459,8 +456,7 @@ http://localhost:8000/docs/
 
 ## Limitações e próximos passos
 
-- Alinhar a chamada de treino em 30d com o horizonte principal de 7d do dashboard;
-  separar treino e previsão ainda é uma evolução futura.
+- Separar treino e previsão e avaliar estabilidade após a transição operacional para 7d.
 - Validar modelos em mais janelas e definir um critério de promoção. O campo
   `modelo_lider` atual não substitui automaticamente o ranking oficial.
 - Completar a base histórica auditável de ações; o backfill point-in-time

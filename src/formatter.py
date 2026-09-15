@@ -31,9 +31,9 @@ ACOES_NUM_COLS   = [
     "Giro do Ativo Inicial",
 ]
 
-FMT_MONEY = 'R$ #.##0,00'
-FMT_PCT   = '0,00%'
-FMT_NUM   = '0,00'
+FMT_MONEY = '"R$" #,##0.00'
+FMT_PCT   = '0.00%'
+FMT_NUM   = '0.00'
 
 COLOR_HEADER      = "1F4E79"
 COLOR_HEADER_FONT = "FFFFFF"
@@ -128,6 +128,8 @@ def _add_premissas(wb, cfg: dict, data_hoje: str, n_fiis: int, n_acoes: int):
         ("FIIs",      "fundsexplorer.com.br/ranking"),
         ("Ações BR",  "fundamentus.com.br/resultado.php (tabela pública)"),
         ("Indicadores de mercado", "Banco Central do Brasil (SGS) + AwesomeAPI"),
+        ("Coleta agendada", "Semanal: segunda-feira, 08h de Brasília; também pode ser acionada manualmente."),
+        ("Frequência dos indicadores", "Liquidez e variações diárias descrevem as métricas dos provedores, não a cadência do screener."),
         (None, None),
         ("── METODOLOGIA: ELEGIBILIDADE + SCORE ──", None),
         (None, "1) Filtros fixos eliminam ativos com problemas absolutos (dados ausentes, "
@@ -199,7 +201,8 @@ def _add_base_completa(wb, sheet_name: str, df: pd.DataFrame, money_cols, pct_co
         del wb[sheet_name]
     ws = wb.create_sheet(sheet_name)
 
-    df = df.fillna("").astype(str)
+    # Preserva números para fórmulas, filtros e formatos monetários/percentuais.
+    df = df.astype(object).where(df.notna(), None)
     data = [df.columns.tolist()] + df.values.tolist()
     for row in data:
         ws.append(row)
@@ -250,7 +253,7 @@ def _add_indicadores(wb, market_data: dict):
 
     # ── Séries históricas (IPCA, Selic, IGP-M) ──────────────────────────────
     series_map = {
-        "ipca_12m": "IPCA (variação mensal %)",
+        "ipca_12m": "IPCA (acumulado em 12 meses %)",
         "selic":    "Selic Meta (% a.a.)",
         "igpm":     "IGP-M (variação mensal %)",
     }
@@ -403,6 +406,8 @@ def format_workbook(
         _style_sheet(wb["FII"], FII_MONEY_COLS, FII_PCT_COLS, FII_NUM_COLS)
     if "Ações BR" in wb.sheetnames:
         _style_sheet(wb["Ações BR"], ACOES_MONEY_COLS, ACOES_PCT_COLS, ACOES_NUM_COLS)
+    elif "Acoes BR" in wb.sheetnames:
+        _style_sheet(wb["Acoes BR"], ACOES_MONEY_COLS, ACOES_PCT_COLS, ACOES_NUM_COLS)
 
     # Bases completas
     _add_base_completa(wb, "FII — Base Completa", fii_base, FII_MONEY_COLS, FII_PCT_COLS, FII_NUM_COLS)
@@ -419,7 +424,7 @@ def format_workbook(
 
     # ── Reordena abas ────────────────────────────────────────────────────────
     desired_order = [
-        "Ações BR", "FII",                          # Recomendações
+        "Ações BR", "Acoes BR", "FII",              # Recomendações
         "Indicadores",
         "Premissas",
         "Ações — Base Completa", "FII — Base Completa",  # Bases completas

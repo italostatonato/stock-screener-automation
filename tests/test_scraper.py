@@ -320,3 +320,17 @@ def test_fundamentus_repete_requisicao_apos_timeout(monkeypatch):
 
     assert len(attempts) == 2
     assert result.iloc[0]["Ação"] == "TEST3"
+
+
+def test_fundamentus_identifica_timeout_de_conexao_e_respeita_esperas(monkeypatch):
+    attempts = []
+    delays = []
+    def fail(*args, **kwargs):
+        attempts.append(kwargs["timeout"])
+        raise requests.ConnectTimeout("unreachable")
+    monkeypatch.setattr("src.scraper.requests.get", fail)
+    monkeypatch.setattr("src.scraper.time.sleep", delays.append)
+    with pytest.raises(RuntimeError, match="timeout de conexão.*3 tentativas"):
+        scrape_acoes_fundamentus({"fundamentus_timeout": 30, "fundamentus_retries": 2})
+    assert attempts == [30, 30, 30]
+    assert delays == [15, 30]

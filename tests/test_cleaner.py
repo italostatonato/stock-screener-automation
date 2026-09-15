@@ -160,3 +160,24 @@ def test_clean_and_normalize_descarta_taxas_negativas():
     assert result["TAX. PERFORMANCE"].iloc[0] == pytest.approx(0.20)
     assert pd.isna(result["TAX. ADMINISTRAÇÃO"].iloc[1])
     assert pd.isna(result["TAX. PERFORMANCE"].iloc[1])
+
+
+def test_excel_numerico_preserva_preco_percentual_e_quantidade(tmp_path):
+    source = pd.DataFrame({
+        "FUNDOS": ["TEST11"], "PREÇO ATUAL (R$)": [125.99],
+        "DIVIDEND YIELD": [0.0155], "QUANT. ATIVOS": [30.0],
+    })
+    path = tmp_path / "entrada.xlsx"
+    source.to_excel(path, index=False)
+    result = clean_and_normalize(pd.read_excel(path), {
+        "money": ["PREÇO ATUAL (R$)"], "percent": ["DIVIDEND YIELD"],
+        "integer": ["QUANT. ATIVOS"],
+    })
+    assert result.iloc[0]["PREÇO ATUAL (R$)"] == pytest.approx(125.99)
+    assert result.iloc[0]["DIVIDEND YIELD"] == pytest.approx(0.0155)
+    assert result.iloc[0]["QUANT. ATIVOS"] == 30
+
+
+def test_coluna_mista_de_excel_e_texto_brasileiro():
+    assert _parse_money(pd.Series([125.99, "125,99"])).tolist() == [125.99, 125.99]
+    assert _parse_percent(pd.Series([0.0155, "1,55%"])).tolist() == [0.0155, 0.0155]

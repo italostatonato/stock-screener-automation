@@ -32,6 +32,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
       - name: Rodar testes
         run: pytest tests/ -v
 
@@ -63,7 +67,19 @@ jobs:
         run: git pull --rebase origin main
 
       - name: Rodar screener
-        run: python main.py
+        shell: bash
+        run: |
+          mkdir -p logs
+          python -u main.py 2>&1 | tee logs/pipeline.log
+
+      - name: Preservar diagnóstico da falha
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screener-failure-${{ github.run_id }}
+          path: logs/
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Healthcheck dos dados
         run: python scripts/healthcheck_data.py

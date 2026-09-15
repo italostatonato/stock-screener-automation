@@ -1270,7 +1270,7 @@
       <div class="signal-cell"><span>Leitura da semana</span><b>Dados para orientar análise, não recomendações.</b></div>
       <div class="signal-cell"><span>Universo</span><b>Ações + FIIs brasileiros</b></div>
       <div class="signal-cell"><span>Metodologia</span><b>Score multifatorial</b></div>
-      <div class="signal-cell"><span>Ritmo</span><b>Atualização semanal</b></div>
+      <div class="signal-cell"><span>Coleta</span><b>Semanal · segunda, 08h BRT</b></div>
     </section>
 
     <section id="overview" class="section active" role="tabpanel" aria-labelledby="tab-overview" aria-hidden="false">
@@ -1363,7 +1363,7 @@
     </section>
 
     <section id="fiis" class="section" role="tabpanel" aria-labelledby="tab-fiis" aria-hidden="true">
-      <div class="section-head"><div><h2>Top 20 FIIs</h2><p class="desc">Rank, score, renda, valuation, liquidez e tendência diária.</p></div><div class="toolbar"><label class="sr-only" for="searchFiis">Buscar FII ou setor</label><input id="searchFiis" class="search" type="search" placeholder="Buscar FII ou setor..." /></div></div>
+      <div class="section-head"><div><h2>Top 20 FIIs</h2><p class="desc">Rank, score, renda, valuation, liquidez e tendência entre coletas semanais ou manuais.</p></div><div class="toolbar"><label class="sr-only" for="searchFiis">Buscar FII ou setor</label><input id="searchFiis" class="search" type="search" placeholder="Buscar FII ou setor..." /></div></div>
       <div id="fiiSectorLegend" class="sector-legend" aria-label="Cores dos setores de FIIs"></div>
       <div class="metric-scale-legend" aria-label="Escala relativa dos indicadores"><b>Faixa relativa dos indicadores</b><span class="scale-dot" style="--swatch:var(--good)"></span> alta <span class="scale-dot" style="--swatch:var(--warn)"></span> média <span class="scale-dot" style="--swatch:var(--bad)"></span> baixa</div>
       <div class="grid" id="fiisGrid"></div>
@@ -1460,7 +1460,7 @@
         <div class="panel"><h3>Macro · IPCA, IGP-M e Selic</h3><p>Séries disponíveis no payload de cada execução.</p><div class="chart-box"><canvas id="macroChart" role="img" aria-label="Evolução histórica de IPCA, IGP-M e Selic"></canvas></div><div class="chart-explain"><b>Como ler:</b> essas linhas ajudam a entender o pano de fundo econômico. Juros e inflação afetam o custo de oportunidade, dividendos, FIIs e valuation das ações.</div></div>
         <div class="panel wide"><h3>Carteira FIIs Top 20</h3><p>Retorno acumulado da carteira real registrada no histórico contra IFIX, IMOB e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyFiisChart" role="img" aria-label="Carteira FIIs Top 20 comparada a IFIX, IMOB e CDI"></canvas></div><div class="mini-note" id="proxyFiisNote"></div><div class="chart-explain"><b>Como ler:</b> IFIX representa fundos imobiliários, IMOB representa o setor imobiliário listado e CDI representa a referência de renda fixa. A carteira precisa superar essas linhas para mostrar valor incremental.</div></div>
         <div class="panel wide"><h3>Carteira Ações Top 20</h3><p>Retorno acumulado da carteira real registrada no histórico contra IBOV, IPCA e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyAcoesChart" role="img" aria-label="Carteira Ações Top 20 comparada a IBOV, IPCA e CDI"></canvas></div><div class="mini-note" id="proxyAcoesNote"></div><div class="chart-explain"><b>Como ler:</b> IBOV mede a bolsa brasileira, IPCA mede inflação e CDI mede a alternativa conservadora. O objetivo é ver se o ranking de ações compensa o risco assumido.</div></div>
-        <div class="panel wide"><h3>Câmbio e cripto</h3><p>Cotações em reais, variação diária e as cinco maiores criptomoedas por valor de mercado.</p><div id="fxGrid" class="market-data-sections"></div></div>
+        <div class="panel wide"><h3>Câmbio e cripto</h3><p>Cotações do snapshot e as cinco maiores criptomoedas por valor de mercado. A variação diária é uma métrica da fonte. Dados ausentes podem ser consultados ao abrir o painel, sem atualizar o ranking semanal.</p><div id="fxGrid" class="market-data-sections"></div></div>
       </div>
     </section>
 
@@ -1740,7 +1740,7 @@
       const detalhe = isAcao ? (rec.empresa || '') : (rec.setor || '');
       const ultima = rec.ultima_aparicao ? `Última: ${rec.ultima_aparicao}` : '';
       const sub = [detalhe, ultima].filter(Boolean).join(' · ');
-      return `<div class="rec-asset"><span class="rec-badge ${isAcao?'acao':'fii'}"></span><span><span class="rec-name">${ticker}</span><span class="rec-sub">${sub}</span></span></div>`;
+      return `<div class="rec-asset"><span class="rec-badge ${isAcao?'acao':'fii'}"></span><span><span class="rec-name">${escapeAttr(ticker)}</span><span class="rec-sub">${escapeAttr(sub)}</span></span></div>`;
     }
     function recNum(v,dec=2){ return v==null || Number.isNaN(Number(v)) ? '—' : fmtNum(v,dec); }
     function recPct(v){ return v==null || Number.isNaN(Number(v)) ? '—' : fmtPct(v); }
@@ -1783,7 +1783,7 @@
       const ticker = rec.Ticker || '—';
       const nome = rec.Nome || '';
       const detalhe = [nome, fmtMoney(rec.preco_atual)].filter(x=>x && x !== '—').join(' · ');
-      return `<div class="rec-asset"><span class="rec-badge ${isAcao?'acao':'fii'}"></span><span><span class="rec-name">${ticker}</span><span class="rec-sub">${detalhe}</span></span></div>`;
+      return `<div class="rec-asset"><span class="rec-badge ${isAcao?'acao':'fii'}"></span><span><span class="rec-name">${escapeAttr(ticker)}</span><span class="rec-sub">${escapeAttr(detalhe)}</span></span></div>`;
     }
     function mlScore(v){ return v==null || Number.isNaN(Number(v)) ? '—' : fmtNum(v,1); }
     function mlReturn(v){ return v==null || Number.isNaN(Number(v)) ? '—' : fmtPct(v); }
@@ -1971,7 +1971,7 @@
         const limit=ml.guardrails?.limite_retorno_esperado_abs_pct||50;
         note.textContent = hasSupervisedScore
           ? `Status: ${statusTxt} · scores em modo sombra. Projeções exigem ${minWindows} janelas válidas e valores acima de ±${fmtNum(limit,0)}% são ocultados.`
-          : `Status: Aquecendo · horizonte 30d · ainda sem Retorno_Futuro_30d realizado. O ranking abaixo mostra o Score Top como baseline até a primeira janela válida.`;
+          : `Status: Aquecendo · horizonte 7d · ainda sem previsão supervisionada de 7d para este snapshot. O ranking abaixo mostra o Score Top como baseline até a primeira janela válida.`;
       }
       if(!rows.length){
         body.innerHTML='<tr><td colspan="14" class="muted-cell">Ainda não há previsões dos modelos. Rode o pipeline para gerar os parquets de ML.</td></tr>';
@@ -1996,7 +1996,7 @@
 
       const perf=ml.performance||[];
       if(!perf.length){
-        perfBody.innerHTML='<tr><td colspan="9" class="muted-cell">Performance supervisionada ainda não disponível: a base atual não possui Retorno_Futuro_30d realizado. Ela aparece automaticamente quando existir pelo menos uma janela completa de 30 dias com preço válido.</td></tr>';
+        perfBody.innerHTML='<tr><td colspan="9" class="muted-cell">Performance supervisionada ainda não disponível: a base atual não possui uma janela realizada para o horizonte principal de 7 dias. Ela aparece automaticamente quando houver preços válidos suficientes.</td></tr>';
       }else{
         perfBody.innerHTML=perf.map(r=>`<tr>
           <td>${r.Tipo === 'ACAO' ? 'Ação' : 'FII'}</td>
@@ -2030,10 +2030,10 @@
       const root=document.getElementById('fiiSectorLegend');
       if(!root) return;
       const sectors=[...new Set((base||[]).map(item=>item.SETOR||'Setor não informado'))].sort((a,b)=>String(a).localeCompare(String(b),'pt-BR'));
-      root.innerHTML=sectors.length?`<b>Setores</b>${sectors.map(sector=>`<span class="sector-swatch" style="--swatch:${sectorColor(sector)}"></span><span>${sector}</span>`).join('')}`:'';
+      root.innerHTML=sectors.length?`<b>Setores</b>${sectors.map(sector=>`<span class="sector-swatch" style="--swatch:${sectorColor(sector)}"></span><span>${escapeAttr(sector)}</span>`).join('')}`:'';
     }
-    function cardFii(r,i,base){ const sector=r.SETOR||'Setor não informado'; const color=sectorColor(sector); return `<article class="asset-card fii" style="--sector-color:${color}"><div class="asset-top"><div><div class="ticker">${r.FUNDOS||'—'}</div><div class="name sector-badge">${sector}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['PREÇO ATUAL (R$)']))}${metric('DY',fmtPct(r['DIVIDEND YIELD']),trendIcon(r,'DIVIDEND YIELD'),relativeTone(base,'DIVIDEND YIELD',r['DIVIDEND YIELD'],true))}${metric('P/VP',fmtNum(r['P/VP'],2),trendIcon(r,'P/VP'),relativeTone(base,'P/VP',r['P/VP'],false))}${metric('Liq.',fmtBig(r['LIQUIDEZ DIÁRIA (R$)']),trendIcon(r,'LIQUIDEZ DIÁRIA (R$)'),relativeTone(base,'LIQUIDEZ DIÁRIA (R$)',r['LIQUIDEZ DIÁRIA (R$)'],true))}</div></article>`; }
-    function cardAcao(r,i,base){ return `<article class="asset-card acao"><div class="asset-top"><div><div class="ticker">${r['Ação']||'—'}</div><div class="name">${r.Empresa||'Empresa não informada'}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['Preço']))}${metric('DY',fmtPct(r['Dividend Yield']),trendIcon(r,'Dividend Yield'),relativeTone(base,'Dividend Yield',r['Dividend Yield'],true))}${metric('P/VPA',fmtNum(r['Preço/VPA'],2),trendIcon(r,'Preço/VPA'),relativeTone(base,'Preço/VPA',r['Preço/VPA'],false))}${metric('ROA',fmtPct(r.ROA),trendIcon(r,'ROA'),relativeTone(base,'ROA',r.ROA,true))}</div></article>`; }
+    function cardFii(r,i,base){ const sector=r.SETOR||'Setor não informado'; const color=sectorColor(sector); return `<article class="asset-card fii" style="--sector-color:${color}"><div class="asset-top"><div><div class="ticker">${escapeAttr(r.FUNDOS||'—')}</div><div class="name sector-badge">${escapeAttr(sector)}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['PREÇO ATUAL (R$)']))}${metric('DY',fmtPct(r['DIVIDEND YIELD']),trendIcon(r,'DIVIDEND YIELD'),relativeTone(base,'DIVIDEND YIELD',r['DIVIDEND YIELD'],true))}${metric('P/VP',fmtNum(r['P/VP'],2),trendIcon(r,'P/VP'),relativeTone(base,'P/VP',r['P/VP'],false))}${metric('Liq.',fmtBig(r['LIQUIDEZ DIÁRIA (R$)']),trendIcon(r,'LIQUIDEZ DIÁRIA (R$)'),relativeTone(base,'LIQUIDEZ DIÁRIA (R$)',r['LIQUIDEZ DIÁRIA (R$)'],true))}</div></article>`; }
+    function cardAcao(r,i,base){ return `<article class="asset-card acao"><div class="asset-top"><div><div class="ticker">${escapeAttr(r['Ação']||'—')}</div><div class="name">${escapeAttr(r.Empresa||'Empresa não informada')}</div></div><span class="rank">#${i+1}</span></div>${scoreBar(scoreOf(r))}<div class="metrics">${metric('Preço',fmtMoney(r['Preço']))}${metric('DY',fmtPct(r['Dividend Yield']),trendIcon(r,'Dividend Yield'),relativeTone(base,'Dividend Yield',r['Dividend Yield'],true))}${metric('P/VPA',fmtNum(r['Preço/VPA'],2),trendIcon(r,'Preço/VPA'),relativeTone(base,'Preço/VPA',r['Preço/VPA'],false))}${metric('ROA',fmtPct(r.ROA),trendIcon(r,'ROA'),relativeTone(base,'ROA',r.ROA,true))}</div></article>`; }
     function renderCards(type){
       const input=document.getElementById(type==='fiis'?'searchFiis':'searchAcoes');
       const grid=document.getElementById(type==='fiis'?'fiisGrid':'acoesGrid');
@@ -2770,7 +2770,7 @@ const CHART_PERIODS = {
               const lines=group.type==='acao'
                 ? [`${ticker} · ${name}`,`Score: ${fmtNum(scoreOf(rec||{}),1)}`,`Preço: ${fmtMoney(rec?.['Preço'])}`,`Dividend Yield: ${fmtPct(rec?.['Dividend Yield'])}`,`P/VPA: ${fmtNum(rec?.['Preço/VPA'],2)}`,`ROA: ${fmtPct(rec?.ROA)}`,`Peso na carteira: ${detail}`]
                 : [`${ticker} · ${name}`,`Setor: ${rec?.SETOR||'não informado'}`,`Score: ${fmtNum(scoreOf(rec||{}),1)}`,`Preço: ${fmtMoney(rec?.['PREÇO ATUAL (R$)'])}`,`Dividend Yield: ${fmtPct(rec?.['DIVIDEND YIELD'])}`,`P/VP: ${fmtNum(rec?.['P/VP'],2)}`,`Liquidez diária: ${fmtBig(rec?.['LIQUIDEZ DIÁRIA (R$)'])}`,`Peso na carteira: ${detail}`];
-              return `<span class="holding-pill" tabindex="0" data-tooltip="${escapeAttr(lines.join('\n'))}" aria-label="Detalhes de ${escapeAttr(ticker)}">${ticker}<small>${detail}</small></span>`;
+              return `<span class="holding-pill" tabindex="0" data-tooltip="${escapeAttr(lines.join('\n'))}" aria-label="Detalhes de ${escapeAttr(ticker)}">${escapeAttr(ticker)}<small>${detail}</small></span>`;
             }).join('')
           : '<span class="muted">Composição ainda não disponível.</span>';
         return `<article class="holdings-card"><h4>${group.title}</h4><p>${fmtNum(group.total,2)}% da carteira · pesos iguais dentro do grupo</p><div class="holding-pills">${pills}</div></article>`;
@@ -2971,7 +2971,7 @@ const CHART_PERIODS = {
         }
         if(cryptoResult.status==='fulfilled'&&Array.isArray(cryptoResult.value)){
           const normalized=cryptoResult.value.slice(0,5).filter(item=>finite(item?.current_price)).map((item,index)=>({
-            id:item.id||'',simbolo:String(item.symbol||'').toUpperCase(),nome:item.name||'',ranking_market_cap:item.market_cap_rank||index+1,preco_brl:Number(item.current_price),variacao_24h_pct:finite(item.price_change_percentage_24h)?Number(item.price_change_percentage_24h):null,market_cap_brl:finite(item.market_cap)?Number(item.market_cap):null,imagem:item.image||'',atualizado_em:item.last_updated||''
+            id:item.id||'',simbolo:String(item.symbol||'').toUpperCase(),nome:item.name||'',ranking_market_cap:Number.isInteger(Number(item.market_cap_rank))&&Number(item.market_cap_rank)>0?Number(item.market_cap_rank):index+1,preco_brl:Number(item.current_price),variacao_24h_pct:finite(item.price_change_percentage_24h)?Number(item.price_change_percentage_24h):null,market_cap_brl:finite(item.market_cap)?Number(item.market_cap):null,imagem:item.image||'',atualizado_em:item.last_updated||''
           }));
           if(normalized.length) indicators.cripto=normalized;
         }
@@ -2990,10 +2990,10 @@ const CHART_PERIODS = {
       const currencies=Object.entries(c).filter(([key])=>/^(USD|EUR|GBP)\//i.test(key)).slice(0,3);
       if((!currencies.length||cryptos.length<5)&&!state.marketFallbackLoading&&!state.marketFallbackAttempted) loadLiveMarketFallback();
       const currencyHtml=currencies.length
-        ? `<div class="market-grid">${currencies.map(([key,value])=>`<article class="market-card" tabindex="0" data-tooltip="${escapeAttr(`${key}\nCotação de compra em reais.\nVariação no dia: ${finite(value?.variacao_pct)?`${signed(value.variacao_pct,2)}%`:'—'}.\nAtualizado em: ${value?.atualizado_em||'não informado'}.`)}"><span class="market-symbol">${key}</span><span class="market-name">Cotação de compra</span><strong class="market-price">${fmtMoney(value?.valor)}</strong><div class="market-meta">${changeMarkup(value?.variacao_pct)}<span>${value?.atualizado_em?String(value.atualizado_em).slice(0,10):'—'}</span></div></article>`).join('')}</div>`
+        ? `<div class="market-grid">${currencies.map(([key,value])=>`<article class="market-card" tabindex="0" data-tooltip="${escapeAttr(`${key}\nCotação de compra em reais.\nVariação no dia: ${finite(value?.variacao_pct)?`${signed(value.variacao_pct,2)}%`:'—'}.\nAtualizado em: ${value?.atualizado_em||'não informado'}.`)}"><span class="market-symbol">${escapeAttr(key)}</span><span class="market-name">Cotação de compra</span><strong class="market-price">${fmtMoney(value?.valor)}</strong><div class="market-meta">${changeMarkup(value?.variacao_pct)}<span>${escapeAttr(value?.atualizado_em?String(value.atualizado_em).slice(0,10):'—')}</span></div></article>`).join('')}</div>`
         : `<div class="empty">${state.marketFallbackLoading?'Buscando cotações atuais...':'Não foi possível carregar o câmbio agora.'}</div>`;
       const cryptoHtml=cryptos.length
-        ? `<div class="market-grid">${cryptos.slice(0,5).map((item,index)=>`<article class="market-card crypto" tabindex="0" data-tooltip="${escapeAttr(`${item.nome||item.simbolo}\nRanking por valor de mercado: #${item.ranking_market_cap||index+1}.\nPreço: ${fmtCryptoPrice(item.preco_brl)}.\nVariação em 24h: ${finite(item.variacao_24h_pct)?`${signed(item.variacao_24h_pct,2)}%`:'—'}.\nValor de mercado: ${finite(item.market_cap_brl)?fmtMoney(item.market_cap_brl):'—'}.\nFonte: CoinGecko.`)}"><span class="market-rank">#${item.ranking_market_cap||index+1}</span><strong class="market-symbol">${item.simbolo||'—'}</strong><span class="market-name">${item.nome||'Criptomoeda'}</span><strong class="market-price">${fmtCryptoPrice(item.preco_brl)}</strong><div class="market-meta">${changeMarkup(item.variacao_24h_pct)}<span>Cap. ${fmtBig(item.market_cap_brl)}</span></div></article>`).join('')}</div><div class="market-source-note">Ranking dinâmico por valor de mercado · preços em BRL · fonte CoinGecko.</div>`
+        ? `<div class="market-grid">${cryptos.slice(0,5).map((item,index)=>`<article class="market-card crypto" tabindex="0" data-tooltip="${escapeAttr(`${item.nome||item.simbolo}\nRanking por valor de mercado: #${item.ranking_market_cap||index+1}.\nPreço: ${fmtCryptoPrice(item.preco_brl)}.\nVariação em 24h: ${finite(item.variacao_24h_pct)?`${signed(item.variacao_24h_pct,2)}%`:'—'}.\nValor de mercado: ${finite(item.market_cap_brl)?fmtMoney(item.market_cap_brl):'—'}.\nFonte: CoinGecko.`)}"><span class="market-rank">#${escapeAttr(item.ranking_market_cap||index+1)}</span><strong class="market-symbol">${escapeAttr(item.simbolo||'—')}</strong><span class="market-name">${escapeAttr(item.nome||'Criptomoeda')}</span><strong class="market-price">${fmtCryptoPrice(item.preco_brl)}</strong><div class="market-meta">${changeMarkup(item.variacao_24h_pct)}<span>Cap. ${fmtBig(item.market_cap_brl)}</span></div></article>`).join('')}</div><div class="market-source-note">Ranking dinâmico por valor de mercado · preços em BRL · fonte CoinGecko.</div>`
         : `<div class="empty">${state.marketFallbackLoading?'Buscando as cinco maiores criptomoedas...':'Não foi possível carregar as criptomoedas agora.'}</div>`;
       const liveNote=state.marketFallbackLive?'<div class="market-source-note">Dados atualizados ao vivo porque o snapshot selecionado não continha essas cotações.</div>':'';
       document.getElementById('fxGrid').innerHTML=`<section class="market-group"><h4>Câmbio <span>USD, EUR e GBP em reais</span></h4>${currencyHtml}</section><section class="market-group"><h4>Top 5 cripto <span>ordenadas por valor de mercado</span></h4>${cryptoHtml}</section>${liveNote}`;

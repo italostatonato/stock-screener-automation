@@ -15,7 +15,7 @@ da métrica de origem; não indicam atualização diária dos rankings.
 `paths.local_input_file` quando esse arquivo existe.
 
 **Ações:** tabela pública do Fundamentus, via HTTP, sem token na execução
-padrão. O timeout é de 30 segundos, com duas novas tentativas configuradas.
+padrão. O timeout é de 30 segundos, com duas novas tentativas e esperas de 15s e 30s.
 Uma execução bem-sucedida pode usar uma requisição; falhas podem causar retries.
 
 O adaptador preserva nomes legados de colunas:

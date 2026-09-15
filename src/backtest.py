@@ -2,7 +2,8 @@
 backtest.py — Camada 3: Backtest
 
 Responsabilidades atuais:
-1. Registrar diariamente a carteira Top 20 recomendada em Parquet.
+1. Registrar a carteira Top 20 em Parquet a cada execução do screener,
+   agendada semanalmente ou acionada manualmente.
 2. Manter o backtest legado de FIIs contra IFIX e IBOV via yfinance.
 
 A primeira responsabilidade é a mais importante neste momento, porque cria a
@@ -202,7 +203,7 @@ def _resolve_date_col(df: pd.DataFrame) -> str | None:
 
 
 def load_top20_snapshots(hist_path: str) -> list[tuple[pd.Timestamp, list[str]]]:
-    """Carrega snapshots diários do Top 20 FIIs a partir do histórico Excel."""
+    """Carrega os snapshots disponíveis do Top 20 FIIs no histórico Excel."""
     try:
         df = pd.read_excel(hist_path)
     except FileNotFoundError:
@@ -322,12 +323,15 @@ def run_backtest(hist_path: str, data_fim: str | None = None) -> dict:
         }
 
     fim = pd.Timestamp(data_fim).normalize() if data_fim else pd.Timestamp.today().normalize()
+    snapshots = [(date, tickers) for date, tickers in snapshots if date < fim]
 
     cart_base100 = 100.0
     ifix_base100 = 100.0
     ibov_base100 = 100.0
     periodos = []
     periodos_com_dados = 0
+    ifix_completo = True
+    ibov_completo = True
 
     for i, (start, tickers) in enumerate(snapshots):
         end = snapshots[i + 1][0] if i + 1 < len(snapshots) else fim
@@ -344,6 +348,8 @@ def run_backtest(hist_path: str, data_fim: str | None = None) -> dict:
 
         periodos_com_dados += 1
         cart_base100 = _chain_base100(cart_base100, cart_ret)
+        ifix_completo = ifix_completo and ifix_ret is not None
+        ibov_completo = ibov_completo and ibov_ret is not None
         ifix_base100 = _chain_base100(ifix_base100, ifix_ret)
         ibov_base100 = _chain_base100(ibov_base100, ibov_ret)
 
@@ -364,8 +370,8 @@ def run_backtest(hist_path: str, data_fim: str | None = None) -> dict:
             "motivo": "Nao foi possivel calcular retorno da carteira Top 20",
         }
 
-    bateu_ifix = cart_base100 > ifix_base100 if periodos else None
-    bateu_ibov = cart_base100 > ibov_base100 if periodos else None
+    bateu_ifix = cart_base100 > ifix_base100 if ifix_completo else None
+    bateu_ibov = cart_base100 > ibov_base100 if ibov_completo else None
 
     result = {
         "disponivel": True,
@@ -379,24 +385,24 @@ def run_backtest(hist_path: str, data_fim: str | None = None) -> dict:
             "base100": round(cart_base100, 2),
         },
         "ifix": {
-            "retorno_pct": round(ifix_base100 - 100, 2),
-            "base100": round(ifix_base100, 2),
+            "retorno_pct": round(ifix_base100 - 100, 2) if ifix_completo else None,
+            "base100": round(ifix_base100, 2) if ifix_completo else None,
         },
         "ibov": {
-            "retorno_pct": round(ibov_base100 - 100, 2),
-            "base100": round(ibov_base100, 2),
+            "retorno_pct": round(ibov_base100 - 100, 2) if ibov_completo else None,
+            "base100": round(ibov_base100, 2) if ibov_completo else None,
         },
         "bateu_ifix": bateu_ifix,
         "bateu_ibov": bateu_ibov,
         "periodos": periodos,
         "metodologia": (
             "Camada 3 — carteira equal-weight Top 20 FIIs rebalanceada a cada snapshot "
-            "diário, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
+            "disponível, comparada a IFIX (XFIX11.SA) e IBOV (^BVSP) via yfinance."
         ),
     }
 
     logger.info(
-        "Backtest Top20 FIIs: carteira=%+.2f%%, IFIX=%+.2f%%, IBOV=%+.2f%% — "
+        "Backtest Top20 FIIs: carteira=%s%%, IFIX=%s%%, IBOV=%s%% — "
         "bateu IFIX=%s, bateu IBOV=%s",
         result["carteira_top20_fiis"]["retorno_pct"],
         result["ifix"]["retorno_pct"],

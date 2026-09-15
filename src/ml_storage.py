@@ -42,7 +42,7 @@ def append_historical_data(
     subset_cols: Optional[list[str]] = None,
 ) -> None:
     """
-    Acrescenta uma base diária ao histórico em Parquet.
+    Acrescenta a base de uma execução semanal ou manual ao histórico em Parquet.
 
     Parâmetros:
         df: DataFrame a ser salvo.
