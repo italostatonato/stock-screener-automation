@@ -1,6 +1,6 @@
 # Troubleshooting
 
-Revisado em 15/09/2026.
+Revisado em 21/09/2026.
 
 ## Preparar e executar
 
@@ -85,7 +85,7 @@ particionados por data não significam que a execução automática seja diária
 
 - `test`: Python 3.11, Node 24, instalação com cache pip e `pytest tests/ -v`.
 - `screener`: depende dos testes; prepara Chrome, sincroniza a `main`,
-  executa pipeline e healthcheck, salva artefatos por 90 dias e commita
+  executa pipeline e healthcheck, salva artefatos de saída por 90 dias e commita
   `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
 - `deploy`: usa a `main` atual e publica `docs/` no GitHub Pages quando
   os testes passam, mesmo se o screener falhar.

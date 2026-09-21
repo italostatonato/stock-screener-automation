@@ -1,7 +1,7 @@
 # Radar Semanal — Contexto para assistentes de IA
 
-Revisado em 15/09/2026, junto com as correções do pipeline, dos dados,
-do ML e do dashboard. Consulte [o estado da revisão](docs/DOCUMENTATION.md).
+Revisado em 21/09/2026 contra a implementação da `main` (`9ff6618`).
+Consulte [o procedimento de revisão](docs/DOCUMENTATION.md).
 
 ## Projeto e documentação
 
@@ -112,7 +112,8 @@ três janelas do mesmo modelo/classe/horizonte e magnitude de até 50%.
 
 `Weekly FII Screener` roda segunda-feira às 08h BRT (`0 11 * * 1`) ou
 manualmente. Jobs: testes → screener; deploy quando testes passam, inclusive
-se a coleta falhar. Publica `docs/`, retém artefatos por 90 dias e commita
+se a coleta falhar. Publica `docs/`. Artefatos de saída são retidos por 90 dias;
+diagnósticos de falha, por 30 dias. Commita
 `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
 `tests.yml` valida pushes de código/documentação e pull requests, sem coleta
 ou deploy. Os testes usam Python e Node 24.

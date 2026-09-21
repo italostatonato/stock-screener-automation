@@ -8,7 +8,7 @@ Boletim quantitativo semanal de **FIIs** e **ações brasileiras**, com coleta d
 
 **[Dashboard público](https://italostatonato.github.io/stock-screener-automation/)** · **[Wiki](https://github.com/italostatonato/stock-screener-automation/wiki)**
 
-Documentação revisada em **15/09/2026**, junto com as correções do pipeline, dos dados, do ML e do dashboard. Veja o [estado da revisão](docs/DOCUMENTATION.md).
+Documentação revisada em **21/09/2026** contra o código e a configuração da `main` (`9ff6618`). Veja o [procedimento de revisão](docs/DOCUMENTATION.md).
 
 > Projeto educacional e analítico. Não constitui recomendação de investimento.
 
@@ -318,9 +318,11 @@ O workflow `.github/workflows/run_screener.yml`:
 - notifica falha via Telegram quando os secrets estão configurados.
 
 O workflow tem os jobs `test`, `screener` e `deploy`, com Python 3.11 e Chrome
-no runner de coleta. Os artefatos ficam retidos por 90 dias. O workflow
-`tests.yml` executa testes Python e JavaScript em pushes de código/documentação
-e pull requests. Esses gatilhos não iniciam coleta nem deploy.
+no runner de coleta. Os artefatos de saída `stock-screener-output-ID` ficam
+retidos por **90 dias**; o diagnóstico `screener-failure-ID`, com os logs de
+falha da coleta, por **30 dias**. O workflow `tests.yml` executa testes Python
+e JavaScript em pushes de código/documentação e pull requests. Esses gatilhos
+não iniciam coleta nem deploy.
 
 A revisão semanal de documentação é uma tarefa separada, solicitada para
 **segunda-feira às 12h, America/Sao_Paulo**. Seu procedimento está em
