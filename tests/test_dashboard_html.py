@@ -6,13 +6,14 @@ HTML = Path("docs/index.html").read_text(encoding="utf-8")
 
 def test_dashboard_tabs_e_buscas_tem_rotulos_acessiveis():
     assert 'role="tablist" aria-label="Seções do Radar Semanal"' in HTML
-    assert HTML.count('role="tab"') == 8
-    assert 'aria-controls="overview" aria-selected="true"' in HTML
+    assert HTML.count('role="tab"') == 9
+    assert 'aria-controls="introducao" aria-selected="true"' in HTML
+    assert 'aria-controls="overview" aria-selected="false"' in HTML
     assert 'for="searchFiis">Buscar FII ou setor</label>' in HTML
     assert 'for="searchAcoes">Buscar ação ou empresa</label>' in HTML
     assert "item.setAttribute('aria-selected',active?'true':'false')" in HTML
     assert "item.setAttribute('aria-hidden',active?'false':'true')" in HTML
-    ordem = ["overview", "hibrida", "modelos", "recorrentes", "acoes", "fiis", "indicadores", "score"]
+    ordem = ["introducao", "overview", "hibrida", "modelos", "recorrentes", "acoes", "fiis", "indicadores", "score"]
     posicoes = [HTML.index(f'id="tab-{tab}"') for tab in ordem]
     assert posicoes == sorted(posicoes)
 

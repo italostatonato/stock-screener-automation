@@ -60,6 +60,11 @@ R$ 10.000 e mínimo R$ 1.000. Os gráficos temporais iniciam em 90D.
 O histórico teórico usa pesos fracionários; as séries Top 20 não reinvestem
 proventos e a simulação híbrida não inclui custos/impostos.
 
+O dashboard abre na aba Introdução, com conteúdo estático para iniciantes,
+exemplos fictícios, glossário expansível e atalhos para as demais abas.
+O guia não depende do carregamento dos snapshots. Ao explicar indicadores,
+diferencie referências de produtos, preço de proventos e histórico de previsão.
+
 ## Pipeline e dados
 
 `main.py`: configuração → FIIs → ações → indicadores/benchmarks → carteira

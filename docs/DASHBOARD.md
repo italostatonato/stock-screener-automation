@@ -3,8 +3,8 @@
 Revisado em 15/09/2026 contra `docs/index.html` e `src/exporter.py`.
 
 O [dashboard público](https://italostatonato.github.io/stock-screener-automation/)
-é servido pelo GitHub Pages. Ele inicia pelo snapshot mais recente de
-`docs/data/index.json`. Os nomes dos arquivos usam a data da execução em
+é servido pelo GitHub Pages. Ele abre na aba **Introdução** e carrega o snapshot
+mais recente de `docs/data/index.json`. Os nomes dos arquivos usam a data da execução em
 `America/Sao_Paulo`; o snapshot não é uma cotação em tempo real.
 
 ## Frequência de atualização
@@ -26,6 +26,11 @@ os scores, as carteiras ou os modelos ML.
 
 ## Navegação
 
+- **Introdução** (padrão ao abrir): guia para iniciantes sobre ações, FIIs,
+  cotas, ETFs, renda fixa, proventos, CDI, juros, inflação e índices da bolsa.
+  Inclui exemplo fictício de preço versus rendimento, glossário expansível,
+  fontes educacionais e atalhos para as outras abas. O conteúdo é estático e
+  permanece legível mesmo sem carregar dados. Navegação atualizada em 23/09/2026.
 - **Visão geral:** entradas, saídas e mudanças de posição na comparação
   semanal descrita acima, líderes Top 5 por classe e desempenho contra referências.
 - **Carteira Híbrida:** alocação entre quatro blocos, perfis, simulação de aporte,

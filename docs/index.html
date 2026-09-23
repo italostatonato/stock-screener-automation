@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Radar Semanal · Ações e FIIs BR</title>
-  <meta name="description" content="Radar semanal quantitativo de ações e FIIs brasileiros, com score, indicadores e backtest." />
+  <meta name="description" content="Entenda ações, FIIs, cotas e indicadores de investimento. Explore os rankings e compare o desempenho das seleções do Radar Semanal." />
   <meta name="theme-color" content="#0b1020" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1222,18 +1222,86 @@
     .score-histogram-panel{margin-bottom:16px}
     @media(max-width:1050px){.overview-grid,.overview-performance-layout{grid-template-columns:1fr}.overview-performance-summary{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.6fr);align-items:start}.performance-warning{margin-top:0}}
     @media(max-width:720px){.overview-panel-head,.overview-performance-head{display:block}.overview-date{display:inline-flex;margin-top:8px}.overview-toggle-group{width:100%;margin-top:12px}.overview-toggle{flex:1;min-height:44px}.leader-columns{grid-template-columns:1fr}.overview-performance-summary{display:flex}.change-row{grid-template-columns:1fr;gap:3px}.change-label{padding-top:0}}
+    /* Introdução: leitura guiada, exemplos e glossário sem depender dos dados. */
+    .tabs{overflow-x:auto;justify-content:flex-start}
+    .tab{flex:0 0 auto;white-space:nowrap}
+    #introducao{--intro-copy:#bac6d7}
+    .intro-welcome{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.65fr);gap:32px;align-items:center;padding:32px;border:1px solid rgba(227,190,114,.28);border-radius:24px;background:radial-gradient(ellipse at top right,rgba(227,190,114,.12),transparent 60%),var(--surface)}
+    .intro-kicker{display:block;color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+    #introducao .intro-welcome h2{max-width:750px;margin:12px 0 14px;font-size:clamp(28px,3.2vw,44px);line-height:1.12;letter-spacing:-.04em}
+    .intro-welcome p{max-width:700px;margin:0;color:var(--intro-copy);font-size:16px;line-height:1.7}
+    .intro-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+    .intro-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 17px;border:1px solid var(--border-strong);border-radius:12px;background:rgba(255,255,255,.03);color:var(--text);font-size:14px;font-weight:750;text-decoration:none;cursor:pointer}
+    .intro-button.primary{border-color:var(--accent);background:var(--accent);color:#101522}
+    .intro-button:hover{border-color:var(--accent);filter:brightness(1.08)}
+    .intro-route{padding:20px;border:1px solid var(--border);border-radius:18px;background:rgba(4,8,17,.28)}
+    .intro-route h3{margin:0 0 10px;font-size:15px}
+    .intro-route a{display:flex;align-items:center;gap:12px;min-height:44px;padding:10px 0;color:var(--intro-copy);font-size:14px;text-decoration:none;border-bottom:1px solid var(--border)}
+    .intro-route a:last-child{border-bottom:0}
+    .intro-route a:hover{color:var(--accent)}
+    .intro-route a span{color:var(--accent);font-size:11px;font-weight:800}
+    .intro-block{margin-top:34px}
+    .intro-heading{margin-bottom:16px}
+    .intro-heading h3{margin:6px 0;font-size:25px;line-height:1.25;letter-spacing:-.025em}
+    .intro-heading p{margin:0;color:var(--intro-copy);font-size:15px;line-height:1.6;max-width:850px}
+    .intro-concepts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .intro-concept{padding:22px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(145deg,rgba(18,28,49,.85),rgba(10,16,29,.8))}
+    .intro-concept-tag{display:inline-block;padding:4px 8px;border-radius:6px;background:rgba(143,215,255,.08);color:var(--accent2);font-size:11px;font-weight:750}
+    .intro-concept h4{margin:12px 0 8px;font-size:19px;letter-spacing:-.02em}
+    .intro-concept p{margin:0;color:var(--intro-copy);font-size:14px;line-height:1.7}
+    .intro-concept p+p{margin-top:12px}
+    #introducao strong{color:var(--text)}
+    .intro-concept .intro-takeaway{padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+    .intro-example{margin-top:18px;padding:24px;border:1px solid rgba(167,139,250,.3);border-radius:20px;background:rgba(167,139,250,.045)}
+    .intro-example h4{margin:7px 0 8px;font-size:20px}
+    .intro-example>p{margin:0;color:var(--intro-copy);font-size:14px;line-height:1.7}
+    .intro-example-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+    .intro-example-values>div{padding:16px;border-radius:12px;background:rgba(4,8,17,.35);border:1px solid var(--border)}
+    .intro-example-values dt{color:var(--intro-copy);font-size:13px}
+    .intro-example-values dd{margin:8px 0 0;font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+    .intro-example-values dd small{display:block;margin-top:5px;font-size:12px;font-weight:500;color:var(--muted)}
+    .intro-reference-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .intro-reference{padding:19px;border:1px solid var(--border);border-radius:16px;background:rgba(14,21,37,.65)}
+    .intro-reference h4{margin:0 0 4px;font-size:18px;color:var(--accent2)}
+    .intro-reference-label{display:block;color:var(--muted);font-size:12px;margin-bottom:10px}
+    .intro-reference p{margin:0;color:var(--intro-copy);font-size:14px;line-height:1.65}
+    .intro-note{margin:16px 0 0;padding:14px 17px;border-left:3px solid var(--accent);border-radius:0 12px 12px 0;background:rgba(227,190,114,.055);color:var(--intro-copy);font-size:14px;line-height:1.65}
+    .intro-glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+    .intro-term{border:1px solid var(--border);border-radius:14px;background:rgba(14,21,37,.65);overflow:hidden}
+    .intro-term[open]{border-color:var(--border-strong)}
+    .intro-term summary{min-height:50px;padding:15px 18px;cursor:pointer;font-size:14px;font-weight:700;line-height:1.5}
+    .intro-term summary::marker{color:var(--accent)}
+    .intro-term summary:hover{background:rgba(255,255,255,.035)}
+    .intro-term summary:focus-visible{outline:2px solid var(--accent2);outline-offset:-4px;border-radius:12px}
+    .intro-term p{margin:0;padding:0 18px 16px;color:var(--intro-copy);font-size:14px;line-height:1.75}
+    .intro-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;counter-reset:intro-step}
+    .intro-steps li{display:flex;flex-direction:column;align-items:flex-start;padding:22px;border:1px solid var(--border);border-radius:18px;background:var(--surface);counter-increment:intro-step}
+    .intro-steps li::before{content:"0" counter(intro-step);color:var(--accent);font-size:12px;font-weight:800}
+    .intro-steps h4{margin:10px 0 8px;font-size:18px}
+    .intro-steps p{margin:0 0 18px;color:var(--intro-copy);font-size:14px;line-height:1.65}
+    .intro-step-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+    .intro-more{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:16px;color:var(--intro-copy);font-size:14px}
+    .intro-sources{margin-top:26px;padding-top:20px;border-top:1px solid var(--border)}
+    .intro-sources h3{margin:0 0 8px;font-size:16px}
+    .intro-sources p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+    .intro-source-links{display:flex;flex-wrap:wrap;gap:4px 20px;margin-top:10px}
+    .intro-source-links a{display:inline-flex;align-items:center;min-height:44px;color:var(--accent2);font-size:13px;text-underline-offset:4px}
+    @media(max-width:1180px){.intro-reference-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:900px){.intro-welcome{grid-template-columns:1fr;gap:22px}.intro-concepts{grid-template-columns:repeat(2,minmax(0,1fr))}.intro-steps{grid-template-columns:1fr}}
+    @media(max-width:620px){.intro-welcome{padding:22px 18px}.intro-welcome p{font-size:15px}.intro-concepts,.intro-reference-grid,.intro-glossary,.intro-example-values{grid-template-columns:1fr}.intro-concept{padding:20px}.intro-heading h3{font-size:23px}.intro-example{padding:20px 18px}.intro-example-values>div{padding:13px 16px}.intro-example-values dd{font-size:23px}.intro-actions .intro-button{width:100%}}
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
     }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#overview">Ir para o conteúdo principal</a>
+  <a class="skip-link" href="#main-content">Ir para o conteúdo principal</a>
   <header class="topbar">
     <div class="wrap nav">
       <div class="brand-area"><div class="brand"><div class="logo">RS</div><div><div class="brand-name">Radar Semanal</div><small class="muted">Ações e FIIs BR · leitura quantitativa</small></div></div><a class="github-top" href="https://github.com/italostatonato/stock-screener-automation" target="_blank" rel="noopener">● GitHub</a></div>
       <div class="tabs" role="tablist" aria-label="Seções do Radar Semanal">
-        <button type="button" id="tab-overview" class="tab active" role="tab" aria-controls="overview" aria-selected="true" tabindex="0" data-tab="overview">Visão geral</button>
+        <button type="button" id="tab-introducao" class="tab active" role="tab" aria-controls="introducao" aria-selected="true" tabindex="0" data-tab="introducao">Introdução</button>
+        <button type="button" id="tab-overview" class="tab" role="tab" aria-controls="overview" aria-selected="false" tabindex="-1" data-tab="overview">Visão geral</button>
         <button type="button" id="tab-hibrida" class="tab" role="tab" aria-controls="hibrida" aria-selected="false" tabindex="-1" data-tab="hibrida">Carteira Híbrida</button>
         <button type="button" id="tab-modelos" class="tab" role="tab" aria-controls="modelos" aria-selected="false" tabindex="-1" data-tab="modelos">Modelos ML</button>
         <button type="button" id="tab-recorrentes" class="tab" role="tab" aria-controls="recorrentes" aria-selected="false" tabindex="-1" data-tab="recorrentes">Recorrentes</button>
@@ -1245,13 +1313,13 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <main id="main-content" class="wrap" tabindex="-1">
     <section class="hero">
       <div class="hero-grid">
         <div class="hero-copy">
           <div class="eyebrow">Boletim quantitativo · Brasil</div>
           <h1>Radar <em>Semanal</em></h1>
-          <p>Uma leitura objetiva do mercado: ações e FIIs selecionados por score multifatorial, acompanhados de benchmarks, histórico e sinais para análise.</p>
+          <p>Acompanhe ações e fundos imobiliários, entenda os indicadores e compare o desempenho das seleções semanais.</p>
           <div class="hero-tags"><span>Seleção quantitativa</span><button type="button" class="hero-tag-link fii" data-go-tab="fiis">Ver Top 20 FIIs</button><button type="button" class="hero-tag-link" data-go-tab="acoes">Ver Top 20 Ações</button><a class="hero-tag-link presentation-link" href="https://docs.google.com/presentation/d/1I61xKNvQ8kfBDXqel5YaoVeTCqhdRXxYmw3mCQqed60/preview?rm=minimal" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="Abrir apresentação do Radar Semanal em modo somente leitura">Ver apresentação ↗</a><span>Dados públicos</span></div>
         </div>
         <aside class="about-card" aria-labelledby="aboutItaloTitle">
@@ -1269,11 +1337,110 @@
     <section class="signal-strip" aria-label="Resumo do Radar Semanal">
       <div class="signal-cell"><span>Leitura da semana</span><b>Dados para orientar análise, não recomendações.</b></div>
       <div class="signal-cell"><span>Universo</span><b>Ações + FIIs brasileiros</b></div>
-      <div class="signal-cell"><span>Metodologia</span><b>Score multifatorial</b></div>
+      <div class="signal-cell"><span>Metodologia</span><b>Nota por indicadores</b></div>
       <div class="signal-cell"><span>Coleta</span><b>Semanal · segunda, 08h BRT</b></div>
     </section>
 
-    <section id="overview" class="section active" role="tabpanel" aria-labelledby="tab-overview" aria-hidden="false">
+    <section id="introducao" class="section active" role="tabpanel" aria-labelledby="tab-introducao" aria-hidden="false">
+      <div class="intro-welcome">
+        <div>
+          <span class="intro-kicker">Primeiros passos · investimentos em linguagem simples</span>
+          <h2>Entenda os conceitos.<br>Depois, explore os números.</h2>
+          <p>Começando agora? Este guia explica o que aparece no Radar, com exemplos do dia a dia. O site organiza dados públicos de investimentos para ajudar você a estudar e comparar.</p>
+          <div class="intro-actions"><a class="intro-button primary" href="#intro-conceitos">Começar pelo básico <span aria-hidden="true">↓</span></a><button type="button" class="intro-button" data-go-tab="overview">Explorar o painel <span aria-hidden="true">→</span></button></div>
+        </div>
+        <nav class="intro-route" aria-label="Neste guia de introdução">
+          <h3>O que você vai encontrar</h3>
+          <a href="#intro-conceitos"><span aria-hidden="true">01</span> Ações, FIIs, cotas e rendimentos</a>
+          <a href="#intro-referencias"><span aria-hidden="true">02</span> CDI, inflação e índices da bolsa</a>
+          <a href="#intro-glossario"><span aria-hidden="true">03</span> As siglas e os números do painel</a>
+          <a href="#intro-roteiro"><span aria-hidden="true">04</span> Como usar o Radar Semanal</a>
+        </nav>
+      </div>
+
+      <section id="intro-conceitos" class="intro-block" aria-labelledby="intro-conceitos-title">
+        <div class="intro-heading"><span class="intro-kicker">01 · O básico</span><h3 id="intro-conceitos-title">O que você está comprando?</h3><p>Um <strong>ativo</strong> é um bem ou investimento com valor econômico. Aqui, você verá principalmente participações em empresas e em fundos.</p></div>
+        <div class="intro-concepts">
+          <article class="intro-concept"><span class="intro-concept-tag">Uma parte de uma empresa</span><h4>Ações</h4><p>Ao comprar uma ação, você se torna dono de uma pequena parte de uma empresa. Pode ganhar com a valorização dessa participação e com a distribuição de lucros, os <strong>dividendos</strong>.</p><p class="intro-takeaway">O preço também pode cair. É <strong>renda variável</strong>: o resultado futuro é incerto.</p></article>
+          <article class="intro-concept"><span class="intro-concept-tag">Investimento coletivo em imóveis</span><h4>FIIs</h4><p>Os <strong>Fundos de Investimento Imobiliário</strong> reúnem recursos de vários investidores. Podem investir em imóveis, como galpões e shoppings, ou em títulos ligados ao setor imobiliário.</p><p class="intro-takeaway">FIIs de “tijolo” investem principalmente em imóveis; os de “papel”, em títulos imobiliários. Os preços e os rendimentos podem variar.</p></article>
+          <article class="intro-concept"><span class="intro-concept-tag">Uma parte de um fundo</span><h4>Cotas e cotistas</h4><p>A <strong>cota</strong> é uma fração do patrimônio de um fundo. Quem tem cotas é um <strong>cotista</strong>. Comprar cotas de um FII dá participação no fundo, sem tornar você proprietário direto de uma sala ou apartamento.</p><p class="intro-takeaway">Exemplo fictício: <strong>5 cotas × R$ 100 = R$ 500</strong> investidos, antes de custos.</p></article>
+          <article class="intro-concept"><span class="intro-concept-tag">Uma cesta negociada na bolsa</span><h4>ETFs</h4><p>São fundos cujas cotas são negociadas na bolsa e que buscam acompanhar um índice. Um índice resume o desempenho de um conjunto de investimentos.</p><p class="intro-takeaway">O <strong>IVVB11</strong>, usado na Carteira Híbrida, busca acompanhar o S&amp;P 500 em reais. Seu resultado também é afetado pelo dólar.</p></article>
+          <article class="intro-concept"><span class="intro-concept-tag">Uma regra de remuneração</span><h4>Renda fixa</h4><p>A forma de calcular o rendimento é definida na contratação: uma taxa combinada, um percentual do CDI ou inflação mais juros, por exemplo. Ao comprar um CDB, você empresta dinheiro a um banco.</p><p class="intro-takeaway">“Fixa” se refere à regra. O valor final pode variar, e os riscos, prazos e condições de resgate dependem do produto.</p></article>
+          <article class="intro-concept"><span class="intro-concept-tag">Valores distribuídos ao investidor</span><h4>Dividendos e rendimentos</h4><p>Dividendos são parcelas do lucro distribuídas por empresas. FIIs podem distribuir rendimentos gerados por seus investimentos. Esses pagamentos fazem parte dos <strong>proventos</strong>.</p><p class="intro-takeaway">O valor e a frequência podem mudar. Receber proventos não impede uma perda com a queda do preço.</p></article>
+        </div>
+        <article class="intro-example" aria-labelledby="intro-example-title">
+          <span class="intro-kicker">Exemplo fictício · sem custos, impostos ou reinvestimento</span>
+          <h4 id="intro-example-title">Preço da cota e rendimento são coisas diferentes</h4>
+          <p>Imagine que você comprou 5 cotas por R$ 100 cada. Depois, o fundo pagou R$ 1 por cota e o preço de mercado passou a R$ 90.</p>
+          <dl class="intro-example-values"><div><dt>Valor investido no início</dt><dd>R$ 500<small>5 cotas × R$ 100</small></dd></div><div><dt>Rendimento recebido</dt><dd>R$ 5<small>5 cotas × R$ 1</small></dd></div><div><dt>Valor das cotas agora</dt><dd>R$ 450<small>5 cotas × R$ 90</small></dd></div></dl>
+          <p>Somando as cotas e o dinheiro recebido, você teria <strong>R$ 455</strong>: R$ 45 a menos que no início, ou <strong>−9%</strong>. É por isso que o rendimento distribuído, sozinho, não conta toda a história.</p>
+        </article>
+      </section>
+
+      <section id="intro-referencias" class="intro-block" aria-labelledby="intro-referencias-title">
+        <div class="intro-heading"><span class="intro-kicker">02 · Referências para comparar</span><h3 id="intro-referencias-title">O que significam CDI, IPCA, IBOV e companhia?</h3><p>São taxas ou índices usados para dar contexto aos resultados. Quando servem de referência para uma comparação, recebem o nome de <strong>benchmark</strong>.</p></div>
+        <div class="intro-reference-grid">
+          <article class="intro-reference"><h4>CDI</h4><span class="intro-reference-label">Referência de juros</span><p>O CDI é um título usado em empréstimos entre bancos. No dia a dia, “render o CDI” significa acompanhar a <strong>Taxa DI</strong>, calculada a partir dessas operações. “100% do CDI” é acompanhar essa taxa, antes de custos e impostos aplicáveis.</p></article>
+          <article class="intro-reference"><h4>Selic</h4><span class="intro-reference-label">Taxa básica de juros</span><p>É a principal referência de juros da economia brasileira. Sua meta é definida pelo Copom, no Banco Central. Influencia empréstimos e investimentos de renda fixa. CDI e Selic costumam andar próximos, mas são taxas diferentes.</p></article>
+          <article class="intro-reference"><h4>IPCA</h4><span class="intro-reference-label">Inflação ao consumidor</span><p>O Índice Nacional de Preços ao Consumidor Amplo, do IBGE, acompanha uma cesta de produtos e serviços. Ajuda a avaliar o <strong>poder de compra</strong>: o dinheiro rendeu mais do que os preços subiram no mesmo período?</p></article>
+          <article class="intro-reference"><h4>IGP-M</h4><span class="intro-reference-label">Outra medida de inflação</span><p>O Índice Geral de Preços – Mercado, da FGV, reúne preços ao produtor, ao consumidor e da construção. Aparece em reajustes de alguns contratos, como aluguéis. Sua variação pode ser bem diferente da do IPCA.</p></article>
+          <article class="intro-reference"><h4>IBOV / Ibovespa</h4><span class="intro-reference-label">Referência para ações brasileiras</span><p>Índice da B3 que acompanha uma carteira teórica de ações representativas da bolsa brasileira. No Radar, ajuda a comparar o desempenho da seleção de ações com uma referência ampla do mercado.</p></article>
+          <article class="intro-reference"><h4>IFIX</h4><span class="intro-reference-label">Referência para fundos imobiliários</span><p>Índice da B3 que acompanha uma carteira de FIIs negociados em bolsa. Nos gráficos deste site, é representado pelo <strong>XFIX11</strong>, um ETF usado como aproximação, chamada de <strong>proxy</strong>. Seu resultado pode diferir do índice.</p></article>
+          <article class="intro-reference"><h4>IMOB</h4><span class="intro-reference-label">Empresas do setor imobiliário</span><p>Índice da B3 de empresas de construção civil e exploração de imóveis. Acompanha <strong>ações de empresas</strong> desse setor; o IFIX acompanha <strong>fundos imobiliários</strong>. São referências com composições e riscos diferentes.</p></article>
+          <article class="intro-reference"><h4>S&amp;P 500 e dólar</h4><span class="intro-reference-label">Exposição internacional via IVVB11</span><p>O S&amp;P 500 acompanha grandes empresas dos Estados Unidos. O IVVB11 busca refletir esse índice em reais. Assim, o desempenho das empresas e a variação do dólar frente ao real influenciam o valor da cota.</p></article>
+        </div>
+        <p class="intro-note"><strong>No simulador:</strong> o bloco CDI representa uma aplicação teórica que acompanha essa referência. O site não escolhe um produto de renda fixa nem realiza compras. Compare retornos no mesmo período e confira se incluem proventos, custos e impostos.</p>
+      </section>
+
+      <section id="intro-glossario" class="intro-block" aria-labelledby="intro-glossario-title">
+        <div class="intro-heading"><span class="intro-kicker">03 · Tradução do painel</span><h3 id="intro-glossario-title">Encontrou uma sigla? Comece por aqui.</h3><p>Abra um termo para ver a explicação. Nenhum indicador, isoladamente, mostra se um investimento é adequado para você.</p></div>
+        <div class="intro-glossary">
+          <details class="intro-term"><summary>Ticker e cotação · o código e o preço</summary><p><strong>Ticker</strong> é o código que identifica um investimento na bolsa, como IVVB11. <strong>Cotação</strong> é seu preço de negociação por unidade. No Radar, os preços vêm da coleta indicada no cabeçalho e não são atualizados em tempo real.</p></details>
+          <details class="intro-term"><summary>Score e Top 20 · a nota e a posição</summary><p><strong>Score</strong> é uma nota de 0 a 100 que resume os indicadores usados pelo Radar. Cada classe tem sete fatores com o mesmo peso. O <strong>Top 20</strong> reúne até 20 ativos que passam pelos filtros, ordenados pela nota. Score 80 não significa 80% de chance de lucro. A nota compara ativos dentro de sua classe, sem garantir qualidade ou retorno futuro.</p></details>
+          <details class="intro-term"><summary>DY · Dividend Yield</summary><p>Relaciona os proventos de um período ao preço do ativo. Exemplo: R$ 8 distribuídos em 12 meses, divididos por um preço de R$ 100, representam <strong>DY de 8% nesse período</strong>. Isso não promete os próximos pagamentos. Um DY alto também pode resultar de uma queda no preço. Confira sempre o período: mensal, acumulado ou média de 12 meses são medidas diferentes.</p></details>
+          <details class="intro-term"><summary>P/VP e P/VPA · preço versus patrimônio</summary><p>Comparam o preço da ação ou cota ao patrimônio líquido por unidade. O patrimônio líquido é o valor contábil dos bens e direitos menos as obrigações. <strong>0,90</strong> significa preço equivalente a 90% desse valor por unidade; <strong>1,20</strong>, a 120%. Um valor abaixo de 1 pode refletir riscos ou expectativas ruins e não garante uma oportunidade.</p></details>
+          <details class="intro-term"><summary>Liquidez e volume · facilidade de negociar</summary><p><strong>Liquidez</strong> é a facilidade de comprar ou vender sem afetar muito o preço. O volume financeiro negociado ajuda a avaliá-la: pouco volume pode dificultar uma venda pelo preço desejado. Nos cartões, <strong>Liq.</strong> resume essa medida. “Liquidez diária” em uma tabela de bolsa descreve negociação, não uma promessa de resgate imediato.</p></details>
+          <details class="intro-term"><summary>ROA, ROE e ROIC · retorno da empresa</summary><p>Relacionam o resultado da empresa aos recursos usados para gerá-lo. <strong>ROA</strong>: retorno sobre seus ativos. <strong>ROE</strong> (ou RPL): retorno sobre o patrimônio dos acionistas. <strong>ROIC</strong> (ou ROInvC): retorno sobre o capital investido na operação. Compare empresas semelhantes e observe dívida e eventos extraordinários; um número alto, sozinho, pode enganar.</p></details>
+          <details class="intro-term"><summary>Margem líquida · o lucro que sobra</summary><p>É a parcela da receita que sobra como lucro líquido após custos, despesas e tributos. Se uma empresa tem R$ 100 de receita e R$ 10 de lucro líquido, a margem é <strong>10%</strong>. Setores diferentes costumam ter margens diferentes.</p></details>
+          <details class="intro-term"><summary>P/L, EV/EBITDA e valuation · relações de valor</summary><p><strong>Valuation</strong> é a análise do valor de um negócio. <strong>P/L</strong> divide o preço da ação pelo lucro por ação. <strong>EV/EBITDA</strong> compara o valor da empresa, considerando dívida e caixa, ao resultado antes de juros, tributos, depreciação e amortização. EBITDA não é o dinheiro livre em caixa. Múltiplos baixos não garantem preço barato; prejuízos e diferenças entre setores podem distorcer a leitura.</p></details>
+          <details class="intro-term"><summary>Rentabilidade, volatilidade e pior queda</summary><p><strong>Rentabilidade</strong> mede o ganho ou a perda em um período. <strong>Volatilidade</strong> descreve a intensidade das oscilações. <strong>Pior queda</strong>, ou drawdown, mede a maior perda desde um pico até um ponto posterior no intervalo analisado. Retorno passado não garante retorno futuro; confira também se a série inclui os proventos.</p></details>
+          <details class="intro-term"><summary>Base 100, p.p., 12M e 90D · como ler os gráficos</summary><p>Em <strong>base 100</strong>, todas as séries começam em 100: chegar a 110 indica alta de 10%. Em gráficos de retorno que começam em 0%, a mesma alta aparece como +10%. <strong>p.p.</strong> significa pontos percentuais: 12% contra 10% é uma diferença de 2 p.p. <strong>12M</strong> indica 12 meses e <strong>90D</strong>, 90 dias. Observe o período de cada indicador antes de comparar.</p></details>
+          <details class="intro-term"><summary>Aporte, carteira e alocação · a divisão do dinheiro</summary><p><strong>Aporte</strong> é o dinheiro destinado a investir. <strong>Carteira</strong> é o conjunto de investimentos. <strong>Alocação</strong> é a divisão entre eles: 30% de R$ 1.000 correspondem a R$ 300. <strong>Rebalancear</strong> é ajustar essa divisão aos pesos definidos. Distribuir entre diferentes riscos ajuda a diversificar, mas não elimina perdas.</p></details>
+          <details class="intro-term"><summary>Taxas de administração e de performance</summary><p>A <strong>taxa de administração</strong> remunera serviços necessários ao funcionamento do fundo, conforme seu regulamento. A <strong>taxa de performance</strong>, quando prevista, depende do resultado e das condições contratadas, geralmente em relação a uma referência. Ambas afetam o resultado do cotista; confira como e sobre qual base são cobradas.</p></details>
+          <details class="intro-term"><summary>Snapshot, backtest e modelos ML</summary><p><strong>Snapshot</strong> é um retrato dos dados em uma data de coleta. <strong>Backtest</strong> é uma simulação de como uma estratégia teria se comportado no passado, sob certas regras. <strong>ML</strong> significa aprendizado de máquina: modelos que procuram padrões nos dados. No Radar, eles são experimentais e comparados ao ranking oficial, sem substituí-lo nem prever o futuro com certeza.</p></details>
+          <details class="intro-term"><summary>Câmbio, cripto e valor de mercado</summary><p><strong>Câmbio</strong> é a relação entre moedas: USD/BRL indica quantos reais correspondem a um dólar. <strong>Criptomoedas</strong> são ativos digitais sujeitos a fortes oscilações. <strong>Valor de mercado</strong> combina o preço por unidade com a quantidade em circulação; não é uma nota de segurança. A aba Indicadores traz esses dados como contexto.</p></details>
+        </div>
+      </section>
+
+      <section id="intro-roteiro" class="intro-block" aria-labelledby="intro-roteiro-title">
+        <div class="intro-heading"><span class="intro-kicker">04 · Da leitura à exploração</span><h3 id="intro-roteiro-title">Um caminho para conhecer o Radar</h3><p>Você pode voltar a esta introdução a qualquer momento pela primeira aba.</p></div>
+        <ol class="intro-steps">
+          <li><h4>Entenda a semana</h4><p>A Visão geral mostra quem entrou ou saiu das seleções, os primeiros colocados e o desempenho comparado às referências.</p><div class="intro-step-links"><button type="button" class="intro-button" data-go-tab="overview">Abrir Visão geral <span aria-hidden="true">→</span></button></div></li>
+          <li><h4>Conheça os investimentos</h4><p>Nas abas Ações e FIIs, consulte preço, nota e indicadores. Use o glossário para interpretar os números e compare ativos semelhantes.</p><div class="intro-step-links"><button type="button" class="intro-button" data-go-tab="acoes">Ver Ações</button><button type="button" class="intro-button" data-go-tab="fiis">Ver FIIs</button></div></li>
+          <li><h4>Experimente uma divisão</h4><p>Na Carteira Híbrida, simule um aporte entre ações, FIIs, CDI e IVVB11. Os perfis são exemplos de alocação; o site não avalia qual é adequado a você.</p><div class="intro-step-links"><button type="button" class="intro-button" data-go-tab="hibrida">Simular uma carteira <span aria-hidden="true">→</span></button></div></li>
+        </ol>
+        <div class="intro-more"><span>Para aprofundar:</span><button type="button" class="intro-button" data-go-tab="indicadores">Indicadores do mercado</button><button type="button" class="intro-button" data-go-tab="score">Como o score é calculado</button><button type="button" class="intro-button" data-go-tab="recorrentes">Presença no ranking</button><button type="button" class="intro-button" data-go-tab="modelos">Modelos experimentais</button></div>
+        <p class="intro-note"><strong>Ao ler o Radar:</strong> a coleta é semanal, às segundas-feiras, 08h de Brasília. As curvas Top 20 usam preços e não reinvestem proventos; a simulação híbrida não inclui custos ou impostos. Os rankings ajudam no estudo e não são recomendações de compra.</p>
+      </section>
+      <aside class="intro-sources" aria-labelledby="intro-sources-title">
+        <h3 id="intro-sources-title">Continue aprendendo nas fontes</h3>
+        <p>Conceitos conferidos em materiais da CVM, B3, Banco Central, IBGE, FGV e da gestora do IVVB11. Os exemplos deste guia são fictícios.</p>
+        <div class="intro-source-links">
+          <a href="https://www.gov.br/investidor/pt-br/investir/tipos-de-investimentos/acoes" target="_blank" rel="noopener noreferrer">CVM · Ações ↗</a>
+          <a href="https://www.gov.br/investidor/pt-br/investir/tipos-de-investimentos/fundos-de-investimentos-imobiliarios-fii" target="_blank" rel="noopener noreferrer">CVM · FIIs ↗</a>
+          <a href="https://www.gov.br/investidor/pt-br/investir/tipos-de-investimentos/fundos-de-investimentos-imobiliarios-fii/o-que-sao-cotas" target="_blank" rel="noopener noreferrer">CVM · Cotas ↗</a>
+          <a href="https://borainvestir.b3.com.br/glossario/taxa-di/" target="_blank" rel="noopener noreferrer">B3 · CDI e Taxa DI ↗</a>
+          <a href="https://www.bcb.gov.br/controleinflacao/taxaselic" target="_blank" rel="noopener noreferrer">Banco Central · Selic ↗</a>
+          <a href="https://www.ibge.gov.br/explica/inflacao.php" target="_blank" rel="noopener noreferrer">IBGE · Inflação e IPCA ↗</a>
+          <a href="https://portal.fgv.br/story/voce-sabe-o-que-e-o-igp-m" target="_blank" rel="noopener noreferrer">FGV · IGP-M ↗</a>
+          <a href="https://borainvestir.b3.com.br/objetivos-financeiros/investir-melhor/ibovespa-x-ifix-qual-a-diferenca-entre-esses-dois-indices/" target="_blank" rel="noopener noreferrer">B3 · Ibovespa e IFIX ↗</a>
+          <a href="https://b3.com.br/pt_br/market-data-e-indices/indices/indices-de-segmentos-e-setoriais/indice-imobiliario-imob-b3.htm" target="_blank" rel="noopener noreferrer">B3 · IMOB ↗</a>
+          <a href="https://www.blackrock.com/br/products/251902/ishares-sp-500-fi-em-cotas-de-fundo-de-ndice-inv-no-exterior-fund" target="_blank" rel="noopener noreferrer">BlackRock · IVVB11 ↗</a>
+        </div>
+      </aside>
+    </section>
+
+    <section id="overview" class="section" role="tabpanel" aria-labelledby="tab-overview" aria-hidden="true">
       <div class="section-head"><div><h2>Visão geral</h2><p class="desc">O que mudou na semana, quem lidera agora e se as carteiras estão entregando resultado.</p></div></div>
       <div class="overview-grid">
         <article class="panel" aria-labelledby="weeklyChangesTitle">
@@ -3029,7 +3196,10 @@ const CHART_PERIODS = {
       activateTab(tabs[next].dataset.tab);
       tabs[next].focus();
     });
-    document.querySelectorAll('[data-go-tab]').forEach(btn=>btn.addEventListener('click',()=>activateTab(btn.dataset.goTab)));
+    document.querySelectorAll('[data-go-tab]').forEach(btn=>btn.addEventListener('click',()=>{
+      activateTab(btn.dataset.goTab);
+      document.getElementById(`tab-${btn.dataset.goTab}`)?.focus({preventScroll:true});
+    }));
 
     function setupRichTooltip(){
       const tooltip=document.createElement('div');
