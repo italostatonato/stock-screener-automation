@@ -7,6 +7,18 @@ O [dashboard público](https://italostatonato.github.io/stock-screener-automatio
 mais recente de `docs/data/index.json`. Os nomes dos arquivos usam a data da execução em
 `America/Sao_Paulo`; o snapshot não é uma cotação em tempo real.
 
+## Versão no Sites
+
+O [site Radar Semanal](https://radar-semanal-italo.italo-st.chatgpt.site/) está público e replica as nove abas
+do dashboard, com dados consultados no GitHub Pages ao abrir. Em caso de falha,
+tenta os snapshots incluídos na publicação e mostra um aviso de cópia local.
+O rodapé tem contador de **visitantes únicos por navegador**, com início em
+29/09/2026; retornos com o mesmo cookie não aumentam o total. Esse contador
+abrange somente o site no Sites, sem somar os acessos ao GitHub Pages.
+A atualização de dados não replica automaticamente mudanças de layout.
+Consulte [acesso, visitantes e manutenção](SITE.md). Informações verificadas
+em **30/09/2026**.
+
 ## Frequência de atualização
 
 A coleta é agendada para **toda segunda-feira, 08h de Brasília**. O novo

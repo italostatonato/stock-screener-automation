@@ -2,6 +2,7 @@
 
 - [Como funciona](https://github.com/italostatonato/stock-screener-automation/wiki/Como-Funciona)
 - [Dashboard](https://github.com/italostatonato/stock-screener-automation/wiki/Dashboard)
+- [Site e visitantes](https://github.com/italostatonato/stock-screener-automation/wiki/Site)
 - [Metodologia de filtros e score](https://github.com/italostatonato/stock-screener-automation/wiki/Metodologia-de-Filtros)
 - [Modelos ML](https://github.com/italostatonato/stock-screener-automation/wiki/Modelos-ML)
 - [Confiabilidade ML](https://github.com/italostatonato/stock-screener-automation/wiki/Confiabilidade-ML)

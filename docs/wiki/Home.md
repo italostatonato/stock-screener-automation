@@ -9,6 +9,18 @@ dos dados, do ML e do dashboard. Consulte o
 Snapshots históricos podem refletir regras anteriores. Projeto educacional e analítico,
 não uma recomendação de investimento.
 
+## Acessar o site
+
+- [Radar Semanal no Sites](https://radar-semanal-italo.italo-st.chatgpt.site/): réplica do dashboard com contador
+  de visitantes únicos por navegador desde 29/09/2026.
+- [Dashboard no GitHub Pages](https://italostatonato.github.io/stock-screener-automation/): publicação original e origem
+  dos snapshots consultados pelo site.
+
+O site no Sites está público, conforme verificação de **30/09/2026**.
+A coleta continua semanal; dados são consultados ao abrir a página, com cópia
+de contingência em caso de falha. Consulte [Site e visitantes](https://github.com/italostatonato/stock-screener-automation/wiki/Site)
+para saber como o contador funciona e como o site é atualizado.
+
 ## Funcionamento atual
 
 - FIIs via Fundsexplorer/Selenium ou Excel local; ações via Fundamentus/HTTP.
@@ -35,6 +47,7 @@ A entrega local de Excel depende de `SCREENER_EXCEL_OUTPUT_DIR`.
 
 - [Como funciona](https://github.com/italostatonato/stock-screener-automation/wiki/Como-Funciona)
 - [Dashboard](https://github.com/italostatonato/stock-screener-automation/wiki/Dashboard)
+- [Site e visitantes](https://github.com/italostatonato/stock-screener-automation/wiki/Site)
 - [Metodologia de filtros e score](https://github.com/italostatonato/stock-screener-automation/wiki/Metodologia-de-Filtros)
 - [Modelos ML](https://github.com/italostatonato/stock-screener-automation/wiki/Modelos-ML)
 - [Confiabilidade ML](https://github.com/italostatonato/stock-screener-automation/wiki/Confiabilidade-ML)

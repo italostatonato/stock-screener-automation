@@ -104,6 +104,21 @@ requests, com permissão de leitura. Esses eventos não iniciam coleta nem deplo
 A revisão documental semanal é separada, **segunda-feira às 12h de São Paulo**,
 e é administrada no Codex. Veja [Manutenção da documentação](DOCUMENTATION.md).
 
+## Site no Sites
+
+O [site Radar Semanal](https://radar-semanal-italo.italo-st.chatgpt.site/) tem publicação própria no Sites.
+Ao abrir, consulta o índice e os snapshots servidos pelo GitHub Pages; o workflow
+deste repositório continua responsável pela coleta semanal. Alterações de HTML,
+CSS, scripts ou da cópia de dados de contingência precisam ser incorporadas ao
+projeto do Sites e publicadas lá. Um push neste repositório não atualiza esse código.
+
+Se aparecer o aviso de última cópia disponível, confira a data exibida e a
+publicação dos dados no GitHub Pages. Se o contador mostrar **Indisponível**,
+verifique a API e o banco do projeto no Sites; a falha não representa total zero.
+O contador é exclusivo do endereço no Sites e persiste no banco D1.
+Veja [Site no Sites e contador de visitantes](SITE.md) para diagnóstico e
+responsabilidades de publicação, verificados em **30/09/2026**.
+
 ## Fonte indisponível ou seleção vazia
 
 Consulte o log e repita a execução quando a fonte estiver disponível.

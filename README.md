@@ -4,9 +4,13 @@
 [![Python](https://img.shields.io/badge/python-3.11+-3776AB)](https://www.python.org/)
 [![GitHub Actions](https://img.shields.io/badge/automation-GitHub%20Actions-24292F)](https://github.com/italostatonato/stock-screener-automation/actions)
 
-Boletim quantitativo semanal de **FIIs** e **ações brasileiras**, com coleta de dados públicos, score multifatorial, histórico, backtest e dashboard web no GitHub Pages.
+Boletim quantitativo semanal de **FIIs** e **ações brasileiras**, com coleta de dados públicos, score multifatorial, histórico, backtest e dashboard web no Sites e no GitHub Pages.
 
-**[Dashboard público](https://italostatonato.github.io/stock-screener-automation/)** · **[Wiki](https://github.com/italostatonato/stock-screener-automation/wiki)**
+**[Site Radar Semanal](https://radar-semanal-italo.italo-st.chatgpt.site/)** · **[GitHub Pages](https://italostatonato.github.io/stock-screener-automation/)** · **[Wiki](https://github.com/italostatonato/stock-screener-automation/wiki)**
+
+O site no Sites está público e inclui contador de visitantes únicos por navegador.
+Veja [acesso, atualização dos dados e funcionamento do contador](docs/SITE.md)
+(informações do site verificadas em **30/09/2026**).
 
 Documentação revisada em **21/09/2026** contra o código e a configuração da `main` (`9ff6618`). Veja o [procedimento de revisão](docs/DOCUMENTATION.md).
 
@@ -79,6 +83,7 @@ docs/
   ML_CONFIDENCE.md              Fórmula de confiabilidade e limites de exibição
   METHODOLOGY.md                Score, elegibilidade e fontes de dados
   DASHBOARD.md                  Telas, carteira híbrida e simulador
+  SITE.md                       Site no Sites, dados, visitantes e publicação
   BACKTEST_RETROATIVO.md        Histórico observado e simulações point-in-time
   OPERATIONS.md                 Operação, validação e troubleshooting
   DOCUMENTATION.md              Revisão e publicação da documentação e da wiki
@@ -139,6 +144,21 @@ de DY, liquidez e patrimônio/valor de mercado são estritos (`>`); pode haver
 menos de 20 aprovados. Veja a [metodologia completa](docs/METHODOLOGY.md).
 
 ---
+
+## Site no Sites
+
+O [Radar Semanal no Sites](https://radar-semanal-italo.italo-st.chatgpt.site/) replica a interface do dashboard,
+com guia para iniciantes, rankings de ações e FIIs, indicadores, carteira híbrida,
+simulador e modelos ML em modo sombra. Ao abrir, consulta os snapshots publicados
+no GitHub Pages. Se a fonte estiver indisponível, tenta a cópia incluída na última
+publicação do site e informa essa condição na tela. A coleta continua no pipeline
+semanal deste repositório; mudanças de layout exigem nova publicação no Sites.
+
+O rodapé mostra **Visitantes únicos**, contados por navegador desde **29/09/2026**.
+Recarregar ou retornar com o mesmo cookie não aumenta o total. A contagem é
+persistida no servidor e abrange somente o endereço no Sites. Limpar cookies,
+usar navegação privada ou outro navegador pode gerar um novo visitante.
+Detalhes e manutenção em [Site no Sites e contador de visitantes](docs/SITE.md).
 
 ## Dashboard
 

@@ -14,7 +14,8 @@ Liquidez diária, CDI diário, variações em 24h e horizontes ML em dias não
 significam que os rankings sejam atualizados diariamente. Revise também textos
 da interface, docstrings e descrições exportadas ao conferir a cadência.
 
-- [Dashboard](https://italostatonato.github.io/stock-screener-automation/)
+- [Site Radar Semanal](https://radar-semanal-italo.italo-st.chatgpt.site/)
+- [Dashboard no GitHub Pages](https://italostatonato.github.io/stock-screener-automation/)
 - [Repositório](https://github.com/italostatonato/stock-screener-automation)
 - [Wiki](https://github.com/italostatonato/stock-screener-automation/wiki)
 
@@ -24,6 +25,13 @@ O [README](README.md) orienta o setup. Consulte os guias de
 [dashboard](docs/DASHBOARD.md), [ML](docs/ML_PIPELINE.md),
 [confiabilidade](docs/ML_CONFIDENCE.md), [backtests](docs/BACKTEST_RETROATIVO.md)
 e [operação](docs/OPERATIONS.md). A wiki também tem cópia em `docs/wiki/`.
+
+O [site no Sites](docs/SITE.md), verificado em 30/09/2026, é uma publicação
+separada e pública que consulta os dados do GitHub Pages ao abrir, com cópia
+incluída para contingência. O rodapé conta navegadores únicos desde 29/09/2026,
+com cookie e persistência no servidor. O código dessa publicação é mantido no
+projeto do Sites e não é entregue por um clone deste repositório. Alterações
+visuais exigem atualização e publicação no Sites; a coleta mantém o cron original.
 
 ## Princípios
 
