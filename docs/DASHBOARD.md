@@ -44,7 +44,10 @@ os scores, as carteiras ou os modelos ML.
   fontes educacionais e atalhos para as outras abas. O conteúdo é estático e
   permanece legível mesmo sem carregar dados. Navegação atualizada em 23/09/2026.
 - **Visão geral:** entradas, saídas e mudanças de posição na comparação
-  semanal descrita acima, líderes Top 5 por classe e desempenho contra referências.
+  semanal descrita acima em resumos compactos, seleções Top 20 por classe em
+  cartões alinhados de uma linha com posição, ticker e score (sem preço), e
+  desempenho em gráfico de linhas com escolha entre Ações e FIIs. A grade
+  completa todas as linhas e empilha as duas classes no celular.
 - **Carteira Híbrida:** alocação entre quatro blocos, perfis, simulação de aporte,
   curva comparativa, contribuições e pesos por ativo.
 - **Modelos ML:** rankings sombra, performance, confiabilidade e evolução

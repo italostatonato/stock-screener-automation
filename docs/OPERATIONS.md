@@ -99,7 +99,11 @@ Para problemas de push, confira remote, credenciais e permissão de escrita.
 O workflow já declara `contents: write`; a publicação usa
 `pages: write` e `id-token: write` no job de deploy.
 O workflow `tests.yml` roda a suíte em pushes de código/documentação e pull
-requests, com permissão de leitura. Esses eventos não iniciam coleta nem deploy.
+requests, com permissão de leitura. Esse workflow não inicia coleta nem deploy.
+Alterações de `docs/index.html`, `docs/assets/` ou de `run_screener.yml` na
+`main` também acionam a publicação pelo `run_screener.yml`: executam `test`
+e `deploy`, ignorando `screener`. Isso publica ajustes da interface sem
+aguardar a próxima segunda-feira nem gerar um novo snapshot.
 
 A revisão documental semanal é separada, **segunda-feira às 12h de São Paulo**,
 e é administrada no Codex. Veja [Manutenção da documentação](DOCUMENTATION.md).

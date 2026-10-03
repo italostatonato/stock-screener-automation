@@ -130,6 +130,11 @@ diagnósticos de falha, por 30 dias. Commita
 `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
 `tests.yml` valida pushes de código/documentação e pull requests, sem coleta
 ou deploy. Os testes usam Python e Node 24.
+Pushes da `main` que alteram `docs/index.html`, `docs/assets/` ou
+`run_screener.yml` também acionam esse último workflow: testes → deploy,
+com `screener` ignorado. A coleta semanal e a execução manual mantêm os três jobs.
+A Visão geral mostra 20 ativos por classe em cartões uniformes com posição,
+ticker e score, sem preço; conserva o gráfico de linhas Ações/FIIs.
 
 A revisão documental é uma automação separada do Codex, solicitada para
 segunda-feira às 12h em São Paulo. Procedimento em

@@ -167,7 +167,7 @@ O dashboard web é publicado via GitHub Pages, abre na aba **Introdução** e ca
 Principais telas:
 
 - **Introdução** (tela inicial): conceitos de ações, FIIs, cotas, ETFs, renda fixa e proventos; exemplo de preço versus rendimento; referências como CDI, Selic, IPCA e índices da bolsa; glossário expansível e roteiro com atalhos para as demais abas. Inclui fontes educacionais oficiais.
-- **Visão geral**: entradas, saídas e mudanças de posição contra o snapshot mais recente de pelo menos sete dias antes, líderes Top 5 de ações e FIIs e desempenho das carteiras contra referências. A janela pode superar uma semana quando há lacunas.
+- **Visão geral**: entradas, saídas e mudanças de posição contra o snapshot mais recente de pelo menos sete dias antes, seleções Top 20 de ações e FIIs em cartões de uma linha com posição, ticker e score, sem preço, e desempenho das carteiras em gráfico de linhas com escolha entre Ações e FIIs. A janela pode superar uma semana quando há lacunas.
 - **Carteira Híbrida**: percentuais editáveis de 1% em 1% para Top 20 Ações BR, Top 20 FIIs, CDI e IVVB11. Ao aumentar um bloco, cada ponto sai do maior dos outros blocos; ao reduzir, a diferença vai para o maior dos demais. Empates seguem a ordem dos blocos na tela. O total permanece em 100%. Cinco perfis de simulação (na mesma ordem dos blocos): Agressivo 45/20/5/30, Meio-Agressivo 40/25/10/25, Balanceado 30/30/20/20, Conservador 15/20/55/10 e Muito conservador 5/10/80/5. O Balanceado preserva a configuração original. Gráfico, contribuições e pesos por ativo acompanham a seleção, com rebalanceamento a cada nova composição semanal. O simulador inicia com R$ 10.000,00 e exibe as compras em listas abertas abaixo do card de cada bloco, na mesma coluna. Usa os preços do snapshot selecionado e o último fechamento disponível de IVVB11 até essa data, calcula unidades inteiras, destino ao CDI, percentuais efetivos e saldo não aplicado, sem redistribuir sobras. O desempenho histórico continua teórico, sem arredondamento de quantidades. Valores sem cotação ou composição ficam no saldo.
 - **Ações**: ranking de ações com preço, score e principais indicadores.
 - **FIIs**: ranking de FIIs com preço, score, DY, P/VP, liquidez e setor.
@@ -343,7 +343,10 @@ no runner de coleta. Os artefatos de saída `stock-screener-output-ID` ficam
 retidos por **90 dias**; o diagnóstico `screener-failure-ID`, com os logs de
 falha da coleta, por **30 dias**. O workflow `tests.yml` executa testes Python
 e JavaScript em pushes de código/documentação e pull requests. Esses gatilhos
-não iniciam coleta nem deploy.
+não iniciam coleta nem deploy pelo `tests.yml`. Alterações de `docs/index.html`,
+`docs/assets/` ou do workflow de publicação na `main` também acionam
+`run_screener.yml`: passam pelos testes e publicam o Pages com a coleta
+semanal ignorada.
 
 A revisão semanal de documentação é uma tarefa separada, solicitada para
 **segunda-feira às 12h, America/Sao_Paulo**. Seu procedimento está em

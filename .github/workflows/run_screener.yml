@@ -1,6 +1,12 @@
 name: Weekly FII Screener
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/index.html"
+      - "docs/assets/**"
+      - ".github/workflows/run_screener.yml"
   schedule:
     - cron: "0 11 * * 1" # segunda-feira, 08:00 BRT (11:00 UTC)
   workflow_dispatch:
@@ -40,6 +46,7 @@ jobs:
         run: pytest tests/ -v
 
   screener:
+    if: ${{ github.event_name != 'push' }}
     needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 60

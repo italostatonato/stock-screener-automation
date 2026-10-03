@@ -1292,6 +1292,51 @@
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
     }
+  
+    /* Overview: small weekly summaries, then compact cards for each ranked asset. */
+body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-strip{display:none}
+#overview .section-head{align-items:center;margin:24px 0 22px;gap:12px}
+#overview .section-head h2{font-size:30px!important}
+#overview .section-head .desc{font-size:14px;margin-top:4px}
+#overview .overview-snapshot-date{flex:0 0 auto;color:var(--muted);font-size:13px;padding:6px 10px;border:1px solid var(--border);border-radius:8px}
+#overview .overview-grid{grid-template-columns:minmax(0,1fr);gap:24px;margin-bottom:24px;align-items:start}
+#overview .overview-week-panel,#overview .overview-rankings-panel{padding:0!important;border:0;border-radius:0;background:transparent;box-shadow:none}
+#overview .overview-panel-head{display:flex;align-items:center;gap:12px}
+#overview .overview-panel-head h3{margin:0!important;font-size:17px}
+#overview .overview-date{padding:0;border:0;border-radius:0;font-size:12px;font-weight:500;margin:0}
+#overview #weeklyChanges{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px;align-items:start}
+#overview .change-group{padding:12px 14px;border-radius:12px;background:rgba(12,18,33,.66)}
+#overview .change-group-head{align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+#overview .change-group-title{margin:0;font-size:14px}
+#overview .change-count{font-size:12px;font-weight:500}
+#overview .overview-selection-changes{display:flex;flex-wrap:wrap;gap:5px 16px;align-items:center;min-height:26px}
+#overview .overview-change-line{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
+#overview .overview-same-selection{margin:0!important;font-size:14px!important;line-height:1.45!important}
+#overview .ticker-chip{font-size:12px;min-height:24px;padding:3px 7px;border-radius:6px}
+#overview .overview-position-changes{margin-top:6px;color:var(--muted);font-size:13px}
+#overview .overview-position-changes summary{cursor:pointer;width:fit-content;padding:4px 0;line-height:1.45}
+#overview .overview-position-changes summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+#overview .overview-position-changes .movement-list{margin-top:8px}
+#overview .movement-pill{font-size:12px}
+#overview .overview-no-movers{margin:8px 0 0!important;color:var(--muted2);font-size:13px!important}
+#overview .overview-empty{font-size:13px}
+#overviewTopFive{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:12px}
+#overviewTopFive .leader-column{container:overview-ranking/inline-size;padding:0;border:0;border-radius:0;background:transparent}
+#overviewTopFive .overview-ranking-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 6px 10px;border-bottom:2px solid rgba(177,195,222,.18)}
+#overviewTopFive .overview-ranking-head h4{margin:0;font-size:14px}
+#overviewTopFive .overview-ranking-head>span{font-size:12px;color:var(--muted2)}
+#overviewTopFive .overview-asset-cards{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;list-style:none;margin:8px 0 0;padding:0}
+@container overview-ranking (min-width:18rem){#overviewTopFive .overview-asset-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container overview-ranking (min-width:35.5rem){#overviewTopFive .overview-asset-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@container overview-ranking (min-width:48rem){#overviewTopFive .overview-asset-cards{grid-template-columns:repeat(5,minmax(0,1fr))}}
+#overviewTopFive .overview-asset-card{display:grid;grid-template-columns:24px minmax(0,1fr) 34px;align-items:center;column-gap:5px;box-sizing:border-box;min-width:0;min-height:32px;padding:6px 8px;border:1px solid rgba(177,195,222,.14);border-radius:8px;background:rgba(4,8,17,.25);font-variant-numeric:tabular-nums;line-height:1.25}
+#overviewTopFive .overview-card-rank{color:var(--muted2);font-size:.75rem;white-space:nowrap}
+#overviewTopFive .overview-card-ticker{min-width:0;color:var(--text);font-size:.875rem;white-space:nowrap}
+#overviewTopFive .overview-card-score{color:var(--text);font-size:.875rem;font-weight:750;text-align:right;white-space:nowrap}
+#overviewTopFive .overview-asset-card:nth-child(-n+3) .overview-card-score{color:var(--accent)}
+#overviewTopFive .overview-asset-cards>.overview-empty{grid-column:1/-1}
+@media(max-width:720px){#overview .section-head{align-items:flex-start!important}#overview #weeklyChanges,#overviewTopFive{grid-template-columns:minmax(0,1fr)}#overview .overview-grid{gap:20px}#overviewTopFive{gap:20px}}
+
   </style>
 </head>
 <body>
@@ -1441,14 +1486,14 @@
     </section>
 
     <section id="overview" class="section" role="tabpanel" aria-labelledby="tab-overview" aria-hidden="true">
-      <div class="section-head"><div><h2>Visão geral</h2><p class="desc">O que mudou na semana, quem lidera agora e se as carteiras estão entregando resultado.</p></div></div>
+      <div class="section-head"><div><h2>Visão geral</h2><p class="desc">Movimentação, ranking e desempenho</p></div><time id="overviewSnapshotDate" class="overview-snapshot-date">Carregando a seleção…</time></div>
       <div class="overview-grid">
-        <article class="panel" aria-labelledby="weeklyChangesTitle">
-          <div class="overview-panel-head"><div><span class="overview-eyebrow">Movimentação</span><h3 id="weeklyChangesTitle">O que mudou na semana</h3><p>Entradas, saídas e maiores mudanças de posição contra o snapshot semanal anterior.</p></div><span class="overview-date" id="weeklyChangesDate">Comparando…</span></div>
+        <article class="panel overview-week-panel" aria-labelledby="weeklyChangesTitle">
+          <div class="overview-panel-head"><h3 id="weeklyChangesTitle">Na semana</h3><span class="overview-date" id="weeklyChangesDate">Comparando…</span></div>
           <div id="weeklyChanges" class="change-groups" aria-live="polite"><div class="overview-empty">Preparando a comparação semanal…</div></div>
         </article>
-        <article class="panel" aria-labelledby="overviewLeadersTitle">
-          <div class="overview-panel-head"><div><span class="overview-eyebrow">Seleção atual</span><h3 id="overviewLeadersTitle">Líderes do ranking</h3><p>Os cinco primeiros de cada universo, apresentados separadamente.</p></div><span class="overview-date">Top 5</span></div>
+        <article class="panel overview-rankings-panel" aria-labelledby="overviewLeadersTitle">
+          <div class="overview-panel-head"><h3 id="overviewLeadersTitle">Seleção atual</h3><span class="overview-date">Top 20 por universo</span></div>
           <div id="overviewTopFive" class="leader-columns"></div>
         </article>
       </div>
@@ -1805,6 +1850,8 @@
       if(pill) pill.innerHTML=`<span class="dot"></span> ${current?'Atualizado nesta semana':'Atualização semanal pendente'}`;
       if(asOf) asOf.textContent=`Snapshot: ${fmtDateShort(last)}`;
       if(range) range.innerHTML=`Histórico: <b>${fmtDateShort(first)}</b> até <b>${fmtDateShort(last)}</b>`;
+      const overviewDate=document.getElementById('overviewSnapshotDate');
+      if(overviewDate){ overviewDate.dateTime=dataBase; overviewDate.textContent=`Dados de ${fmtDateShort(dataBase)}`; }
     }
     async function loadDate(date){
       state.selectedDate = date;
@@ -1874,7 +1921,18 @@
       return items.map(item=>`<span class="movement-pill ${item.delta>0?'up':'down'}"><b>${item.delta>0?'↑':'↓'}${Math.abs(item.delta)}</b> ${escapeAttr(item.ticker)}</span>`).join('');
     }
     function overviewChangeGroup(title,type,movement){
-      return `<section class="change-group ${type==='fii'?'fii':'acao'}"><div class="change-group-head"><span class="change-group-title">${title}</span><span class="change-count">${movement.entries.length} entrada${movement.entries.length===1?'':'s'} · ${movement.exits.length} saída${movement.exits.length===1?'':'s'}</span></div><div class="change-row"><span class="change-label">Entraram</span><div class="ticker-chips">${changeTickerChips(movement.entries,'entry','Nenhuma troca')}</div></div><div class="change-row"><span class="change-label">Saíram</span><div class="ticker-chips">${changeTickerChips(movement.exits,'exit','Nenhuma troca')}</div></div><div class="change-row"><span class="change-label">Ranking</span><div class="movement-list">${movementPills(movement.movers)}</div></div></section>`;
+      const headingId = `overview-changes-${type === 'fii' ? 'fiis' : 'acoes'}`;
+      const { entries, exits, movers } = movement;
+      const changes = entries.length || exits.length
+        ? [
+          entries.length ? `<div class="overview-change-line"><span>${entries.length === 1 ? 'Entrou' : 'Entraram'}</span><div class="ticker-chips">${changeTickerChips(entries, 'entry', '')}</div></div>` : '',
+          exits.length ? `<div class="overview-change-line"><span>${exits.length === 1 ? 'Saiu' : 'Saíram'}</span><div class="ticker-chips">${changeTickerChips(exits, 'exit', '')}</div></div>` : ''
+        ].join('')
+        : '<p class="overview-same-selection">Mesma seleção da semana anterior</p>';
+      const positions = movers.length
+        ? `<details class="overview-position-changes"><summary>Alterações de posição</summary><div class="movement-list">${movementPills(movers)}</div></details>`
+        : '<p class="overview-no-movers">Sem mudança de posição.</p>';
+      return `<section class="change-group ${type === 'fii' ? 'fii' : 'acao'}" aria-labelledby="${headingId}"><div class="change-group-head"><h4 class="change-group-title" id="${headingId}">${escapeAttr(title)}</h4><span class="change-count">${entries.length} entrada${entries.length === 1 ? '' : 's'} · ${exits.length} saída${exits.length === 1 ? '' : 's'}</span></div><div class="overview-selection-changes">${changes}</div>${positions}</section>`;
     }
     function renderOverviewChanges(){
       const target=document.getElementById('weeklyChanges');
@@ -1891,8 +1949,12 @@
       target.innerHTML=overviewChangeGroup('Ações','acao',acoes)+overviewChangeGroup('FIIs','fii',fiis);
     }
     function overviewLeaderColumn(title,type,items){
-      const rows=(items||[]).slice(0,5).map((item,index)=>`<li class="leader-item"><span class="leader-rank">#${index+1}</span><span class="leader-asset"><span class="leader-ticker">${escapeAttr(overviewTicker(item,type)||'—')}</span><span class="leader-detail">${fmtMoney(overviewPrice(item,type))}</span></span><span class="leader-score"><b>${fmtNum(scoreOf(item),1)}</b><span>score</span></span></li>`).join('');
-      return `<section class="leader-column ${type==='fii'?'fii':'acao'}"><h4>${title}</h4><ol class="leader-list">${rows||'<li class="overview-empty">Ranking indisponível.</li>'}</ol></section>`;
+      const selection = (items || []).slice(0, 20);
+      const headingId = `overview-ranking-${type === 'fii' ? 'fiis' : 'acoes'}`;
+      const cards = selection.map((item, index) =>
+        `<li class="overview-asset-card"><span class="overview-card-rank" aria-label="Posição ${index + 1}">#${index + 1}</span><strong class="overview-card-ticker"><span class="sr-only">Ativo: </span>${escapeAttr(overviewTicker(item, type) || '—')}</strong><span class="overview-card-score"><span class="sr-only">Score: </span>${fmtNum(scoreOf(item), 1)}</span></li>`
+      ).join('');
+      return `<section class="leader-column ${type === 'fii' ? 'fii' : 'acao'}" aria-labelledby="${headingId}"><div class="overview-ranking-head"><h4 id="${headingId}">${escapeAttr(title)}</h4><span>${selection.length} ativos</span></div><ol class="overview-asset-cards" aria-labelledby="${headingId}">${cards || '<li class="overview-empty">Ranking indisponível.</li>'}</ol></section>`;
     }
     function renderOverviewTopFive(){
       const target=document.getElementById('overviewTopFive');
