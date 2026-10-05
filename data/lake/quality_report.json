@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-28T18:21:01",
+  "generated_at": "2026-10-05T19:34:18",
   "status": "warn",
   "checks": [
     {
       "name": "lake_snapshots",
       "status": "ok",
-      "detail": "52 snapshots encontrados"
+      "detail": "53 snapshots encontrados"
     },
     {
       "name": "known_incomplete_snapshots",
@@ -15,12 +15,7 @@
     {
       "name": "lake_manifest",
       "status": "ok",
-      "detail": "latest=2026-09-28"
-    },
-    {
-      "name": "snapshot_2026-09-09_files",
-      "status": "ok",
-      "detail": "ok"
+      "detail": "latest=2026-10-05"
     },
     {
       "name": "snapshot_2026-09-15_files",
@@ -43,39 +38,44 @@
       "detail": "ok"
     },
     {
+      "name": "snapshot_2026-10-05_files",
+      "status": "ok",
+      "detail": "ok"
+    },
+    {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_fiis.parquet",
       "status": "ok",
-      "detail": "28285 linhas"
+      "detail": "28835 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_acoes.parquet",
       "status": "ok",
-      "detail": "23295 linhas"
+      "detail": "24251 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
       "status": "ok",
-      "detail": "2020 linhas"
+      "detail": "2060 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_fiis.parquet",
       "status": "ok",
-      "detail": "26354 linhas"
+      "detail": "26867 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_acoes.parquet",
       "status": "ok",
-      "detail": "23295 linhas"
+      "detail": "24251 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
       "status": "ok",
-      "detail": "16768 linhas"
+      "detail": "17281 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
       "status": "ok",
-      "detail": "18223 linhas"
+      "detail": "19179 linhas"
     },
     {
       "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_performance.parquet",
@@ -130,7 +130,12 @@
     {
       "name": "dashboard_index",
       "status": "ok",
-      "detail": "64 datas no index.json"
+      "detail": "65 datas no index.json"
+    },
+    {
+      "name": "dashboard_json_2026-10-05",
+      "status": "ok",
+      "detail": "JSON e rankings válidos"
     },
     {
       "name": "dashboard_json_2026-09-28",
@@ -455,7 +460,7 @@
     {
       "name": "dashboard_latest_vs_lake",
       "status": "ok",
-      "detail": "dashboard_latest=2026-09-28, lake_latest=2026-09-28"
+      "detail": "dashboard_latest=2026-10-05, lake_latest=2026-10-05"
     }
   ]
 }
