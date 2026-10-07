@@ -8,7 +8,7 @@ on:
       - "docs/assets/**"
       - ".github/workflows/run_screener.yml"
   schedule:
-    - cron: "0 11 * * 1" # segunda-feira, 08:00 BRT (11:00 UTC)
+    - cron: "0 13 * * 1" # segunda-feira, 10:00 BRT (13:00 UTC)
   workflow_dispatch:
 
 permissions:

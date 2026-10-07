@@ -1,6 +1,6 @@
 # Radar Semanal — Contexto para assistentes de IA
 
-Revisado em 21/09/2026 contra a implementação da `main` (`9ff6618`).
+Revisado em 05/10/2026 contra a implementação da `main` (`13a6742`).
 Consulte [o procedimento de revisão](docs/DOCUMENTATION.md).
 
 ## Projeto e documentação
@@ -8,7 +8,7 @@ Consulte [o procedimento de revisão](docs/DOCUMENTATION.md).
 Screener semanal de FIIs e ações brasileiras com score, Top 20, Excel,
 dashboard, lake incremental, backtests e ML em modo sombra.
 
-Coleta agendada: segunda-feira, 08h de Brasília. Revisão documental: segunda,
+Coleta agendada: segunda-feira, 10h de Brasília. Revisão documental: segunda,
 12h, em tarefa separada. Snapshots são por data de execução, inclusive manual.
 Liquidez diária, CDI diário, variações em 24h e horizontes ML em dias não
 significam que os rankings sejam atualizados diariamente. Revise também textos
@@ -26,12 +26,15 @@ O [README](README.md) orienta o setup. Consulte os guias de
 [confiabilidade](docs/ML_CONFIDENCE.md), [backtests](docs/BACKTEST_RETROATIVO.md)
 e [operação](docs/OPERATIONS.md). A wiki também tem cópia em `docs/wiki/`.
 
-O [site no Sites](docs/SITE.md), verificado em 30/09/2026, é uma publicação
-separada e pública que consulta os dados do GitHub Pages ao abrir, com cópia
-incluída para contingência. O rodapé conta navegadores únicos desde 29/09/2026,
-com cookie e persistência no servidor. O código dessa publicação é mantido no
-projeto do Sites e não é entregue por um clone deste repositório. Alterações
-visuais exigem atualização e publicação no Sites; a coleta mantém o cron original.
+O [site no Sites](docs/SITE.md), verificado em 05/10/2026, é uma publicação
+separada e pública cujo servidor espelha o HTML, os dados e os recursos do
+GitHub Pages, com cópia incluída para contingência. A aba visível verifica a
+versão a cada 60 segundos e pode recarregar, aguardando a edição de campos.
+Isso não muda o cron da coleta. O rodapé conta navegadores únicos desde
+29/09/2026, com cookie e persistência no servidor. Worker, contador, adaptações
+próprias e cópia de contingência são mantidos e publicados no projeto do Sites;
+um clone deste repositório não inclui esse código. O HTML original atualizado
+no Pages chega pelo espelhamento sem nova publicação no Sites.
 
 ## Princípios
 
@@ -64,7 +67,7 @@ visuais exigem atualização e publicação no Sites; a coleta mantém o cron or
 
 A carteira híbrida possui quatro blocos, cinco perfis, pesos editáveis com
 total de 100% e simulação de compras em unidades inteiras. Aporte padrão
-R$ 10.000 e mínimo R$ 1.000. Os gráficos temporais iniciam em 90D.
+R$ 10.000 e mínimo R$ 1.000. Os gráficos temporais iniciam em 3M.
 O histórico teórico usa pesos fracionários; as séries Top 20 não reinvestem
 proventos e a simulação híbrida não inclui custos/impostos.
 
@@ -123,7 +126,7 @@ três janelas do mesmo modelo/classe/horizonte e magnitude de até 50%.
 
 ## Workflow e manutenção
 
-`Weekly FII Screener` roda segunda-feira às 08h BRT (`0 11 * * 1`) ou
+`Weekly FII Screener` roda segunda-feira às 10h BRT (`0 13 * * 1`) ou
 manualmente. Jobs: testes → screener; deploy quando testes passam, inclusive
 se a coleta falhar. Publica `docs/`. Artefatos de saída são retidos por 90 dias;
 diagnósticos de falha, por 30 dias. Commita
@@ -131,9 +134,9 @@ diagnósticos de falha, por 30 dias. Commita
 `tests.yml` valida pushes de código/documentação e pull requests, sem coleta
 ou deploy. Os testes usam Python e Node 24.
 Pushes da `main` que alteram `docs/index.html`, `docs/assets/` ou
-`run_screener.yml` também acionam esse último workflow: testes → deploy,
+`.github/workflows/run_screener.yml` acionam o próprio `run_screener.yml`: testes → deploy,
 com `screener` ignorado. A coleta semanal e a execução manual mantêm os três jobs.
-A Visão geral mostra 20 ativos por classe em cartões uniformes com posição,
+A Visão geral mostra até 20 ativos por classe em cartões uniformes com posição,
 ticker e score, sem preço; conserva o gráfico de linhas Ações/FIIs.
 
 A revisão documental é uma automação separada do Codex, solicitada para

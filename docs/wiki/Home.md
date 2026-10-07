@@ -16,9 +16,10 @@ não uma recomendação de investimento.
 - [Dashboard no GitHub Pages](https://italostatonato.github.io/stock-screener-automation/): publicação original e origem
   dos snapshots consultados pelo site.
 
-O site no Sites está público, conforme verificação de **30/09/2026**.
-A coleta continua semanal; dados são consultados ao abrir a página, com cópia
-de contingência em caso de falha. Consulte [Site e visitantes](https://github.com/italostatonato/stock-screener-automation/wiki/Site)
+O site no Sites está público, conforme verificação de **05/10/2026**.
+O servidor espelha o HTML e os dados do Pages, com cópia de contingência se a
+origem falhar. A aba visível verifica a versão a cada 60 segundos e pode
+recarregar automaticamente; isso não altera a coleta semanal. Consulte [Site e visitantes](https://github.com/italostatonato/stock-screener-automation/wiki/Site)
 para saber como o contador funciona e como o site é atualizado.
 
 ## Funcionamento atual
@@ -33,7 +34,7 @@ para saber como o contador funciona e como o site é atualizado.
 - ML em modo sombra: mínimo de uma janela para confiança, meta de cinco e
   três janelas para liberar projeções dentro dos limites de exibição.
 
-A coleta é agendada semanalmente, segunda-feira às **08h de São Paulo**,
+A coleta é agendada semanalmente, segunda-feira às **10h de São Paulo**,
 ou pode ser acionada manualmente. O novo ranking é publicado após o processamento.
 Datas dos snapshots e indicadores diários não implicam coleta diária do screener.
 A revisão documental semanal foi solicitada para **segunda-feira às 12h** no

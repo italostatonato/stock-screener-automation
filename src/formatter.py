@@ -128,7 +128,7 @@ def _add_premissas(wb, cfg: dict, data_hoje: str, n_fiis: int, n_acoes: int):
         ("FIIs",      "fundsexplorer.com.br/ranking"),
         ("Ações BR",  "fundamentus.com.br/resultado.php (tabela pública)"),
         ("Indicadores de mercado", "Banco Central do Brasil (SGS) + AwesomeAPI"),
-        ("Coleta agendada", "Semanal: segunda-feira, 08h de Brasília; também pode ser acionada manualmente."),
+        ("Coleta agendada", "Semanal: segunda-feira, 10h de Brasília; também pode ser acionada manualmente."),
         ("Frequência dos indicadores", "Liquidez e variações diárias descrevem as métricas dos provedores, não a cadência do screener."),
         (None, None),
         ("── METODOLOGIA: ELEGIBILIDADE + SCORE ──", None),

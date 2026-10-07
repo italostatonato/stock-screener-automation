@@ -23,7 +23,7 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-A coleta automática inicia segunda-feira às **08h de Brasília**. Os
+A coleta automática inicia segunda-feira às **10h de Brasília**. Os
 comandos abaixo permitem execução manual; datas nos arquivos não representam
 um agendamento diário. A revisão documental ocorre separadamente, segunda
 às **12h de Brasília**.

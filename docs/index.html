@@ -37,7 +37,7 @@
     .info-card{background:rgba(18,27,50,.72);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}.info-card h3{margin-top:0}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{padding:12px;border-bottom:1px solid var(--border);text-align:left}.table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.rank-table-wrap{max-height:380px;overflow:auto;border:1px solid rgba(148,163,184,.12);border-radius:16px}.rank-table td:first-child,.rank-table th:first-child{width:70px;color:var(--accent);font-weight:900}.rank-table td{font-weight:800;vertical-align:top}.rank-table .muted-cell{color:var(--muted);font-weight:600}.rank-asset{display:flex;flex-direction:column;gap:3px;min-width:0}.rank-asset .asset-name{font-size:14px;font-weight:900;letter-spacing:.01em}.rank-asset.acao .asset-name{color:var(--acao)}.rank-asset.fii .asset-name{color:var(--fii)}.rank-asset.fii{border-left:3px solid var(--fii);padding-left:8px}.rank-asset.acao{border-left:3px solid var(--acao);padding-left:8px}.asset-detail{font-size:11px;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .rec-table-wrap{max-height:640px;overflow:auto;border:1px solid rgba(148,163,184,.12);border-radius:16px}.rec-table th,.rec-table td{white-space:nowrap}.rec-table th{position:sticky;top:0;background:#121b32;z-index:2}.rec-table td:first-child,.rec-table th:first-child{width:70px;color:var(--accent);font-weight:900}.rec-table .num{text-align:right;font-variant-numeric:tabular-nums}.rec-asset{display:flex;align-items:center;gap:10px;min-width:0}.rec-badge{display:inline-grid;place-items:center;width:10px;height:10px;border-radius:999px;flex:0 0 auto}.rec-badge.acao{background:var(--acao)}.rec-badge.fii{background:var(--fii)}.rec-name{font-weight:900}.rec-sub{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:2px}
     .empty{border:1px dashed var(--border-strong);border-radius:18px;padding:28px;text-align:center;color:var(--muted)} footer{border-top:1px solid var(--border);padding:24px 0 36px;color:var(--muted2);font-size:13px}.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:5px 9px;color:var(--muted);font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:var(--good)}
-    
+
     .author-row{display:flex;align-items:center;gap:10px;margin-top:22px;flex-wrap:wrap;color:var(--muted)}.author-row a{color:var(--text);font-weight:900;text-decoration:none;border-bottom:1px solid var(--accent)}.about-toggle{border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);border-radius:999px;padding:9px 14px;font-weight:800;cursor:pointer}.about-toggle:hover{border-color:var(--accent);box-shadow:0 0 0 3px rgba(214,180,111,.12)}.about-panel{display:none;grid-template-columns:96px 1fr;gap:18px;align-items:center;margin-top:18px;background:rgba(18,27,50,.72);border:1px solid var(--border-strong);border-radius:22px;padding:18px;max-width:920px}.about-panel.open{display:grid}.about-photo{width:96px;height:96px;border-radius:24px;object-fit:cover;border:1px solid rgba(214,180,111,.55);background:linear-gradient(135deg,rgba(214,180,111,.22),rgba(31,78,121,.45))}.about-panel h3{margin:0 0 6px;font-size:19px}.about-panel p{margin:0;color:var(--muted);font-size:14px;max-width:none}.about-fallback{width:96px;height:96px;border-radius:24px;display:grid;place-items:center;font-weight:900;font-size:30px;color:#fff;border:1px solid rgba(214,180,111,.55);background:radial-gradient(circle at 20% 10%,rgba(52,211,153,.5),transparent 30%),linear-gradient(135deg,#111827,#1F4E79)}
 
     @media(max-width:1180px){.tabs{flex-wrap:wrap}.nav{align-items:flex-start;padding:12px 0}.kpis{grid-template-columns:repeat(3,1fr)}}
@@ -84,7 +84,7 @@
       .kpi .note{font-size:9px}
     }
 
-  
+
     /* Patch: rótulo Resumo + KPIs responsivos sem cortar números */
     @media(max-width:1180px){
       .kpis{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
@@ -109,7 +109,7 @@
       .kpi-spark{height:20px}
     }
 
-  
+
     /* Patch: notas dos KPIs curtas no padrão 'WoW -x,xx%' */
     .kpi .note{white-space:nowrap;overflow:visible;text-overflow:clip;max-width:100%}
     @media(max-width:620px){.kpi .note{font-size:8.8px;white-space:nowrap}.kpi .value{font-size:20px}.kpi-spark{height:22px}}
@@ -201,7 +201,7 @@
       .grid{grid-template-columns:1fr !important}
     }
 
-  
+
     /* Patch final: proporção, alinhamento e densidade visual */
     .hero{
       padding:32px 0 18px;
@@ -454,7 +454,7 @@
       }
     }
 
-  
+
     /* Correção final dos KPIs: layout limpo, proporcional e sem desalinhamento */
     .kpi-windowbar{
       margin:18px 0 12px !important;
@@ -618,7 +618,7 @@
       }
     }
 
-  
+
     /* Correção dos espaços vazios nos KPIs */
     .kpis{
       gap:10px !important;
@@ -717,7 +717,7 @@
       }
     }
 
-  
+
     /* Ajuste apenas dos cards de FIIs/Ações: menos espaço vazio, sem mexer nos KPIs */
     #fiis .grid,
     #acoes .grid{
@@ -861,7 +861,7 @@
       }
     }
 
-  
+
     /* Patch: status de dados compacto, filtros de período e KPIs só na visão geral */
     .asof{
       padding:14px 16px !important;
@@ -985,7 +985,7 @@
     .compare-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}.chart-ai{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;padding:12px 14px;background:linear-gradient(90deg,rgba(227,190,114,.10),rgba(8,12,24,.45));box-shadow:none}.chart-ai b{margin:0;padding-right:12px;border-right:1px solid rgba(227,190,114,.24)}
     .metric-scale-legend,.sector-legend{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;color:var(--muted2);font-size:10px;margin:-8px 0 12px}.metric-scale-legend b,.sector-legend b{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}.scale-dot,.sector-swatch{width:8px;height:8px;border-radius:50%;background:var(--swatch)}.metric.tone-high{border-color:rgba(52,211,153,.34);background:rgba(52,211,153,.075)}.metric.tone-mid{border-color:rgba(251,191,36,.28);background:rgba(251,191,36,.055)}.metric.tone-low{border-color:rgba(251,113,133,.26);background:rgba(251,113,133,.055)}.metric.tone-neutral{opacity:.94}.metric-tone-label{display:block;margin-top:4px!important;font-size:8px!important;font-weight:800;text-transform:uppercase;letter-spacing:.06em}.tone-high .metric-tone-label{color:var(--good)}.tone-mid .metric-tone-label{color:var(--warn)}.tone-low .metric-tone-label{color:var(--bad)}
     .asset-card.fii{--sector-color:var(--fii);border-color:color-mix(in srgb,var(--sector-color) 28%,rgba(177,195,222,.14))!important}.asset-card.fii:before{background:linear-gradient(90deg,var(--sector-color),transparent)}.sector-badge{display:inline-flex;align-items:center;gap:6px;color:var(--sector-color);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}.sector-badge:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sector-color);box-shadow:0 0 0 3px color-mix(in srgb,var(--sector-color) 13%,transparent)}
-    .rec-group-head th{font-size:11px!important;letter-spacing:.12em!important;text-align:center!important}.rec-group-head .group-acao{color:var(--acao)!important;background:color-mix(in srgb,var(--acao) 8%,#121b32)}.rec-group-head .group-fii{color:var(--fii)!important;background:color-mix(in srgb,var(--fii) 8%,#121b32);border-left:3px solid color-mix(in srgb,var(--fii) 60%,transparent)}.rec-table tbody td:nth-child(8),.rec-table thead tr:not(.rec-group-head) th:nth-child(7){border-left:3px solid color-mix(in srgb,var(--fii) 55%,transparent);padding-left:18px}.rec-table tbody tr:hover td{background:rgba(255,255,255,.018)}
+    .rec-group-head th{font-size:11px!important;letter-spacing:.12em!important;text-align:center!important}.rec-group-head .group-acao{color:var(--acao)!important;background:color-mix(in srgb,var(--acao) 8%,#121b32)}.rec-group-head .group-fii{color:var(--fii)!important;background:color-mix(in srgb,var(--fii) 8%,#121b32);border-left:3px solid color-mix(in srgb,var(--fii) 60%,transparent)}#recorrentes .rec-table tbody td:nth-child(8),#recorrentes .rec-table thead tr:not(.rec-group-head) th:nth-child(7){border-left:3px solid color-mix(in srgb,var(--fii) 55%,transparent);padding-left:18px}.rec-table tbody tr:hover td{background:rgba(255,255,255,.018)}
     .rank-movement{display:inline-flex;align-items:center;gap:2px;margin-left:5px;padding:2px 5px;border-radius:999px;font-size:9px;font-weight:900;vertical-align:middle}.rank-movement.up{color:var(--good);background:rgba(52,211,153,.10)}.rank-movement.down{color:var(--bad);background:rgba(251,113,133,.10)}.rank-movement.same{color:var(--muted);background:rgba(148,163,184,.09)}.rank-movement.new{color:var(--accent);background:rgba(227,190,114,.10)}
     .ml-evolution-panel{position:relative;overflow:hidden;border-color:rgba(214,180,111,.30);background:radial-gradient(circle at 92% 0,rgba(167,139,250,.11),transparent 30%),linear-gradient(145deg,rgba(18,27,50,.88),rgba(8,13,26,.82))}.ml-evolution-panel:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--accent),var(--acao),var(--fii))}.ml-evolution-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:12px}.ml-evolution-copy{max-width:720px}.ml-chart-controls{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}.ml-control-group{display:flex;align-items:center;gap:4px;padding:4px;border:1px solid rgba(177,195,222,.15);border-radius:999px;background:rgba(4,8,17,.32)}.ml-control-label{padding:0 6px;color:var(--muted2);font-size:9px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}.ml-chart-toggle{border:0;border-radius:999px;padding:7px 10px;background:transparent;color:var(--muted);font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap}.ml-chart-toggle:hover{color:var(--text);background:rgba(255,255,255,.05)}.ml-chart-toggle.active{color:#0b1020;background:var(--accent)}.ml-evolution-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:2px 0 10px}.ml-evolution-stat{padding:10px 12px;border:1px solid rgba(177,195,222,.12);border-radius:13px;background:rgba(4,8,17,.22)}.ml-evolution-stat small{display:block;color:var(--muted2);font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.ml-evolution-stat b{display:block;margin-top:3px;color:var(--text);font-size:14px}.ml-evolution-stat em{display:block;margin-top:2px;color:var(--muted);font-size:10px;font-style:normal}.ml-evolution-chart{height:380px}.ml-evolution-note{display:flex;align-items:center;gap:8px;min-height:18px;margin-top:8px}.ml-evolution-note .warning-dot{width:7px;height:7px;flex:0 0 auto;border-radius:50%;background:var(--warn);box-shadow:0 0 0 4px rgba(251,191,36,.08)}
     .score-warning{position:relative;border-color:rgba(251,191,36,.42)!important;background:linear-gradient(145deg,rgba(251,191,36,.12),rgba(11,17,31,.82))!important}.score-warning:before{content:"!";position:absolute;right:20px;top:18px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--warn);color:#171006;font-size:18px;font-weight:900}.score-warning-copy{padding:12px 14px;border-left:3px solid var(--warn);border-radius:0 12px 12px 0;background:rgba(251,191,36,.075);font-weight:800}.score-warning-copy strong{color:#ffe4a3}
@@ -1000,7 +1000,13 @@
     .hybrid-control-label{display:block;margin-bottom:10px;font-size:14px;font-weight:800;color:var(--text)}
     .hybrid-presets{display:flex;flex-wrap:wrap;gap:8px}
     .hybrid-presets button{min-height:44px;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.03);color:var(--text);font:inherit;font-size:14px;cursor:pointer}
-    .hybrid-presets button[aria-pressed="true"]{background:rgba(227,190,114,.15);border-color:var(--accent);color:var(--accent)}
+    .hybrid-presets button[data-hybrid-preset="muito_conservador"]{--profile-color:#1e4078}
+    .hybrid-presets button[data-hybrid-preset="conservador"]{--profile-color:#236e91}
+    .hybrid-presets button[data-hybrid-preset="balanceado"]{--profile-color:#6850a1}
+    .hybrid-presets button[data-hybrid-preset="meio_agressivo"]{--profile-color:#9a4673}
+    .hybrid-presets button[data-hybrid-preset="agressivo"]{--profile-color:#8b2338}
+    .hybrid-presets button{border-color:var(--profile-color);box-shadow:inset 0 -3px var(--profile-color)}
+    .hybrid-presets button[aria-pressed="true"]{background:var(--profile-color);border-color:var(--profile-color);color:#fff}
     .hybrid-control-help{font-size:13px!important;line-height:1.5;margin:10px 0 0!important;color:var(--muted2)}
     .hybrid-money-input{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:rgba(4,8,17,.3);color:var(--accent)}
     .hybrid-money-input input{width:100%;min-width:0;border:0;background:transparent;color:var(--text);font:inherit;font-size:20px;padding:10px 0}
@@ -1008,8 +1014,8 @@
     .hybrid-weight-status[data-invalid="true"],#hybridAmountStatus[data-invalid="true"]{color:var(--bad)!important}
     .hybrid-distribution{grid-column:1/-1;margin:0;padding-top:14px;border-top:1px solid var(--border)}
     .hybrid-distribution figcaption{margin-bottom:10px;font-size:14px;font-weight:800}
-    .hybrid-distribution-bar{display:flex;width:100%;height:22px;overflow:hidden;border-radius:8px;background:var(--surface2)}
-    .hybrid-distribution-bar>span{flex-shrink:0;height:100%}
+    .hybrid-distribution-bar{display:flex;width:100%;height:38px;overflow:hidden;border-radius:8px;background:var(--surface2)}
+    .hybrid-distribution-bar>span{flex-shrink:0;height:100%;display:flex;align-items:center;justify-content:center;color:#08111f;font-size:14px;font-weight:900}
     .hybrid-distribution-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
     .hybrid-distribution-legend li{display:flex;align-items:center;gap:8px;min-width:0;font-size:14px}
     .hybrid-distribution-legend i{flex:0 0 10px;width:10px;height:10px;border-radius:3px}
@@ -1292,7 +1298,7 @@
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
     }
-  
+
     /* Overview: small weekly summaries, then compact cards for each ranked asset. */
 body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-strip{display:none}
 #overview .section-head{align-items:center;margin:24px 0 22px;gap:12px}
@@ -1314,8 +1320,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
 #overview .overview-same-selection{margin:0!important;font-size:14px!important;line-height:1.45!important}
 #overview .ticker-chip{font-size:12px;min-height:24px;padding:3px 7px;border-radius:6px}
 #overview .overview-position-changes{margin-top:6px;color:var(--muted);font-size:13px}
-#overview .overview-position-changes summary{cursor:pointer;width:fit-content;padding:4px 0;line-height:1.45}
-#overview .overview-position-changes summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+#overview .overview-position-changes p{margin:0;padding:4px 0;line-height:1.45}
 #overview .overview-position-changes .movement-list{margin-top:8px}
 #overview .movement-pill{font-size:12px}
 #overview .overview-no-movers{margin:8px 0 0!important;color:var(--muted2);font-size:13px!important}
@@ -1337,7 +1342,19 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
 #overviewTopFive .overview-asset-cards>.overview-empty{grid-column:1/-1}
 @media(max-width:720px){#overview .section-head{align-items:flex-start!important}#overview #weeklyChanges,#overviewTopFive{grid-template-columns:minmax(0,1fr)}#overview .overview-grid{gap:20px}#overviewTopFive{gap:20px}}
 
-  </style>
+.top20-switch{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.top20-switch .overview-toggle{min-height:44px;font-size:14px;padding:10px 18px}
+.top20-view[hidden]{display:none!important}
+.overview-toggle-group{flex-wrap:wrap}
+.overview-toggle-group .overview-toggle{white-space:normal;min-height:44px}
+.csv-toolbar{display:flex;justify-content:flex-end;margin:10px 0;gap:8px}
+.csv-download{min-height:44px;padding:8px 14px;border:1px solid var(--border);border-radius:9px;background:var(--surface2);color:var(--text);font:inherit;font-size:14px;cursor:pointer}
+.csv-download:hover{border-color:var(--accent);color:var(--accent)}
+.csv-download:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.csv-download:disabled{opacity:.5;cursor:default}
+.ml-table thead th:nth-child(8),.ml-table tbody td:nth-child(8){border-left:3px solid color-mix(in srgb,var(--fii) 55%,transparent);padding-left:18px}
+@media(max-width:620px){.hybrid-distribution-bar>span{font-size:12px}.hybrid-distribution-bar>span.narrow b{writing-mode:vertical-rl}.top20-switch .overview-toggle{flex:1}.overview-toggle-group{width:100%}}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Ir para o conteúdo principal</a>
@@ -1349,11 +1366,8 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <button type="button" id="tab-overview" class="tab" role="tab" aria-controls="overview" aria-selected="false" tabindex="-1" data-tab="overview">Visão geral</button>
         <button type="button" id="tab-hibrida" class="tab" role="tab" aria-controls="hibrida" aria-selected="false" tabindex="-1" data-tab="hibrida">Carteira Híbrida</button>
         <button type="button" id="tab-modelos" class="tab" role="tab" aria-controls="modelos" aria-selected="false" tabindex="-1" data-tab="modelos">Modelos ML</button>
-        <button type="button" id="tab-recorrentes" class="tab" role="tab" aria-controls="recorrentes" aria-selected="false" tabindex="-1" data-tab="recorrentes">Recorrentes</button>
-        <button type="button" id="tab-acoes" class="tab" role="tab" aria-controls="acoes" aria-selected="false" tabindex="-1" data-tab="acoes">Ações</button>
-        <button type="button" id="tab-fiis" class="tab" role="tab" aria-controls="fiis" aria-selected="false" tabindex="-1" data-tab="fiis">FIIs</button>
-        <button type="button" id="tab-indicadores" class="tab" role="tab" aria-controls="indicadores" aria-selected="false" tabindex="-1" data-tab="indicadores">Indicadores</button>
-        <button type="button" id="tab-score" class="tab" role="tab" aria-controls="score" aria-selected="false" tabindex="-1" data-tab="score">Score e Info</button>
+        <button type="button" id="tab-top20" class="tab" role="tab" aria-controls="top20" aria-selected="false" tabindex="-1" data-tab="top20">Top 20</button>
+        <button type="button" id="tab-indicadores" class="tab" role="tab" aria-controls="indicadores" aria-selected="false" tabindex="-1" data-tab="indicadores">Indicadores e metodologia</button>
       </div>
     </div>
   </header>
@@ -1383,15 +1397,15 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       <div class="signal-cell"><span>Leitura da semana</span><b>Dados para orientar análise, não recomendações.</b></div>
       <div class="signal-cell"><span>Universo</span><b>Ações + FIIs brasileiros</b></div>
       <div class="signal-cell"><span>Metodologia</span><b>Nota por indicadores</b></div>
-      <div class="signal-cell"><span>Coleta</span><b>Semanal · segunda, 08h BRT</b></div>
+      <div class="signal-cell"><span>Coleta</span><b>Semanal · segunda, 10h BRT</b></div>
     </section>
 
     <section id="introducao" class="section active" role="tabpanel" aria-labelledby="tab-introducao" aria-hidden="false">
       <div class="intro-welcome">
         <div>
-          <span class="intro-kicker">Primeiros passos · investimentos em linguagem simples</span>
+          <span class="intro-kicker">Primeiros passos</span>
           <h2>Entenda os conceitos.<br>Depois, explore os números.</h2>
-          <p>Começando agora? Este guia explica o que aparece no Radar, com exemplos do dia a dia. O site organiza dados públicos de investimentos para ajudar você a estudar e comparar.</p>
+          <p>Este guia serve como introdução aos conceitos e indicadores usados no Radar Semanal, com exemplos do dia a dia para ajudar você a entender os dados, estudar e comparar investimentos.</p>
           <div class="intro-actions"><a class="intro-button primary" href="#intro-conceitos">Começar pelo básico <span aria-hidden="true">↓</span></a><button type="button" class="intro-button" data-go-tab="overview">Explorar o painel <span aria-hidden="true">→</span></button></div>
         </div>
         <nav class="intro-route" aria-label="Neste guia de introdução">
@@ -1404,7 +1418,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       </div>
 
       <section id="intro-conceitos" class="intro-block" aria-labelledby="intro-conceitos-title">
-        <div class="intro-heading"><span class="intro-kicker">01 · O básico</span><h3 id="intro-conceitos-title">O que você está comprando?</h3><p>Um <strong>ativo</strong> é um bem ou investimento com valor econômico. Aqui, você verá principalmente participações em empresas e em fundos.</p></div>
+        <div class="intro-heading"><span class="intro-kicker">01 · O básico</span><h3 id="intro-conceitos-title">O que estamos analisando?</h3><p>Um <strong>ativo</strong> é um bem ou investimento com valor econômico. Aqui, você verá principalmente participações em empresas e em fundos.</p></div>
         <div class="intro-concepts">
           <article class="intro-concept"><span class="intro-concept-tag">Uma parte de uma empresa</span><h4>Ações</h4><p>Ao comprar uma ação, você se torna dono de uma pequena parte de uma empresa. Pode ganhar com a valorização dessa participação e com a distribuição de lucros, os <strong>dividendos</strong>.</p><p class="intro-takeaway">O preço também pode cair. É <strong>renda variável</strong>: o resultado futuro é incerto.</p></article>
           <article class="intro-concept"><span class="intro-concept-tag">Investimento coletivo em imóveis</span><h4>FIIs</h4><p>Os <strong>Fundos de Investimento Imobiliário</strong> reúnem recursos de vários investidores. Podem investir em imóveis, como galpões e shoppings, ou em títulos ligados ao setor imobiliário.</p><p class="intro-takeaway">FIIs de “tijolo” investem principalmente em imóveis; os de “papel”, em títulos imobiliários. Os preços e os rendimentos podem variar.</p></article>
@@ -1465,7 +1479,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           <li><h4>Experimente uma divisão</h4><p>Na Carteira Híbrida, simule um aporte entre ações, FIIs, CDI e IVVB11. Os perfis são exemplos de alocação; o site não avalia qual é adequado a você.</p><div class="intro-step-links"><button type="button" class="intro-button" data-go-tab="hibrida">Simular uma carteira <span aria-hidden="true">→</span></button></div></li>
         </ol>
         <div class="intro-more"><span>Para aprofundar:</span><button type="button" class="intro-button" data-go-tab="indicadores">Indicadores do mercado</button><button type="button" class="intro-button" data-go-tab="score">Como o score é calculado</button><button type="button" class="intro-button" data-go-tab="recorrentes">Presença no ranking</button><button type="button" class="intro-button" data-go-tab="modelos">Modelos experimentais</button></div>
-        <p class="intro-note"><strong>Ao ler o Radar:</strong> a coleta é semanal, às segundas-feiras, 08h de Brasília. As curvas Top 20 usam preços e não reinvestem proventos; a simulação híbrida não inclui custos ou impostos. Os rankings ajudam no estudo e não são recomendações de compra.</p>
+        <p class="intro-note"><strong>Ao ler o Radar:</strong> a coleta é semanal, às segundas-feiras, 10h de Brasília. As curvas Top 20 usam preços e não reinvestem proventos; a simulação híbrida não inclui custos ou impostos. Os rankings ajudam no estudo e não são recomendações de compra.</p>
       </section>
       <aside class="intro-sources" aria-labelledby="intro-sources-title">
         <h3 id="intro-sources-title">Continue aprendendo nas fontes</h3>
@@ -1500,7 +1514,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       <article class="panel wide overview-performance-panel" aria-labelledby="overviewPerformanceTitle">
         <div class="overview-performance-head">
           <div><span class="overview-eyebrow">Desempenho</span><h3 id="overviewPerformanceTitle">Top 20 Ações vs referências</h3><p id="overviewPerformanceDescription">Retorno acumulado contra IBOV e CDI no mesmo período.</p></div>
-          <div class="overview-toggle-group" role="group" aria-label="Classe exibida no desempenho"><button type="button" class="overview-toggle active" data-overview-type="acoes" aria-pressed="true">Ações</button><button type="button" class="overview-toggle" data-overview-type="fiis" aria-pressed="false">FIIs</button></div>
+          <div class="overview-toggle-group" role="group" aria-label="Classe exibida no desempenho"><button type="button" class="overview-toggle active" data-overview-type="acoes" aria-pressed="true">Ações</button><button type="button" class="overview-toggle" data-overview-type="fiis" aria-pressed="false">FIIs</button><button type="button" class="overview-toggle" data-overview-type="misto" aria-pressed="false">Ações + FIIs (50/50)</button></div>
         </div>
         <div class="overview-performance-layout">
           <div class="overview-performance-visual"><div class="chart-box overview-performance-chart"><canvas id="overviewPerformanceChart" role="img" aria-label="Desempenho do Top 20 selecionado comparado aos seus principais benchmarks"></canvas></div><div class="mini-note" id="overviewPerformanceNote"></div></div>
@@ -1574,20 +1588,27 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       </div>
     </section>
 
-    <section id="fiis" class="section" role="tabpanel" aria-labelledby="tab-fiis" aria-hidden="true">
+    <section id="top20" class="section" role="tabpanel" aria-labelledby="tab-top20" aria-hidden="true">
+      <div class="section-head"><div><h2>Top 20</h2><p class="desc">Seleção atual e presença no ranking histórico.</p></div></div>
+      <div class="top20-switch" role="group" aria-label="Universo do Top 20">
+        <button type="button" class="overview-toggle active" data-top20-type="acoes" aria-controls="acoes" aria-pressed="true">Ações</button>
+        <button type="button" class="overview-toggle" data-top20-type="fiis" aria-controls="fiis" aria-pressed="false">FIIs</button>
+        <button type="button" class="overview-toggle" data-top20-type="recorrentes" aria-controls="recorrentes" aria-pressed="false">Recorrentes</button>
+      </div>
+    <section id="fiis" class="top20-view" aria-label="Top 20 FIIs" hidden>
       <div class="section-head"><div><h2>Top 20 FIIs</h2><p class="desc">Rank, score, renda, valuation, liquidez e tendência entre coletas semanais ou manuais.</p></div><div class="toolbar"><label class="sr-only" for="searchFiis">Buscar FII ou setor</label><input id="searchFiis" class="search" type="search" placeholder="Buscar FII ou setor..." /></div></div>
       <div id="fiiSectorLegend" class="sector-legend" aria-label="Cores dos setores de FIIs"></div>
       <div class="metric-scale-legend" aria-label="Escala relativa dos indicadores"><b>Faixa relativa dos indicadores</b><span class="scale-dot" style="--swatch:var(--good)"></span> alta <span class="scale-dot" style="--swatch:var(--warn)"></span> média <span class="scale-dot" style="--swatch:var(--bad)"></span> baixa</div>
       <div class="grid" id="fiisGrid"></div>
     </section>
 
-    <section id="acoes" class="section" role="tabpanel" aria-labelledby="tab-acoes" aria-hidden="true">
+    <section id="acoes" class="top20-view" aria-label="Top 20 Ações">
       <div class="section-head"><div><h2>Top 20 Ações</h2><p class="desc">Rank, score, valuation, rentabilidade e dividend yield.</p></div><div class="toolbar"><label class="sr-only" for="searchAcoes">Buscar ação ou empresa</label><input id="searchAcoes" class="search" type="search" placeholder="Buscar ação ou empresa..." /></div></div>
       <div class="metric-scale-legend" aria-label="Escala relativa dos indicadores"><b>Faixa relativa dos indicadores</b><span class="scale-dot" style="--swatch:var(--good)"></span> alta <span class="scale-dot" style="--swatch:var(--warn)"></span> média <span class="scale-dot" style="--swatch:var(--bad)"></span> baixa</div>
       <div class="grid" id="acoesGrid"></div>
     </section>
 
-    <section id="recorrentes" class="section" role="tabpanel" aria-labelledby="tab-recorrentes" aria-hidden="true">
+    <section id="recorrentes" class="top20-view" aria-label="Recorrentes" hidden>
       <div class="section-head"><div><h2>Recorrentes</h2><p class="desc">Todos os ativos que já apareceram no Top 20, ordenados por recorrência e score médio.</p></div></div>
       <div class="panel wide">
         <h3>Todos os ativos recorrentes no Top 20</h3>
@@ -1605,6 +1626,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
 
 
 
+    </section>
     <section id="modelos" class="section" role="tabpanel" aria-labelledby="tab-modelos" aria-hidden="true">
       <div class="section-head"><div><h2>Modelos ML</h2><p class="desc">Comparação em modo sombra entre o Score Top atual e modelos supervisionados.</p></div></div>
       <div class="panel wide ml-evolution-panel">
@@ -1643,7 +1665,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <p>Resultado semanal por ativo, com Score Top, modelos de árvore, regressão, boosting e ensemble. O ranking oficial ainda não muda automaticamente. Retornos projetados são experimentais e podem ter outliers em ativos de baixa cotação.</p>
         <div class="mini-note" id="mlStatusNote"></div>
         <div class="rec-table-wrap">
-          <table class="table rec-table">
+          <table class="table rec-table ml-table">
             <caption class="sr-only">Ranking comparativo dos modelos de seleção de ativos</caption>
             <thead><tr><th>Rank</th><th>Tipo</th><th>Ativo</th><th>Score Top</th><th>Ridge</th><th>Random Forest</th><th>Extra Trees</th><th>XGBoost</th><th>LightGBM</th><th>CatBoost</th><th>Ensemble</th><th>Modelo líder</th><th>Ret. exp.</th><th>Status</th></tr></thead>
             <tbody id="mlRankingBody"></tbody>
@@ -1655,7 +1677,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <h3>Performance dos modelos</h3>
         <p>Métricas acumuladas conforme os retornos futuros de 30 dias passam a ficar disponíveis.</p>
         <div class="rec-table-wrap">
-          <table class="table rec-table">
+          <table class="table rec-table ml-table">
             <caption class="sr-only">Métricas de performance histórica dos modelos</caption>
             <thead><tr><th>Tipo</th><th>Modelo</th><th>Horizonte</th><th>Janelas válidas</th><th>Retorno médio Top 20</th><th>Hit rate</th><th>Spearman IC</th><th>Alpha vs Score Top</th><th>Status</th></tr></thead>
             <tbody id="mlPerformanceBody"></tbody>
@@ -1674,9 +1696,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <div class="panel wide"><h3>Carteira Ações Top 20</h3><p>Retorno acumulado da carteira real registrada no histórico contra IBOV, IPCA e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyAcoesChart" role="img" aria-label="Carteira Ações Top 20 comparada a IBOV, IPCA e CDI"></canvas></div><div class="mini-note" id="proxyAcoesNote"></div><div class="chart-explain"><b>Como ler:</b> IBOV mede a bolsa brasileira, IPCA mede inflação e CDI mede a alternativa conservadora. O objetivo é ver se o ranking de ações compensa o risco assumido.</div></div>
         <div class="panel wide"><h3>Câmbio e cripto</h3><p>Cotações do snapshot e as cinco maiores criptomoedas por valor de mercado. A variação diária é uma métrica da fonte. Dados ausentes podem ser consultados ao abrir o painel, sem atualizar o ranking semanal.</p><div id="fxGrid" class="market-data-sections"></div></div>
       </div>
-    </section>
-
-    <section id="score" class="section score-info-section" role="tabpanel" aria-labelledby="tab-score" aria-hidden="true">
+    <section id="score" class="score-info-section" aria-label="Score e informações do projeto">
       <div class="section-head">
         <div>
           <h2>Score e Info</h2>
@@ -1741,12 +1761,13 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         </div>
       </div>
     </section>
+    </section>
   </main>
 
   <footer><div class="wrap">Atualizado automaticamente uma vez por semana · GitHub Pages · dados públicos e APIs gratuitas</div></footer>
 
   <script>
-    const state = { data:null, charts:{}, allDates:[], selectedDate:null, snapshotCache:{}, overviewComparisonLoading:false, overviewPerformanceType:'acoes', chartWindows:{}, marketFallbackLoading:false, marketFallbackAttempted:false, marketFallbackLive:false, mlChartType:'ACAO', mlChartMetric:'Retorno_Top20' };
+    const state = { data:null, charts:{}, allDates:[], selectedDate:null, snapshotCache:{}, overviewComparisonLoading:false, overviewPerformanceType:'acoes', top20Type:'acoes', chartWindows:{}, marketFallbackLoading:false, marketFallbackAttempted:false, marketFallbackLive:false, mlChartType:'ACAO', mlChartMetric:'Retorno_Top20' };
     const BR = 'pt-BR';
     const RADAR_FONT_FAMILY = '"Proxima Nova", "ProximaNova", Inter, system-ui, -apple-system, "Segoe UI", sans-serif';
     if(window.Chart){ Chart.defaults.font.family = RADAR_FONT_FAMILY; }
@@ -1865,7 +1886,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       preloadOverviewComparison();
     }
 
-    function renderAll(){ renderCards('fiis'); renderCards('acoes'); renderOverviewChanges(); renderOverviewTopFive(); renderRecorrentesTable(); renderMlModelsTables(); renderCharts(); renderFx(); }
+    function renderAll(){ renderCards('fiis'); renderCards('acoes'); renderOverviewChanges(); renderOverviewTopFive(); renderRecorrentesTable(); renderMlModelsTables(); renderCharts(); renderFx(); ensureCsvControls(); }
 
     function deltaClass(v, higherIsBetter=true){
       if(v==null || !Number.isFinite(Number(v))) return 'delta-neu';
@@ -1909,7 +1930,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       const previousMap=new Map((previous||[]).map((item,index)=>[overviewTicker(item,type),index+1]).filter(([ticker])=>ticker));
       const entries=[...currentMap.keys()].filter(ticker=>!previousMap.has(ticker));
       const exits=[...previousMap.keys()].filter(ticker=>!currentMap.has(ticker));
-      const movers=[...currentMap.keys()].filter(ticker=>previousMap.has(ticker)).map(ticker=>({ticker,delta:previousMap.get(ticker)-currentMap.get(ticker)})).filter(item=>item.delta!==0).sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta)||b.delta-a.delta).slice(0,5);
+      const movers=[...currentMap.keys()].filter(ticker=>previousMap.has(ticker)).map(ticker=>({ticker,delta:previousMap.get(ticker)-currentMap.get(ticker)})).filter(item=>item.delta!==0).sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta)||b.delta-a.delta);
       return {entries,exits,movers};
     }
     function changeTickerChips(items,tone,emptyText){
@@ -1930,7 +1951,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         ].join('')
         : '<p class="overview-same-selection">Mesma seleção da semana anterior</p>';
       const positions = movers.length
-        ? `<details class="overview-position-changes"><summary>Alterações de posição</summary><div class="movement-list">${movementPills(movers)}</div></details>`
+        ? `<div class="overview-position-changes"><p>Alterações de posição</p><div class="movement-list">${movementPills(movers)}</div></div>`
         : '<p class="overview-no-movers">Sem mudança de posição.</p>';
       return `<section class="change-group ${type === 'fii' ? 'fii' : 'acao'}" aria-labelledby="${headingId}"><div class="change-group-head"><h4 class="change-group-title" id="${headingId}">${escapeAttr(title)}</h4><span class="change-count">${entries.length} entrada${entries.length === 1 ? '' : 's'} · ${exits.length} saída${exits.length === 1 ? '' : 's'}</span></div><div class="overview-selection-changes">${changes}</div>${positions}</section>`;
     }
@@ -2331,7 +2352,76 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       });
       return cfg;
     }
-    function makeChart(id,cfg){ const el=document.getElementById(id); if(!el) return; destroy(id); state.charts[id]=new Chart(el, applyDatasetColors(cfg)); }
+    function makeChart(id,cfg){ const el=document.getElementById(id); if(!el) return; destroy(id); state.charts[id]=new Chart(el, applyDatasetColors(cfg)); ensureCsvControls(); }
+    function csvCell(value){
+      let text=String(value??'');
+      if(/^[=+@-]/.test(text.trimStart()) && !/^[-+]?\d+(?:[.,]\d+)*(?:%|\s*p\.p\.)?$/.test(text.trim())) text="'"+text;
+      return '"'+text.replace(/"/g,'""')+'"';
+    }
+    function csvText(rows){
+      return '\uFEFF'+rows.map(row=>row.map(csvCell).join(';')).join('\r\n')+'\r\n';
+    }
+    function downloadCsv(name,rows){
+      if(!rows.length) return;
+      const slug=String(name).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'').toLowerCase();
+      const url=URL.createObjectURL(new Blob([csvText(rows)],{type:'text/csv;charset=utf-8'}));
+      const link=document.createElement('a');
+      link.href=url;
+      link.download=`radar-${slug}-${state.selectedDate||todayIsoLocal()}.csv`;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+    function tableCsvRows(table){
+      const grid=[];
+      [...table.rows].forEach((row,rowIndex)=>{
+        grid[rowIndex]||=[];
+        let column=0;
+        [...row.cells].forEach(cell=>{
+          while(grid[rowIndex][column]!==undefined) column++;
+          const copy=cell.cloneNode(true);
+          copy.querySelectorAll('.sr-only').forEach(node=>node.remove());
+          const text=(copy.textContent||'').trim().replace(/\s+/g,' ');
+          for(let r=0;r<cell.rowSpan;r++){
+            grid[rowIndex+r]||=[];
+            for(let c=0;c<cell.colSpan;c++) grid[rowIndex+r][column+c]=text;
+          }
+          column+=cell.colSpan;
+        });
+      });
+      const headerRows=table.tHead?.rows.length||0;
+      if(headerRows<=1) return grid;
+      const header=grid[headerRows-1].map((_,column)=>[...new Set(grid.slice(0,headerRows).map(row=>row[column]).filter(Boolean))].join(' · '));
+      return [header,...grid.slice(headerRows)];
+    }
+    function chartCsvRows(chart){
+      const {labels=[],datasets=[]}=chart?.data||{};
+      if(!datasets.length || labels[0]==='Sem dados') return [];
+      const unit=chart.options?.scales?.y?.title?.text;
+      const header=[chart.config?.type==='bar'?'Faixa de score':'Data',...datasets.map(dataset=>`${dataset.label}${unit?' · '+unit:''}`)];
+      return [header,...labels.map((label,index)=>[label,...datasets.map(dataset=>dataset.data[index]?.y??dataset.data[index]??'')])];
+    }
+    function ensureCsvControls(){
+      document.querySelectorAll('table,canvas').forEach((target,index)=>{
+        if(target.dataset.csvReady) return;
+        const chart=target.tagName==='CANVAS';
+        if(chart && !target.closest('.chart-box')) return;
+        target.dataset.csvReady='true';
+        const title=chart?(target.getAttribute('aria-label')||target.id):(target.caption?.textContent?.trim()||`Tabela ${index+1}`);
+        const toolbar=document.createElement('div');
+        toolbar.className='csv-toolbar';
+        const button=document.createElement('button');
+        button.type='button';
+        button.className='csv-download';
+        button.textContent='Baixar CSV';
+        button.setAttribute('aria-label',`Baixar CSV: ${title}`);
+        button.addEventListener('click',()=>downloadCsv(title,chart?chartCsvRows(state.charts[target.id]):tableCsvRows(target)));
+        toolbar.append(button);
+        const anchor=chart?target.closest('.chart-box'):target;
+        anchor.before(toolbar);
+      });
+    }
     function axisTitle(text){
       return {display:!!text,text,color:css('--muted'),font:{family:RADAR_FONT_FAMILY,weight:'800',size:12}};
     }
@@ -2410,6 +2500,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
     }
     function renderOverviewPerformance(){
       const isFiis=state.overviewPerformanceType==='fiis';
+      const isMixed=state.overviewPerformanceType==='misto';
       const title=document.getElementById('overviewPerformanceTitle');
       const description=document.getElementById('overviewPerformanceDescription');
       const explain=document.getElementById('overviewPerformanceExplain');
@@ -2419,15 +2510,15 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         button.setAttribute('aria-pressed',active?'true':'false');
         button.onclick=()=>{ state.overviewPerformanceType=button.dataset.overviewType; renderOverviewPerformance(); };
       });
-      if(title) title.textContent=isFiis?'Top 20 FIIs vs referências':'Top 20 Ações vs referências';
-      if(description) description.textContent=isFiis?'Retorno por preço contra IFIX e CDI no mesmo período.':'Retorno acumulado contra IBOV e CDI no mesmo período.';
-      if(explain) explain.innerHTML=isFiis?'<b>Como ler:</b> compare o Top 20 com IFIX e CDI, lembrando que a série da carteira usa preços e não reinveste proventos.':'<b>Como ler:</b> compare a seleção de ações com IBOV e CDI. Os cartões resumem retorno, excesso e pior queda no período.';
+      if(title) title.textContent=isMixed?'Ações + FIIs (50/50) vs referências':isFiis?'Top 20 FIIs vs referências':'Top 20 Ações vs referências';
+      if(description) description.textContent=isMixed?'Metade em Top 20 Ações e metade em Top 20 FIIs, contra CDI, IFIX e IBOV.':isFiis?'Retorno por preço contra IFIX e CDI no mesmo período.':'Retorno acumulado contra IBOV e CDI no mesmo período.';
+      if(explain) explain.innerHTML=isMixed?'<b>Como ler:</b> a carteira mantém 50% em cada classe a cada observação semanal. Compare com CDI, IFIX e IBOV. As séries Top 20 usam preços e não reinvestem proventos.':isFiis?'<b>Como ler:</b> compare o Top 20 com IFIX e CDI, lembrando que a série da carteira usa preços e não reinveste proventos.':'<b>Como ler:</b> compare a seleção de ações com IBOV e CDI. Os cartões resumem retorno, excesso e pior queda no período.';
       renderPortfolioComparison(
         'overviewPerformanceChart',
         'overviewPerformanceNote',
-        isFiis?'comparativo_fiis':'comparativo_acoes',
-        isFiis?'Carteira FIIs Top 20':'Carteira Ações Top 20',
-        isFiis?['IFIX','CDI']:['IBOV','CDI'],
+        isMixed?'comparativo_misto':isFiis?'comparativo_fiis':'comparativo_acoes',
+        isMixed?'Ações + FIIs (50/50)':isFiis?'Carteira FIIs Top 20':'Carteira Ações Top 20',
+        isMixed?['CDI','IFIX','IBOV']:isFiis?['IFIX','CDI']:['IBOV','CDI'],
         'overviewPerformanceStats'
       );
     }
@@ -2470,9 +2561,15 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
     function seriesMap(arr){ return Object.fromEntries((arr||[]).map(x=>[String(x.data),Number(x.valor)])); }
     function alignSeriesToLabels(arr,labels,{fillForward=false}={}){
       const map=seriesMap(arr);
+      const observations=(arr||[]).filter(point=>point?.data && finite(point.valor)).sort((a,b)=>String(a.data).localeCompare(String(b.data)));
+      let cursor=0;
       let last=null;
       return labels.map(label=>{
         const key=String(label);
+        if(fillForward){
+          while(cursor<observations.length && String(observations[cursor].data)<=key){ last=Number(observations[cursor].valor); cursor++; }
+          return last;
+        }
         if(map[key]!=null && Number.isFinite(Number(map[key]))){
           last=Number(map[key]);
           return last;
@@ -2535,6 +2632,22 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
     }
     function portfolioComparisonData(key){
       const cv=state.data.carteira_vs||{};
+      if(key==='comparativo_misto'){
+        const acoes=normalizeSeries(cv.comparativo_acoes?.carteira||[]);
+        const fiis=normalizeSeries(cv.comparativo_fiis?.carteira||[]);
+        if(!acoes.length || !fiis.length) return {carteira:[],benchmarks:{},inicio:null,unavailable:true};
+        const start=[acoes[0].data,fiis[0].data].sort().at(-1);
+        const end=[acoes.at(-1).data,fiis.at(-1).data].sort()[0];
+        const labels=weeklyLabels([...acoes,...fiis].map(point=>point.data).filter(date=>date>=start && date<=end));
+        const actions=alignSeriesToLabels(acoes,labels,{fillForward:true});
+        const funds=alignSeriesToLabels(fiis,labels,{fillForward:true});
+        let level=100;
+        const carteira=labels.map((data,index)=>{
+          if(index) level*=1+.5*(actions[index]/actions[index-1]-1)+.5*(funds[index]/funds[index-1]-1);
+          return {data,valor:level};
+        });
+        return {carteira,benchmarks:{},inicio:labels[0]||null,unavailable:!labels.length};
+      }
       const comp=cv[key]||{};
       return {
         carteira: normalizeSeries(comp.carteira||[]),
@@ -2620,55 +2733,74 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       const main=datasets?.[0];
       const mainLast=lastNumeric(main?.data);
       if(mainLast==null) return 'Histórico ainda curto; acompanhe a evolução conforme novas execuções entrarem.';
-      const assetType=comparisonKey==='comparativo_fiis'?'FIIs':'ações';
+      const assetType=comparisonKey==='comparativo_misto'?'ações + FIIs (50/50)':comparisonKey==='comparativo_fiis'?'FIIs':'ações';
       const principal=comparisonKey==='comparativo_fiis'?'IFIX':'IBOV';
       const cdi=lastNumeric((datasets||[]).find(ds=>String(ds.label).toUpperCase()==='CDI')?.data);
       const bench=lastNumeric((datasets||[]).find(ds=>String(ds.label).toUpperCase()===principal)?.data);
       const cdiPart=cdi==null?'sem comparação disponível contra o CDI':`${diffPhrase(mainLast-cdi)} CDI`;
       const benchPart=bench==null?`sem comparação disponível contra o ${principal}`:`${diffPhrase(mainLast-bench)} ${principal}`;
-      return `A carteira recomendada de ${assetType} ficou ${cdiPart} e ${benchPart}, com rentabilidade total de ${mainLast>=0?'+':''}${fmtNum(mainLast,2)}% no período selecionado.`;
+      return `A carteira de ${assetType} ficou ${cdiPart} e ${benchPart}, com retorno de ${mainLast>=0?'+':''}${fmtNum(mainLast,2)}% no período selecionado.`;
     }
 const CHART_PERIODS = {
-      '7D': {days:7, label:'7D'},
-      '15D': {days:15, label:'15D'},
-      '30D': {days:30, label:'30D'},
-      '90D': {days:90, label:'90D'},
-      '6M': {days:182, label:'6M'},
-      '1A': {days:365, label:'1A'},
-      'ALL': {days:null, label:'Tudo'}
+      '1M': {months:1, label:'1M'},
+      '3M': {months:3, label:'3M'},
+      '6M': {months:6, label:'6M'},
+      '12M': {months:12, label:'12M'},
+      '18M': {months:18, label:'18M'},
+      '24M': {months:24, label:'24M'},
+      'ALL': {months:null, label:'Tudo'}
     };
     function dateDiffDays(start,end){
       if(!start || !end) return 0;
       return Math.round((new Date(`${end}T12:00:00`) - new Date(`${start}T12:00:00`))/(1000*60*60*24));
     }
     function defaultChartPeriod(){
-      return '90D';
+      return '3M';
     }
     function dateMinusIso(dateStr,days){
       const d=new Date(`${dateStr}T12:00:00`);
       d.setDate(d.getDate()-days);
       return d.toISOString().slice(0,10);
     }
-    function filteredLabelsForPeriod(allLabels,chartId){
-      const labels=[...(allLabels||[])].filter(Boolean).sort();
+    function weeklyLabels(allLabels){
+      const weeks=new Map();
+      [...new Set(allLabels||[])].filter(Boolean).sort().forEach(label=>{
+        const date=new Date(`${label}T12:00:00Z`);
+        if(!Number.isFinite(date.getTime())) return;
+        date.setUTCDate(date.getUTCDate()-(date.getUTCDay()+6)%7);
+        weeks.set(date.toISOString().slice(0,10),label);
+      });
+      return [...weeks.values()];
+    }
+    function dateMinusMonths(dateStr,months){
+      const end=new Date(`${dateStr}T12:00:00Z`);
+      const day=end.getUTCDate();
+      end.setUTCDate(1);
+      end.setUTCMonth(end.getUTCMonth()-months);
+      const monthEnd=new Date(Date.UTC(end.getUTCFullYear(),end.getUTCMonth()+1,0)).getUTCDate();
+      end.setUTCDate(Math.min(day,monthEnd));
+      return end.toISOString().slice(0,10);
+    }
+    function labelsForPeriod(allLabels,chartId){
+      const labels=[...new Set(allLabels||[])].filter(Boolean).sort();
       if(!labels.length) return labels;
       if(!state.chartWindows[chartId]) state.chartWindows[chartId]=defaultChartPeriod(labels);
       const key=state.chartWindows[chartId];
-      const conf=CHART_PERIODS[key] || CHART_PERIODS['90D'];
-      if(!conf.days) return labels;
+      const conf=CHART_PERIODS[key] || CHART_PERIODS['3M'];
+      if(!conf.months) return labels;
       const end=labels[labels.length-1];
-      const start=dateMinusIso(end, conf.days);
+      const start=dateMinusMonths(end,conf.months);
       const filtered=labels.filter(d=>d>=start && d<=end);
       return filtered.length ? filtered : labels;
     }
+    function filteredLabelsForPeriod(allLabels,chartId){
+      return weeklyLabels(labelsForPeriod(allLabels,chartId));
+    }
     function chartMaxTicks(chartId){
       const key=state.chartWindows[chartId] || defaultChartPeriod();
-      if(key==='7D') return 7;
-      if(key==='15D') return 8;
-      if(key==='30D') return 7;
-      if(key==='90D') return 8;
+      if(key==='1M') return 5;
+      if(key==='3M') return 8;
       if(key==='6M') return 7;
-      if(key==='1A') return 8;
       return 10;
     }
     function ensureChartPeriodControls(chartId,allLabels){
@@ -2724,6 +2856,11 @@ const CHART_PERIODS = {
       conservador:{name:'Conservador',weights:{acoes_top20:.15,fiis_top20:.20,cdi:.55,ivvb11:.10}},
       muito_conservador:{name:'Muito conservador',weights:{acoes_top20:.05,fiis_top20:.10,cdi:.80,ivvb11:.05}}
     };
+    const HYBRID_PROFILE_COLORS={muito_conservador:'#1e4078',conservador:'#236e91',balanceado:'#6850a1',meio_agressivo:'#9a4673',agressivo:'#8b2338'};
+    function hybridProfileColor(){
+      const profile=Object.keys(HYBRID_PRESETS).find(key=>HYBRID_PRESETS[key].name===hybridProfileName());
+      return HYBRID_PROFILE_COLORS[profile]||'#6850a1';
+    }
     const HYBRID_KEYS=Object.keys(HYBRID_TARGET_WEIGHTS);
     const HYBRID_NAMES={acoes_top20:'Top 20 Ações BR',fiis_top20:'Top 20 FIIs',cdi:'CDI · renda fixa',ivvb11:'IVVB11'};
     const hybridSettings={weights:{...HYBRID_TARGET_WEIGHTS},amount:10000};
@@ -2905,7 +3042,7 @@ const CHART_PERIODS = {
       ].map(block=>({...block,pct:Math.round(hybridSettings.weights[block.key]*100)}));
       const bar=document.getElementById('hybridDistributionBar');
       bar.setAttribute('aria-label',blocks.map(block=>`${block.name}: ${block.pct}%`).join('; '));
-      bar.innerHTML=blocks.map(block=>`<span style="width:${block.pct}%;background:${block.color}" title="${block.name}: ${block.pct}%" aria-hidden="true"></span>`).join('');
+      bar.innerHTML=blocks.filter(block=>block.pct>0).map(block=>`<span class="${block.pct<=5?'narrow':''}" style="width:${block.pct}%;background:${block.color}" title="${block.name}: ${block.pct}%" aria-hidden="true"><b>${block.pct}%</b></span>`).join('');
       document.getElementById('hybridDistributionLegend').innerHTML=blocks.map(block=>`<li><i style="background:${block.color}" aria-hidden="true"></i><span>${block.name}</span><b>${block.pct}%</b></li>`).join('');
     }
     function renderHybridControls(){
@@ -3064,16 +3201,20 @@ const CHART_PERIODS = {
       const comparisons=hybrid.comparativos||{};
       const allLabels=[...new Set((hybrid.serie||[]).map(x=>String(x.data)))].sort();
       ensureChartPeriodControls('hybridPortfolioChart',allLabels);
-      const labels=filteredLabelsForPeriod(allLabels,'hybridPortfolioChart');
-      const {componentReturns,weightedReturn}=calculateHybridHistory(components,labels,hybridSettings.weights);
+      const windowLabels=labelsForPeriod(allLabels,'hybridPortfolioChart');
+      const labels=weeklyLabels(windowLabels);
+      const weeklyIndexes=labels.map(label=>windowLabels.indexOf(label));
+      const baseIndex=weeklyIndexes[0];
+      const {componentReturns,weightedReturn}=calculateHybridHistory(components,windowLabels.slice(baseIndex),hybridSettings.weights);
+      const displayedReturn=weeklyIndexes.map(index=>weightedReturn[index-baseIndex]);
       const comparisonOrder=['CDI','IFIX','Top 20 FIIs','Top 20 Ações BR','IPCA'];
       const datasets=[{
-        label:`Carteira Híbrida · ${hybridProfileName()}`,data:weightedReturn,spanGaps:true,borderWidth:4,pointRadius:labels.length<=2?4:2,tension:.18,valueLabelPlugin:{enabled:true}
+        label:`Carteira Híbrida · ${hybridProfileName()}`,color:hybridProfileColor(),data:displayedReturn,spanGaps:true,borderWidth:4,pointRadius:labels.length<=2?4:2,tension:0,valueLabelPlugin:{enabled:true}
       }];
       comparisonOrder.forEach(name=>{
         const series=comparisons[name]||[];
         if(!series.length) return;
-        datasets.push({label:name,data:alignedReturnForWindow(series,labels,{fillForward:true}),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:.18});
+        datasets.push({label:name,data:alignedReturnForWindow(series,labels,{fillForward:true}),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:0});
       });
       const values=datasets.flatMap(ds=>ds.data).filter(v=>v!=null&&Number.isFinite(Number(v))).map(Number);
       const minVal=values.length?Math.min(...values):0;
@@ -3083,9 +3224,9 @@ const CHART_PERIODS = {
       const yMax=Math.max(0,maxVal+padding);
       const first=labels[0]||hybrid.inicio;
       const last=labels[labels.length-1]||hybrid.fim||first;
-      if(note) note.textContent=`Retorno de ${first} até ${last} · ${hybridProfileName()}. Pesos-alvo reaplicados a cada nova composição semanal. Simulação com os percentuais escolhidos para todo o período.`;
+      if(note) note.textContent=`Retorno de ${first} até ${last} · ${hybridProfileName()} · uma observação por semana. Pesos-alvo reaplicados a cada nova composição semanal. Simulação com os percentuais escolhidos para todo o período.`;
       renderHybridTable(hybrid,componentReturns);
-      const totalReturn=lastNumeric(weightedReturn);
+      const totalReturn=lastNumeric(displayedReturn);
       const cdiReturn=lastNumeric(datasets.find(ds=>ds.label==='CDI')?.data);
       const cdiText=cdiReturn==null?'sem comparação disponível com o CDI':`${diffPhrase(totalReturn-cdiReturn)} CDI`;
       const summary=totalReturn==null
@@ -3110,6 +3251,7 @@ const CHART_PERIODS = {
       const target=document.getElementById(summaryId);
       if(!target) return;
       const isFiis=comparisonKey==='comparativo_fiis';
+      const isMixed=comparisonKey==='comparativo_misto';
       const principal=isFiis?'IFIX':'IBOV';
       const mainLast=lastNumeric(datasets?.[0]?.data);
       const benchmarkLast=lastNumeric((datasets||[]).find(dataset=>String(dataset.label).toUpperCase()===principal)?.data);
@@ -3119,12 +3261,20 @@ const CHART_PERIODS = {
       const drawdown=maxDrawdownFromReturns(datasets?.[0]?.data);
       const metric=(label,value,tone='',suffix='%')=>`<div class="performance-stat ${tone}"><span>${label}</span><b>${value==null?'—':`${value>=0?'+':''}${fmtNum(value,2)}${suffix}`}</b></div>`;
       const summary=portfolioSummaryText(comparisonKey,datasets);
-      target.innerHTML=`<div class="performance-stats">${metric('Retorno Top 20',mainLast,mainLast==null?'':mainLast>=0?'good':'bad')}${metric(`Excesso vs ${principal}`,benchmarkDiff,benchmarkDiff==null?'':benchmarkDiff>=0?'good':'bad',' p.p.')}${metric('Excesso vs CDI',cdiDiff,cdiDiff==null?'':cdiDiff>=0?'good':'bad',' p.p.')}${metric('Pior queda',drawdown,drawdown==null?'':drawdown>=0?'good':'bad')}</div><p class="performance-copy">${summary}</p>${isFiis?'<div class="performance-warning"><b>Leitura parcial:</b> a carteira de FIIs considera a variação dos preços e não reinveste os proventos. O gráfico não representa o retorno total recebido pelo cotista.</div>':'<div class="performance-warning"><b>Metodologia:</b> carteira igualmente ponderada, reaplicada a cada nova composição e sem custos ou impostos.</div>'}`;
+      const ifixLast=lastNumeric((datasets||[]).find(dataset=>dataset.label==='IFIX')?.data);
+      const ifixDiff=mainLast!=null&&ifixLast!=null?mainLast-ifixLast:null;
+      const warning=isMixed?'A carteira usa 50% em cada classe a cada observação semanal, sem custos, impostos ou reinvestimento de proventos.':isFiis?'a carteira de FIIs considera a variação dos preços e não reinveste os proventos. O gráfico não representa o retorno total recebido pelo cotista.':'Carteira igualmente ponderada, reaplicada a cada nova composição e sem custos ou impostos.';
+      target.innerHTML=`<div class="performance-stats">${metric(isMixed?'Retorno 50/50':'Retorno Top 20',mainLast,mainLast==null?'':mainLast>=0?'good':'bad')}${metric(`Excesso vs ${principal}`,benchmarkDiff,benchmarkDiff==null?'':benchmarkDiff>=0?'good':'bad',' p.p.')}${isMixed?metric('Excesso vs IFIX',ifixDiff,ifixDiff==null?'':ifixDiff>=0?'good':'bad',' p.p.'):''}${metric('Excesso vs CDI',cdiDiff,cdiDiff==null?'':cdiDiff>=0?'good':'bad',' p.p.')}${metric('Pior queda observada',drawdown,drawdown==null?'':drawdown>=0?'good':'bad')}</div><p class="performance-copy">${summary}</p><div class="performance-warning"><b>${isFiis?'Leitura parcial':'Metodologia'}:</b> ${warning}</div>`;
     }
     function renderPortfolioComparison(chartId,noteId,comparisonKey,portfolioLabel,benchmarkNames,summaryId=''){
       const note=document.getElementById(noteId);
       let comp=portfolioComparisonData(comparisonKey);
       let carteira=comp.carteira||[];
+      if(comp.unavailable){
+        emptyPortfolioChart(chartId,noteId,'Aguardando histórico comum de Ações e FIIs para a carteira 50/50.');
+        if(summaryId) document.getElementById(summaryId).innerHTML='';
+        return;
+      }
 
       if(!carteira.length && comparisonKey==='comparativo_fiis'){
         const legacy=legacyFiisBacktestComparison();
@@ -3139,18 +3289,17 @@ const CHART_PERIODS = {
         return {name, data:Array.isArray(raw) && raw.length>=2 ? base100FromStart(raw, firstDate) : []};
       }).filter(x=>x.data.length>=2);
 
-      const allSeries=[carteira,...benchmarkSeries.map(x=>x.data)];
-      const allLabels=[...new Set(allSeries.flatMap(arr=>arr.map(x=>String(x.data))))].sort();
+      const allLabels=[...new Set(carteira.map(point=>String(point.data)))].sort();
       ensureChartPeriodControls(chartId, allLabels);
       const labels=filteredLabelsForPeriod(allLabels, chartId);
       const cleanPortfolioLabel = portfolioLabel.replace(/^Carteira\s+/,'').replace(/\s*base\s*100/ig,'').trim();
       const datasets=[{
         label: cleanPortfolioLabel,
         data: alignedReturnForWindow(carteira,labels,{fillForward:true}),
-        spanGaps:true, stepped:'before', borderWidth:4, pointRadius: labels.length <= 2 ? 4 : 2, tension:0,
+        spanGaps:true, borderWidth:4, pointRadius: labels.length <= 2 ? 4 : 2, tension:0,
         valueLabelPlugin:{enabled:true}
       }];
-      benchmarkSeries.forEach(({name,data})=>datasets.push({label:name,data:alignedReturnForWindow(data,labels),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:.18}));
+      benchmarkSeries.forEach(({name,data})=>datasets.push({label:name,data:alignedReturnForWindow(data,labels,{fillForward:true}),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:0}));
 
       const values=datasets.flatMap(ds=>ds.data).filter(v=>v!=null && Number.isFinite(Number(v))).map(Number);
       const minVal=values.length?Math.min(...values):0;
@@ -3163,7 +3312,7 @@ const CHART_PERIODS = {
       const missing=benchmarkNames.filter(name=>{ const raw=(availableBenchmarks[name]&&availableBenchmarks[name].length)?availableBenchmarks[name]:benchSeries(name); return !raw||raw.length<2; });
       const extra=missing.length?` Sem dados disponíveis para: ${missing.join(', ')}.`:'';
       const status=comp.fallbackInicial?'Ainda há apenas o ponto inicial da carteira; a linha começa a evoluir quando houver pelo menos dois snapshots reais.':'Séries recalculadas como retorno percentual dentro do período selecionado.';
-      if(note) note.textContent=`Retorno de ${first} até ${last}. ${status}${extra}`;
+      if(note) note.textContent=`Retorno de ${first} até ${last} · uma observação por semana. ${status}${extra}`;
       const summary=portfolioSummaryText(comparisonKey,datasets);
       makeChart(chartId,{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')}},scales:{x:{title:axisTitle('Data'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks(chartId),maxRotation:0,minRotation:0}},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
       if(summaryId) overviewPerformanceSummary(summaryId,comparisonKey,datasets);
@@ -3229,6 +3378,9 @@ const CHART_PERIODS = {
     }
 
     function activateTab(tabId){
+      if(['acoes','fiis','recorrentes'].includes(tabId)){ activateTop20(tabId); tabId='top20'; }
+      const scoreRequested=tabId==='score';
+      if(scoreRequested) tabId='indicadores';
       const btn=document.querySelector(`.tab[data-tab="${tabId}"]`);
       const section=document.getElementById(tabId);
       if(!btn||!section) return;
@@ -3245,9 +3397,20 @@ const CHART_PERIODS = {
       });
       const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
       btn.scrollIntoView({behavior,block:'nearest',inline:'center'});
-      section.scrollIntoView({behavior,block:'start'});
+      (scoreRequested?document.getElementById('score'):section).scrollIntoView({behavior,block:'start'});
       setTimeout(()=>Object.values(state.charts).forEach(chart=>chart.resize()),80);
     }
+    function activateTop20(type){
+      if(!['acoes','fiis','recorrentes'].includes(type)) return;
+      state.top20Type=type;
+      document.querySelectorAll('[data-top20-type]').forEach(button=>{
+        const active=button.dataset.top20Type===type;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
+      document.querySelectorAll('.top20-view').forEach(view=>{ view.hidden=view.id!==type; });
+    }
+    document.querySelectorAll('[data-top20-type]').forEach(button=>button.addEventListener('click',()=>activateTop20(button.dataset.top20Type)));
     document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>activateTab(btn.dataset.tab)));
     document.querySelector('.tabs')?.addEventListener('keydown',event=>{
       if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
@@ -3260,7 +3423,7 @@ const CHART_PERIODS = {
     });
     document.querySelectorAll('[data-go-tab]').forEach(btn=>btn.addEventListener('click',()=>{
       activateTab(btn.dataset.goTab);
-      document.getElementById(`tab-${btn.dataset.goTab}`)?.focus({preventScroll:true});
+      document.querySelector('.tab.active')?.focus({preventScroll:true});
     }));
 
     function setupRichTooltip(){
@@ -3313,6 +3476,7 @@ const CHART_PERIODS = {
     window.addEventListener('orientationchange', ()=>setTimeout(syncStickyTabBar,120));
     window.addEventListener('load', syncStickyTabBar);
     syncStickyTabBar();
+    ensureCsvControls();
     init();
     setTimeout(syncStickyTabBar,300);
   </script>

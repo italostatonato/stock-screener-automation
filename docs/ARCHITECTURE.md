@@ -1,8 +1,8 @@
 # Arquitetura técnica
 
-Revisado em 15/09/2026. O Radar Semanal executa uma coleta semanal de FIIs e
+Revisado em 05/10/2026. O Radar Semanal executa uma coleta semanal de FIIs e
 ações, gera rankings e derivados e publica um dashboard estático. A coleta
-tem início agendado para segunda-feira às 08h de Brasília e também pode ser
+tem início agendado para segunda-feira às 10h de Brasília e também pode ser
 acionada manualmente; a revisão documental das 12h é uma tarefa separada.
 
 ## Ingestão e seleção
@@ -110,9 +110,12 @@ de recuperação, não a fonte primária da coleta.
 ## Orquestração e limites
 
 O workflow [run_screener.yml](../.github/workflows/run_screener.yml) roda às
-segundas, 08h de São Paulo, ou por acionamento manual. `test` precede `screener`.
+segundas, 10h de São Paulo, ou por acionamento manual; nesses eventos, `test`
+precede `screener`. Pushes na `main` que alterem `docs/index.html`,
+`docs/assets/**` ou `.github/workflows/run_screener.yml` também acionam o
+workflow, mas ignoram `screener`: executam testes e publicação, sem coleta.
 O job `deploy` consulta a `main` atual e roda quando os testes passam, mesmo
-se `screener` falhar. A etapa independente de healthcheck bloqueia o commit
+se `screener` falhar ou for ignorado. A etapa independente de healthcheck bloqueia o commit
 automático em caso de `error`. O próprio `main.py` interrompe em falhas de lake,
 reconstrução, exportação ou qualidade. Indicadores, ML e entrega opcional
 podem falhar com registro em log. `tests.yml` valida pushes e pull requests

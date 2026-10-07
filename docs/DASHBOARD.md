@@ -9,19 +9,23 @@ mais recente de `docs/data/index.json`. Os nomes dos arquivos usam a data da exe
 
 ## Versão no Sites
 
-O [site Radar Semanal](https://radar-semanal-italo.italo-st.chatgpt.site/) está público e replica as nove abas
-do dashboard, com dados consultados no GitHub Pages ao abrir. Em caso de falha,
-tenta os snapshots incluídos na publicação e mostra um aviso de cópia local.
+O [site Radar Semanal](https://radar-semanal-italo.italo-st.chatgpt.site/) está público e replica as seis abas principais
+do dashboard. O servidor espelha o HTML, os dados e os recursos do GitHub Pages
+a cada acesso. Enquanto visível, a aba verifica a versão a cada 60 segundos e
+recarrega quando há mudança, aguardando a edição de campos. Em caso de falha,
+tenta a cópia incluída na publicação e mostra um aviso com a data dos dados.
 O rodapé tem contador de **visitantes únicos por navegador**, com início em
 29/09/2026; retornos com o mesmo cookie não aumentam o total. Esse contador
 abrange somente o site no Sites, sem somar os acessos ao GitHub Pages.
-A atualização de dados não replica automaticamente mudanças de layout.
-Consulte [acesso, visitantes e manutenção](SITE.md). Informações verificadas
-em **30/09/2026**.
+O HTML original acompanha o Pages pelo espelhamento; Worker, contador,
+adaptações próprias e cópia de contingência exigem publicação no Sites.
+Essa verificação não altera a frequência semanal da coleta.
+Consulte [acesso, visitantes e manutenção](SITE.md), incluindo os limites da
+detecção de mudanças. Informações verificadas em **05/10/2026**.
 
 ## Frequência de atualização
 
-A coleta é agendada para **toda segunda-feira, 08h de Brasília**. O novo
+A coleta é agendada para **toda segunda-feira, 10h de Brasília**. O novo
 snapshot fica disponível após processamento e publicação. Uma execução manual
 pode gerar outra data ou substituir o snapshot daquele dia. As tendências nos
 cards comparam a coleta selecionada com a anterior disponível, sem pressupor
@@ -44,20 +48,18 @@ os scores, as carteiras ou os modelos ML.
   fontes educacionais e atalhos para as outras abas. O conteúdo é estático e
   permanece legível mesmo sem carregar dados. Navegação atualizada em 23/09/2026.
 - **Visão geral:** entradas, saídas e mudanças de posição na comparação
-  semanal descrita acima em resumos compactos, seleções Top 20 por classe em
-  cartões alinhados de uma linha com posição, ticker e score (sem preço), e
-  desempenho em gráfico de linhas com escolha entre Ações e FIIs. A grade
-  completa todas as linhas e empilha as duas classes no celular.
+  semanal descrita acima em resumos compactos, seleções de até 20 ativos por
+  classe em cartões alinhados de uma linha com posição, ticker e score (sem
+  preço), e desempenho em gráfico de linhas com escolha entre Ações, FIIs e Ações + FIIs (50/50), comparadas a CDI, IFIX e IBOV.
+  A grade adapta as colunas à largura disponível e empilha as classes no celular.
 - **Carteira Híbrida:** alocação entre quatro blocos, perfis, simulação de aporte,
   curva comparativa, contribuições e pesos por ativo.
 - **Modelos ML:** rankings sombra, performance, confiabilidade e evolução
   de janelas realizadas.
-- **Recorrentes:** frequência histórica de presença no Top 20.
-- **Ações** e **FIIs:** rankings, preços, scores e indicadores.
-- **Indicadores:** macroeconomia, câmbio, cripto e benchmarks.
-- **Score e Info:** metodologia, fontes e limitações.
+- **Top 20:** seletor entre Ações, FIIs e Recorrentes, com rankings, preços, scores, indicadores e frequência histórica.
+- **Indicadores e metodologia:** macroeconomia, câmbio, cripto, benchmarks, score, fontes e limitações.
 
-Os gráficos temporais iniciam em **90D** e oferecem outros períodos.
+Os gráficos temporais iniciam em **3M**, com períodos **1M, 3M, 6M, 12M, 18M, 24M e Tudo**. Cada semana apresenta a última observação disponível, sem inventar dados de semanas ausentes. As comparações usam as mesmas datas e partem de 0%. O cálculo híbrido preserva os intervalos de rebalanceamento do histórico e exibe apenas os pontos semanais. Tabelas e gráficos têm **Baixar CSV**: tabelas exportam as células exibidas; gráficos exportam os dados do período e universo selecionados, sem arredondamento adicional. O histórico de dois anos depende de um backfill futuro.
 O cabeçalho contém um link externo para a apresentação de leitura do projeto;
 a disponibilidade desse recurso depende das permissões no Google.
 

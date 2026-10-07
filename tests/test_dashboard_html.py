@@ -6,14 +6,14 @@ HTML = Path("docs/index.html").read_text(encoding="utf-8")
 
 def test_dashboard_tabs_e_buscas_tem_rotulos_acessiveis():
     assert 'role="tablist" aria-label="Seções do Radar Semanal"' in HTML
-    assert HTML.count('role="tab"') == 9
+    assert HTML.count('role="tab"') == 6
     assert 'aria-controls="introducao" aria-selected="true"' in HTML
     assert 'aria-controls="overview" aria-selected="false"' in HTML
     assert 'for="searchFiis">Buscar FII ou setor</label>' in HTML
     assert 'for="searchAcoes">Buscar ação ou empresa</label>' in HTML
     assert "item.setAttribute('aria-selected',active?'true':'false')" in HTML
     assert "item.setAttribute('aria-hidden',active?'false':'true')" in HTML
-    ordem = ["introducao", "overview", "hibrida", "modelos", "recorrentes", "acoes", "fiis", "indicadores", "score"]
+    ordem = ["introducao", "overview", "hibrida", "modelos", "top20", "indicadores"]
     posicoes = [HTML.index(f'id="tab-{tab}"') for tab in ordem]
     assert posicoes == sorted(posicoes)
 
@@ -90,11 +90,9 @@ def test_dashboard_estados_interativos_sao_anunciados():
     assert 'aria-pressed="${active===key?' in HTML
 
 
-def test_dashboard_oferece_janelas_de_sete_e_quinze_dias_nos_graficos():
-    assert "'7D': {days:7, label:'7D'}" in HTML
-    assert "'15D': {days:15, label:'15D'}" in HTML
-    assert "if(key==='7D') return 7" in HTML
-    assert "if(key==='15D') return 8" in HTML
+def test_dashboard_oferece_janelas_mensais_nos_graficos():
+    for months in [1, 3, 6, 12, 18, 24]:
+        assert f"'{months}M': {{months:{months}, label:'{months}M'}}" in HTML
     assert "Object.entries(CHART_PERIODS)" in HTML
     assert "chartId==='proxyFiisChart' || chartId==='proxyAcoesChart'" in HTML
     assert "renderProxyCharts();" in HTML
@@ -136,7 +134,7 @@ def test_visao_geral_prioriza_mudancas_lideres_e_um_unico_grafico():
     assert 'id="weeklyChanges"' in HTML
     assert 'id="overviewTopFive"' in HTML
     assert 'id="overviewPerformanceChart"' in HTML
-    assert HTML.count('data-overview-type=') == 2
+    assert HTML.count('data-overview-type=') == 3
     assert 'id="rankTableBody"' not in HTML
     assert 'id="overviewFiisBacktestChart"' not in HTML
     assert 'id="overviewAcoesBacktestChart"' not in HTML

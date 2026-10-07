@@ -1,6 +1,6 @@
 # Manutenção da documentação e da wiki
 
-Revisão de referência: **15/09/2026**.
+Revisão documental: **05/10/2026**. O registro de validação de 15/09/2026 está preservado abaixo.
 
 ## Estado da revisão de 15/09/2026
 
@@ -20,9 +20,16 @@ A validação local concluiu 176 testes Python, incluindo os wrappers dos
 O healthcheck apontou apenas os snapshots incompletos já conhecidos de
 21, 24 e 25/08/2026. Os dados históricos originais foram preservados.
 
-A coleta continua semanal, segunda-feira às 08h de Brasília, ou manual.
-Atualizações por push executam os testes; coleta e deploy permanecem no
-workflow semanal/manual. A wiki é sincronizada separadamente do projeto.
+## Agendamento e publicação atuais
+
+A coleta continua semanal, segunda-feira às 10h de Brasília, ou manual.
+Desde 03/10/2026, pushes na `main` que alterem `docs/index.html`,
+`docs/assets/**` ou `.github/workflows/run_screener.yml` também acionam o
+workflow de publicação: executam `test` e `deploy`, ignorando `screener`.
+O workflow separado `tests.yml` valida pushes e pull requests sem publicar.
+A wiki é sincronizada separadamente do projeto. O site no Sites espelha o
+GitHub Pages; suas adaptações próprias têm publicação separada, conforme
+[o guia do site](https://github.com/italostatonato/stock-screener-automation/wiki/Site).
 
 ## Escopo e fontes de verdade
 
@@ -58,7 +65,7 @@ Pesquisar `diário`, `diária`, `diariamente`, `daily`, `todos os dias` e
 expressões semelhantes em Markdown, HTML, Python, YAML e strings de JSON.
 Interpretar cada ocorrência antes de alterar:
 
-- coleta e ranking: semanais, segunda-feira às 08h de Brasília, ou manuais;
+- coleta e ranking: semanais, segunda-feira às 10h de Brasília, ou manuais;
 - históricos: por data de execução, sem pressupor um registro por dia;
 - tendências dos cards: entre coletas disponíveis; a Visão geral busca
   uma referência de pelo menos sete dias antes;
@@ -82,8 +89,8 @@ Como a tarefa acessa arquivos locais, o computador precisa estar ligado e o
 aplicativo em execução no horário agendado, conforme a
 [documentação de tarefas agendadas](https://learn.chatgpt.com/docs/automations?surface=app).
 
-O screener mantém seu cron próprio, **segunda-feira às 08h de São Paulo**
-(`0 11 * * 1`). A revisão documental não altera o cron de coleta.
+O screener mantém seu cron próprio, **segunda-feira às 10h de São Paulo**
+(`0 13 * * 1`). A revisão documental não altera o cron de coleta.
 
 Procedimento:
 

@@ -20,7 +20,7 @@ perfis híbridos e cron ficam no código ou no workflow.
 
 ## Cadência
 
-A coleta é agendada para segunda-feira às 08h de Brasília no workflow;
+A coleta é agendada para segunda-feira às 10h de Brasília no workflow;
 `config.yaml` não agenda a execução. Cotações da alternativa brapi são
 consultadas a cada execução, enquanto seus fundamentos usam cache de 30 dias.
 A revisão documental de segunda-feira às 12h é uma automação separada.

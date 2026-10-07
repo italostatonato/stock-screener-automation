@@ -1,6 +1,6 @@
 # Operação e troubleshooting
 
-Revisado em 21/09/2026.
+Revisado em 05/10/2026.
 
 ## Preparar e executar
 
@@ -78,17 +78,19 @@ python -m pytest tests/ -v --basetemp=$TestRunDir -o cache_dir=.test-tmp/pytest-
 ## Workflow e publicação
 
 [Weekly FII Screener](../.github/workflows/run_screener.yml) roda toda segunda,
-**08h de São Paulo** (`0 11 * * 1`), ou por **Actions → Weekly FII Screener →
-Run workflow**. Não possui gatilho de push. O horário das 08h é o início
+**10h de São Paulo** (`0 13 * * 1`), ou por **Actions → Weekly FII Screener →
+Run workflow**. Também publica ajustes por push, conforme os caminhos abaixo.
+O horário das 10h é o início
 agendado da coleta; a publicação depende da conclusão dos jobs. Arquivos
 particionados por data não significam que a execução automática seja diária.
 
 - `test`: Python 3.11, Node 24, instalação com cache pip e `pytest tests/ -v`.
-- `screener`: depende dos testes; prepara Chrome, sincroniza a `main`,
+- `screener`: depende dos testes e só roda no cron ou acionamento manual;
+  prepara Chrome, sincroniza a `main`,
   executa pipeline e healthcheck, salva artefatos de saída por 90 dias e commita
   `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
 - `deploy`: usa a `main` atual e publica `docs/` no GitHub Pages quando
-  os testes passam, mesmo se o screener falhar.
+  os testes passam, mesmo se o screener falhar ou for ignorado no push.
 
 Os timeouts são 25 minutos para testes e 60 para coleta. A concorrência é
 controlada por branch e não cancela a execução já em andamento.
@@ -111,17 +113,23 @@ e é administrada no Codex. Veja [Manutenção da documentação](DOCUMENTATION.
 ## Site no Sites
 
 O [site Radar Semanal](https://radar-semanal-italo.italo-st.chatgpt.site/) tem publicação própria no Sites.
-Ao abrir, consulta o índice e os snapshots servidos pelo GitHub Pages; o workflow
-deste repositório continua responsável pela coleta semanal. Alterações de HTML,
-CSS, scripts ou da cópia de dados de contingência precisam ser incorporadas ao
-projeto do Sites e publicadas lá. Um push neste repositório não atualiza esse código.
+O servidor espelha o HTML, os dados e os recursos publicados no GitHub Pages.
+A aba visível verifica a versão a cada 60 segundos e recarrega quando necessário,
+aguardando a edição de campos. O workflow deste repositório continua responsável
+pela coleta semanal; o espelhamento não executa o pipeline.
+
+O HTML original atualizado no Pages chega ao Sites sem nova publicação da
+réplica. Alterações no Worker, no contador, nas adaptações próprias ou na cópia
+de contingência continuam exigindo publicação no projeto do Sites. Alterações
+isoladas em recursos externos ao HTML podem exigir recarga manual: a versão
+monitorada compara o HTML, o índice e o snapshot mais recente.
 
 Se aparecer o aviso de última cópia disponível, confira a data exibida e a
 publicação dos dados no GitHub Pages. Se o contador mostrar **Indisponível**,
 verifique a API e o banco do projeto no Sites; a falha não representa total zero.
 O contador é exclusivo do endereço no Sites e persiste no banco D1.
 Veja [Site no Sites e contador de visitantes](SITE.md) para diagnóstico e
-responsabilidades de publicação, verificados em **30/09/2026**.
+responsabilidades de publicação, verificados em **05/10/2026**.
 
 ## Fonte indisponível ou seleção vazia
 

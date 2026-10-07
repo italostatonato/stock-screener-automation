@@ -1,6 +1,6 @@
 # Site no Sites e contador de visitantes
 
-Informações verificadas em **30/09/2026** na versão 2 publicada no Sites.
+Informações verificadas em **05/10/2026** no site público, na API de versão e nos scripts servidos pela publicação atual.
 
 ## Endereços e acesso
 
@@ -9,8 +9,8 @@ Informações verificadas em **30/09/2026** na versão 2 publicada no Sites.
 - **[Repositório](https://github.com/italostatonato/stock-screener-automation)** e **[wiki](https://github.com/italostatonato/stock-screener-automation/wiki)**: código do screener e documentação.
 
 O site foi criado em 29/09/2026 como réplica da página publicada no GitHub Pages.
-Preserva a identidade visual e as nove abas: Introdução, Visão geral, Carteira
-Híbrida, Modelos ML, Recorrentes, Ações, FIIs, Indicadores e Score e Info.
+Preserva a identidade visual e as seis abas principais: Introdução, Visão geral, Carteira
+Híbrida, Modelos ML, Top 20 e Indicadores e metodologia.
 Inclui rankings, gráficos, guia para iniciantes e simulador de aporte.
 As premissas de cálculos e simulações estão no
 [guia do dashboard](https://github.com/italostatonato/stock-screener-automation/blob/main/docs/DASHBOARD.md).
@@ -18,22 +18,35 @@ As premissas de cálculos e simulações estão no
 ## Atualização dos dados
 
 A coleta continua no pipeline Python e no GitHub Actions deste repositório:
-**segunda-feira às 08h de Brasília** (`America/Sao_Paulo`), ou por execução manual.
+**segunda-feira às 10h de Brasília** (`America/Sao_Paulo`), ou por execução manual.
 O site no Sites não mantém outra rotina de coleta nem recalcula o ranking.
 
-1. Ao abrir a página, o navegador consulta o
-   [índice de snapshots do GitHub Pages](https://italostatonato.github.io/stock-screener-automation/data/index.json).
-2. Carrega o snapshot mais recente disponível e consulta os demais conforme
-   a navegação e os cálculos do dashboard.
-3. Se o carregamento inicial falhar, tenta os snapshots incluídos na última
-   publicação do site. A tela informa que está exibindo a última cópia disponível
-   e conserva a data real do snapshot apresentado.
+1. A cada acesso, o servidor do Sites busca o HTML, os dados e os recursos na
+   origem fixa do GitHub Pages. O navegador recebe os snapshots por `/data/`
+   no próprio domínio do Sites, a partir do
+   [índice do Pages](https://italostatonato.github.io/stock-screener-automation/data/index.json).
+2. O servidor acrescenta as adaptações do Sites, como o contador e os scripts
+   de sincronização. O HTML original atualizado no Pages chega à réplica sem
+   precisar publicar novamente o projeto do Sites.
+3. Enquanto a aba está visível, consulta `/api/source-version` a cada **60 segundos**,
+   além da verificação inicial e ao voltar à aba. A versão compara o HTML, o
+   índice e o snapshot mais recente, detectando também correções na mesma data.
+4. Quando há mudança, recarrega a página. Se um campo estiver em edição, aguarda
+   o término. Tenta preservar a aba, as buscas, os períodos, as opções do gráfico
+   ML e a simulação válida da carteira durante essa recarga.
+5. Se a origem falhar, tenta a cópia incluída na publicação, identifica a
+   contingência e preserva a data dos dados. As verificações tentam recuperar a
+   fonte quando ela volta a responder.
 
-Os dados não são cotações em tempo real. Uma página já aberta não passa a
-consultar continuamente novas coletas; recarregue para buscar uma nova publicação.
-A cópia de contingência só muda quando os arquivos correspondentes são atualizados
-e o site é publicado novamente. Atualizações de HTML, CSS e scripts do GitHub
-Pages também precisam ser incorporadas e publicadas separadamente no Sites.
+Os dados não são cotações em tempo real. Verificar a versão a cada minuto não
+coleta fontes financeiras, não treina modelos e não recalcula o ranking: a coleta
+continua semanal ou manual. A versão não inclui o conteúdo de cada recurso
+externo ao HTML; uma alteração isolada nesses arquivos pode exigir recarga manual.
+
+Worker, contador, adaptações próprias e cópia de contingência continuam tendo
+código e publicação no Sites. Essa cópia só muda quando seus arquivos são
+atualizados e o site é publicado novamente. Ela não é atualizada pela consulta
+automática à origem.
 
 ## Contador de visitantes únicos
 
@@ -75,15 +88,24 @@ para evitar duplicação de um identificador já registrado.
 - A interface registra a visita quando a página está visível. Contador e dados
   financeiros têm fontes independentes.
 
-Para alterar a interface ou o contador, abra o projeto existente no Sites,
-preserve seu banco, valide a mudança e publique uma nova versão. Publicar
-`docs/` pelo workflow do GitHub Pages não publica o projeto do Sites.
+O Worker também atende `GET /api/source-version`, que devolve o identificador
+da versão da origem e a data do snapshot mais recente. Essa consulta não registra
+uma visita. A resposta usa `X-Radar-Source: github-pages` quando a origem está
+disponível; páginas e dados servidos da cópia de contingência usam `local-copy`.
+
+Para alterar a interface original, atualize o dashboard deste repositório e
+publique no GitHub Pages. Para alterar Worker, contador ou adaptações próprias,
+abra o projeto existente no Sites, preserve seu banco, valide a mudança e
+publique uma nova versão. Publicar `docs/` não publica esse código específico
+do Sites, embora o conteúdo original passe a ser consultado pelo espelhamento.
 As permissões de acesso são administradas no Sites; o modo público foi confirmado
 na data de verificação deste guia.
 
 Se os dados parecerem antigos, confira a data do snapshot, o aviso de cópia
-incluída e a conclusão do workflow original. Se o contador estiver indisponível,
-consulte os logs do Worker e a disponibilidade da tabela e do vínculo `DB`.
+incluída, a [versão da origem](https://radar-semanal-italo.italo-st.chatgpt.site/api/source-version)
+e a conclusão do workflow original. Uma aba oculta ou um campo ainda em edição
+pode adiar a recarga automática. Se o contador estiver indisponível, consulte
+os logs do Worker e a disponibilidade da tabela e do vínculo `DB`.
 Para conferir o total sem gerar uma visita de teste, use
 [a consulta do contador](https://radar-semanal-italo.italo-st.chatgpt.site/api/visitors).
 

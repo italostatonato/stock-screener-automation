@@ -6,7 +6,7 @@ Revisado em 15/09/2026 contra `config.yaml`, `src/scorer.py`,
 ## Frequência e indicadores
 
 O screener coleta semanalmente, com início agendado para segunda-feira às
-08h de Brasília, e permite acionamento manual. As datas dos snapshots registram
+10h de Brasília, e permite acionamento manual. As datas dos snapshots registram
 as execuções. Liquidez diária, CDI diário e variações em 24h mantêm a frequência
 da métrica de origem; não indicam atualização diária dos rankings.
 

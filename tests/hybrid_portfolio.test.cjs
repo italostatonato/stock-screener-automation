@@ -386,15 +386,15 @@ test('monetary results use historical contributions and update when the investme
   assert.equal((elements.hybridCompositionBody.innerHTML.match(/<td(?:\s|>)/g)||[]).length,25);
 });
 
-test('every time-series chart starts at 90D and preserves a later explicit period selection',()=>{
+test('every time-series chart starts at 3M and preserves a later explicit period selection',()=>{
   const {context,run}=loadDashboard();
   context.dates=['2025-01-01','2026-01-01','2026-06-01','2026-08-01','2026-09-01'];
   for(const chartId of ['hybridPortfolioChart','proxyFiisChart','proxyAcoesChart','overviewFiisBacktestChart','overviewAcoesBacktestChart','marketChart','macroChart','mlPerformanceChart']){
     context.chartId=chartId;
-    assert.equal(run('filteredLabelsForPeriod(dates,chartId).join(",")'),'2026-08-01,2026-09-01');
-    assert.equal(run('state.chartWindows[chartId]'),'90D');
+    assert.equal(run('filteredLabelsForPeriod(dates,chartId).join(",")'),'2026-06-01,2026-08-01,2026-09-01');
+    assert.equal(run('state.chartWindows[chartId]'),'3M');
   }
-  assert.equal(run('defaultChartPeriod([])'),'90D');
+  assert.equal(run('defaultChartPeriod([])'),'3M');
   run('state.chartWindows.hybridPortfolioChart="ALL"');
   assert.equal(run('filteredLabelsForPeriod(dates,"hybridPortfolioChart").length'),5);
 });
@@ -426,4 +426,65 @@ test('market, macro and ML renderers apply the selected time window and retain m
   assert.equal(context.chart.data.datasets[0].metaRows[0].Data_Resultado,'2026-08-01');
   run('state.chartWindows.marketChart="ALL";renderMarketChart()');
   assert.equal(context.chart.data.labels.length,3);
+});
+
+test('weekly labels retain the last real observation per Monday-to-Sunday week',()=>{
+  const {run}=loadDashboard();
+  assert.equal(run('weeklyLabels(["2026-01-04","2025-12-29","2026-01-02","2026-01-05","2026-01-07","2026-01-07","2026-01-19"]).join(",")'),'2026-01-04,2026-01-07,2026-01-19');
+  assert.equal(run('weeklyLabels([]).length'),0);
+});
+
+test('month windows clamp month-end dates and include the requested 24-month boundary',()=>{
+  const {run}=loadDashboard();
+  assert.equal(run('dateMinusMonths("2024-03-31",1)'),'2024-02-29');
+  assert.equal(run('dateMinusMonths("2026-03-31",1)'),'2026-02-28');
+  assert.equal(run('dateMinusMonths("2026-10-07",24)'),'2024-10-07');
+  assert.equal(run('Object.keys(CHART_PERIODS).join(",")'),'1M,3M,6M,12M,18M,24M,ALL');
+});
+
+test('weekly alignment uses preceding observations, retains zero, and never reads future prices',()=>{
+  const {run}=loadDashboard();
+  assert.equal(run('JSON.stringify(alignSeriesToLabels([{data:"2026-01-02",valor:100},{data:"2026-01-06",valor:105},{data:"2026-01-12",valor:120}],["2026-01-01","2026-01-05","2026-01-09"],{fillForward:true}))'),'[null,100,105]');
+  assert.equal(run('JSON.stringify(alignSeriesToLabels([{data:"2026-01-02",valor:0}],["2026-01-05"],{fillForward:true}))'),'[0]');
+});
+
+test('weekly hybrid display preserves all intermediate rebalance contributions',()=>{
+  const data=fixture();
+  const dates=['2026-01-02','2026-01-05','2026-01-06','2026-01-09','2026-01-16'];
+  const levels=[100,110,99,100,120];
+  const components=['acoes_top20','fiis_top20','cdi','ivvb11'].map(chave=>({chave,serie:dates.map((data,index)=>({data,valor:chave==='acoes_top20'?levels[index]:100}))}));
+  data.carteira_vs={carteira_hibrida:{disponivel:true,serie:dates.map(data=>({data,valor:100})),componentes:components,comparativos:{}}};
+  const {context,run}=loadDashboard(data);
+  context.dates=dates; context.components=components;
+  run('renderHybridPortfolio()');
+  const expected=run('calculateHybridHistory(components,dates,hybridSettings.weights).weightedReturn');
+  assert.equal(context.chart.data.labels.join(','),'2026-01-02,2026-01-09,2026-01-16');
+  [0,3,4].forEach((index,weeklyIndex)=>close(context.chart.data.datasets[0].data[weeklyIndex],expected[index]));
+});
+
+test('50/50 portfolio compounds equal class weights and stops at the common history end',()=>{
+  const {context,run}=loadDashboard();
+  vm.runInContext(between('    function normalizeSeries','    function benchSeries')+'\n'+between('    function portfolioComparisonData','    function legacyFiisBacktestComparison'),context);
+  context.state.data.carteira_vs={
+    comparativo_acoes:{carteira:[{data:'2026-01-02',valor:100},{data:'2026-01-09',valor:110},{data:'2026-01-16',valor:99},{data:'2026-01-23',valor:120}]},
+    comparativo_fiis:{carteira:[{data:'2026-01-02',valor:100},{data:'2026-01-09',valor:100},{data:'2026-01-16',valor:100}]}
+  };
+  const comparison=run('portfolioComparisonData("comparativo_misto")');
+  assert.equal(comparison.carteira.map(point=>point.data).join(','),'2026-01-02,2026-01-09,2026-01-16');
+  close(comparison.carteira[1].valor,105);
+  close(comparison.carteira[2].valor,99.75);
+  context.state.data.carteira_vs.comparativo_fiis.carteira=[];
+  assert.equal(run('portfolioComparisonData("comparativo_misto").unavailable'),true);
+});
+
+test('CSV retains exact chart values, dates, gaps, separators, quotes, and accents',()=>{
+  const {context,run}=loadDashboard();
+  vm.runInContext(between('    function csvCell','    function downloadCsv')+'\n'+between('    function chartCsvRows','    function ensureCsvControls'),context);
+  context.exportChart={data:{labels:['2026-01-02','2026-01-09'],datasets:[{label:'Ações; "BR"',data:[0,1.23456789]},{label:'FIIs',data:[null,-.1]}]},options:{scales:{y:{title:{text:'Retorno (%)'}}}}};
+  const text=run('csvText(chartCsvRows(exportChart))');
+  assert.ok(text.startsWith('\uFEFF'));
+  assert.match(text, /"Ações; ""BR"" · Retorno \(%\)"/);
+  assert.match(text, /"2026-01-02";"0";""/);
+  assert.match(text, /"1\.23456789";"-0\.1"/);
+  assert.equal(run('csvCell("=SUM(A1)")'),'"\'=SUM(A1)"');
 });
