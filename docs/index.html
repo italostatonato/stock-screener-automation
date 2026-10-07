@@ -2382,7 +2382,8 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           while(grid[rowIndex][column]!==undefined) column++;
           const copy=cell.cloneNode(true);
           copy.querySelectorAll('.sr-only').forEach(node=>node.remove());
-          const text=(copy.textContent||'').trim().replace(/\s+/g,' ');
+          const primary=copy.querySelector('.rec-name,.component-name,.hybrid-money-result');
+          const text=(primary?.textContent||cell.innerText||copy.textContent||'').trim().replace(/\s+/g,' ');
           for(let r=0;r<cell.rowSpan;r++){
             grid[rowIndex+r]||=[];
             for(let c=0;c<cell.colSpan;c++) grid[rowIndex+r][column+c]=text;
