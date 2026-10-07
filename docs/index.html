@@ -2403,12 +2403,13 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       return [header,...labels.map((label,index)=>[label,...datasets.map(dataset=>dataset.data[index]?.y??dataset.data[index]??'')])];
     }
     function ensureCsvControls(){
-      document.querySelectorAll('table,canvas').forEach((target,index)=>{
+      document.querySelectorAll('table,canvas,#hybridDistributionBar').forEach((target,index)=>{
         if(target.dataset.csvReady) return;
         const chart=target.tagName==='CANVAS';
+        const distribution=target.id==='hybridDistributionBar';
         if(chart && !target.closest('.chart-box')) return;
         target.dataset.csvReady='true';
-        const title=chart?(target.getAttribute('aria-label')||target.id):(target.caption?.textContent?.trim()||`Tabela ${index+1}`);
+        const title=distribution?'Distribuição da carteira':chart?(target.getAttribute('aria-label')||target.id):(target.caption?.textContent?.trim()||`Tabela ${index+1}`);
         const toolbar=document.createElement('div');
         toolbar.className='csv-toolbar';
         const button=document.createElement('button');
@@ -2416,7 +2417,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         button.className='csv-download';
         button.textContent='Baixar CSV';
         button.setAttribute('aria-label',`Baixar CSV: ${title}`);
-        button.addEventListener('click',()=>downloadCsv(title,chart?chartCsvRows(state.charts[target.id]):tableCsvRows(target)));
+        button.addEventListener('click',()=>downloadCsv(title,distribution?[['Perfil','Componente','Alocação (%)'],...HYBRID_KEYS.map(key=>[hybridProfileName(),HYBRID_NAMES[key],Math.round(hybridSettings.weights[key]*100)])]:chart?chartCsvRows(state.charts[target.id]):tableCsvRows(target)));
         toolbar.append(button);
         const anchor=chart?target.closest('.chart-box'):target;
         anchor.before(toolbar);
