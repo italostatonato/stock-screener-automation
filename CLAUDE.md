@@ -1,6 +1,6 @@
 # Radar Semanal — Contexto para assistentes de IA
 
-Revisado em 05/10/2026 contra a implementação da `main` (`13a6742`).
+Revisado em 12/10/2026 contra a implementação da `main` (`99f34f9`).
 Consulte [o procedimento de revisão](docs/DOCUMENTATION.md).
 
 ## Projeto e documentação
@@ -71,10 +71,17 @@ R$ 10.000 e mínimo R$ 1.000. Os gráficos temporais iniciam em 3M.
 O histórico teórico usa pesos fracionários; as séries Top 20 não reinvestem
 proventos e a simulação híbrida não inclui custos/impostos.
 
-O dashboard abre na aba Introdução, com conteúdo estático para iniciantes,
-exemplos fictícios, glossário expansível e atalhos para as demais abas.
+O dashboard tem seis abas principais: Introdução, Visão geral, Carteira Híbrida,
+Modelos ML, Top 20 e Indicadores e metodologia. A aba Top 20 reúne Ações, FIIs e
+Recorrentes num seletor. Ele abre em Introdução, com conteúdo estático para
+iniciantes, exemplos fictícios, glossário expansível e atalhos para as demais abas.
 O guia não depende do carregamento dos snapshots. Ao explicar indicadores,
 diferencie referências de produtos, preço de proventos e histórico de previsão.
+
+Os períodos são 1M, 3M, 6M, 12M, 18M, 24M e Tudo, com a última observação de
+cada semana e sem criar dados ausentes. O cálculo híbrido conserva os intervalos
+intermediários. Baixar CSV está disponível em tabelas, gráficos e na distribuição
+da carteira: esta última exporta perfil, componente e alocação em percentuais.
 
 ## Pipeline e dados
 
@@ -137,7 +144,8 @@ Pushes da `main` que alteram `docs/index.html`, `docs/assets/` ou
 `.github/workflows/run_screener.yml` acionam o próprio `run_screener.yml`: testes → deploy,
 com `screener` ignorado. A coleta semanal e a execução manual mantêm os três jobs.
 A Visão geral mostra até 20 ativos por classe em cartões uniformes com posição,
-ticker e score, sem preço; conserva o gráfico de linhas Ações/FIIs.
+ticker e score, sem preço. O gráfico de desempenho permite Ações, FIIs ou
+Ações + FIIs (50/50), com CDI, IFIX e IBOV como referências.
 
 A revisão documental é uma automação separada do Codex, solicitada para
 segunda-feira às 12h em São Paulo. Procedimento em

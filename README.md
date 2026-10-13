@@ -12,7 +12,7 @@ O site no Sites está público e inclui contador de visitantes únicos por naveg
 Veja [acesso, atualização dos dados e funcionamento do contador](docs/SITE.md)
 (informações do site verificadas em **05/10/2026**).
 
-Documentação revisada em **05/10/2026** contra o código e a configuração da `main` (`13a6742`). Veja o [procedimento de revisão](docs/DOCUMENTATION.md).
+Documentação revisada em **12/10/2026** contra o código e a configuração da `main` (`99f34f9`). Veja o [procedimento de revisão](docs/DOCUMENTATION.md).
 
 > Projeto educacional e analítico. Não constitui recomendação de investimento.
 
@@ -169,19 +169,22 @@ Detalhes e manutenção em [Site no Sites e contador de visitantes](docs/SITE.md
 
 O dashboard web é publicado via GitHub Pages, abre na aba **Introdução** e carrega sempre o snapshot mais recente listado em `docs/data/index.json`. O guia inicial é estático e pode ser lido mesmo quando os dados do mercado não carregam.
 
-Principais telas:
+As seis abas principais são:
 
 - **Introdução** (tela inicial): conceitos de ações, FIIs, cotas, ETFs, renda fixa e proventos; exemplo de preço versus rendimento; referências como CDI, Selic, IPCA e índices da bolsa; glossário expansível e roteiro com atalhos para as demais abas. Inclui fontes educacionais oficiais.
-- **Visão geral**: entradas, saídas e mudanças de posição contra o snapshot mais recente de pelo menos sete dias antes, seleções de até 20 ações e 20 FIIs em cartões de uma linha com posição, ticker e score, sem preço, e desempenho das carteiras em gráfico de linhas com escolha entre Ações e FIIs. A janela pode superar uma semana quando há lacunas.
+- **Visão geral**: entradas, saídas e mudanças de posição contra o snapshot mais recente de pelo menos sete dias antes, seleções de até 20 ações e 20 FIIs em cartões de uma linha com posição, ticker e score, sem preço, e desempenho das carteiras em gráfico de linhas com escolha entre Ações, FIIs e Ações + FIIs (50/50), comparadas a CDI, IFIX e IBOV. A janela pode superar uma semana quando há lacunas.
 - **Carteira Híbrida**: percentuais editáveis de 1% em 1% para Top 20 Ações BR, Top 20 FIIs, CDI e IVVB11. Ao aumentar um bloco, cada ponto sai do maior dos outros blocos; ao reduzir, a diferença vai para o maior dos demais. Empates seguem a ordem dos blocos na tela. O total permanece em 100%. Cinco perfis de simulação (na mesma ordem dos blocos): Agressivo 45/20/5/30, Meio-Agressivo 40/25/10/25, Balanceado 30/30/20/20, Conservador 15/20/55/10 e Muito conservador 5/10/80/5. O Balanceado preserva a configuração original. Gráfico, contribuições e pesos por ativo acompanham a seleção, com rebalanceamento a cada nova composição semanal. O simulador inicia com R$ 10.000,00 e exibe as compras em listas abertas abaixo do card de cada bloco, na mesma coluna. Usa os preços do snapshot selecionado e o último fechamento disponível de IVVB11 até essa data, calcula unidades inteiras, destino ao CDI, percentuais efetivos e saldo não aplicado, sem redistribuir sobras. O desempenho histórico continua teórico, sem arredondamento de quantidades. Valores sem cotação ou composição ficam no saldo.
-- **Ações**: ranking de ações com preço, score e principais indicadores.
-- **FIIs**: ranking de FIIs com preço, score, DY, P/VP, liquidez e setor.
-- **Recorrentes**: ativos que mais apareceram no Top 20 histórico, com indicadores atuais.
 - **Modelos ML**: comparação entre score atual e modelos preditivos em modo sombra.
-- **Indicadores**: mercado, macro, câmbio, cripto e benchmarks.
-- **Score e Info**: metodologia, premissas, fontes e limitações.
+- **Top 20**: seletor entre Ações, FIIs e Recorrentes, com rankings, preços, scores, indicadores e frequência histórica de presença no Top 20.
+- **Indicadores e metodologia**: mercado, macro, câmbio, cripto, benchmarks, score, premissas, fontes e limitações.
 
-Os gráficos com eixo de tempo abrem em **3M**, com seleção manual dos outros períodos. Na Carteira Híbrida, o aporte mínimo é **R$ 1.000,00**; uma barra colorida representa os quatro blocos, as compras usam linhas compactas com detalhes ao passar o mouse ou focar pelo teclado, e a tabela mostra o ganho/perda estimado em reais a partir do aporte e das contribuições históricas, além do saldo teórico total.
+Os gráficos com eixo de tempo abrem em **3M**, com opções **1M, 3M, 6M, 12M, 18M, 24M e Tudo**, limitadas ao histórico disponível. A exibição usa a última observação de cada semana; a carteira híbrida conserva os intervalos intermediários no cálculo. Na Carteira Híbrida, o aporte mínimo é **R$ 1.000,00**; uma barra colorida representa os quatro blocos, as compras usam linhas compactas com detalhes ao passar o mouse ou focar pelo teclado, e a tabela mostra o ganho/perda estimado em reais a partir do aporte e das contribuições históricas, além do saldo teórico total.
+
+O botão **Baixar CSV** está nas tabelas, nos gráficos e na distribuição da carteira
+híbrida. A distribuição exporta perfil, componente e alocação; as tabelas mantêm
+os valores principais formatados; os gráficos exportam os valores do período e
+universo selecionados, sem arredondamento adicional. Os arquivos usam UTF-8 e
+ponto e vírgula como separador. Detalhes no [guia do dashboard](docs/DASHBOARD.md).
 
 O campo de aporte usa a máscara numérica [IMask](https://imask.js.org/guide.html#masked-number) 7.6.1, distribuída localmente em `docs/assets/vendor/` com licença MIT. Os separadores de milhar se ajustam durante a edição, preservando o cursor; os centavos são completados ao sair do campo. A validação do mínimo é separada da máscara para permitir apagar e redigitar o valor.
 

@@ -1,6 +1,6 @@
 # Dashboard e carteira híbrida
 
-Revisado em 15/09/2026 contra `docs/index.html` e `src/exporter.py`.
+Revisado em 12/10/2026 contra `docs/index.html` e `src/exporter.py` da `main` (`99f34f9`).
 
 O [dashboard público](https://italostatonato.github.io/stock-screener-automation/)
 é servido pelo GitHub Pages. Ele abre na aba **Introdução** e carrega o snapshot
@@ -46,11 +46,12 @@ os scores, as carteiras ou os modelos ML.
   cotas, ETFs, renda fixa, proventos, CDI, juros, inflação e índices da bolsa.
   Inclui exemplo fictício de preço versus rendimento, glossário expansível,
   fontes educacionais e atalhos para as outras abas. O conteúdo é estático e
-  permanece legível mesmo sem carregar dados. Navegação atualizada em 23/09/2026.
+  permanece legível mesmo sem carregar dados. Navegação reorganizada em 07/10/2026.
 - **Visão geral:** entradas, saídas e mudanças de posição na comparação
   semanal descrita acima em resumos compactos, seleções de até 20 ativos por
   classe em cartões alinhados de uma linha com posição, ticker e score (sem
-  preço), e desempenho em gráfico de linhas com escolha entre Ações, FIIs e Ações + FIIs (50/50), comparadas a CDI, IFIX e IBOV.
+  preço), e desempenho em gráfico de linhas com escolha entre Ações, FIIs e
+  Ações + FIIs (50/50), comparadas a CDI, IFIX e IBOV.
   A grade adapta as colunas à largura disponível e empilha as classes no celular.
 - **Carteira Híbrida:** alocação entre quatro blocos, perfis, simulação de aporte,
   curva comparativa, contribuições e pesos por ativo.
@@ -59,9 +60,41 @@ os scores, as carteiras ou os modelos ML.
 - **Top 20:** seletor entre Ações, FIIs e Recorrentes, com rankings, preços, scores, indicadores e frequência histórica.
 - **Indicadores e metodologia:** macroeconomia, câmbio, cripto, benchmarks, score, fontes e limitações.
 
-Os gráficos temporais iniciam em **3M**, com períodos **1M, 3M, 6M, 12M, 18M, 24M e Tudo**. Cada semana apresenta a última observação disponível, sem inventar dados de semanas ausentes. As comparações usam as mesmas datas e partem de 0%. O cálculo híbrido preserva os intervalos de rebalanceamento do histórico e exibe apenas os pontos semanais. Tabelas e gráficos têm **Baixar CSV**: tabelas exportam as células exibidas; gráficos exportam os dados do período e universo selecionados, sem arredondamento adicional. O histórico de dois anos depende de um backfill futuro.
 O cabeçalho contém um link externo para a apresentação de leitura do projeto;
 a disponibilidade desse recurso depende das permissões no Google.
+
+## Períodos dos gráficos
+
+Os gráficos temporais iniciam em **3M**, com períodos **1M, 3M, 6M, 12M, 18M,
+24M e Tudo**. Os meses são contados até a última data disponível no gráfico.
+A exibição seleciona a última observação de cada semana de segunda a domingo,
+sem criar pontos em semanas ausentes. Selecionar 24M não reconstrói dois anos
+de dados: a ampliação do histórico continua dependendo de trabalho separado.
+
+As comparações de retorno das carteiras alinham as séries às mesmas datas e
+recalculam o retorno a partir do primeiro valor disponível no período. O cálculo
+híbrido preserva os intervalos intermediários de rebalanceamento antes de
+selecionar os pontos semanais para exibição.
+
+## Exportação CSV
+
+O botão **Baixar CSV** está disponível nas tabelas, nos gráficos e na barra de
+distribuição da carteira híbrida:
+
+- **Tabelas:** exportam as linhas renderizadas, com os valores principais
+  formatados. Nomes de ativos/componentes e resultados monetários usam o texto
+  principal da célula; cabeçalhos de várias linhas são combinados.
+- **Gráficos:** exportam os rótulos e valores do período e universo selecionados,
+  sem arredondamento adicional; valores ausentes ficam vazios. Incluem todas as
+  séries presentes no gráfico, mesmo quando ocultadas pela legenda, e a unidade
+  do eixo quando ela está indicada.
+- **Distribuição da carteira:** exporta as colunas `Perfil`, `Componente` e
+  `Alocação (%)`, com os pesos atuais dos quatro blocos, inclusive após edição.
+
+O download é gerado no navegador em UTF-8 com BOM, usa ponto e vírgula como
+separador e coloca os campos entre aspas. O nome começa por `radar-` e inclui
+o título normalizado e a data selecionada. Esses CSVs não acionam coleta,
+treinamento nem entrega de Excel.
 
 ## Alocação híbrida
 
@@ -107,6 +140,11 @@ As séries Top 20 usam preços dos snapshots, **sem reinvestir proventos**.
 A carteira híbrida não inclui custos ou impostos. Ganho/perda estimado em reais
 e saldo teórico derivam do aporte e das contribuições históricas; não são
 previsões de resultado futuro.
+
+Na Visão geral, **Ações + FIIs (50/50)** combina os retornos das duas classes
+com metade do peso em cada uma a cada observação semanal. Usa apenas o intervalo
+comum às duas séries; sem histórico comum, o painel aguarda dados. A curva é
+teórica e não inclui custos, impostos nem reinvestimento de proventos.
 
 O benchmark IFIX usa **XFIX11 como proxy**. Os scripts auditáveis de backtest
 têm outro motor, com entrada no pregão seguinte, preços ajustados e custos;
