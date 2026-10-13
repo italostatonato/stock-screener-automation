@@ -70,6 +70,15 @@ test('all inline scripts compile',()=>{
   scripts.forEach((match,index)=>new vm.Script(match[1],{filename:`dashboard-script-${index}`}));
 });
 
+test('missing hybrid history never plots a fictitious 100% return',()=>{
+  const {run,context,elements}=loadDashboard();
+  run(between('    function emptyPortfolioChart','    function addAiInsight'));
+  run('emptyPortfolioChart("hybridPortfolioChart","hybridPortfolioNote","Sem histórico suficiente para: CDI")');
+  assert.equal(elements.hybridPortfolioNote.textContent,'Sem histórico suficiente para: CDI');
+  assert.equal(context.chart.data.labels.length,0);
+  assert.equal(context.chart.data.datasets.length,0);
+});
+
 test('five presets total 100%, preserve balanced and increase CDI progressively',()=>{
   const {run}=loadDashboard();
   assert.equal(run('Object.keys(HYBRID_PRESETS).length'),5);

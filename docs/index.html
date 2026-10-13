@@ -2688,8 +2688,8 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       if(note) note.textContent=message;
       makeChart(chartId,{
         type:'line',
-        data:{labels:['Aguardando histórico'],datasets:[{label:'Aguardando dados',data:[100],pointRadius:4}]},
-        options:baseOptions({plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{title:axisTitle('Status'),grid:{display:false}},y:{min:99,max:101,title:axisTitle('Retorno (%)')}}})
+        data:{labels:[],datasets:[]},
+        options:baseOptions({plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{title:axisTitle('Status'),grid:{display:false}},y:{min:-1,max:1,title:axisTitle('Retorno (%)')}}})
       });
     }
     function addAiInsight(chartId, text){

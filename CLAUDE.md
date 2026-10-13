@@ -71,6 +71,11 @@ R$ 10.000 e mínimo R$ 1.000. Os gráficos temporais iniciam em 3M.
 O histórico teórico usa pesos fracionários; as séries Top 20 não reinvestem
 proventos e a simulação híbrida não inclui custos/impostos.
 
+A coleta BCB tenta até três vezes em falhas temporárias, com pausas de 1s e 2s.
+Sem histórico dos quatro componentes, a híbrida informa a indisponibilidade
+e não plota um retorno fictício. Reparos de benchmark preservam os rankings
+e os demais campos do snapshot, com backup anterior fora do Git.
+
 O dashboard tem seis abas principais: Introdução, Visão geral, Carteira Híbrida,
 Modelos ML, Top 20 e Indicadores e metodologia. A aba Top 20 reúne Ações, FIIs e
 Recorrentes num seletor. Ele abre em Introdução, com conteúdo estático para

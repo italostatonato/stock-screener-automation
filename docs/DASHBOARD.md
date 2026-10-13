@@ -141,6 +141,10 @@ A carteira híbrida não inclui custos ou impostos. Ganho/perda estimado em reai
 e saldo teórico derivam do aporte e das contribuições históricas; não são
 previsões de resultado futuro.
 
+O desempenho da híbrida exige séries reais de todos os quatro blocos.
+Se uma delas estiver ausente, o painel exibe o motivo e deixa o gráfico sem
+observações, sem transformar a base 100 em um retorno de 100%.
+
 Na Visão geral, **Ações + FIIs (50/50)** combina os retornos das duas classes
 com metade do peso em cada uma a cada observação semanal. Usa apenas o intervalo
 comum às duas séries; sem histórico comum, o painel aguarda dados. A curva é

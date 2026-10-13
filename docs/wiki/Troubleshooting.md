@@ -133,6 +133,14 @@ responsabilidades de publicação, verificados em **05/10/2026**.
 
 ## Fonte indisponível ou seleção vazia
 
+Se a Carteira Híbrida informar falta de CDI, confira `benchmarks.CDI` no
+snapshot publicado e os logs da coleta BCB. O SGS usa timeout de 15s e até
+três tentativas para timeout, erro de conexão, HTTP 408/429 ou 5xx, com pausas
+de 1s e 2s. Outros erros HTTP encerram a consulta. Uma falha persistente
+continua explícita; não se inventa rentabilidade. Para reparar um snapshot,
+faça backup, recupere a série oficial e recalcule apenas o benchmark e seus
+comparativos e a híbrida, preservando rankings, preços e modelos ML.
+
 Consulte o log e repita a execução quando a fonte estiver disponível.
 O Fundamentus usa timeout de 30s e duas novas tentativas. O intervalo
 `fundamentus_retry_delay` começa em 15s e dobra (15s, 30s), limitado a 120s.

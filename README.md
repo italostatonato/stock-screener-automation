@@ -136,6 +136,10 @@ interrompem a execução. Indicadores, ML sombra e entrega opcional podem falhar
 com registro em log. Um erro ao construir datasets impede treinar dados antigos.
 Reexecutar no mesmo dia substitui o ranking Excel daquela data.
 
+A coleta do BCB tenta até três vezes em falhas temporárias, com pausas de 1s
+e 2s. A Carteira Híbrida exige histórico real dos quatro blocos; sem ele,
+o gráfico informa a indisponibilidade e não representa um retorno fictício.
+
 O score é calculado no universo completo **antes** dos filtros. Cada classe usa
 sete indicadores com peso `1/7`; dados ausentes recebem percentil neutro 50.
 A seleção aplica os pisos de `config.yaml`, ordena por score decrescente e
