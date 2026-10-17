@@ -166,6 +166,8 @@ def test_exemplo_do_score_confere_com_o_calculo_real():
 
     soup = BeautifulSoup(HTML, "html.parser")
     table = soup.find(id="scoreExampleTable")
+    assert "score-example-data" in table.parent.get("class", [])
+    assert len(soup.select_one(".score-example-layout").find_all(recursive=False)) == 2
     notes = [float(row.find_all("td")[-1].get_text()) for row in table.select("tbody tr")]
     ranks = [8, 3, 4, 5, 9, 4, 10]
     universe = pd.DataFrame({
