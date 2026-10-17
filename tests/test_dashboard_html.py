@@ -69,7 +69,8 @@ def test_dashboard_exibe_sete_indicadores_com_pesos_iguais_por_classe():
     assert "Taxa de performance" in HTML
     assert "ROIC (ROInvC)" in HTML
     assert "ROE (RPL)" in HTML
-    assert "Volume diário médio (3 meses)" in HTML
+    assert "Volume diário médio" in HTML
+    assert "o volume usa a média de dois meses" in HTML
 
 
 def test_dashboard_compensa_cabecalho_fixo_e_respeita_reducao_de_movimento():
@@ -142,11 +143,53 @@ def test_visao_geral_prioriza_mudancas_lideres_e_um_unico_grafico():
     assert "function preloadOverviewComparison()" in HTML
 
 
-def test_histograma_fica_na_secao_de_metodologia():
-    score_section = HTML.index('<section id="score"')
-    histogram = HTML.index('id="scoreChart"')
-    assert histogram > score_section
+def test_score_fontes_e_histograma_ficam_na_introducao():
+    from bs4 import BeautifulSoup
+
+    soup = BeautifulSoup(HTML, "html.parser")
+    score = soup.find(id="score")
+    assert score.find_parent(id="introducao") is not None
+    assert score.find(id="scoreChart") is not None
+    assert "Fontes de dados" in score.get_text()
+    assert "Sobre o projeto" in score.get_text()
+    assert soup.select_one("#indicadores #score") is None
+    assert soup.find(id="tab-indicadores").get_text(strip=True) == "Indicadores"
+    assert soup.select_one('#introducao .intro-route a[href="#score"]') is not None
+    assert "if(scoreRequested) tabId='introducao';" in HTML
     assert "não devem ser comparados como se fossem a mesma escala econômica" in HTML
+
+
+def test_exemplo_do_score_confere_com_o_calculo_real():
+    from bs4 import BeautifulSoup
+    import pandas as pd
+    from src.scorer import ACOES_WEIGHTS, _percentil_score, ACOES_DIRECTION, score_acoes
+
+    soup = BeautifulSoup(HTML, "html.parser")
+    table = soup.find(id="scoreExampleTable")
+    notes = [float(row.find_all("td")[-1].get_text()) for row in table.select("tbody tr")]
+    ranks = [8, 3, 4, 5, 9, 4, 10]
+    universe = pd.DataFrame({
+        key: [rank] + [value for value in range(1, 11) if value != rank]
+        for key, rank in zip(ACOES_WEIGHTS, ranks)
+    })
+    calculated = [_percentil_score(universe[key], ACOES_DIRECTION[key]).iloc[0] for key in ACOES_WEIGHTS]
+    assert notes == calculated
+    assert len(notes) == 7
+    assert sum(notes) == 490
+    assert sum(notes) / 7 == score_acoes(universe).iloc[0] == 70
+    assert soup.select_one(".score-example-number").get_text() == "70,0"
+
+
+def test_guia_do_score_explica_dados_ausentes_e_selecao_separada():
+    from bs4 import BeautifulSoup
+
+    text = BeautifulSoup(HTML, "html.parser").find(id="score").get_text(" ", strip=True)
+    assert "antes dos filtros de seleção" in text
+    assert "50 pontos e mantém seu peso de 1/7" in text
+    assert "posição média das colocações empatadas" in text
+    assert "uma casa decimal" in text
+    assert "não são pontos extras no score" in text
+    assert "não significa 70% de chance de lucro" in text
 
 
 def test_resumo_de_fiis_explica_limite_dos_proventos():

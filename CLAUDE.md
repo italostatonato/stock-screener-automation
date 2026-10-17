@@ -77,10 +77,13 @@ e não plota um retorno fictício. Reparos de benchmark preservam os rankings
 e os demais campos do snapshot, com backup anterior fora do Git.
 
 O dashboard tem seis abas principais: Introdução, Visão geral, Carteira Híbrida,
-Modelos ML, Top 20 e Indicadores e metodologia. A aba Top 20 reúne Ações, FIIs e
+Modelos ML, Top 20 e Indicadores. A aba Top 20 reúne Ações, FIIs e
 Recorrentes num seletor. Ele abre em Introdução, com conteúdo estático para
 iniciantes, exemplos fictícios, glossário expansível e atalhos para as demais abas.
-O guia não depende do carregamento dos snapshots. Ao explicar indicadores,
+A Introdução também reúne score, fontes e informações do projeto, com exemplo
+numérico dos sete percentis e a média final, além de elegibilidade e histograma.
+A explicação não depende dos snapshots; o histograma usa os dados carregados.
+Ao explicar indicadores,
 diferencie referências de produtos, preço de proventos e histórico de previsão.
 
 Os períodos são 1M, 3M, 6M, 12M, 18M, 24M e Tudo, com a última observação de

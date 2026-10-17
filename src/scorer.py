@@ -5,7 +5,8 @@ Calcula um escore composto (0-100) para FIIs e Ações com base na posição
 de cada indicador dentro do universo do dia (ranking percentílico).
 
 Lógica:
-- Para cada indicador, calcula o percentil do ativo dentro do universo filtrado
+- Para cada indicador, calcula o percentil no universo completo da execução,
+  antes dos filtros de seleção
 - Indicadores "maior é melhor" → percentil direto
 - Indicadores "menor é melhor" → percentil invertido (100 - percentil)
 - Score final = média ponderada dos percentis, normalizada para 0-100

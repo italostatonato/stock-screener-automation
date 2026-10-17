@@ -45,7 +45,10 @@ os scores, as carteiras ou os modelos ML.
 - **Introdução** (padrão ao abrir): guia para iniciantes sobre ações, FIIs,
   cotas, ETFs, renda fixa, proventos, CDI, juros, inflação e índices da bolsa.
   Inclui exemplo fictício de preço versus rendimento, glossário expansível,
-  fontes educacionais e atalhos para as outras abas. O conteúdo é estático e
+  fontes educacionais e atalhos para as outras abas. Reúne também score, pesos,
+  elegibilidade, histograma, fontes de dados e informações do projeto. A explicação
+  usa sete notas, percentis diretos/invertidos e um exemplo fictício com média 70,0.
+  A explicação é estática e
   permanece legível mesmo sem carregar dados. Navegação reorganizada em 07/10/2026.
 - **Visão geral:** entradas, saídas e mudanças de posição na comparação
   semanal descrita acima em resumos compactos, seleções de até 20 ativos por
@@ -58,7 +61,8 @@ os scores, as carteiras ou os modelos ML.
 - **Modelos ML:** rankings sombra, performance, confiabilidade e evolução
   de janelas realizadas.
 - **Top 20:** seletor entre Ações, FIIs e Recorrentes, com rankings, preços, scores, indicadores e frequência histórica.
-- **Indicadores e metodologia:** macroeconomia, câmbio, cripto, benchmarks, score, fontes e limitações.
+- **Indicadores:** macroeconomia, câmbio, cripto e benchmarks. O atalho `score`
+  abre a Introdução e rola até a explicação da pontuação.
 
 O cabeçalho contém um link externo para a apresentação de leitura do projeto;
 a disponibilidade desse recurso depende das permissões no Google.

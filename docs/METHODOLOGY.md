@@ -3,6 +3,16 @@
 Revisado em 15/09/2026 contra `config.yaml`, `src/scorer.py`,
 `src/filters.py`, `src/scraper.py`, `src/market_data.py` e `src/benchmark.py`.
 
+## Explicação no painel
+
+A aba Introdução reúne a explicação do score e as informações do projeto.
+O exemplo mostra uma ação na 8ª posição entre 10 valores de DY (80 pontos)
+e na 3ª posição de P/VPA (100 − 30 = 70 pontos). As sete notas fictícias
+80, 70, 60, 50, 90, 40 e 100 somam 490; a média é 70,0.
+Empates usam posições médias; ausência recebe 50 com peso 1/7 preservado.
+O score é calculado antes da elegibilidade; os filtros não acrescentam pontos.
+Uma nota de 70 não representa retorno, chance de lucro ou percentil final 70.
+
 ## Frequência e indicadores
 
 O screener coleta semanalmente, com início agendado para segunda-feira às

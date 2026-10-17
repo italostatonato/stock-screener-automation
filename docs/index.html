@@ -1354,7 +1354,32 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
 .csv-download:disabled{opacity:.5;cursor:default}
 .ml-table thead th:nth-child(8),.ml-table tbody td:nth-child(8){border-left:3px solid color-mix(in srgb,var(--fii) 55%,transparent);padding-left:18px}
 @media(max-width:620px){.hybrid-distribution-bar>span{font-size:12px}.hybrid-distribution-bar>span.narrow b{writing-mode:vertical-rl}.top20-switch .overview-toggle{flex:1}.overview-toggle-group{width:100%}}
-</style>
+
+    /* Explicação do score dentro do guia de introdução. */
+    #score{scroll-margin-top:calc(var(--topbar-h,68px) + 18px)}
+    #score h4{margin:0 0 12px;font-size:19px;line-height:1.35;letter-spacing:-.02em}
+    #score p{color:var(--intro-copy);font-size:14px;line-height:1.7}
+    .score-equation{display:flex;align-items:center;flex-wrap:wrap;gap:14px;padding:22px;margin-bottom:18px;border:1px solid rgba(227,190,114,.28);border-radius:18px;background:rgba(227,190,114,.055)}
+    .score-equation b{font-size:clamp(17px,2vw,23px);color:var(--accent)}
+    .score-equation>span{color:var(--muted);font-size:22px}
+    .score-conversion-grid,.score-example-layout,.score-filter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .score-conversion-grid{margin-bottom:16px;align-items:stretch}
+    .score-conversion-grid>.info-card{margin-bottom:0;min-width:0}
+    #score .score-formula{padding:14px;border:1px solid var(--border);border-radius:12px;background:rgba(4,8,17,.3);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+    .score-worked-example{border-color:rgba(227,190,114,.28)!important}
+    .score-example-layout{align-items:center;margin-top:18px}
+    .score-example-table caption{text-align:left;padding:0 12px 12px;color:var(--muted);font-size:12px}
+    .score-example-table td:last-child,.score-example-table th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+    .score-example-result{min-width:0;padding:22px;border-radius:18px;background:rgba(227,190,114,.055)}
+    #score .score-example-number{display:block;color:var(--accent);font-size:64px;line-height:1.1;font-variant-numeric:tabular-nums;margin:8px 0 18px}
+    .score-filter-details{margin-top:18px}
+    .score-filter-grid{padding:0 18px}
+    .score-filter-grid h5{font-size:15px;margin:10px 0}
+    .score-filter-grid ul{padding-left:20px;margin:0;color:var(--intro-copy);font-size:14px;line-height:1.8}
+    .score-filter-details>p{padding:0 18px 16px;margin:10px 0 0}
+    #score .score-warning{padding-right:56px}
+    @media(max-width:760px){.score-conversion-grid,.score-example-layout,.score-filter-grid{grid-template-columns:1fr}.score-equation{gap:10px;padding:18px}.score-example-result{padding:18px}.score-filter-grid{gap:4px}#score .score-warning{padding-right:22px}#score .score-warning:before{display:none}}
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Ir para o conteúdo principal</a>
@@ -1367,7 +1392,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <button type="button" id="tab-hibrida" class="tab" role="tab" aria-controls="hibrida" aria-selected="false" tabindex="-1" data-tab="hibrida">Carteira Híbrida</button>
         <button type="button" id="tab-modelos" class="tab" role="tab" aria-controls="modelos" aria-selected="false" tabindex="-1" data-tab="modelos">Modelos ML</button>
         <button type="button" id="tab-top20" class="tab" role="tab" aria-controls="top20" aria-selected="false" tabindex="-1" data-tab="top20">Top 20</button>
-        <button type="button" id="tab-indicadores" class="tab" role="tab" aria-controls="indicadores" aria-selected="false" tabindex="-1" data-tab="indicadores">Indicadores e metodologia</button>
+        <button type="button" id="tab-indicadores" class="tab" role="tab" aria-controls="indicadores" aria-selected="false" tabindex="-1" data-tab="indicadores">Indicadores</button>
       </div>
     </div>
   </header>
@@ -1406,14 +1431,15 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           <span class="intro-kicker">Primeiros passos</span>
           <h2>Entenda os conceitos.<br>Depois, explore os números.</h2>
           <p>Este guia serve como introdução aos conceitos e indicadores usados no Radar Semanal, com exemplos do dia a dia para ajudar você a entender os dados, estudar e comparar investimentos.</p>
-          <div class="intro-actions"><a class="intro-button primary" href="#intro-conceitos">Começar pelo básico <span aria-hidden="true">↓</span></a><button type="button" class="intro-button" data-go-tab="overview">Explorar o painel <span aria-hidden="true">→</span></button></div>
+          <div class="intro-actions"><a class="intro-button primary" href="#intro-conceitos">Começar pelo básico <span aria-hidden="true">↓</span></a><a class="intro-button" href="#score">Como calculamos o score</a><button type="button" class="intro-button" data-go-tab="overview">Explorar o painel <span aria-hidden="true">→</span></button></div>
         </div>
         <nav class="intro-route" aria-label="Neste guia de introdução">
           <h3>O que você vai encontrar</h3>
           <a href="#intro-conceitos"><span aria-hidden="true">01</span> Ações, FIIs, cotas e rendimentos</a>
           <a href="#intro-referencias"><span aria-hidden="true">02</span> CDI, inflação e índices da bolsa</a>
           <a href="#intro-glossario"><span aria-hidden="true">03</span> As siglas e os números do painel</a>
-          <a href="#intro-roteiro"><span aria-hidden="true">04</span> Como usar o Radar Semanal</a>
+          <a href="#score"><span aria-hidden="true">04</span> Como o score é calculado</a>
+          <a href="#intro-roteiro"><span aria-hidden="true">05</span> Como usar o Radar Semanal</a>
         </nav>
       </div>
 
@@ -1471,8 +1497,67 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         </div>
       </section>
 
+      <section id="score" class="score-info-section intro-block" aria-labelledby="score-title">
+        <div class="intro-heading">
+          <span class="intro-kicker">04 · A nota do Radar</span>
+          <h3 id="score-title">Como o score é calculado</h3>
+          <p>O score resume a posição de um ativo em sete indicadores. Primeiro calculamos uma nota para cada indicador; depois fazemos a média das sete notas.</p>
+        </div>
+        <div class="score-equation" aria-label="Sete indicadores geram sete notas; a média dessas notas forma o score de zero a cem">
+          <b>7 indicadores</b><span aria-hidden="true">→</span><b>7 notas</b><span aria-hidden="true">→</span><b>1 média de 0 a 100</b>
+        </div>
+        <div class="score-guide-grid">
+          <article class="info-card score-stage"><span class="info-kicker">1 · Com quem comparamos?</span><h4>Cada classe tem seu grupo</h4><p>Comparamos <strong>ações com ações e FIIs com FIIs</strong>, usando o universo completo de ativos coletados e tratados naquela execução, antes dos filtros de seleção.</p><p>A nota não é calculada apenas entre os ativos que aparecem no Top 20.</p></article>
+          <article class="info-card score-stage"><span class="info-kicker">2 · Como surgem os pontos?</span><h4>A posição vira uma nota</h4><p>Ordenamos os valores de cada indicador. A posição nessa lista vira uma nota na escala de 0 a 100, chamada de <strong>percentil</strong>.</p><p>Quando o modelo favorece valores maiores, usamos o percentil. Quando favorece valores menores, usamos <strong>100 menos o percentil</strong>.</p></article>
+          <article class="info-card score-stage"><span class="info-kicker">3 · Como juntamos as notas?</span><h4>Somamos e dividimos por sete</h4><p>Os sete indicadores têm <strong>o mesmo peso: 1/7 cada</strong>, aproximadamente 14,29%. Não somamos os valores brutos de DY, preço ou volume.</p><p>O score final é a média das sete notas, arredondada para <strong>uma casa decimal</strong>.</p></article>
+        </div>
+        <div class="score-conversion-grid">
+          <article class="info-card"><h4>De um valor para os pontos</h4><p><strong>Exemplo fictício, sem empates:</strong> em um grupo de 10 ações com DY conhecido, uma ação ocupa a 8ª posição ao ordenar o DY do menor para o maior.</p><p class="score-formula">Nota do DY = 8 ÷ 10 × 100 = <strong>80 pontos</strong></p><p>No P/VPA, valores menores recebem mais pontos. Se essa ação ocupa a 3ª posição na lista crescente:</p><p class="score-formula">Nota do P/VPA = 100 − (3 ÷ 10 × 100) = <strong>70 pontos</strong></p><p>O mesmo procedimento é repetido para cada um dos sete indicadores. Os pontos expressam a posição relativa, não uma taxa de retorno.</p></article>
+          <article class="info-card"><h4>E se houver empate ou faltar um dado?</h4><p><strong>Valores iguais:</strong> recebem a posição média das colocações empatadas. Se dois ativos empatam nas posições 3 e 4, ambos usam 3,5.</p><p><strong>Dado ausente ou inválido:</strong> aquele indicador recebe 50 pontos e mantém seu peso de 1/7. A média continua sendo dividida por sete; o peso não é redistribuído.</p><p>O percentil considera apenas os valores conhecidos daquele indicador. Os filtros de seleção ainda podem excluir um ativo por falta de um dado obrigatório.</p></article>
+        </div>
+        <article class="info-card score-worked-example" aria-labelledby="score-example-title">
+          <span class="info-kicker">Exemplo fictício · sem dados de um ativo real</span>
+          <h4 id="score-example-title">Uma conta completa</h4>
+          <p>Depois de comparar a mesma ação com seu grupo, imagine que as sete notas sejam estas:</p>
+          <div class="score-example-layout">
+            <table class="table score-example-table" id="scoreExampleTable"><caption>Exemplo de cálculo do score de uma ação</caption><thead><tr><th scope="col">Indicador</th><th scope="col">Nota de 0 a 100</th></tr></thead><tbody>
+              <tr><td>Dividend Yield</td><td>80</td></tr><tr><td>Preço/VPA</td><td>70</td></tr><tr><td>EV/EBITDA</td><td>60</td></tr><tr><td>Margem Líquida</td><td>50</td></tr><tr><td>ROIC (ROInvC)</td><td>90</td></tr><tr><td>ROE (RPL)</td><td>40</td></tr><tr><td>Volume diário médio</td><td>100</td></tr>
+            </tbody></table>
+            <div class="score-example-result"><span class="info-kicker">Score final</span><strong class="score-example-number">70,0</strong><p class="score-formula">(80 + 70 + 60 + 50 + 90 + 40 + 100) ÷ 7<br><strong>490 ÷ 7 = 70,0</strong></p><p>A ação teve uma média de 70 pontos nos sete critérios.</p><p><strong>Isso não significa 70% de chance de lucro, retorno de 70% nem estar à frente de 70% das ações.</strong> O score é a média de posições em indicadores diferentes, não o percentil final do ranking.</p></div>
+          </div>
+        </article>
+        <div class="charts score-detail-grid">
+        <div class="info-card">
+          <h4>Pesos usados para FIIs</h4>
+          <p>Sete indicadores igualmente ponderados; cada um vale exatamente 1/7. Os 14,29% abaixo são arredondados apenas para exibição.</p>
+          <table class="table"><caption class="sr-only">Pesos e interpretação dos indicadores usados no score de FIIs</caption><thead><tr><th>Indicador</th><th>Regra do indicador</th><th>Peso</th></tr></thead><tbody><tr><td>DY médio (12 meses)</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr><tr><td>P/VP</td><td>Menor valor → mais pontos</td><td>14,29%</td></tr><tr><td>Liquidez diária</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr><tr><td>Patrimônio líquido</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr><tr><td>Rentabilidade do período</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr><tr><td>Taxa de administração</td><td>Menor valor → mais pontos</td><td>14,29%</td></tr><tr><td>Taxa de performance</td><td>Menor valor → mais pontos</td><td>14,29%</td></tr></tbody></table>
+        </div>
+        <div class="info-card">
+          <h4>Pesos usados para Ações</h4>
+          <p>Sete indicadores igualmente ponderados; cada um vale exatamente 1/7. Os 14,29% abaixo são arredondados apenas para exibição.</p>
+          <table class="table"><caption class="sr-only">Pesos e interpretação dos indicadores usados no score de ações</caption><thead><tr><th>Indicador</th><th>Regra do indicador</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr><tr><td>Preço/VPA</td><td>Menor valor → mais pontos</td><td>14,29%</td></tr><tr><td>EV/EBITDA</td><td>Menor valor → mais pontos</td><td>14,29%</td></tr><tr><td>Margem Líquida</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr><tr><td>ROIC (ROInvC)</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr><tr><td>ROE (RPL)</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr><tr><td>Volume diário médio</td><td>Maior valor → mais pontos</td><td>14,29%</td></tr></tbody></table><p>Na fonte atual, o volume usa a média de dois meses. ROInvC corresponde ao ROIC e RPL ao ROE.</p>
+        </div>
+      </div>
+        <article class="info-card score-selection" aria-labelledby="score-selection-title"><span class="info-kicker">4 · Da nota ao Top 20</span><h4 id="score-selection-title">Ter score alto não basta para entrar</h4><p>Com os scores já calculados, aplicamos os critérios mínimos de elegibilidade. Entre os ativos aprovados, ordenamos pelo <strong>maior score</strong> e selecionamos até 20 por classe. Um ativo com nota alta pode ficar de fora se não passar pelos filtros.</p><p>Nos empates de score, usamos a ordem alfabética do ticker. Em ações, mantemos apenas a ação mais bem classificada de cada empresa. Se houver menos de 20 aprovados, a lista fica menor.</p>
+          <details class="intro-term score-filter-details"><summary>Ver os critérios mínimos de seleção</summary><div class="score-filter-grid"><div><h5>FIIs</h5><ul><li>DY médio de 12 meses acima de 0,3%.</li><li>Liquidez diária acima de R$ 100 mil.</li><li>Patrimônio líquido acima de R$ 50 milhões.</li><li>P/VP positivo e os dados obrigatórios presentes.</li></ul></div><div><h5>Ações</h5><ul><li>Dividend Yield acima de 2%.</li><li>Volume diário médio acima de R$ 500 mil.</li><li>Valor de mercado da empresa acima de R$ 200 milhões.</li><li>P/VPA e EV/EBITDA positivos e os dados obrigatórios presentes.</li></ul></div></div><p>Os limites são estritos: um valor igual ao mínimo não passa. Esses critérios definem elegibilidade; não são pontos extras no score.</p></details>
+        </article>
+        <article class="info-card score-warning"><h4>Como interpretar a nota</h4><p>A nota é relativa ao grupo e à data da coleta. Ela pode mudar se os outros ativos ou o universo coletado mudarem, mesmo que um indicador do ativo permaneça igual. Ações e FIIs usam critérios próprios.</p><p class="score-warning-copy"><strong>O modelo não substitui análise qualitativa.</strong> Não avalia em profundidade governança, gestão, risco jurídico, notícias ou eventos extraordinários. Use o score como ponto de partida para estudar.</p></article>
+        <div class="panel wide score-histogram-panel"><h4>Distribuição dos scores do Top 20</h4><p>Diagnóstico técnico da concentração das notas dentro de cada universo. Ações e FIIs têm metodologias próprias e não devem ser comparados como se fossem a mesma escala econômica.</p><div class="chart-box"><canvas id="scoreChart" role="img" aria-label="Histograma da distribuição dos scores de ações e FIIs do Top 20" aria-describedby="scoreChartExplain"></canvas></div><div class="chart-explain" id="scoreChartExplain"><b>Como ler:</b> cada barra conta os ativos dentro de um intervalo contínuo de score. Use este gráfico para entender dispersão e concentração do ranking, não como projeção de retorno.</div></div>
+        <div class="score-conversion-grid">
+          <div class="info-card">
+          <h4>Fontes de dados</h4>
+          <table class="table compact-source-table"><caption class="sr-only">Fontes dos dados exibidos no dashboard</caption><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Fundamentus (tabela pública)</td></tr><tr><td>CDI, IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio</td><td>AwesomeAPI</td></tr><tr><td>Cripto</td><td>CoinGecko · ranking por valor de mercado</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table>
+        </div>
+        <div class="info-card">
+          <h4>Sobre o projeto</h4>
+          <p>Projeto gratuito, automatizado e versionado, com dados públicos, rankings semanais, histórico e simulações. Os modelos ML são experimentais e não substituem o ranking oficial.</p>
+          <p><b>Disclaimer:</b> ferramenta educacional e quantitativa. Não constitui recomendação de investimento.</p>
+        </div>
+        </div>
+      </section>
+
       <section id="intro-roteiro" class="intro-block" aria-labelledby="intro-roteiro-title">
-        <div class="intro-heading"><span class="intro-kicker">04 · Da leitura à exploração</span><h3 id="intro-roteiro-title">Um caminho para conhecer o Radar</h3><p>Você pode voltar a esta introdução a qualquer momento pela primeira aba.</p></div>
+        <div class="intro-heading"><span class="intro-kicker">05 · Da leitura à exploração</span><h3 id="intro-roteiro-title">Um caminho para conhecer o Radar</h3><p>Você pode voltar a esta introdução a qualquer momento pela primeira aba.</p></div>
         <ol class="intro-steps">
           <li><h4>Entenda a semana</h4><p>A Visão geral mostra quem entrou ou saiu das seleções, os primeiros colocados e o desempenho comparado às referências.</p><div class="intro-step-links"><button type="button" class="intro-button" data-go-tab="overview">Abrir Visão geral <span aria-hidden="true">→</span></button></div></li>
           <li><h4>Conheça os investimentos</h4><p>Na aba Top 20, alterne entre Ações e FIIs para consultar preço, nota e indicadores. Use o glossário para interpretar os números e compare ativos semelhantes.</p><div class="intro-step-links"><button type="button" class="intro-button" data-go-tab="acoes">Ver Ações</button><button type="button" class="intro-button" data-go-tab="fiis">Ver FIIs</button></div></li>
@@ -1696,71 +1781,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <div class="panel wide"><h3>Carteira Ações Top 20</h3><p>Retorno acumulado da carteira real registrada no histórico contra IBOV, IPCA e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyAcoesChart" role="img" aria-label="Carteira Ações Top 20 comparada a IBOV, IPCA e CDI"></canvas></div><div class="mini-note" id="proxyAcoesNote"></div><div class="chart-explain"><b>Como ler:</b> IBOV mede a bolsa brasileira, IPCA mede inflação e CDI mede a alternativa conservadora. O objetivo é ver se o ranking de ações compensa o risco assumido.</div></div>
         <div class="panel wide"><h3>Câmbio e cripto</h3><p>Cotações do snapshot e as cinco maiores criptomoedas por valor de mercado. A variação diária é uma métrica da fonte. Dados ausentes podem ser consultados ao abrir o painel, sem atualizar o ranking semanal.</p><div id="fxGrid" class="market-data-sections"></div></div>
       </div>
-    <section id="score" class="score-info-section" aria-label="Score e informações do projeto">
-      <div class="section-head">
-        <div>
-          <h2>Score e Info</h2>
-          <p class="desc">Entenda a pontuação, os critérios de leitura, as fontes e os limites do dashboard.</p>
-        </div>
-      </div>
 
-      <div class="score-guide-grid">
-        <div class="info-card score-primer">
-          <span class="info-kicker">Para leigos</span>
-          <h3>O que é o score?</h3>
-          <p>O score é uma nota de triagem quantitativa. Ele compara cada ativo com os demais ativos do mesmo universo no dia da coleta. Quanto maior o score, melhor o ativo ficou posicionado dentro dos critérios usados pelo robô.</p>
-          <p>Ele não diz que o ativo é “barato para sempre” nem garante retorno. Ele ajuda a separar rapidamente quais ativos merecem uma análise mais profunda.</p>
-        </div>
-        <div class="info-card score-primer">
-          <span class="info-kicker">Como ler</span>
-          <h3>Regra prática</h3>
-          <div class="score-band-grid">
-            <div><b>80+</b><span>muito forte no ranking do dia</span></div>
-            <div><b>70–80</b><span>bom destaque quantitativo</span></div>
-            <div><b>60–70</b><span>acima da média</span></div>
-            <div><b>50–60</b><span>zona intermediária</span></div>
-            <div><b>&lt;50</b><span>exige mais cautela</span></div>
-          </div>
-        </div>
-        <div class="info-card score-primer score-warning">
-          <span class="info-kicker">Importante</span>
-          <h3>O que o score não mede</h3>
-          <p class="score-warning-copy"><strong>O modelo não substitui análise qualitativa.</strong> Ele não avalia governança em profundidade, risco jurídico, mudança estrutural de negócio, qualidade da gestão, eventos extraordinários ou notícias recentes.</p>
-          <p>Use o score como filtro inicial, não como recomendação final.</p>
-        </div>
-      </div>
-
-      <div class="panel wide score-histogram-panel"><h3>Distribuição dos scores do Top 20</h3><p>Diagnóstico técnico da concentração das notas dentro de cada universo. Ações e FIIs têm metodologias próprias e não devem ser comparados como se fossem a mesma escala econômica.</p><div class="chart-box"><canvas id="scoreChart" role="img" aria-label="Histograma da distribuição dos scores de ações e FIIs do Top 20" aria-describedby="scoreChartExplain"></canvas></div><div class="chart-explain" id="scoreChartExplain"><b>Como ler:</b> cada barra conta os ativos dentro de um intervalo contínuo de score. Use este gráfico para entender dispersão e concentração do ranking, não como projeção de retorno.</div></div>
-
-      <div class="charts score-detail-grid">
-        <div class="info-card">
-          <h3>Pesos usados para FIIs</h3>
-          <p>Sete indicadores igualmente ponderados; 14,29% é o valor arredondado de 1/7.</p>
-          <table class="table"><caption class="sr-only">Pesos e interpretação dos indicadores usados no score de FIIs</caption><thead><tr><th>Indicador</th><th>Leitura</th><th>Peso</th></tr></thead><tbody><tr><td>DY médio (12 meses)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>P/VP</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Liquidez diária</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Patrimônio líquido</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Rentabilidade do período</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Taxa de administração</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Taxa de performance</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr></tbody></table>
-        </div>
-        <div class="info-card">
-          <h3>Pesos usados para Ações</h3>
-          <p>Sete indicadores igualmente ponderados; 14,29% é o valor arredondado de 1/7.</p>
-          <table class="table"><caption class="sr-only">Pesos e interpretação dos indicadores usados no score de ações</caption><thead><tr><th>Indicador</th><th>Leitura</th><th>Peso</th></tr></thead><tbody><tr><td>Dividend Yield</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Preço/VPA</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>EV/EBITDA</td><td>Menor tende a ser melhor</td><td>14,29%</td></tr><tr><td>Margem Líquida</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>ROIC (ROInvC)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>ROE (RPL)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr><tr><td>Volume diário médio (3 meses)</td><td>Maior tende a ser melhor</td><td>14,29%</td></tr></tbody></table>
-        </div>
-      </div>
-
-      <div class="score-guide-grid lower-info-grid">
-        <div class="info-card">
-          <h3>Como o ranking é calculado</h3>
-          <p>O robô coleta os dados, aplica filtros mínimos, normaliza os indicadores por comparação relativa e calcula uma pontuação ponderada. O Top 20 mostra os ativos mais bem colocados dentro desse recorte.</p>
-        </div>
-        <div class="info-card">
-          <h3>Fontes de dados</h3>
-          <table class="table compact-source-table"><caption class="sr-only">Fontes dos dados exibidos no dashboard</caption><tbody><tr><td>FIIs</td><td>Fundsexplorer</td></tr><tr><td>Ações BR</td><td>Fundamentus (tabela pública)</td></tr><tr><td>IPCA, IGP-M, Selic</td><td>Banco Central do Brasil</td></tr><tr><td>Câmbio</td><td>AwesomeAPI</td></tr><tr><td>Cripto</td><td>CoinGecko · ranking por valor de mercado</td></tr><tr><td>IBOV, IFIX, IMOB</td><td>Yahoo Finance</td></tr></tbody></table>
-        </div>
-        <div class="info-card">
-          <h3>Sobre o projeto</h3>
-          <p>Pipeline gratuito, automatizado e versionado, com coleta via Selenium, snapshots em Excel/JSON, histórico em Parquet, backtest e modelos ML em modo sombra.</p>
-          <p><b>Disclaimer:</b> ferramenta educacional e quantitativa. Não constitui recomendação de investimento.</p>
-        </div>
-      </div>
-    </section>
     </section>
   </main>
 
@@ -3382,7 +3403,7 @@ const CHART_PERIODS = {
     function activateTab(tabId){
       if(['acoes','fiis','recorrentes'].includes(tabId)){ activateTop20(tabId); tabId='top20'; }
       const scoreRequested=tabId==='score';
-      if(scoreRequested) tabId='indicadores';
+      if(scoreRequested) tabId='introducao';
       const btn=document.querySelector(`.tab[data-tab="${tabId}"]`);
       const section=document.getElementById(tabId);
       if(!btn||!section) return;
