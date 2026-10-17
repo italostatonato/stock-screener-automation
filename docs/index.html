@@ -1379,6 +1379,25 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
     .score-filter-details>p{padding:0 18px 16px;margin:10px 0 0}
     #score .score-warning{padding-right:56px}
     @media(max-width:760px){.score-conversion-grid,.score-example-layout,.score-filter-grid{grid-template-columns:1fr}.score-equation{gap:10px;padding:18px}.score-example-result{padding:18px}.score-filter-grid{gap:4px}#score .score-warning{padding-right:22px}#score .score-warning:before{display:none}}
+
+    .score-dy-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:22px;align-items:start;margin-top:20px}
+    .score-dy-data,.score-dy-result{min-width:0}
+    .score-dy-result{padding:20px;border:1px solid rgba(227,190,114,.25);border-radius:16px;background:rgba(227,190,114,.055)}
+    #score .score-dy-example h5{font-size:17px;line-height:1.4;margin:0 0 12px}
+    .score-dy-result ol{padding-left:21px;color:var(--intro-copy);font-size:14px;line-height:1.8}
+    .score-dy-table{table-layout:fixed}
+    .score-dy-table th,.score-dy-table td{padding:10px 8px;font-size:13px}
+    .score-dy-table th:first-child{width:19%}
+    .score-dy-table th:nth-child(2){width:29%}
+    .score-dy-table th:nth-child(3){width:20%}
+    .score-dy-table caption{text-align:left;padding:0 8px 12px;font-size:12px;color:var(--muted)}
+    .score-dy-table td:not(:nth-child(2)),.score-dy-table th:not(:nth-child(2)){text-align:right;font-variant-numeric:tabular-nums}
+    .score-dy-table .dy-highlight td{background:rgba(227,190,114,.14);color:var(--accent);font-weight:850}
+    .score-dy-range,.score-dy-comparison{margin-top:20px}
+    .score-dy-range p:last-child,.score-dy-comparison p:last-child{margin-bottom:0}
+    #score .score-dy-values{font-variant-numeric:tabular-nums;line-height:2}
+    #score .score-note-link{color:var(--accent);text-decoration:underline;text-underline-offset:4px;display:inline-flex;align-items:center;justify-content:flex-end;min-width:44px;min-height:28px}
+    @media(max-width:760px){.score-dy-layout{grid-template-columns:1fr;gap:16px}.score-dy-result{padding:16px}.score-dy-table th,.score-dy-table td{padding:10px 6px;font-size:12px}}
   </style>
 </head>
 <body>
@@ -1511,17 +1530,51 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           <article class="info-card score-stage"><span class="info-kicker">2 · Como surgem os pontos?</span><h4>A posição vira uma nota</h4><p>Ordenamos os valores de cada indicador. A posição nessa lista vira uma nota na escala de 0 a 100, chamada de <strong>percentil</strong>.</p><p>Quando o modelo favorece valores maiores, usamos o percentil. Quando favorece valores menores, usamos <strong>100 menos o percentil</strong>.</p></article>
           <article class="info-card score-stage"><span class="info-kicker">3 · Como juntamos as notas?</span><h4>Somamos e dividimos por sete</h4><p>Os sete indicadores têm <strong>o mesmo peso: 1/7 cada</strong>, aproximadamente 14,29%. Não somamos os valores brutos de DY, preço ou volume.</p><p>O score final é a média das sete notas, arredondada para <strong>uma casa decimal</strong>.</p></article>
         </div>
+
+        <article id="score-dy-example" class="info-card score-dy-example" aria-labelledby="score-dy-title">
+          <span class="info-kicker">De onde saem os 80 pontos?</span>
+          <h4 id="score-dy-title">O DY vira pontos pela posição na lista</h4>
+          <p>Para o Dividend Yield, a regra favorece valores maiores. Reunimos os DYs conhecidos das ações daquela coleta e <strong>ordenamos do menor para o maior</strong>. A nota vem da posição nessa lista, e não de uma meta fixa de rendimento.</p>
+          <p class="score-formula"><strong>Nota do DY = posição na lista crescente ÷ quantidade de DYs conhecidos × 100</strong></p>
+          <p><strong>Exemplo fictício, sem empates:</strong> este grupo tem 10 ações com DY conhecido. Cada posição equivale a 100 ÷ 10 = 10 pontos. Confira os valores e acompanhe o Ativo H, destacado na tabela.</p>
+          <div class="score-dy-layout">
+            <div class="score-dy-data">
+              <table id="scoreDyExampleTable" class="table score-dy-table"><caption>Exemplo fictício: DYs ordenados do menor para o maior</caption><thead><tr><th scope="col">Posição</th><th scope="col">Ativo</th><th scope="col">DY</th><th scope="col">Nota do DY</th></tr></thead><tbody>
+                <tr><td>1</td><td>Ativo A</td><td>2%</td><td>10</td></tr>
+                <tr><td>2</td><td>Ativo B</td><td>3%</td><td>20</td></tr>
+                <tr><td>3</td><td>Ativo C</td><td>4%</td><td>30</td></tr>
+                <tr><td>4</td><td>Ativo D</td><td>5%</td><td>40</td></tr>
+                <tr><td>5</td><td>Ativo E</td><td>6%</td><td>50</td></tr>
+                <tr><td>6</td><td>Ativo F</td><td>7%</td><td>60</td></tr>
+                <tr><td>7</td><td>Ativo G</td><td>8%</td><td>70</td></tr>
+                <tr class="dy-highlight"><td>8</td><td>Ativo H</td><td>9%</td><td>80</td></tr>
+                <tr><td>9</td><td>Ativo I</td><td>10%</td><td>90</td></tr>
+                <tr><td>10</td><td>Ativo J</td><td>12%</td><td>100</td></tr>
+              </tbody></table>
+            </div>
+            <div class="score-dy-result">
+              <span class="info-kicker">Ativo H · DY de 9%</span>
+              <h5>Por que a nota é 80?</h5>
+              <ol><li>Há <strong>7 DYs menores que 9%</strong>.</li><li>Ao incluir o próprio Ativo H, ele ocupa a <strong>8ª posição</strong> na lista crescente.</li><li>O grupo tem <strong>10 DYs conhecidos</strong>.</li></ol>
+              <p class="score-formula"><strong>8 ÷ 10 × 100 = 80 pontos</strong></p>
+              <p>O <strong>9%</strong> é o rendimento usado na comparação. Os <strong>80 pontos</strong> expressam a posição do Ativo H entre esses dez valores.</p>
+              <p>As notas 10, 20, 30 e assim por diante surgem da mesma conta: posição dividida por 10, multiplicada por 100.</p>
+            </div>
+          </div>
+          <div class="intro-note score-dy-range"><h5>Como essa escala vai de 0 a 100?</h5><p>Na regra atual, com estes 10 valores sem empates, o menor DY recebe <strong>10 pontos</strong> e o maior recebe <strong>100 pontos</strong>. A fórmula não força o menor DY a receber zero. Com 100 valores sem empates, o menor receberia 1 ponto: 1 ÷ 100 × 100.</p><p>O zero é um limite da escala. Nos indicadores em que valores menores recebem mais pontos, a conta é invertida: 100 menos a nota da posição. Sem empates, o maior valor nesses indicadores fica com 100 − 100 = 0.</p></div>
+          <div class="score-dy-comparison" aria-labelledby="score-dy-comparison-title"><h5 id="score-dy-comparison-title">O mesmo DY pode receber outra nota</h5><p>Imagine outra coleta com estes 10 DYs, também em ordem crescente:</p><p id="scoreDyOtherValues" class="score-dy-values">2%, 3%, 4%, 5%, <strong>9%</strong>, 10%, 11%, 12%, 13%, 14%</p><p>O DY de 9% agora ocupa a <strong>5ª posição</strong>: 5 ÷ 10 × 100 = <strong class="score-dy-other-result">50 pontos</strong>. O rendimento permaneceu em 9%; a nota mudou porque os outros valores do grupo mudaram. Por isso, não existe uma tabela fixa em que um determinado DY sempre valha 80 pontos.</p></div>
+        </article>
         <div class="score-conversion-grid">
-          <article class="info-card"><h4>De um valor para os pontos</h4><p><strong>Exemplo fictício, sem empates:</strong> em um grupo de 10 ações com DY conhecido, uma ação ocupa a 8ª posição ao ordenar o DY do menor para o maior.</p><p class="score-formula">Nota do DY = 8 ÷ 10 × 100 = <strong>80 pontos</strong></p><p>No P/VPA, valores menores recebem mais pontos. Se essa ação ocupa a 3ª posição na lista crescente:</p><p class="score-formula">Nota do P/VPA = 100 − (3 ÷ 10 × 100) = <strong>70 pontos</strong></p><p>O mesmo procedimento é repetido para cada um dos sete indicadores. Os pontos expressam a posição relativa, não uma taxa de retorno.</p></article>
+          <article class="info-card"><h4>E quando um valor menor recebe mais pontos?</h4><p>No P/VPA, a ordem começa da mesma forma: valores do menor para o maior. Depois, a nota é invertida. Se o ativo está na 3ª posição entre 10 valores conhecidos:</p><p class="score-formula">Nota do P/VPA = 100 − (3 ÷ 10 × 100) = <strong>70 pontos</strong></p><p>As tabelas de pesos abaixo mostram a direção usada em cada indicador.</p></article>
           <article class="info-card"><h4>E se houver empate ou faltar um dado?</h4><p><strong>Valores iguais:</strong> recebem a posição média das colocações empatadas. Se dois ativos empatam nas posições 3 e 4, ambos usam 3,5.</p><p><strong>Dado ausente ou inválido:</strong> aquele indicador recebe 50 pontos e mantém seu peso de 1/7. A média continua sendo dividida por sete; o peso não é redistribuído.</p><p>O percentil considera apenas os valores conhecidos daquele indicador. Os filtros de seleção ainda podem excluir um ativo por falta de um dado obrigatório.</p></article>
         </div>
         <article class="info-card score-worked-example" aria-labelledby="score-example-title">
           <span class="info-kicker">Exemplo fictício · sem dados de um ativo real</span>
           <h4 id="score-example-title">Uma conta completa</h4>
-          <p>Depois de comparar a mesma ação com seu grupo, imagine que as sete notas sejam estas:</p>
+          <p>Os 80 pontos do DY do Ativo H vêm da lista acima. Imagine que, após repetir a comparação nos demais indicadores, suas sete notas sejam estas:</p>
           <div class="score-example-layout">
             <div class="score-example-data"><table class="table score-example-table" id="scoreExampleTable"><caption>Exemplo de cálculo do score de uma ação</caption><thead><tr><th scope="col">Indicador</th><th scope="col">Nota de 0 a 100</th></tr></thead><tbody>
-              <tr><td>Dividend Yield</td><td>80</td></tr><tr><td>Preço/VPA</td><td>70</td></tr><tr><td>EV/EBITDA</td><td>60</td></tr><tr><td>Margem Líquida</td><td>50</td></tr><tr><td>ROIC (ROInvC)</td><td>90</td></tr><tr><td>ROE (RPL)</td><td>40</td></tr><tr><td>Volume diário médio</td><td>100</td></tr>
+              <tr><td>Dividend Yield</td><td><a class="score-note-link" href="#score-dy-example" aria-label="Ver de onde saem os 80 pontos de Dividend Yield">80</a></td></tr><tr><td>Preço/VPA</td><td>70</td></tr><tr><td>EV/EBITDA</td><td>60</td></tr><tr><td>Margem Líquida</td><td>50</td></tr><tr><td>ROIC (ROInvC)</td><td>90</td></tr><tr><td>ROE (RPL)</td><td>40</td></tr><tr><td>Volume diário médio</td><td>100</td></tr>
             </tbody></table></div>
             <div class="score-example-result"><span class="info-kicker">Score final</span><strong class="score-example-number">70,0</strong><p class="score-formula">(80 + 70 + 60 + 50 + 90 + 40 + 100) ÷ 7<br><strong>490 ÷ 7 = 70,0</strong></p><p>A ação teve uma média de 70 pontos nos sete critérios.</p><p><strong>Isso não significa 70% de chance de lucro, retorno de 70% nem estar à frente de 70% das ações.</strong> O score é a média de posições em indicadores diferentes, não o percentil final do ranking.</p></div>
           </div>

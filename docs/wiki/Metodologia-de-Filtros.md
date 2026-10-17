@@ -6,8 +6,13 @@ Revisado em 15/09/2026 contra `config.yaml`, `src/scorer.py`,
 ## Explicação no painel
 
 A aba Introdução reúne a explicação do score e as informações do projeto.
-O exemplo mostra uma ação na 8ª posição entre 10 valores de DY (80 pontos)
-e na 3ª posição de P/VPA (100 − 30 = 70 pontos). As sete notas fictícias
+A tabela didática ordena os DYs 2%, 3%, 4%, 5%, 6%, 7%, 8%, 9%, 10% e 12%.
+O Ativo H tem DY de 9%, fica na 8ª posição entre 10 valores conhecidos e recebe
+8 / 10 × 100 = 80 pontos. A nota de cada linha confere com o scorer.
+Com o grupo 2%, 3%, 4%, 5%, 9%, 10%, 11%, 12%, 13% e 14%, o mesmo DY de 9%
+fica na 5ª posição e recebe 50 pontos. Sem empates, o menor DY recebe 100/N,
+não zero; a inversão dos indicadores menor-é-melhor pode produzir zero.
+No P/VPA, a 3ª posição entre 10 valores gera 100 − 30 = 70 pontos. As sete notas fictícias
 80, 70, 60, 50, 90, 40 e 100 somam 490; a média é 70,0.
 Empates usam posições médias; ausência recebe 50 com peso 1/7 preservado.
 O score é calculado antes da elegibilidade; os filtros não acrescentam pontos.

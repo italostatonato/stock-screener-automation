@@ -194,6 +194,45 @@ def test_guia_do_score_explica_dados_ausentes_e_selecao_separada():
     assert "não significa 70% de chance de lucro" in text
 
 
+
+def test_tabela_de_dy_mostra_como_os_valores_viram_pontos():
+    from bs4 import BeautifulSoup
+    import pandas as pd
+    from src.scorer import _percentil_score
+
+    soup = BeautifulSoup(HTML, "html.parser")
+    table = soup.find(id="scoreDyExampleTable")
+    rows = [[cell.get_text(strip=True) for cell in row.find_all("td")] for row in table.select("tbody tr")]
+    values = pd.Series([float(row[2].rstrip("%")) for row in rows])
+    notes = [float(row[3]) for row in rows]
+    assert values.tolist() == [2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+    assert [int(row[0]) for row in rows] == list(range(1, 11))
+    assert notes == _percentil_score(values, "max").tolist()
+    assert rows[7] == ["8", "Ativo H", "9%", "80"]
+    assert table.select_one("tr.dy-highlight").find_all("td")[1].get_text() == "Ativo H"
+    assert "score-dy-data" in table.parent.get("class", [])
+    assert len(soup.select_one(".score-dy-layout").find_all(recursive=False)) == 2
+    text = soup.find(id="score-dy-example").get_text(" ", strip=True)
+    assert "quantidade de DYs conhecidos" in text
+    assert "o menor DY recebe 10 pontos" in text
+    assert "não força o menor DY a receber zero" in text
+
+
+def test_mesmo_dy_muda_de_nota_quando_o_grupo_muda():
+    from bs4 import BeautifulSoup
+    import pandas as pd
+    import re
+    from src.scorer import _percentil_score
+
+    soup = BeautifulSoup(HTML, "html.parser")
+    values = [float(value) for value in re.findall(r"\d+(?=%)", soup.find(id="scoreDyOtherValues").get_text())]
+    assert values == [2, 3, 4, 5, 9, 10, 11, 12, 13, 14]
+    index = values.index(9)
+    score = _percentil_score(pd.Series(values), "max").iloc[index]
+    assert score == 50
+    assert soup.select_one(".score-dy-other-result").get_text() == "50 pontos"
+
+
 def test_resumo_de_fiis_explica_limite_dos_proventos():
     assert "a carteira de FIIs considera a variação dos preços e não reinveste os proventos" in HTML
 

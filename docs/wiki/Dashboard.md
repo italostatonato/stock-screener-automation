@@ -47,7 +47,9 @@ os scores, as carteiras ou os modelos ML.
   Inclui exemplo fictício de preço versus rendimento, glossário expansível,
   fontes educacionais e atalhos para as outras abas. Reúne também score, pesos,
   elegibilidade, histograma, fontes de dados e informações do projeto. A explicação
-  usa sete notas, percentis diretos/invertidos e um exemplo fictício com média 70,0.
+  usa uma lista ordenada de 10 DYs para mostrar de onde saem os 80 pontos,
+  compara a mesma taxa em outro grupo e explica os limites da escala. Depois,
+  junta sete notas em um exemplo fictício com média 70,0.
   A explicação é estática e
   permanece legível mesmo sem carregar dados. Navegação reorganizada em 07/10/2026.
 - **Visão geral:** entradas, saídas e mudanças de posição na comparação

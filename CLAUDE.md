@@ -82,6 +82,9 @@ Recorrentes num seletor. Ele abre em Introdução, com conteúdo estático para
 iniciantes, exemplos fictícios, glossário expansível e atalhos para as demais abas.
 A Introdução também reúne score, fontes e informações do projeto, com exemplo
 numérico dos sete percentis e a média final, além de elegibilidade e histograma.
+A tabela de DY mostra 10 valores ordenados: DY de 9% na 8ª posição vale 80;
+em outro grupo, o mesmo DY na 5ª posição vale 50. Sem empates, o menor DY
+recebe 100/N pontos e o maior recebe 100; os pesos e o algoritmo são preservados.
 A explicação não depende dos snapshots; o histograma usa os dados carregados.
 Ao explicar indicadores,
 diferencie referências de produtos, preço de proventos e histórico de previsão.
