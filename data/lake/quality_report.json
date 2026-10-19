@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-19T12:08:14",
+  "generated_at": "2026-10-19T19:00:10",
   "status": "warn",
   "checks": [
     {
@@ -43,42 +43,42 @@
       "detail": "ok"
     },
     {
-      "name": "data/ml/historico_fiis.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_fiis.parquet",
       "status": "ok",
       "detail": "29938 linhas"
     },
     {
-      "name": "data/ml/historico_acoes.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/historico_acoes.parquet",
       "status": "ok",
       "detail": "26163 linhas"
     },
     {
-      "name": "data/backtest/carteiras_historicas.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/backtest/carteiras_historicas.parquet",
       "status": "ok",
       "detail": "2140 linhas"
     },
     {
-      "name": "data/ml/dataset_fiis.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_fiis.parquet",
       "status": "ok",
       "detail": "27896 linhas"
     },
     {
-      "name": "data/ml/dataset_acoes.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/dataset_acoes.parquet",
       "status": "ok",
       "detail": "26163 linhas"
     },
     {
-      "name": "data/ml/model_predictions_fiis.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_fiis.parquet",
       "status": "ok",
       "detail": "18310 linhas"
     },
     {
-      "name": "data/ml/model_predictions_acoes.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_predictions_acoes.parquet",
       "status": "ok",
       "detail": "21091 linhas"
     },
     {
-      "name": "data/ml/model_performance.parquet",
+      "name": "/home/runner/work/stock-screener-automation/stock-screener-automation/data/ml/model_performance.parquet",
       "status": "ok",
       "detail": "16 linhas"
     },
@@ -466,11 +466,6 @@
       "name": "dashboard_json_2026-06-21",
       "status": "ok",
       "detail": "JSON e rankings válidos"
-    },
-    {
-      "name": "snapshot_da_execucao",
-      "status": "ok",
-      "detail": "esperado=2026-10-19, lake=2026-10-19"
     },
     {
       "name": "dashboard_latest_vs_lake",
