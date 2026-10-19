@@ -89,6 +89,11 @@ A tabela de DY mostra 10 valores ordenados: DY de 9% na 8ª posição vale 80;
 em outro grupo, o mesmo DY na 5ª posição vale 50. Sem empates, o menor DY
 recebe 100/N pontos e o maior recebe 100; os pesos e o algoritmo são preservados.
 A explicação não depende dos snapshots; o histograma usa os dados carregados.
+Os sete tópicos principais da Introdução começam recolhidos em `details/summary`,
+com seta, teclado e abertura automática por atalhos ou links diretos. Ao abrir,
+o histograma é redimensionado. A escolha dos até 20 ativos é contextualizada por
+Tang (2004) e Rabelo et al. (2007), sem um corte universal em 17 nem promessa de
+redução do risco total. Aplicar o mesmo limite a FIIs é adaptação do projeto.
 Ao explicar indicadores,
 diferencie referências de produtos, preço de proventos e histórico de previsão.
 

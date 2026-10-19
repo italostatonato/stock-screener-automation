@@ -1247,6 +1247,25 @@
     .intro-route a:hover{color:var(--accent)}
     .intro-route a span{color:var(--accent);font-size:11px;font-weight:800}
     .intro-block{margin-top:34px}
+    .intro-guide-hint{margin:18px 0 0;color:var(--muted);font-size:13px;line-height:1.6}
+    .intro-block.intro-disclosure{margin-top:14px;border:1px solid var(--border);border-radius:18px;background:rgba(14,21,37,.5);overflow:clip}
+    .intro-disclosure>.intro-summary{display:block;padding:20px 24px;list-style:none;cursor:pointer}
+    .intro-disclosure>.intro-summary::-webkit-details-marker{display:none}
+    .intro-disclosure>.intro-summary::marker{content:""}
+    .intro-summary h3{display:grid;grid-template-columns:minmax(0,1fr) 24px;column-gap:20px;row-gap:6px;align-items:center;margin:0;font-size:21px;line-height:1.35;letter-spacing:-.025em}
+    .intro-summary .intro-kicker,.intro-summary-label{grid-column:1}
+    .intro-chevron{grid-column:2;grid-row:1/3;align-self:center;width:24px;height:24px;color:var(--accent);transition:transform .18s ease}
+    .intro-disclosure[open]>.intro-summary{border-bottom:1px solid var(--border)}
+    .intro-disclosure[open]>.intro-summary .intro-chevron{transform:rotate(180deg)}
+    .intro-disclosure>.intro-summary:hover{background:rgba(255,255,255,.035)}
+    .intro-disclosure>.intro-summary:focus-visible{outline:2px solid var(--accent2);outline-offset:-4px;border-radius:16px}
+    .intro-disclosure-body{padding:22px 24px 24px}
+    .intro-lead{margin:0 0 18px;color:var(--intro-copy);font-size:15px;line-height:1.7;max-width:900px}
+    .intro-studies{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .intro-study-source{font-size:12px!important;overflow-wrap:anywhere}
+    .intro-study-source a{color:var(--accent2);text-underline-offset:3px}
+    .intro-study-source cite{font-style:normal}
+    @media(max-width:620px){.intro-disclosure>.intro-summary{padding:18px}.intro-summary h3{font-size:19px;column-gap:12px}.intro-disclosure-body{padding:18px}.intro-studies{grid-template-columns:1fr}}
     .intro-heading{margin-bottom:16px}
     .intro-heading h3{margin:6px 0;font-size:25px;line-height:1.25;letter-spacing:-.025em}
     .intro-heading p{margin:0;color:var(--intro-copy);font-size:15px;line-height:1.6;max-width:850px}
@@ -1287,8 +1306,6 @@
     .intro-steps p{margin:0 0 18px;color:var(--intro-copy);font-size:14px;line-height:1.65}
     .intro-step-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
     .intro-more{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:16px;color:var(--intro-copy);font-size:14px}
-    .intro-sources{margin-top:26px;padding-top:20px;border-top:1px solid var(--border)}
-    .intro-sources h3{margin:0 0 8px;font-size:16px}
     .intro-sources p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
     .intro-source-links{display:flex;flex-wrap:wrap;gap:4px 20px;margin-top:10px}
     .intro-source-links a{display:inline-flex;align-items:center;min-height:44px;color:var(--accent2);font-size:13px;text-underline-offset:4px}
@@ -1455,15 +1472,19 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <nav class="intro-route" aria-label="Neste guia de introdução">
           <h3>O que você vai encontrar</h3>
           <a href="#intro-conceitos"><span aria-hidden="true">01</span> Ações, FIIs, cotas e rendimentos</a>
-          <a href="#intro-referencias"><span aria-hidden="true">02</span> CDI, inflação e índices da bolsa</a>
-          <a href="#intro-glossario"><span aria-hidden="true">03</span> As siglas e os números do painel</a>
-          <a href="#score"><span aria-hidden="true">04</span> Como o score é calculado</a>
-          <a href="#intro-roteiro"><span aria-hidden="true">05</span> Como usar o Radar Semanal</a>
+          <a href="#intro-diversificacao"><span aria-hidden="true">02</span> Por que selecionamos até 20 ativos?</a>
+          <a href="#intro-referencias"><span aria-hidden="true">03</span> CDI, inflação e índices da bolsa</a>
+          <a href="#intro-glossario"><span aria-hidden="true">04</span> As siglas e os números do painel</a>
+          <a href="#score"><span aria-hidden="true">05</span> Como o score é calculado</a>
+          <a href="#intro-roteiro"><span aria-hidden="true">06</span> Como usar o Radar Semanal</a>
         </nav>
       </div>
+      <p class="intro-guide-hint">Abra um tópico pelo título ou pela seta. Você pode expandir e recolher cada um quando quiser.</p>
 
-      <section id="intro-conceitos" class="intro-block" aria-labelledby="intro-conceitos-title">
-        <div class="intro-heading"><span class="intro-kicker">01 · O básico</span><h3 id="intro-conceitos-title">O que estamos analisando?</h3><p>Um <strong>ativo</strong> é um bem ou investimento com valor econômico. Aqui, você verá principalmente participações em empresas e em fundos.</p></div>
+      <details id="intro-conceitos" class="intro-block intro-disclosure" aria-labelledby="intro-conceitos-title">
+        <summary class="intro-summary"><h3 id="intro-conceitos-title"><span class="intro-kicker">01 · O básico</span><span class="intro-summary-label">O que estamos analisando?</span><svg class="intro-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></h3></summary>
+        <div class="intro-disclosure-body">
+          <p class="intro-lead">Um <strong>ativo</strong> é um bem ou investimento com valor econômico. Aqui, você verá principalmente participações em empresas e em fundos.</p>
         <div class="intro-concepts">
           <article class="intro-concept"><span class="intro-concept-tag">Uma parte de uma empresa</span><h4>Ações</h4><p>Ao comprar uma ação, você se torna dono de uma pequena parte de uma empresa. Pode ganhar com a valorização dessa participação e com a distribuição de lucros, os <strong>dividendos</strong>.</p><p class="intro-takeaway">O preço também pode cair. É <strong>renda variável</strong>: o resultado futuro é incerto.</p></article>
           <article class="intro-concept"><span class="intro-concept-tag">Investimento coletivo em imóveis</span><h4>FIIs</h4><p>Os <strong>Fundos de Investimento Imobiliário</strong> reúnem recursos de vários investidores. Podem investir em imóveis, como galpões e shoppings, ou em títulos ligados ao setor imobiliário.</p><p class="intro-takeaway">FIIs de “tijolo” investem principalmente em imóveis; os de “papel”, em títulos imobiliários. Os preços e os rendimentos podem variar.</p></article>
@@ -1479,10 +1500,38 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           <dl class="intro-example-values"><div><dt>Valor investido no início</dt><dd>R$ 500<small>5 cotas × R$ 100</small></dd></div><div><dt>Rendimento recebido</dt><dd>R$ 5<small>5 cotas × R$ 1</small></dd></div><div><dt>Valor das cotas agora</dt><dd>R$ 450<small>5 cotas × R$ 90</small></dd></div></dl>
           <p>Somando as cotas e o dinheiro recebido, você teria <strong>R$ 455</strong>: R$ 45 a menos que no início, ou <strong>−9%</strong>. É por isso que o rendimento distribuído, sozinho, não conta toda a história.</p>
         </article>
-      </section>
+        </div>
+      </details>
 
-      <section id="intro-referencias" class="intro-block" aria-labelledby="intro-referencias-title">
-        <div class="intro-heading"><span class="intro-kicker">02 · Referências para comparar</span><h3 id="intro-referencias-title">O que significam CDI, IPCA, IBOV e companhia?</h3><p>São taxas ou índices usados para dar contexto aos resultados. Quando servem de referência para uma comparação, recebem o nome de <strong>benchmark</strong>.</p></div>
+      <details id="intro-diversificacao" class="intro-block intro-disclosure" aria-labelledby="intro-diversificacao-title">
+        <summary class="intro-summary"><h3 id="intro-diversificacao-title"><span class="intro-kicker">02 · A escolha do Top 20</span><span class="intro-summary-label">Por que até 20 ações e 20 FIIs?</span><svg class="intro-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></h3></summary>
+        <div class="intro-disclosure-body">
+          <p class="intro-lead">O limite de <strong>até 20 ativos por classe</strong> busca combinar diversificação com uma seleção que seja possível acompanhar. A literatura ajuda a embasar essa escolha: os primeiros ativos costumam trazer a maior redução do risco específico; depois, cada inclusão tende a acrescentar menos benefício.</p>
+          <div class="intro-studies">
+            <article class="intro-concept">
+              <span class="intro-concept-tag">20 ações · um resultado teórico</span>
+              <h4>Gordon Y. N. Tang (2004)</h4>
+              <p>Em um modelo de ações selecionadas aleatoriamente, com <strong>pesos iguais</strong> e uma população infinita de ações, uma carteira de 20 elimina, em média, <strong>95% da parcela diversificável da variância</strong>, uma medida do risco. Para chegar a 99%, seriam necessárias 100 ações.</p>
+              <p>Isso ilustra o benefício adicional decrescente: aumentar bastante a quantidade pode reduzir apenas uma pequena parte do risco restante. O resultado é uma média do modelo, não uma garantia para uma carteira específica.</p>
+              <p class="intro-study-source"><a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048303001336" target="_blank" rel="noopener noreferrer">Ler Tang: <cite>How efficient is naive portfolio diversification? An educational note</cite> ↗</a><br>Omega, 32(2), 155–160. DOI: 10.1016/j.omega.2003.10.002.</p>
+            </article>
+            <article class="intro-concept">
+              <span class="intro-concept-tag">17 ações · uma referência brasileira</span>
+              <h4>Rabelo e colaboradores (2007)</h4>
+              <p>Rabelo, Rogers, Ribeiro e Securato utilizaram carteiras de <strong>17 ações</strong> em um estudo sobre governança corporativa. Para justificar esse tamanho, citaram pesquisas brasileiras sobre redução do risco específico pela diversificação.</p>
+              <p>Essa referência ajuda a contextualizar a faixa próxima de 20 ativos. O artigo não estabelece que 17 seja um limite universal nem que o risco deixe de diminuir a partir desse número.</p>
+              <p class="intro-study-source"><a href="https://biblat.unam.mx/hevila/FACEFpesquisa/2007/vol10/no2/3.pdf#page=6" target="_blank" rel="noopener noreferrer">Ler Rabelo et al.: <cite>Performance das melhores práticas de governança corporativa no Brasil: um estudo de carteiras</cite> ↗</a><br>FACEF Pesquisa, 10(2), 161–176; justificativa nas páginas 166–167.</p>
+            </article>
+          </div>
+          <p class="intro-note"><strong>Como aplicamos isso no Radar:</strong> 20 é uma escolha de desenho do ranking informada por essas referências, não um número ótimo para toda carteira. Os estudos citados tratam de ações; usar o mesmo limite para FIIs é uma adaptação do projeto, sem transferir automaticamente os 95% para fundos imobiliários. Nos FIIs, também importam segmentos, gestores e exposições em comum.</p>
+          <p class="intro-note"><strong>Quantidade não basta:</strong> os pesos, os setores e a correlação entre os ativos influenciam a diversificação. Nosso ranking seleciona por score, e não aleatoriamente como no modelo de Tang. Diversificar reduz o risco específico, mas não elimina o risco de mercado. Se menos de 20 ativos passarem pelos filtros, a seleção será menor.</p>
+        </div>
+      </details>
+
+      <details id="intro-referencias" class="intro-block intro-disclosure" aria-labelledby="intro-referencias-title">
+        <summary class="intro-summary"><h3 id="intro-referencias-title"><span class="intro-kicker">03 · Referências para comparar</span><span class="intro-summary-label">O que significam CDI, IPCA, IBOV e companhia?</span><svg class="intro-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></h3></summary>
+        <div class="intro-disclosure-body">
+          <p class="intro-lead">São taxas ou índices usados para dar contexto aos resultados. Quando servem de referência para uma comparação, recebem o nome de <strong>benchmark</strong>.</p>
         <div class="intro-reference-grid">
           <article class="intro-reference"><h4>CDI</h4><span class="intro-reference-label">Referência de juros</span><p>O CDI é um título usado em empréstimos entre bancos. No dia a dia, “render o CDI” significa acompanhar a <strong>Taxa DI</strong>, calculada a partir dessas operações. “100% do CDI” é acompanhar essa taxa, antes de custos e impostos aplicáveis.</p></article>
           <article class="intro-reference"><h4>Selic</h4><span class="intro-reference-label">Taxa básica de juros</span><p>É a principal referência de juros da economia brasileira. Sua meta é definida pelo Copom, no Banco Central. Influencia empréstimos e investimentos de renda fixa. CDI e Selic costumam andar próximos, mas são taxas diferentes.</p></article>
@@ -1494,10 +1543,13 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           <article class="intro-reference"><h4>S&amp;P 500 e dólar</h4><span class="intro-reference-label">Exposição internacional via IVVB11</span><p>O S&amp;P 500 acompanha grandes empresas dos Estados Unidos. O IVVB11 busca refletir esse índice em reais. Assim, o desempenho das empresas e a variação do dólar frente ao real influenciam o valor da cota.</p></article>
         </div>
         <p class="intro-note"><strong>No simulador:</strong> o bloco CDI representa uma aplicação teórica que acompanha essa referência. O site não escolhe um produto de renda fixa nem realiza compras. Compare retornos no mesmo período e confira se incluem proventos, custos e impostos.</p>
-      </section>
+        </div>
+      </details>
 
-      <section id="intro-glossario" class="intro-block" aria-labelledby="intro-glossario-title">
-        <div class="intro-heading"><span class="intro-kicker">03 · Tradução do painel</span><h3 id="intro-glossario-title">Encontrou uma sigla? Comece por aqui.</h3><p>Abra um termo para ver a explicação. Nenhum indicador, isoladamente, mostra se um investimento é adequado para você.</p></div>
+      <details id="intro-glossario" class="intro-block intro-disclosure" aria-labelledby="intro-glossario-title">
+        <summary class="intro-summary"><h3 id="intro-glossario-title"><span class="intro-kicker">04 · Tradução do painel</span><span class="intro-summary-label">Encontrou uma sigla? Comece por aqui.</span><svg class="intro-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></h3></summary>
+        <div class="intro-disclosure-body">
+          <p class="intro-lead">Abra um termo para ver a explicação. Nenhum indicador, isoladamente, mostra se um investimento é adequado para você.</p>
         <div class="intro-glossary">
           <details class="intro-term"><summary>Ticker e cotação · o código e o preço</summary><p><strong>Ticker</strong> é o código que identifica um investimento na bolsa, como IVVB11. <strong>Cotação</strong> é seu preço de negociação por unidade. No Radar, os preços vêm da coleta indicada no cabeçalho e não são atualizados em tempo real.</p></details>
           <details class="intro-term"><summary>Score e Top 20 · a nota e a posição</summary><p><strong>Score</strong> é uma nota de 0 a 100 que resume os indicadores usados pelo Radar. Cada classe tem sete fatores com o mesmo peso. O <strong>Top 20</strong> reúne até 20 ativos que passam pelos filtros, ordenados pela nota. Score 80 não significa 80% de chance de lucro. A nota compara ativos dentro de sua classe, sem garantir qualidade ou retorno futuro.</p></details>
@@ -1514,14 +1566,13 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           <details class="intro-term"><summary>Snapshot, backtest e modelos ML</summary><p><strong>Snapshot</strong> é um retrato dos dados em uma data de coleta. <strong>Backtest</strong> é uma simulação de como uma estratégia teria se comportado no passado, sob certas regras. <strong>ML</strong> significa aprendizado de máquina: modelos que procuram padrões nos dados. No Radar, eles são experimentais e comparados ao ranking oficial, sem substituí-lo nem prever o futuro com certeza.</p></details>
           <details class="intro-term"><summary>Câmbio, cripto e valor de mercado</summary><p><strong>Câmbio</strong> é a relação entre moedas: USD/BRL indica quantos reais correspondem a um dólar. <strong>Criptomoedas</strong> são ativos digitais sujeitos a fortes oscilações. <strong>Valor de mercado</strong> combina o preço por unidade com a quantidade em circulação; não é uma nota de segurança. A aba Indicadores traz esses dados como contexto.</p></details>
         </div>
-      </section>
-
-      <section id="score" class="score-info-section intro-block" aria-labelledby="score-title">
-        <div class="intro-heading">
-          <span class="intro-kicker">04 · A nota do Radar</span>
-          <h3 id="score-title">Como o score é calculado</h3>
-          <p>O score resume a posição de um ativo em sete indicadores. Primeiro calculamos uma nota para cada indicador; depois fazemos a média das sete notas.</p>
         </div>
+      </details>
+
+      <details id="score" class="score-info-section intro-block intro-disclosure" aria-labelledby="score-title">
+        <summary class="intro-summary"><h3 id="score-title"><span class="intro-kicker">05 · A nota do Radar</span><span class="intro-summary-label">Como o score é calculado</span><svg class="intro-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></h3></summary>
+        <div class="intro-disclosure-body">
+          <p class="intro-lead">O score resume a posição de um ativo em sete indicadores. Primeiro calculamos uma nota para cada indicador; depois fazemos a média das sete notas.</p>
         <div class="score-equation" aria-label="Sete indicadores geram sete notas; a média dessas notas forma o score de zero a cem">
           <b>7 indicadores</b><span aria-hidden="true">→</span><b>7 notas</b><span aria-hidden="true">→</span><b>1 média de 0 a 100</b>
         </div>
@@ -1607,10 +1658,13 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           <p><b>Disclaimer:</b> ferramenta educacional e quantitativa. Não constitui recomendação de investimento.</p>
         </div>
         </div>
-      </section>
+        </div>
+      </details>
 
-      <section id="intro-roteiro" class="intro-block" aria-labelledby="intro-roteiro-title">
-        <div class="intro-heading"><span class="intro-kicker">05 · Da leitura à exploração</span><h3 id="intro-roteiro-title">Um caminho para conhecer o Radar</h3><p>Você pode voltar a esta introdução a qualquer momento pela primeira aba.</p></div>
+      <details id="intro-roteiro" class="intro-block intro-disclosure" aria-labelledby="intro-roteiro-title">
+        <summary class="intro-summary"><h3 id="intro-roteiro-title"><span class="intro-kicker">06 · Da leitura à exploração</span><span class="intro-summary-label">Um caminho para conhecer o Radar</span><svg class="intro-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></h3></summary>
+        <div class="intro-disclosure-body">
+          <p class="intro-lead">Você pode voltar a esta introdução a qualquer momento pela primeira aba.</p>
         <ol class="intro-steps">
           <li><h4>Entenda a semana</h4><p>A Visão geral mostra quem entrou ou saiu das seleções, os primeiros colocados e o desempenho comparado às referências.</p><div class="intro-step-links"><button type="button" class="intro-button" data-go-tab="overview">Abrir Visão geral <span aria-hidden="true">→</span></button></div></li>
           <li><h4>Conheça os investimentos</h4><p>Na aba Top 20, alterne entre Ações e FIIs para consultar preço, nota e indicadores. Use o glossário para interpretar os números e compare ativos semelhantes.</p><div class="intro-step-links"><button type="button" class="intro-button" data-go-tab="acoes">Ver Ações</button><button type="button" class="intro-button" data-go-tab="fiis">Ver FIIs</button></div></li>
@@ -1618,9 +1672,11 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         </ol>
         <div class="intro-more"><span>Para aprofundar:</span><button type="button" class="intro-button" data-go-tab="indicadores">Indicadores do mercado</button><button type="button" class="intro-button" data-go-tab="score">Como o score é calculado</button><button type="button" class="intro-button" data-go-tab="recorrentes">Presença no ranking</button><button type="button" class="intro-button" data-go-tab="modelos">Modelos experimentais</button></div>
         <p class="intro-note"><strong>Ao ler o Radar:</strong> a coleta é semanal, às segundas-feiras, 10h de Brasília. As curvas Top 20 usam preços e não reinvestem proventos; a simulação híbrida não inclui custos ou impostos. Os rankings ajudam no estudo e não são recomendações de compra.</p>
-      </section>
-      <aside class="intro-sources" aria-labelledby="intro-sources-title">
-        <h3 id="intro-sources-title">Continue aprendendo nas fontes</h3>
+        </div>
+      </details>
+      <details id="intro-fontes" class="intro-sources intro-block intro-disclosure" aria-labelledby="intro-sources-title">
+        <summary class="intro-summary"><h3 id="intro-sources-title"><span class="intro-kicker">07 · Fontes para aprender</span><span class="intro-summary-label">Continue aprendendo nas fontes</span><svg class="intro-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></h3></summary>
+        <div class="intro-disclosure-body">
         <p>Conceitos conferidos em materiais da CVM, B3, Banco Central, IBGE, FGV e da gestora do IVVB11. Os exemplos deste guia são fictícios.</p>
         <div class="intro-source-links">
           <a href="https://www.gov.br/investidor/pt-br/investir/tipos-de-investimentos/acoes" target="_blank" rel="noopener noreferrer">CVM · Ações ↗</a>
@@ -1634,7 +1690,8 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
           <a href="https://b3.com.br/pt_br/market-data-e-indices/indices/indices-de-segmentos-e-setoriais/indice-imobiliario-imob-b3.htm" target="_blank" rel="noopener noreferrer">B3 · IMOB ↗</a>
           <a href="https://www.blackrock.com/br/products/251902/ishares-sp-500-fi-em-cotas-de-fundo-de-ndice-inv-no-exterior-fund" target="_blank" rel="noopener noreferrer">BlackRock · IVVB11 ↗</a>
         </div>
-      </aside>
+        </div>
+      </details>
     </section>
 
     <section id="overview" class="section" role="tabpanel" aria-labelledby="tab-overview" aria-hidden="true">
@@ -3453,6 +3510,31 @@ const CHART_PERIODS = {
       document.getElementById('fxGrid').innerHTML=`<section class="market-group"><h4>Câmbio <span>USD, EUR e GBP em reais</span></h4>${currencyHtml}</section><section class="market-group"><h4>Top 5 cripto <span>ordenadas por valor de mercado</span></h4>${cryptoHtml}</section>${liveNote}`;
     }
 
+    function expandIntroTarget(target){
+      const intro=document.getElementById('introducao');
+      if(!target||!intro.contains(target)) return false;
+      for(let node=target;node&&node!==intro;node=node.parentElement){
+        if(node.tagName==='DETAILS') node.open=true;
+      }
+      return true;
+    }
+    function setupIntroDisclosures(){
+      const intro=document.getElementById('introducao');
+      intro.querySelectorAll('details.intro-disclosure').forEach(item=>item.addEventListener('toggle',()=>{
+        if(item.open) requestAnimationFrame(()=>Object.values(state.charts).forEach(chart=>chart.resize()));
+      }));
+      intro.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{
+        expandIntroTarget(document.getElementById(link.hash.slice(1)));
+      }));
+      const revealHash=()=>{
+        const target=document.getElementById(window.location.hash.slice(1));
+        if(!expandIntroTarget(target)) return;
+        if(!intro.classList.contains('active')) activateTab('introducao');
+        requestAnimationFrame(()=>target.scrollIntoView({behavior:'auto',block:'start'}));
+      };
+      window.addEventListener('hashchange',revealHash);
+      revealHash();
+    }
     function activateTab(tabId){
       if(['acoes','fiis','recorrentes'].includes(tabId)){ activateTop20(tabId); tabId='top20'; }
       const scoreRequested=tabId==='score';
@@ -3471,6 +3553,7 @@ const CHART_PERIODS = {
         item.classList.toggle('active',active);
         item.setAttribute('aria-hidden',active?'false':'true');
       });
+      if(scoreRequested) expandIntroTarget(document.getElementById('score'));
       const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
       btn.scrollIntoView({behavior,block:'nearest',inline:'center'});
       (scoreRequested?document.getElementById('score'):section).scrollIntoView({behavior,block:'start'});
@@ -3540,6 +3623,7 @@ const CHART_PERIODS = {
       document.addEventListener('click',event=>{ const target=event.target.closest('[data-tooltip]'); if(target&&matchMedia('(hover: none)').matches){ active===target?hide(target):show(target,event); } else if(!target){ hide(); } });
       window.addEventListener('scroll',()=>hide(),{passive:true});
     }
+    setupIntroDisclosures();
     setupRichTooltip();
 
     function syncStickyTabBar(){
