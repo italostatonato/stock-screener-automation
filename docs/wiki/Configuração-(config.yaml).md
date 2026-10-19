@@ -8,9 +8,11 @@ Revisado em 15/09/2026 contra
 - `paths`: diretórios relativos de entrada, saída, histórico e logs;
   arquivo local de FIIs e destino opcional da entrega.
 - `scraper`: fontes, URLs, timeouts, retries e parâmetros das alternativas.
-  O padrão é `acoes_source: fundamentus`; timeout de 30 segundos e duas
-  novas tentativas para essa fonte. `fundamentus_retry_delay: 15` define
-  as esperas de 15s e 30s, com teto de 120s.
+  O padrão é `acoes_source: fundamentus`; `fundamentus_connect_timeout: 10`
+  limita a conexão, e `fundamentus_timeout: 30` limita a resposta.
+  `fundamentus_retries: 4` permite até cinco tentativas para falhas transitórias.
+  `fundamentus_retry_delay: 30` define esperas de 30/60/120/120s.
+  HTTP 403/404, TLS inválido e tabela ilegível não são repetidos.
 - `filters`: pisos de FIIs e `top_n`; a subseção `acoes` controla ações.
 - `columns`: colunas percentuais, monetárias, inteiras e numéricas simples
   usadas para normalizar os FIIs.

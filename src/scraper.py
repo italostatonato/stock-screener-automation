@@ -136,8 +136,11 @@ def scrape_acoes_fundamentus(cfg: dict) -> pd.DataFrame:
     """Lê a tabela pública do Fundamentus com retentativas transitórias."""
     url = str(cfg.get("fundamentus_url", "https://www.fundamentus.com.br/resultado.php"))
     timeout = float(cfg.get("fundamentus_timeout", 30))
-    retries = max(0, int(cfg.get("fundamentus_retries", 2)))
-    retry_delay = max(0.0, float(cfg.get("fundamentus_retry_delay", 15)))
+    connect_timeout = float(cfg.get("fundamentus_connect_timeout", 10))
+    retries = max(0, int(cfg.get("fundamentus_retries", 4)))
+    retry_delay = max(0.0, float(cfg.get("fundamentus_retry_delay", 30)))
+    if timeout <= 0 or connect_timeout <= 0:
+        raise ValueError("Os timeouts do Fundamentus devem ser positivos.")
     headers = {
         "User-Agent": "stock-screener-automation/1.0 (coleta semanal; dados públicos)",
         "Accept-Language": "pt-BR,pt;q=0.9",
@@ -145,7 +148,7 @@ def scrape_acoes_fundamentus(cfg: dict) -> pd.DataFrame:
 
     for attempt in range(retries + 1):
         try:
-            response = requests.get(url, headers=headers, timeout=timeout)
+            response = requests.get(url, headers=headers, timeout=(connect_timeout, timeout))
             response.raise_for_status()
             # A tabela usa ponto para milhar e vírgula para decimal. Sem esses
             # parâmetros, o parser padrão transforma P/VP 0,75 em 75.
@@ -156,18 +159,25 @@ def scrape_acoes_fundamentus(cfg: dict) -> pd.DataFrame:
             )
             break
         except (requests.RequestException, ValueError) as exc:
+            retryable = False
             if isinstance(exc, requests.ConnectTimeout):
-                reason = f"timeout de conexão ({timeout:g}s)"
+                reason = f"timeout de conexão ({connect_timeout:g}s)"
+                retryable = True
             elif isinstance(exc, requests.Timeout):
                 reason = f"timeout de resposta ({timeout:g}s)"
+                retryable = True
+            elif isinstance(exc, requests.exceptions.SSLError):
+                reason = "falha de certificado TLS"
             elif isinstance(exc, requests.ConnectionError):
                 reason = "falha de conexão"
+                retryable = True
             elif isinstance(exc, requests.HTTPError):
                 status = exc.response.status_code if exc.response is not None else "desconhecido"
                 reason = f"erro HTTP {status}"
+                retryable = isinstance(status, int) and (status in {408, 429} or status >= 500)
             else:
                 reason = "resposta sem tabela legível"
-            if attempt < retries:
+            if retryable and attempt < retries:
                 wait_seconds = min(retry_delay * 2 ** attempt, 120)
                 logger.warning(
                     "Fundamentus: %s (tentativa %d/%d); nova tentativa em %gs.",
@@ -179,7 +189,7 @@ def scrape_acoes_fundamentus(cfg: dict) -> pd.DataFrame:
                 time.sleep(wait_seconds)
                 continue
             raise RuntimeError(
-                f"Fundamentus: {reason} após {retries + 1} tentativas. "
+                f"Fundamentus: {reason} após {attempt + 1} tentativa(s). "
                 "A coleta de ações não foi concluída."
             ) from exc
 

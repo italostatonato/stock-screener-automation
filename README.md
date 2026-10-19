@@ -415,8 +415,11 @@ Sem a variável, a cópia local é pulada e o Excel continua em `data/output/`.
 
 Por padrão, as ações são coletadas da tabela pública do
 [Fundamentus](https://www.fundamentus.com.br/resultado.php), em **uma requisição
-por tentativa**, sem conta ou token. A configuração permite duas novas
-tentativas após falha, com intervalos de 15s e 30s. Ela fornece cotação,
+por tentativa**, sem conta ou token. A configuração permite até cinco
+tentativas para falhas temporárias de conexão, resposta ou HTTP 408/429/5xx,
+com intervalos de 30s, 60s, 120s e 120s. O limite de conexão é 10s e o de
+resposta é 30s; erros definitivos, como HTTP 403/404 e certificado inválido,
+interrompem a coleta. Ela fornece cotação,
 múltiplos, margens, ROIC/ROE, liquidez de dois meses, patrimônio, dívida
 líquida e crescimento de receita.
 

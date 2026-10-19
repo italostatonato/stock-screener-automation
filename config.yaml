@@ -19,8 +19,9 @@ scraper:
   acoes_source: "fundamentus"
   fundamentus_url: "https://www.fundamentus.com.br/resultado.php"
   fundamentus_timeout: 30
-  fundamentus_retries: 2
-  fundamentus_retry_delay: 15 # Esperas de 15s e 30s entre as tentativas.
+  fundamentus_connect_timeout: 10
+  fundamentus_retries: 4
+  fundamentus_retry_delay: 30 # Até 5 tentativas; esperas de 30s, 60s, 120s e 120s.
 
   # Alternativa opcional para quem possuir plano Pro da brapi. Não é usada
   # enquanto acoes_source estiver como "fundamentus".

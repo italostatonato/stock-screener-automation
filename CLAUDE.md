@@ -54,6 +54,8 @@ no Pages chega pelo espelhamento sem nova publicação no Sites.
 
 - FIIs: Fundsexplorer via Selenium/Chrome, ou Excel local quando presente.
 - Ações: tabela HTTP do Fundamentus; brapi/investsite são alternativas.
+  Até cinco tentativas em falhas transitórias, com pausas de 30/60/120/120s,
+  conexão limitada a 10s e resposta a 30s. HTTP 403/404 e TLS inválido não repetem.
 - Score no universo completo, antes da seleção: sete fatores por classe,
   peso `1/7`, percentis invertidos para menor-é-melhor e nota neutra 50
   para dado ausente.
@@ -71,7 +73,8 @@ R$ 10.000 e mínimo R$ 1.000. Os gráficos temporais iniciam em 3M.
 O histórico teórico usa pesos fracionários; as séries Top 20 não reinvestem
 proventos e a simulação híbrida não inclui custos/impostos.
 
-A coleta BCB tenta até três vezes em falhas temporárias, com pausas de 1s e 2s.
+A coleta BCB de indicadores e benchmarks tenta até três vezes em falhas
+temporárias, com pausas de 1s e 2s.
 Sem histórico dos quatro componentes, a híbrida informa a indisponibilidade
 e não plota um retorno fictício. Reparos de benchmark preservam os rankings
 e os demais campos do snapshot, com backup anterior fora do Git.
@@ -145,8 +148,9 @@ três janelas do mesmo modelo/classe/horizonte e magnitude de até 50%.
 ## Workflow e manutenção
 
 `Weekly FII Screener` roda segunda-feira às 10h BRT (`0 13 * * 1`) ou
-manualmente. Jobs: testes → screener; deploy quando testes passam, inclusive
-se a coleta falhar. Publica `docs/`. Artefatos de saída são retidos por 90 dias;
+manualmente. Jobs: testes → screener → deploy; a publicação da coleta exige
+testes e screener bem-sucedidos. Pushes de interface continuam publicando após
+os testes, com screener ignorado. Publica `docs/`. Artefatos de saída são retidos por 90 dias;
 diagnósticos de falha, por 30 dias. Commita
 `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
 `tests.yml` valida pushes de código/documentação e pull requests, sem coleta

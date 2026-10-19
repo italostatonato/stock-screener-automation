@@ -90,7 +90,8 @@ particionados por data não significam que a execução automática seja diária
   executa pipeline e healthcheck, salva artefatos de saída por 90 dias e commita
   `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
 - `deploy`: usa a `main` atual e publica `docs/` no GitHub Pages quando
-  os testes passam, mesmo se o screener falhar ou for ignorado no push.
+  testes e screener passam. Em pushes de interface, publica após os testes,
+  com screener ignorado. Uma coleta que falha não republica os dados antigos.
 
 Os timeouts são 25 minutos para testes e 60 para coleta. A concorrência é
 controlada por branch e não cancela a execução já em andamento.
@@ -136,14 +137,23 @@ responsabilidades de publicação, verificados em **05/10/2026**.
 Se a Carteira Híbrida informar falta de CDI, confira `benchmarks.CDI` no
 snapshot publicado e os logs da coleta BCB. O SGS usa timeout de 15s e até
 três tentativas para timeout, erro de conexão, HTTP 408/429 ou 5xx, com pausas
-de 1s e 2s. Outros erros HTTP encerram a consulta. Uma falha persistente
+de 1s e 2s. Isso também vale para IPCA, Selic e IGP-M na aba Indicadores.
+Outros erros HTTP encerram a consulta. Uma falha persistente
 continua explícita; não se inventa rentabilidade. Para reparar um snapshot,
 faça backup, recupere a série oficial e recalcule apenas o benchmark e seus
 comparativos e a híbrida, preservando rankings, preços e modelos ML.
 
 Consulte o log e repita a execução quando a fonte estiver disponível.
-O Fundamentus usa timeout de 30s e duas novas tentativas. O intervalo
-`fundamentus_retry_delay` começa em 15s e dobra (15s, 30s), limitado a 120s.
+O Fundamentus limita a conexão a 10s (`fundamentus_connect_timeout`) e a
+resposta a 30s (`fundamentus_timeout`). Falhas transitórias têm até cinco
+tentativas: timeout, conexão, HTTP 408/429 ou 5xx. O intervalo
+`fundamentus_retry_delay` começa em 30s e dobra até 120s (30/60/120/120s).
+HTTP 403/404, certificado TLS inválido e tabela ilegível interrompem sem repetir.
+Um timeout de conexão ocorre antes de receber a página; aumentar apenas o
+limite de resposta não resolve uma rota indisponível. Compare o acesso a partir
+do executor e de outra rede antes de concluir que o parser ou a fonte falhou.
+Se o GitHub não alcançar a fonte, uma recuperação local pode usar a mesma
+fonte pública, com backup, healthcheck e revisão dos dados antes da publicação.
 O log distingue timeout de conexão, de resposta, erro HTTP e tabela ilegível.
 Falhas na etapa de coleta preservam `logs/` no artefato `screener-failure-ID`
 por 30 dias. A coleta de FIIs depende de Chrome e do HTML do Fundsexplorer.

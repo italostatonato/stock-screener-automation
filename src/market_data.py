@@ -24,33 +24,52 @@ YAHOO_SEARCH_URL = "https://query2.finance.yahoo.com/v1/finance/search"
 
 
 def _fetch_bcb_series(codigo: int, meses: int = 13) -> pd.DataFrame:
-    """Busca uma série temporal do BCB (SGS) dos últimos N meses."""
-    data_inicio = (datetime.today() - timedelta(days=meses * 31)).strftime("%d/%m/%Y")
-    url = f"{BCB_URL.format(codigo=codigo)}?formato=json&dataInicial={data_inicio}"
-    try:
-        resp = requests.get(url, timeout=15)
-        resp.raise_for_status()
-        data = resp.json()
-        df = pd.DataFrame(data)
-        df["data"] = pd.to_datetime(df["data"], format="%d/%m/%Y")
-        df["valor"] = pd.to_numeric(
-            df["valor"].astype(str).str.replace(",", ".", regex=False),
-            errors="coerce",
-        )
-        # Algumas séries podem conter observações programadas pelo provedor.
-        # Indicadores futuros distorcem o eixo do gráfico e não devem compor
-        # um snapshot histórico já publicado.
-        hoje = pd.Timestamp(datetime.today().date())
-        return (
-            df[df["data"] <= hoje]
-            .dropna(subset=["data", "valor"])
-            .sort_values("data")
-            .drop_duplicates(subset=["data"], keep="last")
-            .reset_index(drop=True)
-        )
-    except Exception as e:
-        logger.warning(f"Falha ao buscar série BCB {codigo}: {e}")
-        return pd.DataFrame(columns=["data", "valor"])
+    """Busca uma série SGS com até três tentativas para falhas temporárias."""
+    data_fim = datetime.today()
+    data_inicio = (data_fim - timedelta(days=meses * 31)).strftime("%d/%m/%Y")
+    url = (
+        f"{BCB_URL.format(codigo=codigo)}?formato=json&dataInicial={data_inicio}"
+        f"&dataFinal={data_fim.strftime('%d/%m/%Y')}"
+    )
+    for attempt in range(3):
+        try:
+            resp = requests.get(url, timeout=15)
+            resp.raise_for_status()
+            data = resp.json()
+            if not data:
+                return pd.DataFrame(columns=["data", "valor"])
+            df = pd.DataFrame(data)
+            df["data"] = pd.to_datetime(df["data"], format="%d/%m/%Y")
+            df["valor"] = pd.to_numeric(
+                df["valor"].astype(str).str.replace(",", ".", regex=False),
+                errors="coerce",
+            )
+            # Observações futuras não pertencem ao snapshot da execução.
+            hoje = pd.Timestamp(data_fim.date())
+            return (
+                df[df["data"] <= hoje]
+                .dropna(subset=["data", "valor"])
+                .sort_values("data")
+                .drop_duplicates(subset=["data"], keep="last")
+                .reset_index(drop=True)
+            )
+        except requests.RequestException as exc:
+            status = getattr(exc.response, "status_code", None)
+            temporary = (
+                isinstance(exc, (requests.Timeout, requests.ConnectionError))
+                and not isinstance(exc, requests.exceptions.SSLError)
+            ) or (isinstance(status, int) and (status in {408, 429} or 500 <= status < 600))
+            if temporary and attempt < 2:
+                wait_seconds = 2 ** attempt
+                logger.warning("BCB série %s: tentativa %s falhou; nova tentativa em %ss: %s", codigo, attempt + 1, wait_seconds, exc)
+                time.sleep(wait_seconds)
+                continue
+            logger.warning("Falha ao buscar série BCB %s: %s", codigo, exc)
+            break
+        except Exception as exc:
+            logger.warning("Falha ao buscar série BCB %s: %s", codigo, exc)
+            break
+    return pd.DataFrame(columns=["data", "valor"])
 
 
 def _fetch_awesome_api(pares: list) -> dict:

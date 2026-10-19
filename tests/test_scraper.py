@@ -330,7 +330,50 @@ def test_fundamentus_identifica_timeout_de_conexao_e_respeita_esperas(monkeypatc
         raise requests.ConnectTimeout("unreachable")
     monkeypatch.setattr("src.scraper.requests.get", fail)
     monkeypatch.setattr("src.scraper.time.sleep", delays.append)
-    with pytest.raises(RuntimeError, match="timeout de conexão.*3 tentativas"):
+    with pytest.raises(RuntimeError, match="timeout de conexão.*3 tentativa"):
         scrape_acoes_fundamentus({"fundamentus_timeout": 30, "fundamentus_retries": 2})
-    assert attempts == [30, 30, 30]
-    assert delays == [15, 30]
+    assert attempts == [(10, 30)] * 3
+    assert delays == [30, 60]
+
+
+def test_fundamentus_tem_janela_de_recuperacao_limitada_para_falha_de_rede(monkeypatch):
+    attempts, delays = [], []
+
+    def fail(*args, **kwargs):
+        attempts.append(kwargs["timeout"])
+        raise requests.ConnectTimeout("rede indisponível")
+
+    monkeypatch.setattr("src.scraper.requests.get", fail)
+    monkeypatch.setattr("src.scraper.time.sleep", delays.append)
+    with pytest.raises(RuntimeError, match="timeout de conexão.*5 tentativa"):
+        scrape_acoes_fundamentus({})
+    assert attempts == [(10, 30)] * 5
+    assert delays == [30, 60, 120, 120]
+
+
+@pytest.mark.parametrize("status,retry_count", [(403, 1), (404, 1), (429, 3), (503, 3)])
+def test_fundamentus_repete_apenas_erros_http_transitorios(monkeypatch, status, retry_count):
+    attempts, delays = [], []
+
+    def fail(*args, **kwargs):
+        attempts.append(1)
+        response = requests.Response()
+        response.status_code = status
+        raise requests.HTTPError(response=response)
+
+    monkeypatch.setattr("src.scraper.requests.get", fail)
+    monkeypatch.setattr("src.scraper.time.sleep", delays.append)
+    with pytest.raises(RuntimeError, match=f"erro HTTP {status}.*{retry_count} tentativa"):
+        scrape_acoes_fundamentus({"fundamentus_retries": 2})
+    assert len(attempts) == retry_count
+    assert delays == ([30, 60] if retry_count > 1 else [])
+
+
+def test_fundamentus_nao_repete_falha_de_certificado(monkeypatch):
+    def fail(*args, **kwargs):
+        raise requests.exceptions.SSLError("certificado inválido")
+
+    monkeypatch.setattr("src.scraper.requests.get", fail)
+    monkeypatch.setattr("src.scraper.time.sleep", lambda *_: pytest.fail("TLS não é falha transitória"))
+    with pytest.raises(RuntimeError, match="certificado TLS.*1 tentativa"):
+        scrape_acoes_fundamentus({})

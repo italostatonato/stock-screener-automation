@@ -137,7 +137,7 @@ jobs:
 
   deploy:
     needs: [test, screener]
-    if: ${{ always() && needs.test.result == 'success' }}
+    if: ${{ always() && needs.test.result == 'success' && (needs.screener.result == 'success' || (github.event_name == 'push' && needs.screener.result == 'skipped')) }}
     runs-on: ubuntu-latest
   
     permissions:

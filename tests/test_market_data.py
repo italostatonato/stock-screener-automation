@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+import pytest
+import requests
 
 from src.market_data import (
     _fetch_asset_names,
@@ -34,6 +36,47 @@ def test_fetch_bcb_series_descarta_observacoes_futuras(monkeypatch):
     assert len(result) == 1
     assert result.iloc[0]["valor"] == 10.50
     assert result.iloc[0]["data"].date() == today
+
+
+def test_fetch_bcb_series_recupera_timeout_sem_esvaziar_indicador(monkeypatch):
+    attempts, delays = [], []
+
+    class Response:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return [{"data": datetime.today().strftime("%d/%m/%Y"), "valor": "0,29"}]
+
+    def get(*args, **kwargs):
+        attempts.append(1)
+        if len(attempts) == 1:
+            raise requests.ReadTimeout("BCB lento")
+        return Response()
+
+    monkeypatch.setattr("src.market_data.requests.get", get)
+    monkeypatch.setattr("src.market_data.time.sleep", delays.append)
+    result = _fetch_bcb_series(189)
+    assert result["valor"].tolist() == [0.29]
+    assert len(attempts) == 2
+    assert delays == [1]
+
+
+@pytest.mark.parametrize("status,expected", [(403, 1), (429, 3), (503, 3)])
+def test_fetch_bcb_series_limita_retenta_apenas_falha_transitoria(monkeypatch, status, expected):
+    attempts, delays = [], []
+
+    def fail(*args, **kwargs):
+        attempts.append(1)
+        response = requests.Response()
+        response.status_code = status
+        raise requests.HTTPError(response=response)
+
+    monkeypatch.setattr("src.market_data.requests.get", fail)
+    monkeypatch.setattr("src.market_data.time.sleep", delays.append)
+    assert _fetch_bcb_series(189).empty
+    assert len(attempts) == expected
+    assert delays == ([1, 2] if expected > 1 else [])
 
 
 def test_fetch_coingecko_top_cryptos_normaliza_e_limita(monkeypatch):
