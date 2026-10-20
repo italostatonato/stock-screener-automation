@@ -94,6 +94,9 @@ com seta, teclado e abertura automática por atalhos ou links diretos. Ao abrir,
 o histograma é redimensionado. A escolha dos até 20 ativos é contextualizada por
 Tang (2004) e Rabelo et al. (2007), sem um corte universal em 17 nem promessa de
 redução do risco total. Aplicar o mesmo limite a FIIs é adaptação do projeto.
+A curva didática `100/n` normaliza o risco diversificável em variância, sem
+estimar risco dos ativos reais. Tem controle de 1–100 ativos, referência em 20 e CSV;
+é inicializada sem depender dos snapshots e permanece dentro do tópico recolhível.
 Ao explicar indicadores,
 diferencie referências de produtos, preço de proventos e histórico de previsão.
 

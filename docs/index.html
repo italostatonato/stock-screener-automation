@@ -1261,6 +1261,26 @@
     .intro-disclosure>.intro-summary:focus-visible{outline:2px solid var(--accent2);outline-offset:-4px;border-radius:16px}
     .intro-disclosure-body{padding:22px 24px 24px}
     .intro-lead{margin:0 0 18px;color:var(--intro-copy);font-size:15px;line-height:1.7;max-width:900px}
+    .intro-risk-figure{margin:0 0 20px;padding:22px;border:1px solid var(--border-strong);border-radius:18px;background:rgba(4,8,17,.3)}
+    .intro-risk-heading{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px;margin-bottom:16px}
+    .intro-risk-heading h4{margin:0;font-size:20px;letter-spacing:-.02em}
+    .intro-risk-model{color:var(--accent2);font-size:12px;font-weight:700}
+    .intro-risk-control-label{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;font-weight:700}
+    .intro-risk-control-label output{color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+    #introAssetCount{display:block;width:100%;min-height:44px;margin:2px 0;accent-color:var(--accent);cursor:pointer}
+    #introAssetCount:focus-visible{outline:2px solid var(--accent2);outline-offset:3px;border-radius:8px}
+    .intro-risk-presets{display:flex;flex-wrap:wrap;gap:6px}
+    .intro-risk-presets button{min-width:44px;min-height:44px;padding:8px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--intro-copy);font:inherit;font-size:13px;cursor:pointer}
+    .intro-risk-presets button[aria-pressed="true"]{border-color:var(--accent);background:rgba(227,190,114,.1);color:var(--accent)}
+    .intro-risk-presets button:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+    .intro-risk-readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+    .intro-risk-readout>div{padding:12px 16px;border:1px solid var(--border);border-radius:12px;background:rgba(14,21,37,.65)}
+    .intro-risk-readout span{display:block;color:var(--intro-copy);font-size:12px;line-height:1.45}
+    .intro-risk-readout strong{display:block;margin-top:4px;color:var(--accent);font-size:24px;font-variant-numeric:tabular-nums}
+    .intro-risk-figure .chart-box{height:280px!important}
+    .intro-risk-figure figcaption{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.65}
+    .intro-risk-figure figcaption a{color:var(--accent2);text-underline-offset:3px}
+    @media(max-width:620px){.intro-risk-figure{padding:16px}.intro-risk-heading h4{font-size:18px}.intro-risk-readout>div{padding:10px 12px}.intro-risk-readout strong{font-size:22px}}
     .intro-studies{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
     .intro-study-source{font-size:12px!important;overflow-wrap:anywhere}
     .intro-study-source a{color:var(--accent2);text-underline-offset:3px}
@@ -1507,6 +1527,18 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <summary class="intro-summary"><h3 id="intro-diversificacao-title"><span class="intro-kicker">02 · A escolha do Top 20</span><span class="intro-summary-label">Por que até 20 ações e 20 FIIs?</span><svg class="intro-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg></h3></summary>
         <div class="intro-disclosure-body">
           <p class="intro-lead">O limite de <strong>até 20 ativos por classe</strong> busca combinar diversificação com uma seleção que seja possível acompanhar. A literatura ajuda a embasar essa escolha: os primeiros ativos costumam trazer a maior redução do risco específico; depois, cada inclusão tende a acrescentar menos benefício.</p>
+          <figure id="intro-risk-figure" class="intro-risk-figure" aria-labelledby="intro-risk-title" aria-describedby="introRiskExplain">
+            <div class="intro-risk-heading"><h4 id="intro-risk-title">Quantidade de ativos × risco diversificável</h4><span class="intro-risk-model">Modelo teórico · pesos iguais</span></div>
+            <label class="intro-risk-control-label" for="introAssetCount">Quantidade de ativos (n)<output id="introAssetCountValue" for="introAssetCount">20 ativos</output></label>
+            <input id="introAssetCount" type="range" min="1" max="100" step="1" value="20" aria-describedby="introRiskExplain">
+            <div class="intro-risk-presets" role="group" aria-label="Comparar quantidades de ativos"><button type="button" data-intro-assets="1" aria-pressed="false" aria-label="Ver 1 ativo">1</button><button type="button" data-intro-assets="5" aria-pressed="false" aria-label="Ver 5 ativos">5</button><button type="button" data-intro-assets="10" aria-pressed="false" aria-label="Ver 10 ativos">10</button><button type="button" data-intro-assets="17" aria-pressed="false" aria-label="Ver 17 ativos">17</button><button type="button" data-intro-assets="20" aria-pressed="true" aria-label="Ver 20 ativos">20</button><button type="button" data-intro-assets="50" aria-pressed="false" aria-label="Ver 50 ativos">50</button><button type="button" data-intro-assets="100" aria-pressed="false" aria-label="Ver 100 ativos">100</button></div>
+            <div class="intro-risk-readout" aria-live="polite" aria-atomic="true">
+              <div><span>Risco diversificável restante</span><strong id="introRiskRemaining">5,0%</strong></div>
+              <div><span>Parcela diversificável reduzida</span><strong id="introRiskRemoved">95,0%</strong></div>
+            </div>
+            <div class="chart-box"><canvas id="introDiversificationChart" role="img" aria-label="Curva teórica de quantidade de ativos versus risco diversificável restante" aria-describedby="introRiskExplain"></canvas></div>
+            <figcaption id="introRiskExplain">Ilustração baseada em <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048303001336" target="_blank" rel="noopener noreferrer">Tang (2004)</a>: <strong>risco diversificável restante (%) = 100/n</strong>, com pesos iguais e universo infinito de ações. A parcela diversificável da variância de um ativo é a base de 100%. O risco de mercado permanece fora desta curva. Os valores são teóricos e não usam os retornos dos ativos do Radar.</figcaption>
+          </figure>
           <div class="intro-studies">
             <article class="intro-concept">
               <span class="intro-concept-tag">20 ações · um resultado teórico</span>
@@ -2531,7 +2563,9 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       const {labels=[],datasets=[]}=chart?.data||{};
       if(!datasets.length || labels[0]==='Sem dados') return [];
       const unit=chart.options?.scales?.y?.title?.text;
-      const header=[chart.config?.type==='bar'?'Faixa de score':'Data',...datasets.map(dataset=>`${dataset.label}${unit?' · '+unit:''}`)];
+      const xTitle=chart.options?.scales?.x?.title?.text;
+      const xHeader=chart.options?.scales?.x?.type==='linear'&&xTitle?xTitle:chart.config?.type==='bar'?'Faixa de score':'Data';
+      const header=[xHeader,...datasets.map(dataset=>`${dataset.label}${unit?' · '+unit:''}`)];
       return [header,...labels.map((label,index)=>[label,...datasets.map(dataset=>dataset.data[index]?.y??dataset.data[index]??'')])];
     }
     function ensureCsvControls(){
@@ -2579,6 +2613,76 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       if(!clean.length) return ['Sem ativos nesta faixa'];
       const head=clean.slice(0,limit);
       return clean.length>limit ? [...head, `+${clean.length-limit} outros`] : head;
+    }
+    function diversificationRisk(n){
+      const assets=Number(n);
+      if(!Number.isInteger(assets)||assets<1) return null;
+      const remaining=100/assets;
+      return {assets,remaining,removed:100-remaining};
+    }
+    function renderDiversificationChart(){
+      const input=document.getElementById('introAssetCount');
+      if(!input) return;
+      const points=Array.from({length:100},(_,index)=>diversificationRisk(index+1));
+      makeChart('introDiversificationChart',{
+        type:'line',
+        data:{labels:points.map(point=>point.assets),datasets:[{
+          label:'Risco diversificável restante · modelo 100/n',
+          data:points.map(point=>point.remaining),color:css('--accent2'),
+          borderWidth:2.5,tension:0,pointRadius:0,pointHoverRadius:6,pointHitRadius:10
+        }]},
+        plugins:[{
+          id:'diversificationReference',
+          afterDraw(chart){
+            const {ctx,chartArea,scales}=chart;
+            if(!chartArea||chartArea.width<=0||chartArea.height<=0) return;
+            const x=scales.x.getPixelForValue(20);
+            ctx.save();
+            ctx.strokeStyle=colorWithAlpha(css('--accent'),.5);
+            ctx.lineWidth=1;
+            ctx.setLineDash([4,5]);
+            ctx.beginPath();ctx.moveTo(x,chartArea.top+20);ctx.lineTo(x,chartArea.bottom);ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle=css('--accent');ctx.font=`700 11px ${RADAR_FONT_FAMILY}`;
+            ctx.fillText('20 ativos · Radar',x+8,chartArea.top+12);
+            ctx.restore();
+          }
+        }],
+        options:baseOptions({
+          animation:false,
+          layout:{padding:{top:8,right:8}},
+          plugins:{legend:{display:false},tooltip:{mode:'nearest',intersect:false,callbacks:{
+            title:items=>`${items[0]?.parsed.x||''} ativos`,
+            label:context=>`${fmtNum(context.parsed.y,2)}% do risco diversificável inicial`
+          }}},
+          scales:{
+            x:{type:'linear',min:1,max:100,title:axisTitle('Número de ativos (n)'),ticks:{precision:0,maxTicksLimit:6}},
+            y:{min:0,max:100,title:axisTitle('Risco diversificável (%)'),ticks:{maxTicksLimit:5,callback:value=>`${fmtNum(value,0)}%`}}
+          }
+        })
+      });
+      const update=()=>{
+        const point=diversificationRisk(input.value);
+        if(!point) return;
+        document.getElementById('introAssetCountValue').textContent=`${point.assets} ${point.assets===1?'ativo':'ativos'}`;
+        document.getElementById('introRiskRemaining').textContent=`${fmtNum(point.remaining,1)}%`;
+        document.getElementById('introRiskRemoved').textContent=`${fmtNum(point.removed,1)}%`;
+        input.setAttribute('aria-valuetext',`${point.assets} ativos; ${fmtNum(point.remaining,1)}% do risco diversificável restante`);
+        document.querySelectorAll('[data-intro-assets]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.introAssets)===point.assets)));
+        const chart=state.charts.introDiversificationChart;
+        const dataset=chart.data.datasets[0];
+        dataset.pointRadius=points.map(item=>item.assets===point.assets?6:0);
+        dataset.pointBackgroundColor=css('--accent');
+        dataset.pointBorderColor=css('--text');
+        dataset.pointBorderWidth=2;
+        chart.update('none');
+      };
+      input.addEventListener('input',update);
+      document.querySelectorAll('[data-intro-assets]').forEach(button=>button.addEventListener('click',()=>{
+        input.value=button.dataset.introAssets;
+        update();
+      }));
+      update();
     }
     function renderScoreChart(){
       const allScores=[...(state.data.fiis||[]),...(state.data.acoes||[])].map(scoreOf).filter(Number.isFinite);
@@ -3623,6 +3727,7 @@ const CHART_PERIODS = {
       document.addEventListener('click',event=>{ const target=event.target.closest('[data-tooltip]'); if(target&&matchMedia('(hover: none)').matches){ active===target?hide(target):show(target,event); } else if(!target){ hide(); } });
       window.addEventListener('scroll',()=>hide(),{passive:true});
     }
+    renderDiversificationChart();
     setupIntroDisclosures();
     setupRichTooltip();
 

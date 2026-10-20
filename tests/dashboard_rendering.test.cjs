@@ -97,3 +97,40 @@ test('fallback ao vivo usa os mesmos destinos protegidos e normaliza ranking', a
   assert.doesNotMatch(elements.fxGrid.innerHTML, /<(?:img|b)\b/i);
   assert.equal(context.state.data.indicadores.cripto[0].ranking_market_cap, 1);
 });
+
+
+test('modelo de diversificação preserva os marcos e o benefício marginal decrescente', () => {
+  const context = vm.createContext({});
+  vm.runInContext(source('diversificationRisk'), context);
+  const risk = context.diversificationRisk;
+  for (const [n, remaining, removed] of [[1,100,0],[5,20,80],[10,10,90],[20,5,95],[100,1,99]]) {
+    assert.equal(risk(n).remaining, remaining);
+    assert.equal(risk(n).removed, removed);
+  }
+  assert.ok(Math.abs(risk(17).remaining - 5.882352941176471) < 1e-12);
+  for (let n = 1; n < 99; n++) {
+    assert.ok(risk(n).remaining > risk(n+1).remaining);
+    assert.ok(risk(n).remaining - risk(n+1).remaining > risk(n+1).remaining - risk(n+2).remaining);
+    assert.ok(Math.abs(risk(n).remaining + risk(n).removed - 100) < 1e-12);
+  }
+  for (const invalid of [0,-1,1.5,NaN,Infinity]) assert.equal(risk(invalid), null);
+});
+
+test('CSV do modelo identifica número de ativos e mantém todos os 100 pontos', () => {
+  const context = vm.createContext({});
+  vm.runInContext(source('diversificationRisk'), context);
+  vm.runInContext(source('chartCsvRows'), context);
+  const points = Array.from({length:100}, (_,index)=>context.diversificationRisk(index+1));
+  const chart = {
+    config:{type:'line'},
+    data:{labels:points.map(point=>point.assets),datasets:[{label:'Modelo teórico 100/n',data:points.map(point=>point.remaining)}]},
+    options:{scales:{x:{type:'linear',title:{text:'Número de ativos (n)'}},y:{title:{text:'Risco diversificável (%)'}}}},
+  };
+  const rows = context.chartCsvRows(chart);
+  assert.equal(rows.length, 101);
+  assert.equal(rows[0][0], 'Número de ativos (n)');
+  assert.match(rows[0][1], /Modelo teórico.*Risco diversificável/);
+  assert.equal(rows[1][0], 1); assert.equal(rows[1][1], 100);
+  assert.equal(rows[20][0], 20); assert.equal(rows[20][1], 5);
+  assert.equal(rows[100][0], 100); assert.equal(rows[100][1], 1);
+});

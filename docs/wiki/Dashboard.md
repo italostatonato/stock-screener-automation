@@ -56,6 +56,8 @@ os scores, as carteiras ou os modelos ML.
   a escolha de até 20 ativos por classe com Tang (2004) e Rabelo et al. (2007),
   distingue risco diversificável de risco de mercado e identifica a aplicação
   aos FIIs como adaptação do projeto, sem prometer a mesma redução de risco.
+  A curva teórica `100/n` permite comparar 1–100 ativos, destaca 20 e exporta CSV.
+  Ela normaliza a parcela diversificável da variância e funciona sem snapshots.
   A explicação é estática e
   permanece legível mesmo sem carregar dados. Navegação reorganizada em 07/10/2026.
 - **Visão geral:** entradas, saídas e mudanças de posição na comparação
