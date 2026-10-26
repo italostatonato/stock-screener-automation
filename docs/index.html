@@ -1880,7 +1880,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         <div id="mlEvolutionSummary" class="ml-evolution-summary"></div>
         <div class="chart-box ml-evolution-chart"><canvas id="mlPerformanceChart" role="img" aria-label="Evolução histórica da performance do Score Top e dos modelos supervisionados"></canvas></div>
         <div class="mini-note ml-evolution-note" id="mlEvolutionNote"></div>
-        <div class="chart-explain"><b>Como ler:</b> cada ponto mede uma janela independente: seleciona-se o Top 20 na data indicada e observa-se seu retorno médio sete dias depois. As linhas não são retornos compostos. Compare quem liderou, a estabilidade dos resultados e o alpha contra o Score Top; datas anteriores à ativação de um modelo permanecem honestamente vazias.</div>
+        <div class="chart-explain"><b>Como ler:</b> cada ponto mede uma janela independente: seleciona-se o Top 20 na data indicada e observa-se seu retorno médio sete dias depois. O eixo mostra a data da previsão; o cartão “Última janela realizada” mostra a data do resultado. As linhas não são retornos compostos. Compare quem liderou, a estabilidade dos resultados e o alpha contra o Score Top; datas anteriores à ativação de um modelo permanecem honestamente vazias.</div>
       </div>
       <div class="panel wide">
         <div id="ml-confidence-panel" style="margin: 16px 0 22px; padding: 16px; border: 1px solid rgba(148,163,184,.25); border-radius: 16px; background: rgba(15,23,42,.45);">
@@ -1902,7 +1902,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       </div>
       <div class="panel wide">
         <h3>Performance dos modelos</h3>
-        <p>Métricas acumuladas conforme os retornos futuros de 30 dias passam a ficar disponíveis.</p>
+        <p>Métricas acumuladas das janelas realizadas de 7 dias. A quantidade de janelas varia por modelo.</p>
         <div class="rec-table-wrap">
           <table class="table rec-table ml-table">
             <caption class="sr-only">Métricas de performance histórica dos modelos</caption>
@@ -1918,7 +1918,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       <div class="section-head"><div><h2>Indicadores</h2><p class="desc">Mercado, juros, inflação e câmbio em blocos separados para leitura mais limpa.</p></div></div>
       <div class="charts">
         <div class="panel"><h3>Mercado · IBOV e IFIX</h3><p>Índices em base 100 para comparação visual.</p><div class="chart-box"><canvas id="marketChart" role="img" aria-label="Comparação em base 100 entre IBOV e IFIX"></canvas></div><div class="chart-explain"><b>Como ler:</b> os dois índices partem do mesmo valor inicial. Assim, o gráfico compara crescimento relativo, e não pontos absolutos do índice.</div></div>
-        <div class="panel"><h3>Macro · IPCA, IGP-M e Selic</h3><p>Séries disponíveis no payload de cada execução.</p><div class="chart-box"><canvas id="macroChart" role="img" aria-label="Evolução histórica de IPCA, IGP-M e Selic"></canvas></div><div class="chart-explain"><b>Como ler:</b> essas linhas ajudam a entender o pano de fundo econômico. Juros e inflação afetam o custo de oportunidade, dividendos, FIIs e valuation das ações.</div></div>
+        <div class="panel"><h3>Macro · IPCA, IGP-M e Selic</h3><p>IPCA acumulado em 12 meses, IGP-M mensal e meta Selic.</p><div class="chart-box"><canvas id="macroChart" role="img" aria-label="Evolução histórica de IPCA, IGP-M e Selic" aria-describedby="macroChartSources macroChartExplain"></canvas></div><div class="mini-note" id="macroChartSources" aria-live="polite"></div><div class="chart-explain" id="macroChartExplain"><b>Como ler:</b> mostramos uma observação por semana, em degraus. Entre registros, mantemos o último valor da série. Isso não cria uma nova divulgação mensal de IPCA ou IGP-M. A referência original de cada ponto aparece no tooltip e no CSV.</div></div>
         <div class="panel wide"><h3>Carteira FIIs Top 20</h3><p>Retorno acumulado da carteira real registrada no histórico contra IFIX, IMOB e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyFiisChart" role="img" aria-label="Carteira FIIs Top 20 comparada a IFIX, IMOB e CDI"></canvas></div><div class="mini-note" id="proxyFiisNote"></div><div class="chart-explain"><b>Como ler:</b> IFIX representa fundos imobiliários, IMOB representa o setor imobiliário listado e CDI representa a referência de renda fixa. A carteira precisa superar essas linhas para mostrar valor incremental.</div></div>
         <div class="panel wide"><h3>Carteira Ações Top 20</h3><p>Retorno acumulado da carteira real registrada no histórico contra IBOV, IPCA e CDI. Todos começam em 100 na primeira data da carteira.</p><div class="chart-box"><canvas id="proxyAcoesChart" role="img" aria-label="Carteira Ações Top 20 comparada a IBOV, IPCA e CDI"></canvas></div><div class="mini-note" id="proxyAcoesNote"></div><div class="chart-explain"><b>Como ler:</b> IBOV mede a bolsa brasileira, IPCA mede inflação e CDI mede a alternativa conservadora. O objetivo é ver se o ranking de ações compensa o risco assumido.</div></div>
         <div class="panel wide"><h3>Câmbio e cripto</h3><p>Cotações do snapshot e as cinco maiores criptomoedas por valor de mercado. A variação diária é uma métrica da fonte. Dados ausentes podem ser consultados ao abrir o painel, sem atualizar o ranking semanal.</p><div id="fxGrid" class="market-data-sections"></div></div>
@@ -2309,7 +2309,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       if(summary) summary.innerHTML=[
         mlEvolutionStat('Liderança atual',leaderName,bestValue==null?'—':metric.format(bestValue)),
         mlEvolutionStat('Última janela realizada',fmtDateShort(leaderRow?.Data_Resultado||labels[latestIndex]),leaderRow?.Ativos_Avaliados?`Top 20 entre ${leaderRow.Ativos_Avaliados} ativos`:'resultado já observado'),
-        mlEvolutionStat('Histórico exibido',`${labels.length} janelas`,coverage)
+        mlEvolutionStat('Datas das previsões',`${labels.length} janelas`,coverage)
       ].join('');
       const supervised=datasets.filter(dataset=>dataset.label!=='Score Top');
       const minWindows=supervised.length?Math.min(...supervised.map(dataset=>dataset.data.filter(finite).length)):0;
@@ -2343,7 +2343,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
             }}
           },
           scales:{
-            x:{title:axisTitle('Processamento'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('mlPerformanceChart'),maxRotation:0,minRotation:0}},
+            x:{title:axisTitle('Data da previsão · resultado 7 dias depois'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('mlPerformanceChart'),maxRotation:0,minRotation:0}},
             y:{title:axisTitle(metric.axis),ticks:{callback:value=>metric.format(Number(value))},grid:{color:context=>Number(context.tick.value)===0?'rgba(238,242,255,.34)':'rgba(148,163,184,.08)',lineWidth:context=>Number(context.tick.value)===0?2:1}}
           }
         })
@@ -2565,8 +2565,9 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       const unit=chart.options?.scales?.y?.title?.text;
       const xTitle=chart.options?.scales?.x?.title?.text;
       const xHeader=chart.options?.scales?.x?.type==='linear'&&xTitle?xTitle:chart.config?.type==='bar'?'Faixa de score':'Data';
-      const header=[xHeader,...datasets.map(dataset=>`${dataset.label}${unit?' · '+unit:''}`)];
-      return [header,...labels.map((label,index)=>[label,...datasets.map(dataset=>dataset.data[index]?.y??dataset.data[index]??'')])];
+      const provenance=datasets.filter(dataset=>Array.isArray(dataset.referenceDates));
+      const header=[xHeader,...datasets.map(dataset=>`${dataset.label}${unit?' · '+unit:''}`),...provenance.map(dataset=>`Referência original · ${dataset.label}`)];
+      return [header,...labels.map((label,index)=>[label,...datasets.map(dataset=>dataset.data[index]?.y??dataset.data[index]??''),...provenance.map(dataset=>dataset.referenceDates[index]||'')])];
     }
     function ensureCsvControls(){
       document.querySelectorAll('table,canvas,#hybridDistributionBar').forEach((target,index)=>{
@@ -2836,20 +2837,60 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
         {label:'IFIX',data:alignedReturnForWindow(ifix,labels),spanGaps:true,tension:.25}
       ]},options:baseOptions({interaction:{mode:'index',intersect:false},scales:{x:{title:axisTitle('Data')},y:{title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
     }
+    function seriesEndDate(records){
+      return (records||[]).filter(point=>point?.data&&finite(point.valor)).map(point=>String(point.data)).sort().at(-1)||'';
+    }
+    function macroDataset(label,records,labels){
+      const observations=(records||[]).filter(point=>point?.data&&finite(point.valor)).slice().sort((a,b)=>String(a.data).localeCompare(String(b.data)));
+      let cursor=0;
+      let reference=null;
+      const referenceDates=labels.map(date=>{
+        while(cursor<observations.length&&String(observations[cursor].data)<=date){ reference=String(observations[cursor].data); cursor++; }
+        return reference;
+      });
+      return {label,data:alignSeriesToLabels(observations,labels,{fillForward:true}),referenceDates,stepped:'after',spanGaps:false,pointRadius:labels.length<=2?3:0,tension:0};
+    }
+    function hybridCoverageNote(data){
+      const hybrid=data?.carteira_vs?.carteira_hibrida;
+      const snapshot=data?.data;
+      const end=hybrid?.fim||seriesEndDate(hybrid?.serie);
+      if(!snapshot||!end||end>=snapshot) return '';
+      const cv=data.carteira_vs||{};
+      const sources=[['Ações',cv.carteira_acoes_base100],['FIIs',cv.carteira_fiis_base100],['CDI',data.benchmarks?.CDI],['IVVB11',data.benchmarks?.IVVB11]];
+      const pending=sources.map(([name,records])=>({name,date:seriesEndDate(records)})).filter(item=>item.date&&item.date<snapshot);
+      const detail=pending.length?` Últimos registros coletados: ${pending.map(item=>`${item.name} até ${fmtDateShort(item.date)}`).join('; ')}.`:'';
+      return ` Coleta de ${fmtDateShort(snapshot)}; histórico comum até ${fmtDateShort(end)}.${detail} O desempenho usa apenas datas de composição cobertas pelos quatro blocos.`;
+    }
     function renderMacroChart(){
       const ind=state.data.indicadores||{};
       const series=[['IPCA 12M',ind.ipca_12m||[]],['IGP-M',ind.igpm||[]],['Selic',ind.selic||[]]];
       const allLabels=[...new Set(series.flatMap(s=>s[1].map(x=>String(x.data))))].sort();
       ensureChartPeriodControls('macroChart',allLabels);
       const labels=filteredLabelsForPeriod(allLabels,'macroChart');
+      const sourceNote=document.getElementById('macroChartSources');
+      if(sourceNote) sourceNote.textContent=series.map(([name,records])=>{
+        const date=seriesEndDate(records);
+        const period=name==='Selic'?fmtDateShort(date):date?`${date.slice(5,7)}/${date.slice(0,4)}`:'';
+        return `${name}: ${date?'referência '+period:'sem dados'}`;
+      }).join(' · ');
       if(!labels.length){
         emptyLineChart('macroChart','Aguardando séries macroeconômicas');
         return;
       }
       const datasets=series
         .filter(([,arr])=>Array.isArray(arr) && arr.length)
-        .map(([label,arr])=>({label,data:alignSeriesToLabels(arr,labels),spanGaps:true,tension:.25}));
-      makeChart('macroChart',{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},scales:{x:{title:axisTitle('Data')},y:{title:axisTitle('Taxa / indicador')}}})});
+        .map(([label,arr])=>macroDataset(label,arr,labels));
+      makeChart('macroChart',{type:'line',data:{labels,datasets},options:baseOptions({
+        interaction:{mode:'index',intersect:false},
+        plugins:{tooltip:{callbacks:{
+          label:context=>`${context.dataset.label}: ${fmtNum(context.parsed.y,2)}%`,
+          afterBody:items=>items.map(item=>{
+            const date=item.dataset.referenceDates?.[item.dataIndex];
+            return date?`${item.dataset.label} · referência ${fmtDateShort(date)}`:'';
+          }).filter(Boolean)
+        }}},
+        scales:{x:{title:axisTitle('Data')},y:{title:axisTitle('Taxa (%)')}}
+      })});
     }
     function renderProxyCharts(){
       renderPortfolioComparison(
@@ -3461,7 +3502,7 @@ const CHART_PERIODS = {
       const yMax=Math.max(0,maxVal+padding);
       const first=labels[0]||hybrid.inicio;
       const last=labels[labels.length-1]||hybrid.fim||first;
-      if(note) note.textContent=`Retorno de ${first} até ${last} · ${hybridProfileName()} · uma observação por semana. Pesos-alvo reaplicados a cada nova composição semanal. Simulação com os percentuais escolhidos para todo o período.`;
+      if(note) note.textContent=`Retorno de ${first} até ${last} · ${hybridProfileName()} · uma observação por semana. Pesos-alvo reaplicados a cada nova composição semanal. Simulação com os percentuais escolhidos para todo o período.${hybridCoverageNote(state.data)}`;
       renderHybridTable(hybrid,componentReturns);
       const totalReturn=lastNumeric(displayedReturn);
       const cdiReturn=lastNumeric(datasets.find(ds=>ds.label==='CDI')?.data);
@@ -3547,7 +3588,9 @@ const CHART_PERIODS = {
       const first=labels[0] || carteira[0]?.data;
       const last=labels[labels.length-1] || first;
       const missing=benchmarkNames.filter(name=>{ const raw=(availableBenchmarks[name]&&availableBenchmarks[name].length)?availableBenchmarks[name]:benchSeries(name); return !raw||raw.length<2; });
-      const extra=missing.length?` Sem dados disponíveis para: ${missing.join(', ')}.`:'';
+      const datedReferences=benchmarkSeries.map(({name,data})=>({name,date:seriesEndDate(data)})).filter(item=>item.date&&item.date<last);
+      const coverage=datedReferences.length?` Referências mantidas no último registro: ${datedReferences.map(item=>`${item.name} até ${fmtDateShort(item.date)}`).join('; ')}.`:'';
+      const extra=(missing.length?` Sem dados disponíveis para: ${missing.join(', ')}.`:'')+coverage;
       const status=comp.fallbackInicial?'Ainda há apenas o ponto inicial da carteira; a linha começa a evoluir quando houver pelo menos dois snapshots reais.':'Séries recalculadas como retorno percentual dentro do período selecionado.';
       if(note) note.textContent=`Retorno de ${first} até ${last} · uma observação por semana. ${status}${extra}`;
       const summary=portfolioSummaryText(comparisonKey,datasets);

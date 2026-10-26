@@ -102,7 +102,11 @@ diferencie referências de produtos, preço de proventos e histórico de previs�
 
 Os períodos são 1M, 3M, 6M, 12M, 18M, 24M e Tudo, com a última observação de
 cada semana e sem criar dados ausentes. O cálculo híbrido conserva os intervalos
-intermediários. Baixar CSV está disponível em tabelas, gráficos e na distribuição
+intermediários. A data da coleta é distinta das observações: a híbrida informa
+o corte comum e os componentes defasados; comparativos indicam benchmarks
+anteriores ao fim da janela. O macro alinha o último valor em degraus, preserva
+a referência mensal no tooltip e CSV e não antecipa registros. No ML, o eixo
+mostra a data da previsão e o cartão a data do resultado sete dias depois. Baixar CSV está disponível em tabelas, gráficos e na distribuição
 da carteira: esta última exporta perfil, componente e alocação em percentuais.
 
 ## Pipeline e dados

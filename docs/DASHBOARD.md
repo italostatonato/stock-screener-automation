@@ -90,6 +90,21 @@ recalculam o retorno a partir do primeiro valor disponível no período. O cálc
 híbrido preserva os intervalos intermediários de rebalanceamento antes de
 selecionar os pontos semanais para exibição.
 
+
+### Datas de coleta e datas das séries
+
+A data do snapshot não substitui a data das observações. A híbrida usa o
+intervalo comum dos quatro componentes; o painel informa o corte e as fontes
+com registros anteriores à coleta. Os comparativos mantêm o último registro
+disponível de cada benchmark e mostram sua data quando anterior ao fim do gráfico.
+
+No macro, o último valor registrado é alinhado às observações semanais em
+degraus, com a referência original no tooltip e em colunas adicionais do CSV.
+IPCA e IGP-M continuam mensais; não são criadas novas divulgações semanais.
+No ML, o eixo usa a data da previsão e o cartão informa a data do resultado
+realizado sete dias depois. O gráfico didático de diversificação é estático em
+relação às coletas; o histograma usa os scores do snapshot selecionado.
+
 ## Exportação CSV
 
 O botão **Baixar CSV** está disponível nas tabelas, nos gráficos e na barra de

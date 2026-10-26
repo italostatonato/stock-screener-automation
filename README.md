@@ -171,7 +171,7 @@ Detalhes e manutenção em [Site no Sites e contador de visitantes](docs/SITE.md
 
 ## Dashboard
 
-O dashboard web é publicado via GitHub Pages, abre na aba **Introdução** e carrega sempre o snapshot mais recente listado em `docs/data/index.json`. O guia inicial é estático e pode ser lido mesmo quando os dados do mercado não carregam.
+O dashboard web é publicado via GitHub Pages, abre na aba **Introdução** e carrega sempre o snapshot mais recente listado em `docs/data/index.json`. O guia inicial é estático e pode ser lido mesmo quando os dados do mercado não carregam. As datas das séries podem anteceder a coleta: o painel informa o intervalo comum da híbrida, a referência dos indicadores mensais e a distinção entre previsão e resultado no ML.
 
 As seis abas principais são:
 

@@ -134,3 +134,38 @@ test('CSV do modelo identifica número de ativos e mantém todos os 100 pontos',
   assert.equal(rows[20][0], 20); assert.equal(rows[20][1], 5);
   assert.equal(rows[100][0], 100); assert.equal(rows[100][1], 1);
 });
+
+
+test('macro semanal conserva valores mensais e suas referências sem antecipar dados', () => {
+  const context=vm.createContext({finite:value=>value!=null&&Number.isFinite(Number(value))});
+  for(const name of ['seriesMap','alignSeriesToLabels','macroDataset']) vm.runInContext(source(name),context);
+  const monthly=[{data:'2026-08-01',valor:4.5},{data:'2026-09-01',valor:4.8},{data:'2026-11-01',valor:9}];
+  const original=JSON.stringify(monthly);
+  const labels=['2026-07-26','2026-08-02','2026-08-30','2026-09-06','2026-10-26'];
+  const dataset=context.macroDataset('IPCA 12M',monthly,labels);
+  assert.deepEqual(Array.from(dataset.data),[null,4.5,4.5,4.8,4.8]);
+  assert.deepEqual(Array.from(dataset.referenceDates),[null,'2026-08-01','2026-08-01','2026-09-01','2026-09-01']);
+  assert.equal(dataset.stepped,'after');
+  assert.equal(JSON.stringify(monthly),original);
+});
+
+test('CSV macro exporta a data mensal original ao lado da observação semanal', () => {
+  const context=vm.createContext({});
+  vm.runInContext(source('chartCsvRows'),context);
+  const rows=context.chartCsvRows({config:{type:'line'},data:{labels:['2026-10-26'],datasets:[{label:'IPCA 12M',data:[4.8],referenceDates:['2026-09-01']}]},options:{scales:{y:{title:{text:'Taxa (%)'}}}}});
+  assert.deepEqual(Array.from(rows[0]),['Data','IPCA 12M · Taxa (%)','Referência original · IPCA 12M']);
+  assert.deepEqual(Array.from(rows[1]),['2026-10-26',4.8,'2026-09-01']);
+});
+
+test('nota da híbrida distingue data da coleta, histórico comum e CDI coletado', () => {
+  const context=vm.createContext({finite:value=>value!=null&&Number.isFinite(Number(value)),fmtDateShort:value=>value});
+  vm.runInContext(source('seriesEndDate'),context);
+  vm.runInContext(source('hybridCoverageNote'),context);
+  const payload={data:'2026-10-26',carteira_vs:{carteira_hibrida:{fim:'2026-10-19'}},benchmarks:{CDI:[{data:'2026-10-23',valor:115}]}};
+  const note=context.hybridCoverageNote(payload);
+  assert.match(note,/Coleta de 2026-10-26/);
+  assert.match(note,/histórico comum até 2026-10-19/);
+  assert.match(note,/CDI até 2026-10-23/);
+  payload.carteira_vs.carteira_hibrida.fim='2026-10-26';
+  assert.equal(context.hybridCoverageNote(payload),'');
+});

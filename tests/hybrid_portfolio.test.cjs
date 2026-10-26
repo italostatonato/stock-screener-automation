@@ -49,6 +49,8 @@ function loadDashboard(data=fixture()){
   vm.runInContext([
     between('    const fmtNum =','    function mergeDeep'),
     between('    function seriesMap','    function emptyLineChart'),
+    between('    function fmtDateShort','    function todayIsoLocal'),
+    between('    function seriesEndDate','    function renderMacroChart'),
     between('    function lastNumeric','    function diffPhrase'),
     between('const CHART_PERIODS','    function ensureChartPeriodControls'),
     between('    function alignedReturnForWindow','    function renderPortfolioComparison')
