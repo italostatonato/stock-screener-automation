@@ -499,3 +499,29 @@ test('CSV retains exact chart values, dates, gaps, separators, quotes, and accen
   assert.match(text, /"1\.23456789";"-0\.1"/);
   assert.equal(run('csvCell("=SUM(A1)")'),'"\'=SUM(A1)"');
 });
+
+
+test('CDI fallback chart and CSV preserve the actual reference date',()=>{
+  const data=fixture();
+  const hybrid=history();
+  const cdi=hybrid.componentes.find(component=>component.chave==='cdi');
+  const references=['2026-01-01','2026-01-08','2026-01-15'];
+  cdi.serie.forEach((point,index)=>point.data_referencia=references[index]);
+  hybrid.comparativos.CDI=cdi.serie;
+  data.carteira_vs={carteira_hibrida:hybrid};
+  const {run,context,elements}=loadDashboard(data);
+  run('renderHybridPortfolio()');
+  const dataset=context.chart.data.datasets.find(dataset=>dataset.label==='CDI');
+  assert.deepEqual(Array.from(dataset.referenceDates),references);
+  assert.deepEqual(Array.from(dataset.data),[0,0,0]);
+  assert.match(elements.hybridPortfolioNote.textContent,/CDI: último acumulado disponível de 15\/01\/2026, mantido até 16\/01\/2026/);
+  const tooltip=context.chart.options.plugins.tooltip.callbacks.afterBody;
+  assert.deepEqual(Array.from(tooltip([{dataset,dataIndex:2,label:'2026-01-16'}])),['CDI · referência 15/01/2026']);
+  const start=html.indexOf('    function chartCsvRows(');
+  const end=html.indexOf('\n    function ',start+1);
+  run(html.slice(start,end));
+  const rows=run('chartCsvRows(chart)');
+  const referenceColumn=rows[0].indexOf('Referência original · CDI');
+  assert.ok(referenceColumn>0);
+  assert.equal(rows.at(-1)[referenceColumn],'2026-01-15');
+});

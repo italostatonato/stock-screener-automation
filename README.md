@@ -139,6 +139,9 @@ Reexecutar no mesmo dia substitui o ranking Excel daquela data.
 A coleta do BCB tenta até três vezes em falhas temporárias, com pausas de 1s
 e 2s. A Carteira Híbrida exige histórico real dos quatro blocos; sem ele,
 o gráfico informa a indisponibilidade e não representa um retorno fictício.
+Quando falta apenas o CDI da segunda-feira, mantém o último acumulado
+disponível, sem projetar juros, e informa a referência usada na nota, no
+tooltip e no CSV. Os outros três blocos continuam limitando o fim da curva.
 
 O score é calculado no universo completo **antes** dos filtros. Cada classe usa
 sete indicadores com peso `1/7`; dados ausentes recebem percentil neutro 50.

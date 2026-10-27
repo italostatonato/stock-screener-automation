@@ -93,10 +93,15 @@ selecionar os pontos semanais para exibição.
 
 ### Datas de coleta e datas das séries
 
-A data do snapshot não substitui a data das observações. A híbrida usa o
-intervalo comum dos quatro componentes; o painel informa o corte e as fontes
-com registros anteriores à coleta. Os comparativos mantêm o último registro
-disponível de cada benchmark e mostram sua data quando anterior ao fim do gráfico.
+A data do snapshot não substitui a data das observações. A híbrida exige
+histórico dos quatro componentes, mas o CDI não limita a data final: quando
+falta seu dado de segunda-feira, mantém o último acumulado conhecido até a
+composição. Ações, FIIs e IVVB11 continuam limitando o período disponível.
+Não se estimam juros após a última observação do CDI. Sua data original fica
+no JSON (`data_referencia`), na nota, no tooltip e no CSV do gráfico híbrido.
+Sem histórico suficiente de CDI, a carteira continua indisponível.
+Os comparativos mantêm o último registro disponível de cada benchmark e
+mostram sua data quando anterior ao fim do gráfico.
 
 No macro, o último valor registrado é alinhado às observações semanais em
 degraus, com a referência original no tooltip e em colunas adicionais do CSV.

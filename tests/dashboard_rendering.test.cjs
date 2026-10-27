@@ -167,5 +167,12 @@ test('nota da híbrida distingue data da coleta, histórico comum e CDI coletado
   assert.match(note,/histórico comum até 2026-10-19/);
   assert.match(note,/CDI até 2026-10-23/);
   payload.carteira_vs.carteira_hibrida.fim='2026-10-26';
+  const fallback=context.hybridCoverageNote(payload);
+  assert.doesNotMatch(fallback,/histórico comum até/);
+  assert.match(fallback,/CDI: último acumulado disponível de 2026-10-23, mantido até 2026-10-26/);
+  assert.match(fallback,/sem estimativa de juros/);
+  payload.benchmarks.CDI.push({data:'2026-10-27',valor:999});
+  assert.equal(context.hybridCoverageNote(payload),fallback);
+  payload.benchmarks.CDI.push({data:'2026-10-26',valor:116});
   assert.equal(context.hybridCoverageNote(payload),'');
 });

@@ -142,3 +142,77 @@ def test_top20_usa_composicao_de_cada_data_no_intervalo_seguinte(tmp_path):
 
     # Se 09/01 fosse um snapshot parcial, a troca para NOVA3 seria ignorada.
     assert [row["valor"] for row in without_partial_snapshot] == pytest.approx([100.0, 220.0])
+
+
+@pytest.mark.parametrize("extra_rows, expected_value, expected_reference", [
+    ([], 101.0, "2026-10-23"),
+    ([("2026-10-26", 102.0)], 102.0, "2026-10-26"),
+    ([("2026-10-27", 999.0)], 101.0, "2026-10-23"),
+])
+def test_hybrid_cdi_usa_ultima_observacao_sem_projetar_ou_antecipar(
+    extra_rows, expected_value, expected_reference
+):
+    dates = ["2026-10-19", "2026-10-26"]
+    acoes = [{"data": date, "valor": value} for date, value in zip(dates, [100, 110])]
+    fiis = [{"data": date, "valor": value} for date, value in zip(dates, [100, 104])]
+    cdi_rows = [("2026-10-19", 100.0), ("2026-10-23", 101.0)] + extra_rows
+    cdi = pd.DataFrame(cdi_rows, columns=["data", "valor"])
+    cdi["data"] = pd.to_datetime(cdi["data"])
+    original_cdi = cdi.copy(deep=True)
+    original_acoes = [row.copy() for row in acoes]
+    result = _build_hybrid_portfolio(
+        acoes_series=acoes, fiis_series=fiis,
+        benchmarks={
+            "CDI": cdi,
+            "IVVB11": pd.DataFrame({"data": pd.to_datetime(dates), "valor": [100, 120]}),
+        },
+        top_acoes=pd.DataFrame(), top_fiis=pd.DataFrame(),
+    )
+
+    assert result["disponivel"] is True
+    assert result["fim"] == "2026-10-26"
+    assert [row["data"] for row in result["serie"]] == dates
+    cdi_component = next(item for item in result["componentes"] if item["chave"] == "cdi")
+    assert cdi_component["serie"][-1] == {
+        "data": "2026-10-26", "valor": expected_value,
+        "data_referencia": expected_reference,
+    }
+    assert cdi_component["retorno_pct"] == pytest.approx(expected_value - 100)
+    assert result["comparativos"]["CDI"] == cdi_component["serie"]
+    expected_return = 0.3 * 10 + 0.3 * 4 + 0.2 * 20 + 0.2 * (expected_value - 100)
+    assert result["serie"][-1]["valor"] == pytest.approx(100 + expected_return)
+    assert sum(item["contribuicao_pct"] for item in result["componentes"]) == pytest.approx(expected_return)
+    pd.testing.assert_frame_equal(cdi, original_cdi)
+    assert acoes == original_acoes
+
+
+@pytest.mark.parametrize("limited_component", ["acoes_top20", "fiis_top20", "IVVB11"])
+def test_fallback_cdi_nao_estende_componentes_sem_cobertura(limited_component):
+    dates = ["2026-10-12", "2026-10-19", "2026-10-26"]
+    rows = [{"data": date, "valor": value} for date, value in zip(dates, [100, 110, 120])]
+    acoes = rows[:-1] if limited_component == "acoes_top20" else rows
+    fiis = rows[:-1] if limited_component == "fiis_top20" else rows
+    ivvb = rows[:-1] if limited_component == "IVVB11" else rows
+    result = _build_hybrid_portfolio(
+        acoes_series=acoes, fiis_series=fiis,
+        benchmarks={
+            "CDI": pd.DataFrame({"data": pd.to_datetime([dates[0], "2026-10-23"]), "valor": [100, 101]}),
+            "IVVB11": pd.DataFrame(ivvb),
+        },
+        top_acoes=pd.DataFrame(), top_fiis=pd.DataFrame(),
+    )
+    assert result["disponivel"] is True
+    assert result["fim"] == "2026-10-19"
+    assert all(row["data"] <= "2026-10-19" for row in result["serie"])
+
+
+@pytest.mark.parametrize("cdi", [pd.DataFrame(), _benchmark(100, 101).iloc[:1]])
+def test_fallback_nao_substitui_historico_cdi_insuficiente(cdi):
+    result = _build_hybrid_portfolio(
+        acoes_series=_records(100, 110), fiis_series=_records(100, 104),
+        benchmarks={"CDI": cdi, "IVVB11": _benchmark(100, 120)},
+        top_acoes=pd.DataFrame(), top_fiis=pd.DataFrame(),
+    )
+    assert result["disponivel"] is False
+    assert "CDI" in result["motivo"]
+    assert result["serie"] == []

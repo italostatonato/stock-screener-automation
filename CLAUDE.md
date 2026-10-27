@@ -103,8 +103,11 @@ diferencie referências de produtos, preço de proventos e histórico de previs�
 Os períodos são 1M, 3M, 6M, 12M, 18M, 24M e Tudo, com a última observação de
 cada semana e sem criar dados ausentes. O cálculo híbrido conserva os intervalos
 intermediários. A data da coleta é distinta das observações: a híbrida informa
-o corte comum e os componentes defasados; comparativos indicam benchmarks
-anteriores ao fim da janela. O macro alinha o último valor em degraus, preserva
+o corte e os componentes defasados. Quando falta CDI na composição, mantém
+o último acumulado conhecido sem estimar juros; ações, FIIs e IVVB11 continuam
+limitando o fim da curva. Cada ponto alinhado do CDI guarda `data_referencia`,
+exibida na nota, no tooltip e no CSV. A ausência de histórico suficiente de
+CDI continua indisponível. Comparativos indicam benchmarks anteriores ao fim da janela. O macro alinha o último valor em degraus, preserva
 a referência mensal no tooltip e CSV e não antecipa registros. No ML, o eixo
 mostra a data da previsão e o cartão a data do resultado sete dias depois. Baixar CSV está disponível em tabelas, gráficos e na distribuição
 da carteira: esta última exporta perfil, componente e alocação em percentuais.

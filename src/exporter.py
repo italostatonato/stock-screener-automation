@@ -797,7 +797,9 @@ def _build_hybrid_portfolio(
     Os quatro componentes são rebaseados na primeira data em que todos têm
     observação. Em cada novo snapshot das carteiras Top 20, os pesos-alvo são
     reaplicados antes de medir o intervalo seguinte. Assim, mudanças semanais
-    na seleção de ações e FIIs entram dinamicamente no desempenho.
+    na seleção de ações e FIIs entram dinamicamente no desempenho. O CDI usa
+    o último acumulado conhecido até cada composição, inclusive quando a
+    observação da segunda-feira ainda não está disponível, sem projetar juros.
     """
     component_records = {
         "acoes_top20": acoes_series,
@@ -819,7 +821,9 @@ def _build_hybrid_portfolio(
         "pesos": HYBRID_PORTFOLIO_WEIGHTS,
         "metodologia": (
             "Pesos-alvo reaplicados a cada nova composição registrada; sem custos "
-            "e impostos; séries Top 20 baseadas em preços, sem reinvestir proventos."
+            "e impostos; séries Top 20 baseadas em preços, sem reinvestir proventos. "
+            "Na ausência de CDI na data da composição, mantém-se o último "
+            "acumulado disponível, sem estimar juros após essa referência."
         ),
         "rebalanceamento": "A cada nova composição das carteiras Top 20",
     }
@@ -835,7 +839,11 @@ def _build_hybrid_portfolio(
         }
 
     first_common = max(series.index.min() for series in raw_series.values())
-    last_common = min(series.index.max() for series in raw_series.values())
+    # O CDI é divulgado com defasagem: seu último acumulado pode ser mantido
+    # até a composição atual. Ações, FIIs e IVVB11 ainda limitam o fim da curva.
+    last_common = min(
+        series.index.max() for key, series in raw_series.items() if key != "cdi"
+    )
     portfolio_dates = raw_series["acoes_top20"].index.union(raw_series["fiis_top20"].index)
     portfolio_dates = portfolio_dates[(portfolio_dates >= first_common) & (portfolio_dates <= last_common)]
     if portfolio_dates.empty:
@@ -863,6 +871,12 @@ def _build_hybrid_portfolio(
             "comparativos": {},
             "ativos": {},
         }
+
+    # Guarda a data efetivamente usada, sem transformar o valor mantido em
+    # uma nova observação do CDI nem antecipar uma divulgação posterior.
+    for record in aligned["cdi"]:
+        reference = raw_series["cdi"].index.asof(pd.Timestamp(record["data"]))
+        record["data_referencia"] = reference.strftime("%Y-%m-%d")
 
     # Rebalanceamento dinâmico: em cada intervalo, o retorno de cada bloco é
     # aplicado novamente ao seu peso-alvo. Isso evita que uma alta passada faça

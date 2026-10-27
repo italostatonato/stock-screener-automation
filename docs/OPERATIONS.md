@@ -139,7 +139,11 @@ snapshot publicado e os logs da coleta BCB. O SGS usa timeout de 15s e até
 três tentativas para timeout, erro de conexão, HTTP 408/429 ou 5xx, com pausas
 de 1s e 2s. Isso também vale para IPCA, Selic e IGP-M na aba Indicadores.
 Outros erros HTTP encerram a consulta. Uma falha persistente
-continua explícita; não se inventa rentabilidade. Para reparar um snapshot,
+continua explícita; não se inventa rentabilidade. Se existe histórico de CDI,
+mas falta a observação de segunda-feira, a híbrida mantém o último acumulado
+disponível até a composição, sem projetar juros. A data original acompanha
+os pontos do CDI no JSON e é exibida na nota, tooltip e CSV. Ações, FIIs e
+IVVB11 continuam limitando o fim da curva. Para reparar um snapshot,
 faça backup, recupere a série oficial e recalcule apenas o benchmark e seus
 comparativos e a híbrida, preservando rankings, preços e modelos ML.
 

@@ -2854,12 +2854,17 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       const hybrid=data?.carteira_vs?.carteira_hibrida;
       const snapshot=data?.data;
       const end=hybrid?.fim||seriesEndDate(hybrid?.serie);
-      if(!snapshot||!end||end>=snapshot) return '';
+      if(!snapshot||!end) return '';
       const cv=data.carteira_vs||{};
+      const cdiComponent=(hybrid?.componentes||[]).find(component=>component.chave==='cdi');
+      const cdiReference=(cdiComponent?.serie||[]).find(point=>String(point.data)===end)?.data_referencia||seriesEndDate((data.benchmarks?.CDI||[]).filter(point=>String(point.data)<=end));
+      const fallback=cdiReference&&cdiReference<end;
+      const cutoff=end<snapshot?` Coleta de ${fmtDateShort(snapshot)}; histórico comum até ${fmtDateShort(end)}.`:'';
       const sources=[['Ações',cv.carteira_acoes_base100],['FIIs',cv.carteira_fiis_base100],['CDI',data.benchmarks?.CDI],['IVVB11',data.benchmarks?.IVVB11]];
-      const pending=sources.map(([name,records])=>({name,date:seriesEndDate(records)})).filter(item=>item.date&&item.date<snapshot);
+      const pending=end<snapshot?sources.map(([name,records])=>({name,date:seriesEndDate(records)})).filter(item=>item.date&&item.date<snapshot&&!(fallback&&item.name==='CDI')):[];
       const detail=pending.length?` Últimos registros coletados: ${pending.map(item=>`${item.name} até ${fmtDateShort(item.date)}`).join('; ')}.`:'';
-      return ` Coleta de ${fmtDateShort(snapshot)}; histórico comum até ${fmtDateShort(end)}.${detail} O desempenho usa apenas datas de composição cobertas pelos quatro blocos.`;
+      const cdiNote=fallback?` CDI: último acumulado disponível de ${fmtDateShort(cdiReference)}, mantido até ${fmtDateShort(end)}; sem estimativa de juros após essa referência.`:'';
+      return `${cutoff}${detail}${cdiNote}`;
     }
     function renderMacroChart(){
       const ind=state.data.indicadores||{};
@@ -3492,7 +3497,12 @@ const CHART_PERIODS = {
       comparisonOrder.forEach(name=>{
         const series=comparisons[name]||[];
         if(!series.length) return;
-        datasets.push({label:name,data:alignedReturnForWindow(series,labels,{fillForward:true}),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:0});
+        const dataset={label:name,data:alignedReturnForWindow(series,labels,{fillForward:true}),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:0};
+        if(name==='CDI'&&series.some(point=>point.data_referencia)){
+          const references=new Map(series.map(point=>[String(point.data),point.data_referencia]));
+          dataset.referenceDates=labels.map(date=>references.get(date)||null);
+        }
+        datasets.push(dataset);
       });
       const values=datasets.flatMap(ds=>ds.data).filter(v=>v!=null&&Number.isFinite(Number(v))).map(Number);
       const minVal=values.length?Math.min(...values):0;
@@ -3510,7 +3520,7 @@ const CHART_PERIODS = {
       const summary=totalReturn==null
         ? 'Histórico ainda insuficiente para calcular o resultado da carteira.'
         : `A Carteira Híbrida · ${hybridProfileName()} acumula ${signedPctPoint(totalReturn)} no período e ficou ${cdiText}.`;
-      makeChart('hybridPortfolioChart',{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')}},scales:{x:{title:axisTitle('Data'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('hybridPortfolioChart'),maxRotation:0,minRotation:0}},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
+      makeChart('hybridPortfolioChart',{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')},tooltip:{callbacks:{afterBody:items=>items.map(item=>{const reference=item.dataset.referenceDates?.[item.dataIndex];return reference&&reference<item.label?`CDI · referência ${fmtDateShort(reference)}`:'';}).filter(Boolean)}}},scales:{x:{title:axisTitle('Data'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('hybridPortfolioChart'),maxRotation:0,minRotation:0}},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
       clearTimeout(hybridSettings.insightTimer);
       hybridSettings.insightTimer=setTimeout(()=>addAiInsight('hybridPortfolioChart',summary),50);
     }
