@@ -1,6 +1,6 @@
 {
   "data_execucao": "2026-11-02",
-  "created_at": "2026-11-02T16:22:29",
+  "created_at": "2026-11-02T22:07:13",
   "layer": "lake_snapshot",
   "schema_version": 1,
   "files": [
@@ -16,7 +16,7 @@
       "path": "data/lake/snapshots/2026-11-02/acoes_universe.parquet",
       "rows": 957,
       "columns": 20,
-      "sha256": "879d1e77324c7ff1d6053114d9f2873ed19d26cdd3e20afed4c0d94a80fb0246"
+      "sha256": "a02e2eda766a210621ff073963e405e8baa2604c48976c35ffa84f62e2552a4d"
     },
     {
       "name": "top_fiis.parquet",
