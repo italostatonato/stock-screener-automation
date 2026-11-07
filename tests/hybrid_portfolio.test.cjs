@@ -528,45 +528,93 @@ test('CDI fallback chart and CSV preserve the actual reference date',()=>{
 });
 
 
-test('stocks use the same 3M dates and returns in both charts when the hybrid ends earlier',()=>{
+test('all hybrid comparisons use the selected window even when the portfolio calculation ends earlier',()=>{
   const data=fixture();
   data.data='2026-11-02';
   const dates=['2026-07-31','2026-08-07','2026-10-26','2026-11-02'];
-  const levels=[100,120,144,108];
-  const stocks=dates.map((data,index)=>({data,valor:levels[index]}));
-  const covered=stocks.slice(0,-1);
-  const flat=covered.map(({data})=>({data,valor:100}));
+  const series=levels=>dates.map((data,index)=>({data,valor:levels[index]}));
+  const stocks=series([100,120,144,108]);
+  const funds=series([100,100,100,112]);
+  const coveredStocks=stocks.slice(0,-1);
+  const flat=series([100,100,100]).slice(0,-1);
+  const coveredCdi=series([100,100,102]).slice(0,-1);
   data.carteira_vs={
     comparativo_acoes:{carteira:stocks},
+    comparativo_fiis:{carteira:funds},
     carteira_hibrida:{
       disponivel:true,fim:'2026-10-26',serie:flat,
       componentes:[
-        {chave:'acoes_top20',serie:covered},
+        {chave:'acoes_top20',serie:coveredStocks},
         {chave:'fiis_top20',serie:flat},
-        {chave:'cdi',serie:flat},
+        {chave:'cdi',serie:coveredCdi},
         {chave:'ivvb11',serie:flat}
       ],
-      comparativos:{'Top 20 Ações BR':covered,CDI:flat}
+      comparativos:{
+        'Top 20 Ações BR':coveredStocks,
+        'Top 20 FIIs':flat,
+        CDI:coveredCdi,
+        IFIX:flat,
+        IPCA:flat
+      }
     }
   };
-  data.benchmarks.IVVB11=[{data:'2026-10-30',valor:100}];
+  data.benchmarks={
+    IVVB11:[{data:'2026-10-30',valor:100}],
+    CDI:[
+      {data:'2026-08-07',valor:100},
+      {data:'2026-10-26',valor:102},
+      {data:'2026-10-30',valor:105},
+      {data:'2026-11-03',valor:999}
+    ],
+    IFIX:[
+      {data:'2026-08-07',valor:100},
+      {data:'2026-10-26',valor:110},
+      {data:'2026-10-30',valor:108},
+      {data:'2026-11-02',valor:115}
+    ],
+    IPCA:[
+      {data:'2026-08-01',valor:100},
+      {data:'2026-09-01',valor:100.5}
+    ]
+  };
+
+  data.carteira_vs.comparativo_fiis.benchmarks={IFIX:data.benchmarks.IFIX.slice(0,-1)};
 
   const {context,run,elements}=loadDashboard(data);
   run('state.chartWindows={overviewPerformanceChart:"3M",hybridPortfolioChart:"3M"}');
-  run('renderPortfolioComparison("overviewPerformanceChart","overviewPerformanceNote","comparativo_acoes","Carteira Ações Top 20",[])');
-  const overview=context.chart.data;
+  run('renderPortfolioComparison("overviewPerformanceChart","overviewPerformanceNote","comparativo_acoes","Top 20 Ações BR",["CDI","IPCA"])');
+  const overviewStocks=context.chart.data;
+  run('renderPortfolioComparison("overviewPerformanceChart","overviewPerformanceNote","comparativo_fiis","Top 20 FIIs",["IFIX"])');
+  const overviewFunds=context.chart.data;
+
+  let summary='';
+  context.addAiInsight=(_chart,text)=>{summary=text;};
+  context.diffPhrase=delta=>delta.toFixed(2)+' p.p. acima do';
+  context.setTimeout=callback=>{callback();return 1;};
   run('renderHybridPortfolio()');
   const hybrid=context.chart.data;
+  const datasetFor=name=>hybrid.datasets.find(dataset=>dataset.label===name);
   assert.deepEqual(Array.from(hybrid.labels),dates.slice(1));
-  assert.deepEqual(Array.from(hybrid.labels),Array.from(overview.labels));
-  const comparison=hybrid.datasets.find(dataset=>dataset.label==='Top 20 Ações BR');
-  assert.deepEqual(Array.from(comparison.data),Array.from(overview.datasets[0].data));
-  close(comparison.data.at(-1),-10);
-  close(hybrid.datasets[0].data[1],6);
+  for(const overview of [overviewStocks,overviewFunds]){
+    assert.deepEqual(Array.from(hybrid.labels),Array.from(overview.labels));
+    for(const dataset of overview.datasets){
+      assert.deepEqual(Array.from(datasetFor(dataset.label).data),Array.from(dataset.data));
+    }
+  }
+  for(const [name,lastValue,reference] of [
+    ['CDI',5,'2026-10-30'],
+    ['IFIX',8,'2026-10-30'],
+    ['IPCA',0.5,'2026-09-01']
+  ]){
+    const dataset=datasetFor(name);
+    close(dataset.data.at(-1),lastValue);
+    assert.equal(dataset.referenceDates.at(-1),reference);
+  }
+  close(hybrid.datasets[0].data[1],6.4);
   assert.equal(hybrid.datasets[0].data.at(-1),null);
-  assert.equal(hybrid.datasets.find(dataset=>dataset.label==='CDI').data.at(-1),null);
-  assert.match(elements.hybridPortfolioNote.textContent,/gráfico de 07\/08\/2026 a 02\/11\/2026/);
-  assert.match(elements.hybridPortfolioNote.textContent,/curva e a tabela da Carteira Híbrida cobrem de 07\/08\/2026 a 26\/10\/2026/);
+  assert.match(summary,/a 26\/10\/2026 e ficou 4\.40 p\.p\. acima do CDI/);
+  assert.ok(elements.hybridPortfolioNote.textContent.includes('gráfico de 07/08/2026 a 02/11/2026'));
+  assert.ok(elements.hybridPortfolioNote.textContent.includes('curva e a tabela da Carteira Híbrida cobrem de 07/08/2026 a 26/10/2026'));
 });
 
 test('weekly comparisons keep real dates when hybrid and stocks were recorded on different days',()=>{

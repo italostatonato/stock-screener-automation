@@ -1797,7 +1797,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       <div id="hybridResults">
       <div class="panel wide">
         <h3>Desempenho comparado</h3>
-        <p>Compare a Carteira Híbrida com o Top 20 de Ações, o Top 20 de FIIs, o CDI, o IFIX e o IPCA. A linha do Top 20 de Ações usa a mesma janela da Visão geral para cada período selecionado.</p>
+        <p>Compare a Carteira Híbrida com o Top 20 de Ações, o Top 20 de FIIs, o CDI, o IFIX e o IPCA na mesma janela. Ao passar sobre um ponto, confira a data de referência quando o dado for anterior.</p>
         <div class="chart-box"><canvas id="hybridPortfolioChart" role="img" aria-label="Desempenho da Carteira Híbrida com os percentuais escolhidos comparado aos principais benchmarks"></canvas></div>
         <div class="mini-note" id="hybridPortfolioNote"></div>
         <div id="hybridUnavailable" class="empty hybrid-empty" hidden></div>
@@ -2769,6 +2769,12 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       return clean.map(x=>({data:x.data, valor:Number(x.valor)/first*100}));
     }
     function benchSeries(name){ const b=state.data.benchmarks||{}; return b[name]||b[name?.toUpperCase()]||[]; }
+    function portfolioBenchmarkSource(comparison,name){
+      const preferred=comparison.benchmarks?.[name];
+      if(Array.isArray(preferred)&&preferred.length) return preferred;
+      const source=benchSeries(name);
+      return Array.isArray(source) ? source : [];
+    }
     function carteiraVsSeries(key){ const cv=state.data.carteira_vs||{}; return normalizeSeries(cv[key]||[]); }
     function benchmarkBase100(name){
       const cv=state.data.carteira_vs||{};
@@ -2840,15 +2846,22 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
     function seriesEndDate(records){
       return (records||[]).filter(point=>point?.data&&finite(point.valor)).map(point=>String(point.data)).sort().at(-1)||'';
     }
-    function macroDataset(label,records,labels){
-      const observations=(records||[]).filter(point=>point?.data&&finite(point.valor)).slice().sort((a,b)=>String(a.data).localeCompare(String(b.data)));
+    function seriesReferenceDates(records,labels){
+      const observations=(records||[]).filter(point=>point?.data&&finite(point.valor))
+        .sort((a,b)=>String(a.data).localeCompare(String(b.data)));
       let cursor=0;
       let reference=null;
-      const referenceDates=labels.map(date=>{
-        while(cursor<observations.length&&String(observations[cursor].data)<=date){ reference=String(observations[cursor].data); cursor++; }
+      return labels.map(date=>{
+        while(cursor<observations.length&&String(observations[cursor].data)<=date){
+          const observation=observations[cursor++];
+          reference=String(observation.data_referencia||observation.data);
+        }
         return reference;
       });
-      return {label,data:alignSeriesToLabels(observations,labels,{fillForward:true}),referenceDates,stepped:'after',spanGaps:false,pointRadius:labels.length<=2?3:0,tension:0};
+    }
+    function macroDataset(label,records,labels){
+      const referenceDates=seriesReferenceDates(records,labels);
+      return {label,data:alignSeriesToLabels(records,labels,{fillForward:true}),referenceDates,stepped:'after',spanGaps:false,pointRadius:labels.length<=2?3:0,tension:0};
     }
     function hybridCoverageNote(data){
       const hybrid=data?.carteira_vs?.carteira_hibrida;
@@ -3486,14 +3499,19 @@ const CHART_PERIODS = {
       const components=hybrid.componentes||[];
       const comparisons=hybrid.comparativos||{};
       const hybridDates=[...new Set(hybrid.serie.map(point=>String(point.data)))].sort();
-      const stocks=portfolioComparisonData('comparativo_acoes').carteira;
-      const comparisonDates=stocks.length ? stocks.map(point=>String(point.data)) : hybridDates;
+      const stocks=portfolioComparisonData('comparativo_acoes');
+      const funds=portfolioComparisonData('comparativo_fiis');
+      const stockDates=stocks.carteira.map(point=>String(point.data));
+      const fundDates=funds.carteira.map(point=>String(point.data));
+      const portfolioDates=[...stockDates,...fundDates];
+      const comparisonDates=portfolioDates.length ? portfolioDates : hybridDates;
       ensureChartPeriodControls('hybridPortfolioChart',comparisonDates);
-      const stockLabels=filteredLabelsForPeriod(comparisonDates,'hybridPortfolioChart');
-      const first=stockLabels[0];
-      const last=stockLabels.at(-1);
+      const windowDates=labelsForPeriod(comparisonDates,'hybridPortfolioChart');
+      const inWindow=date=>date>=windowDates[0]&&date<=windowDates.at(-1);
+      const stockLabels=weeklyLabels(stockDates.filter(inWindow));
+      const fundLabels=weeklyLabels(fundDates.filter(inWindow));
 
-      const availableHybridDates=hybridDates.filter(date=>date>=first&&date<=last);
+      const availableHybridDates=hybridDates.filter(inWindow);
       const hybridLabels=weeklyLabels(availableHybridDates);
       const hybridFirst=hybridLabels[0];
       const hybridLast=hybridLabels.at(-1);
@@ -3501,7 +3519,9 @@ const CHART_PERIODS = {
       const {componentReturns,weightedReturn}=calculateHybridHistory(components,hybridWindow,hybridSettings.weights);
 
       // Keep each series' real observation when two snapshots in a week have different dates.
-      const labels=weeklyLabels([...stockLabels,...hybridLabels]);
+      const labels=weeklyLabels([...stockLabels,...fundLabels,...hybridLabels]);
+      const first=labels[0];
+      const last=labels.at(-1);
       const weeks=labels.map(weekStart);
       const onChartWeeks=(dates,values,sourceDates=null)=>{
         const byWeek=new Map(dates.map((date,index)=>[weekStart(date),{
@@ -3510,7 +3530,7 @@ const CHART_PERIODS = {
         }]));
         const points=weeks.map(week=>byWeek.get(week));
         const data=points.map(point=>point?.value??null);
-        const referenceDates=points.map(point=>point?.reference??null);
+        const referenceDates=points.map(point=>point?.value!=null ? point.reference : null);
         return sourceDates||referenceDates.some((date,index)=>date&&date!==labels[index])
           ? {data,referenceDates}
           : {data};
@@ -3522,16 +3542,39 @@ const CHART_PERIODS = {
         label:`Carteira Híbrida · ${hybridProfileName()}`,color:hybridProfileColor(),...hybridPlot,
         spanGaps:true,borderWidth:4,pointRadius:labels.length<=2?4:2,tension:0,valueLabelPlugin:{enabled:true}
       }];
+      const classComparisons={
+        'Top 20 FIIs':{series:funds.carteira,dates:fundLabels},
+        'Top 20 Ações BR':{series:stocks.carteira,dates:stockLabels}
+      };
+      const benchmarkComparisons={CDI:stocks,IFIX:funds,IPCA:stocks};
       for(const name of ['CDI','IFIX','Top 20 FIIs','Top 20 Ações BR','IPCA']){
-        const isStockComparison=name==='Top 20 Ações BR'&&stocks.length>0;
-        const series=isStockComparison ? stocks : comparisons[name]||[];
+        let series=comparisons[name]||[];
+        let dates=hybridLabels;
+        let referenceRecords=series.some(point=>point.data_referencia) ? series : null;
+        const classComparison=classComparisons[name];
+        const benchmarkComparison=benchmarkComparisons[name];
+        if(classComparison?.series.length){
+          ({series,dates}=classComparison);
+          referenceRecords=null;
+        }else if(benchmarkComparison){
+          const source=portfolioBenchmarkSource(benchmarkComparison,name);
+          const start=benchmarkComparison.inicio||benchmarkComparison.carteira[0]?.data;
+          const benchmark=source.length>=2 ? base100FromStart(source,start) : [];
+          if(benchmark.length>=2){
+            const raw=benchSeries(name);
+            const observations=Array.isArray(raw)&&raw.length ? raw : source;
+            const observedDates=seriesReferenceDates(observations,benchmark.map(point=>point.data));
+            series=benchmark.flatMap((point,index)=>{
+              const reference=observedDates[index];
+              return reference ? [{...point,data_referencia:reference}] : [];
+            });
+            dates=labels;
+            referenceRecords=series;
+          }
+        }
         if(!series.length) continue;
-        const dates=isStockComparison ? stockLabels : hybridLabels;
+        const sourceDates=referenceRecords ? seriesReferenceDates(referenceRecords,dates) : null;
         const returns=alignedReturnForWindow(series,dates,{fillForward:true});
-        const referenceByDate=name==='CDI'&&series.some(point=>point.data_referencia)
-          ? new Map(series.map(point=>[String(point.data),point.data_referencia]))
-          : null;
-        const sourceDates=referenceByDate ? dates.map(date=>referenceByDate.get(date)) : null;
         datasets.push({
           label:name,...onChartWeeks(dates,returns,sourceDates),
           spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:0
@@ -3553,11 +3596,12 @@ const CHART_PERIODS = {
       if(note) note.textContent=`Janela do gráfico ${dateRange(first,last)} · ${hybridProfileName()} · uma observação por semana.${hybridRange} Pesos-alvo reaplicados a cada nova composição semanal.${hybridCoverageNote(state.data)}`;
       renderHybridTable(hybrid,componentReturns);
       const totalReturn=lastNumeric(displayedReturn);
-      const cdiReturn=lastNumeric(datasets.find(ds=>ds.label==='CDI')?.data);
+      // The longer CDI comparison line can extend beyond the portfolio's calculation.
+      const cdiReturn=componentReturns.cdi;
       const cdiText=cdiReturn==null?'sem comparação disponível com o CDI':`${diffPhrase(totalReturn-cdiReturn)} CDI`;
       const summary=totalReturn==null
         ? 'Histórico ainda insuficiente para calcular o resultado da carteira.'
-        : `A Carteira Híbrida · ${hybridProfileName()} acumula ${signedPctPoint(totalReturn)} no período e ficou ${cdiText}.`;
+        : `A Carteira Híbrida · ${hybridProfileName()} acumula ${signedPctPoint(totalReturn)} ${dateRange(hybridFirst,hybridLast)} e ficou ${cdiText}.`;
       makeChart('hybridPortfolioChart',{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')},tooltip:{callbacks:{afterBody:items=>items.map(item=>{const reference=item.dataset.referenceDates?.[item.dataIndex];return reference&&reference!==item.label?`${item.dataset.label} · referência ${fmtDateShort(reference)}`:'';}).filter(Boolean)}}},scales:{x:{title:axisTitle('Data'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('hybridPortfolioChart'),maxRotation:0,minRotation:0}},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
       clearTimeout(hybridSettings.insightTimer);
       hybridSettings.insightTimer=setTimeout(()=>addAiInsight('hybridPortfolioChart',summary),50);
@@ -3609,9 +3653,8 @@ const CHART_PERIODS = {
       if(!carteira.length){ carteira=fallbackPortfolioPoint(); comp={...comp, inicio:carteira[0].data, fallbackInicial:true}; }
 
       const firstDate = comp.inicio || carteira[0]?.data || state.data?.data;
-      const availableBenchmarks = comp.benchmarks||{};
       const benchmarkSeries = benchmarkNames.map(name=>{
-        const raw = Array.isArray(availableBenchmarks[name]) && availableBenchmarks[name].length ? availableBenchmarks[name] : benchSeries(name);
+        const raw = portfolioBenchmarkSource(comp,name);
         return {name, data:Array.isArray(raw) && raw.length>=2 ? base100FromStart(raw, firstDate) : []};
       }).filter(x=>x.data.length>=2);
 
@@ -3635,7 +3678,7 @@ const CHART_PERIODS = {
       const yMax=Math.max(0,maxVal+padding);
       const first=labels[0] || carteira[0]?.data;
       const last=labels[labels.length-1] || first;
-      const missing=benchmarkNames.filter(name=>{ const raw=(availableBenchmarks[name]&&availableBenchmarks[name].length)?availableBenchmarks[name]:benchSeries(name); return !raw||raw.length<2; });
+      const missing=benchmarkNames.filter(name=>portfolioBenchmarkSource(comp,name).length<2);
       const datedReferences=benchmarkSeries.map(({name,data})=>({name,date:seriesEndDate(data)})).filter(item=>item.date&&item.date<last);
       const coverage=datedReferences.length?` Referências mantidas no último registro: ${datedReferences.map(item=>`${item.name} até ${fmtDateShort(item.date)}`).join('; ')}.`:'';
       const extra=(missing.length?` Sem dados disponíveis para: ${missing.join(', ')}.`:'')+coverage;

@@ -138,7 +138,7 @@ test('CSV do modelo identifica número de ativos e mantém todos os 100 pontos',
 
 test('macro semanal conserva valores mensais e suas referências sem antecipar dados', () => {
   const context=vm.createContext({finite:value=>value!=null&&Number.isFinite(Number(value))});
-  for(const name of ['seriesMap','alignSeriesToLabels','macroDataset']) vm.runInContext(source(name),context);
+  for(const name of ['seriesMap','alignSeriesToLabels','seriesReferenceDates','macroDataset']) vm.runInContext(source(name),context);
   const monthly=[{data:'2026-08-01',valor:4.5},{data:'2026-09-01',valor:4.8},{data:'2026-11-01',valor:9}];
   const original=JSON.stringify(monthly);
   const labels=['2026-07-26','2026-08-02','2026-08-30','2026-09-06','2026-10-26'];
