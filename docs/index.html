@@ -1797,7 +1797,7 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       <div id="hybridResults">
       <div class="panel wide">
         <h3>Desempenho comparado</h3>
-        <p>Retorno da carteira contra CDI, IFIX, Top 20 FIIs, Top 20 Ações BR e IPCA, todos partindo de 0% no período selecionado.</p>
+        <p>Compare a Carteira Híbrida com o Top 20 de Ações, o Top 20 de FIIs, o CDI, o IFIX e o IPCA. A linha do Top 20 de Ações usa a mesma janela da Visão geral para cada período selecionado.</p>
         <div class="chart-box"><canvas id="hybridPortfolioChart" role="img" aria-label="Desempenho da Carteira Híbrida com os percentuais escolhidos comparado aos principais benchmarks"></canvas></div>
         <div class="mini-note" id="hybridPortfolioNote"></div>
         <div id="hybridUnavailable" class="empty hybrid-empty" hidden></div>
@@ -2859,12 +2859,11 @@ body:has(#overview.active) main>.hero,body:has(#overview.active) main>.signal-st
       const cdiComponent=(hybrid?.componentes||[]).find(component=>component.chave==='cdi');
       const cdiReference=(cdiComponent?.serie||[]).find(point=>String(point.data)===end)?.data_referencia||seriesEndDate((data.benchmarks?.CDI||[]).filter(point=>String(point.data)<=end));
       const fallback=cdiReference&&cdiReference<end;
-      const cutoff=end<snapshot?` Coleta de ${fmtDateShort(snapshot)}; histórico comum até ${fmtDateShort(end)}.`:'';
       const sources=[['Ações',cv.carteira_acoes_base100],['FIIs',cv.carteira_fiis_base100],['CDI',data.benchmarks?.CDI],['IVVB11',data.benchmarks?.IVVB11]];
       const pending=end<snapshot?sources.map(([name,records])=>({name,date:seriesEndDate(records)})).filter(item=>item.date&&item.date<snapshot&&!(fallback&&item.name==='CDI')):[];
       const detail=pending.length?` Últimos registros coletados: ${pending.map(item=>`${item.name} até ${fmtDateShort(item.date)}`).join('; ')}.`:'';
       const cdiNote=fallback?` CDI: último acumulado disponível de ${fmtDateShort(cdiReference)}, mantido até ${fmtDateShort(end)}; sem estimativa de juros após essa referência.`:'';
-      return `${cutoff}${detail}${cdiNote}`;
+      return detail+cdiNote;
     }
     function renderMacroChart(){
       const ind=state.data.indicadores||{};
@@ -3045,13 +3044,17 @@ const CHART_PERIODS = {
       d.setDate(d.getDate()-days);
       return d.toISOString().slice(0,10);
     }
+    function weekStart(label){
+      const date=new Date(`${label}T12:00:00Z`);
+      if(!Number.isFinite(date.getTime())) return null;
+      date.setUTCDate(date.getUTCDate()-(date.getUTCDay()+6)%7);
+      return date.toISOString().slice(0,10);
+    }
     function weeklyLabels(allLabels){
       const weeks=new Map();
       [...new Set(allLabels||[])].filter(Boolean).sort().forEach(label=>{
-        const date=new Date(`${label}T12:00:00Z`);
-        if(!Number.isFinite(date.getTime())) return;
-        date.setUTCDate(date.getUTCDate()-(date.getUTCDay()+6)%7);
-        weeks.set(date.toISOString().slice(0,10),label);
+        const week=weekStart(label);
+        if(week) weeks.set(week,label);
       });
       return [...weeks.values()];
     }
@@ -3482,37 +3485,72 @@ const CHART_PERIODS = {
 
       const components=hybrid.componentes||[];
       const comparisons=hybrid.comparativos||{};
-      const allLabels=[...new Set((hybrid.serie||[]).map(x=>String(x.data)))].sort();
-      ensureChartPeriodControls('hybridPortfolioChart',allLabels);
-      const windowLabels=labelsForPeriod(allLabels,'hybridPortfolioChart');
-      const labels=weeklyLabels(windowLabels);
-      const weeklyIndexes=labels.map(label=>windowLabels.indexOf(label));
-      const baseIndex=weeklyIndexes[0];
-      const {componentReturns,weightedReturn}=calculateHybridHistory(components,windowLabels.slice(baseIndex),hybridSettings.weights);
-      const displayedReturn=weeklyIndexes.map(index=>weightedReturn[index-baseIndex]);
-      const comparisonOrder=['CDI','IFIX','Top 20 FIIs','Top 20 Ações BR','IPCA'];
+      const hybridDates=[...new Set(hybrid.serie.map(point=>String(point.data)))].sort();
+      const stocks=portfolioComparisonData('comparativo_acoes').carteira;
+      const comparisonDates=stocks.length ? stocks.map(point=>String(point.data)) : hybridDates;
+      ensureChartPeriodControls('hybridPortfolioChart',comparisonDates);
+      const stockLabels=filteredLabelsForPeriod(comparisonDates,'hybridPortfolioChart');
+      const first=stockLabels[0];
+      const last=stockLabels.at(-1);
+
+      const availableHybridDates=hybridDates.filter(date=>date>=first&&date<=last);
+      const hybridLabels=weeklyLabels(availableHybridDates);
+      const hybridFirst=hybridLabels[0];
+      const hybridLast=hybridLabels.at(-1);
+      const hybridWindow=hybridFirst ? availableHybridDates.filter(date=>date>=hybridFirst) : [];
+      const {componentReturns,weightedReturn}=calculateHybridHistory(components,hybridWindow,hybridSettings.weights);
+
+      // Keep each series' real observation when two snapshots in a week have different dates.
+      const labels=weeklyLabels([...stockLabels,...hybridLabels]);
+      const weeks=labels.map(weekStart);
+      const onChartWeeks=(dates,values,sourceDates=null)=>{
+        const byWeek=new Map(dates.map((date,index)=>[weekStart(date),{
+          value:values[index],
+          reference:sourceDates?.[index]||date
+        }]));
+        const points=weeks.map(week=>byWeek.get(week));
+        const data=points.map(point=>point?.value??null);
+        const referenceDates=points.map(point=>point?.reference??null);
+        return sourceDates||referenceDates.some((date,index)=>date&&date!==labels[index])
+          ? {data,referenceDates}
+          : {data};
+      };
+
+      const hybridPlot=onChartWeeks(hybridWindow,weightedReturn);
+      const displayedReturn=hybridPlot.data;
       const datasets=[{
-        label:`Carteira Híbrida · ${hybridProfileName()}`,color:hybridProfileColor(),data:displayedReturn,spanGaps:true,borderWidth:4,pointRadius:labels.length<=2?4:2,tension:0,valueLabelPlugin:{enabled:true}
+        label:`Carteira Híbrida · ${hybridProfileName()}`,color:hybridProfileColor(),...hybridPlot,
+        spanGaps:true,borderWidth:4,pointRadius:labels.length<=2?4:2,tension:0,valueLabelPlugin:{enabled:true}
       }];
-      comparisonOrder.forEach(name=>{
-        const series=comparisons[name]||[];
-        if(!series.length) return;
-        const dataset={label:name,data:alignedReturnForWindow(series,labels,{fillForward:true}),spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:0};
-        if(name==='CDI'&&series.some(point=>point.data_referencia)){
-          const references=new Map(series.map(point=>[String(point.data),point.data_referencia]));
-          dataset.referenceDates=labels.map(date=>references.get(date)||null);
-        }
-        datasets.push(dataset);
-      });
+      for(const name of ['CDI','IFIX','Top 20 FIIs','Top 20 Ações BR','IPCA']){
+        const isStockComparison=name==='Top 20 Ações BR'&&stocks.length>0;
+        const series=isStockComparison ? stocks : comparisons[name]||[];
+        if(!series.length) continue;
+        const dates=isStockComparison ? stockLabels : hybridLabels;
+        const returns=alignedReturnForWindow(series,dates,{fillForward:true});
+        const referenceByDate=name==='CDI'&&series.some(point=>point.data_referencia)
+          ? new Map(series.map(point=>[String(point.data),point.data_referencia]))
+          : null;
+        const sourceDates=referenceByDate ? dates.map(date=>referenceByDate.get(date)) : null;
+        datasets.push({
+          label:name,...onChartWeeks(dates,returns,sourceDates),
+          spanGaps:true,borderWidth:2,pointRadius:labels.length<=2?4:1.5,tension:0
+        });
+      }
       const values=datasets.flatMap(ds=>ds.data).filter(v=>v!=null&&Number.isFinite(Number(v))).map(Number);
       const minVal=values.length?Math.min(...values):0;
       const maxVal=values.length?Math.max(...values):0;
       const padding=Math.max(.5,(maxVal-minVal)*.22);
       const yMin=Math.min(0,minVal-padding);
       const yMax=Math.max(0,maxVal+padding);
-      const first=labels[0]||hybrid.inicio;
-      const last=labels[labels.length-1]||hybrid.fim||first;
-      if(note) note.textContent=`Retorno de ${first} até ${last} · ${hybridProfileName()} · uma observação por semana. Pesos-alvo reaplicados a cada nova composição semanal. Simulação com os percentuais escolhidos para todo o período.${hybridCoverageNote(state.data)}`;
+      const dateRange=(start,end)=>`de ${fmtDateShort(start)} a ${fmtDateShort(end)}`;
+      let hybridRange='';
+      if(!hybridFirst){
+        hybridRange=' A Carteira Híbrida está sem pontos nesta janela.';
+      }else if(hybridFirst!==first||hybridLast!==last){
+        hybridRange=` A curva e a tabela da Carteira Híbrida cobrem ${dateRange(hybridFirst,hybridLast)}.`;
+      }
+      if(note) note.textContent=`Janela do gráfico ${dateRange(first,last)} · ${hybridProfileName()} · uma observação por semana.${hybridRange} Pesos-alvo reaplicados a cada nova composição semanal.${hybridCoverageNote(state.data)}`;
       renderHybridTable(hybrid,componentReturns);
       const totalReturn=lastNumeric(displayedReturn);
       const cdiReturn=lastNumeric(datasets.find(ds=>ds.label==='CDI')?.data);
@@ -3520,7 +3558,7 @@ const CHART_PERIODS = {
       const summary=totalReturn==null
         ? 'Histórico ainda insuficiente para calcular o resultado da carteira.'
         : `A Carteira Híbrida · ${hybridProfileName()} acumula ${signedPctPoint(totalReturn)} no período e ficou ${cdiText}.`;
-      makeChart('hybridPortfolioChart',{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')},tooltip:{callbacks:{afterBody:items=>items.map(item=>{const reference=item.dataset.referenceDates?.[item.dataIndex];return reference&&reference<item.label?`CDI · referência ${fmtDateShort(reference)}`:'';}).filter(Boolean)}}},scales:{x:{title:axisTitle('Data'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('hybridPortfolioChart'),maxRotation:0,minRotation:0}},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
+      makeChart('hybridPortfolioChart',{type:'line',data:{labels,datasets},options:baseOptions({interaction:{mode:'index',intersect:false},plugins:{valueLabelPlugin:{enabled:true,datasetIndex:0,suffix:'%',maxLabels:6,color:css('--accent')},tooltip:{callbacks:{afterBody:items=>items.map(item=>{const reference=item.dataset.referenceDates?.[item.dataIndex];return reference&&reference!==item.label?`${item.dataset.label} · referência ${fmtDateShort(reference)}`:'';}).filter(Boolean)}}},scales:{x:{title:axisTitle('Data'),ticks:{autoSkip:true,maxTicksLimit:chartMaxTicks('hybridPortfolioChart'),maxRotation:0,minRotation:0}},y:{min:yMin,max:yMax,title:axisTitle('Retorno (%)'),ticks:{callback:v=>Number.isFinite(Number(v))?`${fmtNum(Number(v),1)}%`:v},grid:{color:(ctx)=>ctx.tick.value===0?'rgba(238,242,255,.38)':'rgba(148,163,184,.08)',lineWidth:(ctx)=>ctx.tick.value===0?2:1}}}})});
       clearTimeout(hybridSettings.insightTimer);
       hybridSettings.insightTimer=setTimeout(()=>addAiInsight('hybridPortfolioChart',summary),50);
     }

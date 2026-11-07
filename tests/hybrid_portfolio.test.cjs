@@ -40,7 +40,7 @@ function loadDashboard(data=fixture()){
     document:{getElementById:id=>elements[id],addEventListener:()=>{},removeEventListener:()=>{},querySelectorAll:selector=>({'[data-hybrid-preset]':presets,'[data-hybrid-weight]':inputs,'[data-hybrid-foot]':feet}[selector]||[])},
     getComputedStyle:()=>({getPropertyValue:()=>''}),
     setTimeout:()=>1,clearTimeout:()=>{},
-    ensureChartPeriodControls:()=>{},filteredLabelsForPeriod:labels=>labels,
+    ensureChartPeriodControls:()=>{},
     makeChart:(id,config)=>context.chart=config,baseOptions:options=>options,
     axisTitle:()=>({}),chartMaxTicks:()=>6,diffPhrase:()=>'',
     emptyPortfolioChart:()=>{context.chart=null;}
@@ -48,12 +48,14 @@ function loadDashboard(data=fixture()){
   vm.runInContext(fs.readFileSync(path.join(__dirname,'../docs/assets/vendor/imask-7.6.1.min.js'),'utf8'),context);
   vm.runInContext([
     between('    const fmtNum =','    function mergeDeep'),
-    between('    function seriesMap','    function emptyLineChart'),
+    between('    function normalizeSeries','    function emptyLineChart'),
+    between('    function portfolioComparisonData','    function legacyFiisBacktestComparison'),
     between('    function fmtDateShort','    function todayIsoLocal'),
     between('    function seriesEndDate','    function renderMacroChart'),
     between('    function lastNumeric','    function diffPhrase'),
+    between('    function portfolioSummaryText','const CHART_PERIODS'),
     between('const CHART_PERIODS','    function ensureChartPeriodControls'),
-    between('    function alignedReturnForWindow','    function renderPortfolioComparison')
+    between('    function alignedReturnForWindow','    function fmtCryptoPrice')
   ].join('\n'),context);
   return {context,elements,presets,inputs,feet,run:code=>vm.runInContext(code,context)};
 }
@@ -475,7 +477,6 @@ test('weekly hybrid display preserves all intermediate rebalance contributions',
 
 test('50/50 portfolio compounds equal class weights and stops at the common history end',()=>{
   const {context,run}=loadDashboard();
-  vm.runInContext(between('    function normalizeSeries','    function benchSeries')+'\n'+between('    function portfolioComparisonData','    function legacyFiisBacktestComparison'),context);
   context.state.data.carteira_vs={
     comparativo_acoes:{carteira:[{data:'2026-01-02',valor:100},{data:'2026-01-09',valor:110},{data:'2026-01-16',valor:99},{data:'2026-01-23',valor:120}]},
     comparativo_fiis:{carteira:[{data:'2026-01-02',valor:100},{data:'2026-01-09',valor:100},{data:'2026-01-16',valor:100}]}
@@ -524,4 +525,84 @@ test('CDI fallback chart and CSV preserve the actual reference date',()=>{
   const referenceColumn=rows[0].indexOf('Referência original · CDI');
   assert.ok(referenceColumn>0);
   assert.equal(rows.at(-1)[referenceColumn],'2026-01-15');
+});
+
+
+test('stocks use the same 3M dates and returns in both charts when the hybrid ends earlier',()=>{
+  const data=fixture();
+  data.data='2026-11-02';
+  const dates=['2026-07-31','2026-08-07','2026-10-26','2026-11-02'];
+  const levels=[100,120,144,108];
+  const stocks=dates.map((data,index)=>({data,valor:levels[index]}));
+  const covered=stocks.slice(0,-1);
+  const flat=covered.map(({data})=>({data,valor:100}));
+  data.carteira_vs={
+    comparativo_acoes:{carteira:stocks},
+    carteira_hibrida:{
+      disponivel:true,fim:'2026-10-26',serie:flat,
+      componentes:[
+        {chave:'acoes_top20',serie:covered},
+        {chave:'fiis_top20',serie:flat},
+        {chave:'cdi',serie:flat},
+        {chave:'ivvb11',serie:flat}
+      ],
+      comparativos:{'Top 20 Ações BR':covered,CDI:flat}
+    }
+  };
+  data.benchmarks.IVVB11=[{data:'2026-10-30',valor:100}];
+
+  const {context,run,elements}=loadDashboard(data);
+  run('state.chartWindows={overviewPerformanceChart:"3M",hybridPortfolioChart:"3M"}');
+  run('renderPortfolioComparison("overviewPerformanceChart","overviewPerformanceNote","comparativo_acoes","Carteira Ações Top 20",[])');
+  const overview=context.chart.data;
+  run('renderHybridPortfolio()');
+  const hybrid=context.chart.data;
+  assert.deepEqual(Array.from(hybrid.labels),dates.slice(1));
+  assert.deepEqual(Array.from(hybrid.labels),Array.from(overview.labels));
+  const comparison=hybrid.datasets.find(dataset=>dataset.label==='Top 20 Ações BR');
+  assert.deepEqual(Array.from(comparison.data),Array.from(overview.datasets[0].data));
+  close(comparison.data.at(-1),-10);
+  close(hybrid.datasets[0].data[1],6);
+  assert.equal(hybrid.datasets[0].data.at(-1),null);
+  assert.equal(hybrid.datasets.find(dataset=>dataset.label==='CDI').data.at(-1),null);
+  assert.match(elements.hybridPortfolioNote.textContent,/gráfico de 07\/08\/2026 a 02\/11\/2026/);
+  assert.match(elements.hybridPortfolioNote.textContent,/curva e a tabela da Carteira Híbrida cobrem de 07\/08\/2026 a 26\/10\/2026/);
+});
+
+test('weekly comparisons keep real dates when hybrid and stocks were recorded on different days',()=>{
+  const data=fixture();
+  data.data='2026-08-30';
+  const stocks=[
+    {data:'2026-08-07',valor:100},
+    {data:'2026-08-20',valor:110},
+    {data:'2026-08-30',valor:120}
+  ];
+  const covered=[
+    {data:'2026-08-07',valor:100},
+    {data:'2026-08-21',valor:110},
+    {data:'2026-08-27',valor:110}
+  ];
+  const flat=covered.map(({data})=>({data,valor:100}));
+  data.carteira_vs={
+    comparativo_acoes:{carteira:stocks},
+    carteira_hibrida:{
+      disponivel:true,serie:flat,
+      componentes:[
+        {chave:'acoes_top20',serie:covered},
+        {chave:'fiis_top20',serie:flat},
+        {chave:'cdi',serie:flat},
+        {chave:'ivvb11',serie:flat}
+      ]
+    }
+  };
+
+  const {context,run,elements}=loadDashboard(data);
+  run('renderHybridPortfolio()');
+  assert.deepEqual(Array.from(context.chart.data.labels),['2026-08-07','2026-08-21','2026-08-30']);
+  const [portfolio,comparison]=context.chart.data.datasets;
+  assert.deepEqual(Array.from(portfolio.referenceDates),covered.map(point=>point.data));
+  assert.deepEqual(Array.from(comparison.referenceDates),stocks.map(point=>point.data));
+  close(portfolio.data.at(-1),3);
+  close(comparison.data.at(-1),20);
+  assert.match(elements.hybridPortfolioNote.textContent,/a 27\/08\/2026/);
 });

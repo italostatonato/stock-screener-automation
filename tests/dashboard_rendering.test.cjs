@@ -157,18 +157,15 @@ test('CSV macro exporta a data mensal original ao lado da observação semanal',
   assert.deepEqual(Array.from(rows[1]),['2026-10-26',4.8,'2026-09-01']);
 });
 
-test('nota da híbrida distingue data da coleta, histórico comum e CDI coletado', () => {
+test('nota das fontes da híbrida distingue CDI coletado e CDI mantido', () => {
   const context=vm.createContext({finite:value=>value!=null&&Number.isFinite(Number(value)),fmtDateShort:value=>value});
   vm.runInContext(source('seriesEndDate'),context);
   vm.runInContext(source('hybridCoverageNote'),context);
   const payload={data:'2026-10-26',carteira_vs:{carteira_hibrida:{fim:'2026-10-19'}},benchmarks:{CDI:[{data:'2026-10-23',valor:115}]}};
   const note=context.hybridCoverageNote(payload);
-  assert.match(note,/Coleta de 2026-10-26/);
-  assert.match(note,/histórico comum até 2026-10-19/);
   assert.match(note,/CDI até 2026-10-23/);
   payload.carteira_vs.carteira_hibrida.fim='2026-10-26';
   const fallback=context.hybridCoverageNote(payload);
-  assert.doesNotMatch(fallback,/histórico comum até/);
   assert.match(fallback,/CDI: último acumulado disponível de 2026-10-23, mantido até 2026-10-26/);
   assert.match(fallback,/sem estimativa de juros/);
   payload.benchmarks.CDI.push({data:'2026-10-27',valor:999});
