@@ -162,17 +162,17 @@ três janelas do mesmo modelo/classe/horizonte e magnitude de até 50%.
 
 ## Workflow e manutenção
 
-`Weekly FII Screener` roda segunda-feira às 10h BRT (`0 13 * * 1`) ou
-manualmente. Jobs: testes → screener → deploy; a publicação da coleta exige
-testes e screener bem-sucedidos. Pushes de interface continuam publicando após
-os testes, com screener ignorado. Publica `docs/`. Artefatos de saída são retidos por 90 dias;
-diagnósticos de falha, por 30 dias. Commita
-`docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
-`tests.yml` valida pushes de código/documentação e pull requests, sem coleta
-ou deploy. Os testes usam Python e Node 24.
-Pushes da `main` que alteram `docs/index.html`, `docs/assets/` ou
-`.github/workflows/run_screener.yml` acionam o próprio `run_screener.yml`: testes → deploy,
-com `screener` ignorado. A coleta semanal e a execução manual mantêm os três jobs.
+`Weekly FII Screener` roda às segundas-feiras, às 10h de Brasília, com
+tentativas às 10h17 e 11h17. A coleta automática reaproveita um snapshot válido
+da mesma semana. Pushes relevantes na `main` e a opção manual de republicação
+executam os testes e usam os dados salvos. A coleta commita os dados e retém
+artefatos de saída por 90 dias e logs de falha por 30 dias.
+
+`Publish Radar Dashboard` usa `workflow_run` para publicar o `GITHUB_SHA`
+da execução de publicação. O job compara o identificador da revisão, o índice e
+o hash do snapshot no Pages e no Sites. O workflow `tests.yml` valida pushes de
+código e pull requests. Os testes usam Python 3.11 e Node 24.
+
 A Visão geral mostra até 20 ativos por classe em cartões uniformes com posição,
 ticker e score, sem preço. O gráfico de desempenho permite Ações, FIIs ou
 Ações + FIIs (50/50), com CDI, IFIX e IBOV como referências.

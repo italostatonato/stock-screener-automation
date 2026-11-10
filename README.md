@@ -331,37 +331,20 @@ Detalhes em [Pipeline ML](docs/ML_PIPELINE.md) e
 
 ## Automação
 
-O workflow `.github/workflows/run_screener.yml`:
+O [Weekly FII Screener](.github/workflows/run_screener.yml) testa e coleta
+às segundas-feiras a partir das **10h de Brasília**, com tentativas às
+**10h17 e 11h17**. Se já existe um snapshot válido da semana, usa os dados
+salvos. Quando coleta, valida o snapshot e commita `docs/data/`,
+`data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
 
-- roda uma vez por semana, às segundas-feiras;
-- usa cron `0 13 * * 1`, equivalente a **10h BRT**;
-- permite execução manual por `workflow_dispatch`;
-- usa cache de `pip`;
-- roda testes antes do screener;
-- executa `python main.py`;
-- executa `python scripts/healthcheck_data.py`;
-- salva artefatos da execução;
-- commita dados gerados em:
-  - `docs/data/`
-  - `data/lake/`
-  - `data/ml/`
-  - `data/backtest/`
-  - `data/delivery/`
-- usa `concurrency` para evitar execuções simultâneas;
-- publica o GitHub Pages após os testes, inclusive quando uma fonte pública
-  falhar temporariamente; quando a coleta conclui, o deploy usa o snapshot
-  novo gerado pela própria execução;
-- notifica falha via Telegram quando os secrets estão configurados.
+O [Publish Radar Dashboard](.github/workflows/publish_dashboard.yml) é
+disparado após o sucesso do screener. Publica a revisão correspondente
+no GitHub Pages e verifica o índice e o conteúdo do snapshot no Pages e no Sites.
+Pushes relevantes na `main` também acionam esse caminho após os testes.
 
-O workflow tem os jobs `test`, `screener` e `deploy`, com Python 3.11 e Chrome
-no runner de coleta. Os artefatos de saída `stock-screener-output-ID` ficam
-retidos por **90 dias**; o diagnóstico `screener-failure-ID`, com os logs de
-falha da coleta, por **30 dias**. O workflow `tests.yml` executa testes Python
-e JavaScript em pushes de código/documentação e pull requests. Esses gatilhos
-não iniciam coleta nem deploy pelo `tests.yml`. Alterações de `docs/index.html`,
-`docs/assets/` ou do workflow de publicação na `main` também acionam
-`run_screener.yml`: passam pelos testes e publicam o Pages com a coleta
-semanal ignorada.
+A execução manual oferece a opção **Republicar a última coleta salva**.
+Consulte os procedimentos e a retenção de artefatos em
+[Operação do Radar](docs/OPERATIONS.md).
 
 A revisão semanal de documentação é uma tarefa separada, solicitada para
 **segunda-feira às 12h, America/Sao_Paulo**. Seu procedimento está em

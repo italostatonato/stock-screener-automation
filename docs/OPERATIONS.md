@@ -77,36 +77,29 @@ python -m pytest tests/ -v --basetemp=$TestRunDir -o cache_dir=.test-tmp/pytest-
 
 ## Workflow e publicação
 
-[Weekly FII Screener](../.github/workflows/run_screener.yml) roda toda segunda,
-**10h de São Paulo** (`0 13 * * 1`), ou por **Actions → Weekly FII Screener →
-Run workflow**. Também publica ajustes por push, conforme os caminhos abaixo.
-O horário das 10h é o início
-agendado da coleta; a publicação depende da conclusão dos jobs. Arquivos
-particionados por data não significam que a execução automática seja diária.
+[Weekly FII Screener](../.github/workflows/run_screener.yml) começa a coleta
+na segunda às **10h de São Paulo**. Há tentativas às **10h17 e 11h17**. Se já
+existe um snapshot válido da semana, a tentativa aproveita os dados salvos.
+O GitHub pode atrasar o início dos agendamentos.
 
-- `test`: Python 3.11, Node 24, instalação com cache pip e `pytest tests/ -v`.
-- `screener`: depende dos testes e só roda no cron ou acionamento manual;
-  prepara Chrome, sincroniza a `main`,
-  executa pipeline e healthcheck, salva artefatos de saída por 90 dias e commita
-  `docs/data/`, `data/lake/`, `data/ml/`, `data/backtest/` e `data/delivery/`.
-- `deploy`: usa a `main` atual e publica `docs/` no GitHub Pages quando
-  testes e screener passam. Em pushes de interface, publica após os testes,
-  com screener ignorado. Uma coleta que falha não republica os dados antigos.
+O job `test` valida Python e JavaScript. O job `screener` coleta os dados,
+executa o healthcheck, verifica a data do snapshot, salva os artefatos e envia
+o commit para a `main`. Os artefatos de saída ficam por 90 dias e os logs de
+falha por 30. O job de coleta usa `contents: write` e mantém a notificação
+opcional por Telegram quando os secrets estão configurados.
 
-Os timeouts são 25 minutos para testes e 60 para coleta. A concorrência é
-controlada por branch e não cancela a execução já em andamento.
-A etapa opcional de notificação de falha do screener usa
-`TELEGRAM_BOT_TOKEN` e `TELEGRAM_CHAT_ID` nos Secrets.
+[Publish Radar Dashboard](../.github/workflows/publish_dashboard.yml) começa
+após o sucesso do screener e empacota `docs/` da revisão que acionou a
+publicação. O job usa `pages: write` e `id-token: write`. Confere o
+identificador da revisão, o índice e o conteúdo do snapshot no Pages e no Sites.
+Uma revisão já confirmada nos dois endereços dispensa novo envio.
 
-Para problemas de push, confira remote, credenciais e permissão de escrita.
-O workflow já declara `contents: write`; a publicação usa
-`pages: write` e `id-token: write` no job de deploy.
-O workflow `tests.yml` roda a suíte em pushes de código/documentação e pull
-requests, com permissão de leitura. Esse workflow não inicia coleta nem deploy.
-Alterações de `docs/index.html`, `docs/assets/` ou de `run_screener.yml` na
-`main` também acionam a publicação pelo `run_screener.yml`: executam `test`
-e `deploy`, ignorando `screener`. Isso publica ajustes da interface sem
-aguardar a próxima segunda-feira nem gerar um novo snapshot.
+Pushes de interface, dados ou configuração de publicação na `main`
+acionam os testes e a publicação dos dados salvos. Para recuperar uma
+publicação manualmente, abra **Actions → Weekly FII Screener → Run workflow**
+na `main` e marque **Republicar a última coleta salva**. Para uma nova coleta,
+deixe a opção desmarcada. O workflow `tests.yml` verifica também os pushes de
+código e pull requests.
 
 A revisão documental semanal é separada, **segunda-feira às 12h de São Paulo**,
 e é administrada no Codex. Veja [Manutenção da documentação](DOCUMENTATION.md).

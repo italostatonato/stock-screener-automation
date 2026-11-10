@@ -1,0 +1,81 @@
+name: Publish Radar Dashboard
+
+on:
+  workflow_run:
+    workflows: ["Weekly FII Screener"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: radar-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      ${{ github.event.workflow_run.conclusion == 'success'
+      && github.event.workflow_run.head_repository.full_name == github.repository
+      && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout da revisão de publicação
+        uses: actions/checkout@v4.2.2
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Preparar e validar a revisão
+        id: release
+        shell: bash
+        env:
+          TESTED_SHA: ${{ github.event.workflow_run.head_sha }}
+          SCHEDULED_AT: ${{ github.event.workflow_run.event == 'schedule' && github.event.workflow_run.run_started_at || '' }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git fetch --no-tags origin refs/heads/main
+          if ! git diff --quiet HEAD FETCH_HEAD -- docs; then
+            echo "::error::A main já contém uma versão diferente do dashboard. Publique a partir da revisão atual."
+            exit 1
+          fi
+          git merge-base --is-ancestor "$TESTED_SHA" HEAD
+          if ! git diff --quiet "$TESTED_SHA" HEAD -- docs/index.html docs/assets; then
+            echo "::error::A interface mudou após os testes da execução de origem."
+            exit 1
+          fi
+          python3 scripts/dashboard_release.py prepare --commit "$GITHUB_SHA" --scheduled-at "$SCHEDULED_AT"
+          if python3 scripts/dashboard_release.py verify --timeout 0; then
+            echo "upload=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "upload=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Pages
+        if: steps.release.outputs.upload == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: steps.release.outputs.upload == 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./docs
+
+      - name: Deploy to GitHub Pages
+        if: steps.release.outputs.upload == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Conferir a revisão e os dados públicos
+        if: steps.release.outputs.upload == 'true'
+        run: python3 scripts/dashboard_release.py verify
